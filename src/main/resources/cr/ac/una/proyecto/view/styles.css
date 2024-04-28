@@ -1,0 +1,61 @@
+* {
+    -mfx-main: rgb(81, 130, 155);
+    -mfx-purple: rgb(81, 130, 155);
+    -fx-beige: rgb(234, 223, 180);
+    -fx-celeste-pastel:rgb(155, 176, 193);
+    -fx-azul-pastel: rgb(81, 130, 155);
+    -fx-naranja: rgb(246, 153, 92);
+    -fx-magenta: rgb(255, 32, 78);
+    -fx-fucsia: rgb(160, 21, 62);
+    -fx-morado: rgb(93, 14, 65);
+    -fx-azul: rgb(0, 34, 77);
+    -fx-celeste-hielo: rgb(223, 245, 255);
+}
+.pregunta-background{
+    -fx-background-color: gray;
+}
+
+.contenedor-forms{
+    -fx-background-color: white;
+    -fx-background-radius: 4.0;
+    -fx-padding: 25 15 15 15;
+    -fx-spacing: 6px;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 10.0, 0.7, 0.0, 1.5);
+}
+
+.mfx-button, .mfx-button:armed, .mfx-button:focused{
+    -mfx-button-type: RAISED;
+    -mfx-depth-level: LEVEL2;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-label-padding: 3px;
+
+}
+.mfx-button:hover{
+    -fx-background-color: -fx-azul-pastel;
+    -fx-text-fill: white;
+}
+
+.butonPregunta{
+    -fx-max-width: 225px;
+    -fx-min-width: 190px;
+    -fx-max-height: 40px;
+    -fx-min-height: 40px;
+    -fx-background-color: firebrick;
+}
+
+.butonComodin{
+    -fx-max-width: 50px;
+    -fx-min-width: 50px;
+    -fx-max-height: 50px;
+    -fx-min-height: 50px;
+    -fx-background-color: firebrick;
+}
+
+.principal-imagen {
+    -fx-background-image: url("../resources/principalIcon.png");
+    -fx-background-position: center;
+    -fx-background-size: stretch;
+}
