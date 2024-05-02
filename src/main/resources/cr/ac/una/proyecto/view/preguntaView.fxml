@@ -32,12 +32,9 @@
             </VBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" styleClass="contenedor-forms" VBox.vgrow="NEVER">
                <children>
-                  <MFXButton alignment="CENTER" styleClass="butonComodin" text=" ">
+                  <MFXButton alignment="CENTER" prefHeight="50.0" prefWidth="38.0" styleClass="jfx-btn-bomb" text=" ">
                      <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/bomb.png" />
-                           </image>
+                        <ImageView fitHeight="35.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
