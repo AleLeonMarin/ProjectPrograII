@@ -31,6 +31,15 @@
     -fx-border-width: 1px;
 }
 
+.contenedor-base {
+    -fx-background-radius: 4.0;
+    -fx-border-width: 1px;
+    -fx-padding: 5 5 5 5;
+    -fx-spacing: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,1), 10, 0, 0, 0);
+}
+
+
 .contenedorBotones{
     -fx-padding: 2 2 2 2;
     -fx-spacing: 6px;
@@ -86,6 +95,12 @@
 .principal-imagen {
     -fx-background-image: url("../resources/principalIcon.png");
 }
+
+.acercaDe-imagen{
+    -fx-background-image: url("../resources/acercadeBackground.jpg");
+    -fx-opacity: 1;
+}
+
 .mfx-btn-bomb > ImageView {
     -fx-image: url("../resources/bomb.png");
 }
@@ -97,4 +112,11 @@
 }
 .mfx-btn-next > ImageView {
     -fx-image: url("../resources/next.png");
+}
+
+.dev1-Image{
+    -fx-background-image: url("../resources/dev1.jpg");
+}
+.dev2-Image{
+    -fx-background-image: url("../resources/dev1.jpg");
 }
