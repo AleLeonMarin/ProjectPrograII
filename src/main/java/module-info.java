@@ -3,6 +3,7 @@ module cr.ac.una.proyecto {
     requires javafx.fxml;
     requires java.logging;
     requires MaterialFX;
+    requires java.base;
 
     opens cr.ac.una.proyecto to javafx.fxml;
     exports cr.ac.una.proyecto;

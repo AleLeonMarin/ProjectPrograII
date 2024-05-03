@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="pregunta-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PreguntaController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PreguntaController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="contenedor-forms" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" styleClass="contenedor-forms">
                <children>
-                  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="35.0" styleClass="principal-imagen" />
-                  <Label text="Preguntados" />
+                  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="65.0">
+                     <styleClass>
+                        <String fx:value="imagen" />
+                        <String fx:value="principal-imagen" />
+                     </styleClass></AnchorPane>
+                  <Label styleClass="label-Titulos" text="Preguntados" />
                </children>
             </HBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="600.0" styleClass="contenedor-forms">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="600.0" styleClass="contenedor-forms" VBox.vgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Texto Pregunta" />
-                  <MFXButton fx:id="btnRespuesta1" styleClass="butonPregunta" text="Respuesta1" />
-                  <MFXButton layoutX="283.0" layoutY="98.0" styleClass="butonPregunta" text="Respuesta2" />
-                  <MFXButton layoutX="198.0" layoutY="164.0" styleClass="butonPregunta" text="Respuesta3" />
-                  <MFXButton layoutX="198.0" layoutY="210.0" styleClass="butonPregunta" text="Respuesta4" />
+                  <VBox fx:id="vboxTextPregunta" alignment="CENTER" prefHeight="180.0" prefWidth="770.0">
+                     <styleClass>
+                        <String fx:value="contenedorPregunta" />
+                        <String fx:value="imagen" />
+                     </styleClass></VBox>
+                  <HBox alignment="CENTER" styleClass="contenedorBotones">
+                     <children>
+                        <MFXButton fx:id="btnRespuesta1" onAction="#brnRespuesta1OnAcrtion" styleClass="butonPregunta" text="Respuesta1" />
+                        <MFXButton styleClass="butonPregunta" text="Respuesta2" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" styleClass="contenedorBotones">
+                     <children>
+                        <MFXButton styleClass="butonPregunta" text="Respuesta3" />
+                        <MFXButton styleClass="butonPregunta" text="Respuesta4" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" styleClass="contenedor-forms" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="600.0" styleClass="contenedor-forms">
                <children>
                   <MFXButton alignment="CENTER" prefHeight="50.0" prefWidth="38.0" styleClass="jfx-btn-bomb" text=" ">
                      <graphic>
@@ -52,34 +65,49 @@
                         </ImageView>
                      </graphic>
                   </MFXButton>
-                  <MFXButton alignment="CENTER" layoutX="342.0" layoutY="35.0" styleClass="butonComodin" text=" ">
+                  <MFXButton fx:id="btnBomb" alignment="CENTER" onAction="#sads" text=" ">
+                     <styleClass>
+                        <String fx:value="butonComodin" />
+                        <String fx:value="mfx-btn-bomb" />
+                     </styleClass>
                      <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/retry.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                        </ImageView>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </MFXButton>
-                  <MFXButton alignment="CENTER" layoutX="370.0" layoutY="35.0" styleClass="butonComodin" text=" ">
+                  <MFXButton fx:id="btnPorDos" alignment="CENTER" layoutX="256.0" layoutY="35.0" text=" ">
                      <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/next.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                        </ImageView>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="butonComodin" />
+                        <String fx:value="mfx-btn-porDos" />
+                     </styleClass>
+                  </MFXButton>
+                  <MFXButton fx:id="btnRetry" alignment="CENTER" layoutX="370.0" layoutY="35.0" text=" ">
+                     <styleClass>
+                        <String fx:value="butonComodin" />
+                        <String fx:value="mfx-btn-btnRetry" />
+                     </styleClass>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </MFXButton>
-                  <Button fx:id="joya" mnemonicParsing="false" text="Button" />
+                  <MFXButton fx:id="btnNext1" alignment="CENTER" layoutX="151.0" layoutY="35.0" text=" ">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="butonComodin" />
+                        <String fx:value="mfx-btn-next" />
+                     </styleClass>
+                  </MFXButton>
                </children>
             </HBox>
          </children>
       </VBox>
    </children>
+   <styleClass>
+      <String fx:value="imagen" />
+      <String fx:value="pregunta-background" />
+   </styleClass>
 </AnchorPane>
