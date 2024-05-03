@@ -16,7 +16,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
 
         FlowController.getInstance().InitializeFlow(stage, null);
-        FlowController.getInstance().goViewInWindow("tableroView");
+        stage.setTitle("Preguntados Jr");
+        FlowController.getInstance().goViewInWindow("DevLogIn");
         
     }
 
