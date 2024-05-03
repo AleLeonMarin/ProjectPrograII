@@ -9,12 +9,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.RegistryNewGameViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="460.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.RegistryNewGameViewController">
    <children>
       <VBox alignment="CENTER" layoutX="138.0" layoutY="110.0" prefHeight="578.0" prefWidth="460.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Registro de Usuario" />
+            <Label styleClass="label-Titulo-Principal" text="Registro de Usuario" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
                   <MFXTextField fx:id="txfJug1" floatingText="Jugador 1" prefHeight="49.0" prefWidth="140.0" />
@@ -34,7 +33,7 @@
                </children>
             </HBox>
             <MFXSlider fx:id="sldQty" prefHeight="3.0" prefWidth="91.0" />
-            <MFXButton fx:id="btnNext" onAction="#onActionBtnNext" text="Siguiente">
+            <MFXButton fx:id="btnNext" onAction="#onActionBtnNext" styleClass="jfx-mfx-btn-next" text="Siguiente">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
