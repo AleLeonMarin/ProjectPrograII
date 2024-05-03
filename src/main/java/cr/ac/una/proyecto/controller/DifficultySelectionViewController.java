@@ -2,14 +2,12 @@ package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import cr.ac.una.proyecto.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ToggleGroup;
 
 public class DifficultySelectionViewController extends Controller implements Initializable {
 
