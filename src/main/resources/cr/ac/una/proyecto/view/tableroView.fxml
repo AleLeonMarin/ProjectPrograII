@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.TableroController">
    <children>
-      <Pane fx:id="tablero" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <Pane BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="ruleta" fitHeight="484.0" fitWidth="508.0" layoutX="345.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/ruleta.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="picker" fitHeight="355.0" fitWidth="345.0" layoutX="415.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/picker.png" />
+                     </image>
+                  </ImageView>
+                  <HBox layoutX="471.0" layoutY="650.0">
+                     <children>
+                        <Button fx:id="btnGirar" mnemonicParsing="false" onAction="#btnGirarOnAction" prefHeight="60.0" prefWidth="116.0" text="Girar" />
+                        <Button fx:id="btnReset" layoutX="159.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="60.0" prefWidth="116.0" text="Reset" />
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

@@ -1,34 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 import java.util.ResourceBundle;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
  *
- * @author justi
+ * @author Justin Mendez y Alejandro Leon
  */
 public class TableroController extends Controller implements Initializable {
 
-    @FXML
     private Pane tablero;
     private static final int RADIO_TABLERO = 400; // Radio del tablero circular
+    @FXML
+    private ImageView ruleta;
+    @FXML
+    private ImageView picker;
+    @FXML
+    private Button btnGirar;
+    @FXML
+    private Button btnReset;
 
-    /**
-     * Initializes the controller class.
-     */
+    private RotateTransition rotate;
+    private ArrayList<String> opciones = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Entretenimiento", "Ciencia", "Historia"));
+    private double anguloInicial = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -36,52 +45,93 @@ public class TableroController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        int numeroJugadores = 1;
-        tablero.setPrefSize(RADIO_TABLERO
-                * 2, RADIO_TABLERO * 2);
-        double anguloSeparacion = 360.0 / numeroJugadores;
-
-        crearTablero(anguloSeparacion, numeroJugadores);
 
     }
 
-    private void crearTablero(double anguloSeparacion, int numeroJugadores) {
-        for (int i = 0; i < numeroJugadores; i++)
+    @FXML
+    private void btnGirarOnAction(ActionEvent event) {
+        if (rotate != null)
         {
-            double anguloInicio = i * anguloSeparacion;
-            double anguloFin = anguloInicio + anguloSeparacion;
-            Arc celda = new Arc(RADIO_TABLERO, RADIO_TABLERO, RADIO_TABLERO, RADIO_TABLERO, anguloInicio, anguloSeparacion); // Tamaño y ubicación del arco
-            celda.setType(ArcType.ROUND); // Tipo de arco (redondeado)
-            celda.setFill(Color.WHITE); // Color de fondo del arco
-            celda.setStroke(Color.BLACK); // Color del borde del arco
-            celda.setStrokeWidth(2); // Grosor del borde del arco
-            celda.setId("celda_" + i); // Asignar un ID a cada arco
-
-            // Cargar una imagen
-            Image imagen = new Image("file:src/main/resources/cr/ac/una/proyecto/resources/baseT.png");
-
-            ImageView imageView = new ImageView(imagen);
-
-            // Calcular el ancho y alto de la imagen para que coincida con el arco
-            double radioX = RADIO_TABLERO * Math.cos(Math.toRadians(anguloSeparacion / 2));
-            double radioY = RADIO_TABLERO * Math.sin(Math.toRadians(anguloSeparacion / 2));
-            double anchoImagen = 2 * Math.sqrt(Math.pow(radioX, 2) + Math.pow(radioY, 2));
-            double altoImagen = imageView.getFitHeight();
-
-            // Establecer el tamaño de la imagen
-            imageView.setFitWidth(anchoImagen);
-            imageView.setFitHeight(altoImagen);
-
-            // Rotar la imagen para que se alinee con el arco
-            imageView.setRotate(anguloInicio + anguloSeparacion / 2);
-
-            // Calcular la posición del ImageView para que se superponga al arco
-            double x = RADIO_TABLERO - anchoImagen / 2;
-            double y = RADIO_TABLERO - altoImagen / 2;
-            imageView.setLayoutX(x);
-            imageView.setLayoutY(y);
-            tablero.getChildren().addAll(celda, imageView);
+            rotate.stop();
         }
+        rotate = new RotateTransition();
+        rotate.setNode(ruleta);
+        ruleta.setRotate(anguloInicial);
+
+        rotate.setDuration(Duration.millis(3));
+        rotate.setInterpolator(Interpolator.EASE_BOTH);
+
+        double nuevoAnguloDetenido = generarAnguloAleatorio();
+
+        rotate.setByAngle(360 * 6 + nuevoAnguloDetenido);
+        rotate.setAxis(Rotate.Z_AXIS);
+        rotate.setOnFinished(e -> determinarPosicionRuleta(nuevoAnguloDetenido));
+        rotate.play();
+
+    }
+
+    private int generarAnguloAleatorio() {//se cambio de double a int por 
+        Random random = new Random();
+        return random.nextInt(360);
+    }
+
+    private void determinarPosicionRuleta(double anguloDetenido) {
+        double inicio = 0;
+
+        double cienciaInicio = 29;
+        double cienciaFin = 80;
+
+        double geografiaInicio = 81;
+        double geografiaFin = 134;
+
+        double coronaInicio = 135;
+        double coronaFin = 183;
+
+        double entretenimientoInicio = 184;
+        double entretenimientoFin = 233;
+
+        double arteInicio = 234;
+        double arteFin = 284;
+
+        double deporteInicio = 285;
+        double deporteFin = 336;
+
+        double historiaInicio = 337;
+        double historiaFin = 29;
+
+        double finalGrados = 360;
+
+        String categoria = "Angulo no encontrado" + String.valueOf(anguloDetenido);
+
+        if (anguloDetenido >= deporteInicio && anguloDetenido <= deporteFin)
+        {
+            categoria = "Deporte";
+        } else if (anguloDetenido >= arteInicio && anguloDetenido <= arteFin)
+        {
+            categoria = "Arte";
+        } else if (anguloDetenido >= geografiaInicio && anguloDetenido <= geografiaFin)
+        {
+            categoria = "Geografía";
+        } else if (anguloDetenido >= cienciaInicio && anguloDetenido <= cienciaFin)
+        {
+            categoria = "Ciencia";
+        } else if (anguloDetenido >= coronaInicio && anguloDetenido <= coronaFin)
+        {
+            categoria = "Corona";
+        } else if (anguloDetenido >= entretenimientoInicio && anguloDetenido <= entretenimientoFin)
+        {
+            categoria = "Entretenimiento";
+        } else if ((anguloDetenido >= historiaInicio && anguloDetenido <= finalGrados) || (anguloDetenido >= inicio && anguloDetenido <= historiaFin))
+        {
+            categoria = "Historia";
+        }
+
+        System.out.println("La ruleta se detuvo en la categoría de: " + categoria + "Angulo: " + String.valueOf(anguloDetenido));
+    }
+
+    @FXML
+    private void btnResetOnAction(ActionEvent event) {
+        ruleta.setRotate(anguloInicial);
     }
 
 }

@@ -17,7 +17,7 @@ public class App extends Application {
 
         FlowController.getInstance().InitializeFlow(stage, null);
         stage.setTitle("Preguntados Jr");
-        FlowController.getInstance().goViewInWindow("DevLogIn");
+        FlowController.getInstance().goViewInWindow("tableroView");
         
     }
 
