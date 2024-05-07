@@ -231,3 +231,53 @@
 .jfx-mfx-btn-next > ImageView {
     -fx-image: url("../resources/next.png");
 }
+
+/*************
+    Tableros
+*************/
+
+.tablero-2-jugadores{
+
+    -fx-background-image: url("../resources/Tableros2jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-3-jugadores{
+
+    -fx-background-image: url("../resources/Tablero3jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-4-jugadores{
+
+    -fx-background-image: url("../resources/Tablero4jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-5-jugadores{
+
+    -fx-background-image: url("../resources/Tablero5jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-6-jugadores{
+
+    -fx-background-image: url("../resources/Tablero6jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-mfx-button-picker , .jfx-mfx-button-picker:armed , .jfx-mfx-button-picker:focused{
+    -fx-background-color: TRASNPARENT;
+}
+
+.jfx-mfx-button-picker > ImageView {-fx-image: url("../resources/picker.png");}

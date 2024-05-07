@@ -16,22 +16,27 @@
          <center>
             <Pane BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="ruleta" fitHeight="484.0" fitWidth="508.0" layoutX="498.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="823.0" fitWidth="1219.0" layoutX="197.0" layoutY="35.0" pickOnBounds="true" smooth="false">
+                     <image>
+                        <Image url="@../resources/Tablero_2_jugadores-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="ruleta" fitHeight="486.0" fitWidth="614.0" layoutX="529.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/ruleta.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="picker" fitHeight="355.0" fitWidth="345.0" layoutX="560.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/picker.png" />
-                     </image>
-                  </ImageView>
-                  <HBox layoutX="642.0" layoutY="650.0">
+                  <HBox layoutX="910.0" layoutY="802.0" prefHeight="84.0" prefWidth="228.0">
                      <children>
                         <Button fx:id="btnGirar" mnemonicParsing="false" onAction="#btnGirarOnAction" prefHeight="60.0" prefWidth="116.0" text="Girar" />
                         <Button fx:id="btnReset" layoutX="159.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="60.0" prefWidth="116.0" text="Reset" />
                      </children>
                   </HBox>
+                  <ImageView fx:id="picker" fitHeight="393.0" fitWidth="403.0" layoutX="572.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/picker.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
          </center>

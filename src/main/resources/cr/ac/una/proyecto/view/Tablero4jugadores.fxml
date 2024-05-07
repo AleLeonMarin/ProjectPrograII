@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="817.0" styleClass="tablero-4-jugadores" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.Tablero4Jugadores">
+   <children>
+      <ImageView fx:id="ruleta" fitHeight="332.0" fitWidth="404.0" layoutX="207.0" layoutY="128.0" pickOnBounds="true">
+         <image>
+            <Image url="@../resources/ruleta.png" />
+         </image>
+      </ImageView>
+      <MFXButton fx:id="btnPicker" ellipsisString="" layoutX="321.0" layoutY="212.0" onAction="#onActionBtnPicker" prefHeight="164.0" prefWidth="157.0" styleClass="jfx-mfx-button-picker">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </MFXButton>
+   </children>
+</AnchorPane>
