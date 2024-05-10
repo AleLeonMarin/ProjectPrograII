@@ -14,6 +14,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.VBox;
 
 public class PawnSectorSelectionController extends Controller implements Initializable {
 
@@ -47,6 +48,18 @@ public class PawnSectorSelectionController extends Controller implements Initial
     private ImageView imgPeon6;
     @FXML
     private ImageView imgMorado;
+    @FXML
+    private VBox vboxPlayer1;
+    @FXML
+    private VBox vboxPlayer2;
+    @FXML
+    private VBox vboxPlayer3;
+    @FXML
+    private VBox vboxPlayer4;
+    @FXML
+    private VBox vboxPlayer5;
+    @FXML
+    private VBox vboxPlayer6;
 
     @Override
     public void initialize() {
@@ -67,6 +80,8 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
         Image imagenPeonAmarrilo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
         imgAmarrillo.setImage(imagenPeonAmarrilo);
+        habilitarCampos(false);
+        cantidadJugadores(3);//manejar cantidad de jugadores desde appcontext o algo
     }
 
     @Override
@@ -74,13 +89,45 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
     }
 
-    // Método genérico para iniciar el evento de arrastre
     private void startDrag(MouseEvent event, ImageView imageView) {
         Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
         ClipboardContent content = new ClipboardContent();
         content.putImage(imageView.getImage());
         dragboard.setContent(content);
         event.consume();
+    }
+
+    private void cantidadJugadores(int cantJug) {
+        if (cantJug > 2) {
+            if (cantJug == 3) {
+                this.vboxPlayer3.setDisable(false);
+                this.vboxPlayer3.setVisible(true);
+            } else if (cantJug == 4) {
+                this.vboxPlayer3.setDisable(false);
+                this.vboxPlayer3.setVisible(true);
+                this.vboxPlayer4.setDisable(false);
+                this.vboxPlayer4.setVisible(true);
+            } else if (cantJug == 5) {
+                habilitarCampos(true);
+                this.vboxPlayer6.setDisable(false);
+                this.vboxPlayer6.setVisible(true);
+
+            } else {
+                habilitarCampos(true);
+            }
+        }
+
+    }
+
+    private void habilitarCampos(Boolean estado) {
+        this.vboxPlayer3.setDisable(!estado);
+        this.vboxPlayer3.setVisible(estado);
+        this.vboxPlayer4.setDisable(!estado);
+        this.vboxPlayer4.setVisible(estado);
+        this.vboxPlayer5.setDisable(!estado);
+        this.vboxPlayer5.setVisible(estado);
+        this.vboxPlayer6.setDisable(!estado);
+        this.vboxPlayer6.setVisible(estado);
     }
 
     private void dragOver(DragEvent event) {
