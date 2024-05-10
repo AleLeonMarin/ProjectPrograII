@@ -41,7 +41,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     @FXML
     void onActionBtnNext(ActionEvent event) {
 
-        FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+        FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
         ((Stage) btnNext.getScene().getWindow()).close();
 
     }

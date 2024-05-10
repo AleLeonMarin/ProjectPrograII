@@ -17,8 +17,8 @@ public class App extends Application {
 
         FlowController.getInstance().InitializeFlow(stage, null);
         stage.setTitle("Preguntados Jr");
-        FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
-        
+        FlowController.getInstance().goViewInWindow("Tablero2jugadores");
+
     }
 
     public static void main(String[] args) {

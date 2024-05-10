@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -65,5 +66,6 @@
             <Label text="Peones Jugadores" />
          </children>
       </VBox>
+      <Button layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#Siguiente" text="Siguiente" />
    </children>
 </AnchorPane>

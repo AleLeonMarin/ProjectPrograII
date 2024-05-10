@@ -4,8 +4,7 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +14,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
+import cr.ac.una.proyecto.util.FlowController;
 
 public class PawnSectorSelectionController extends Controller implements Initializable {
 
@@ -80,6 +80,7 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
         Image imagenPeonAmarrilo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
         imgAmarrillo.setImage(imagenPeonAmarrilo);
+        
         habilitarCampos(false);
         cantidadJugadores(3);//manejar cantidad de jugadores desde appcontext o algo
     }
@@ -98,21 +99,26 @@ public class PawnSectorSelectionController extends Controller implements Initial
     }
 
     private void cantidadJugadores(int cantJug) {
-        if (cantJug > 2) {
-            if (cantJug == 3) {
+        if (cantJug > 2)
+        {
+            if (cantJug == 3)
+            {
                 this.vboxPlayer3.setDisable(false);
                 this.vboxPlayer3.setVisible(true);
-            } else if (cantJug == 4) {
+            } else if (cantJug == 4)
+            {
                 this.vboxPlayer3.setDisable(false);
                 this.vboxPlayer3.setVisible(true);
                 this.vboxPlayer4.setDisable(false);
                 this.vboxPlayer4.setVisible(true);
-            } else if (cantJug == 5) {
+            } else if (cantJug == 5)
+            {
                 habilitarCampos(true);
                 this.vboxPlayer6.setDisable(false);
                 this.vboxPlayer6.setVisible(true);
 
-            } else {
+            } else
+            {
                 habilitarCampos(true);
             }
         }
@@ -131,7 +137,8 @@ public class PawnSectorSelectionController extends Controller implements Initial
     }
 
     private void dragOver(DragEvent event) {
-        if (event.getGestureSource() != event.getTarget() && event.getDragboard().hasImage()) {
+        if (event.getGestureSource() != event.getTarget() && event.getDragboard().hasImage())
+        {
             event.acceptTransferModes(TransferMode.MOVE);
         }
         event.consume();
@@ -140,10 +147,13 @@ public class PawnSectorSelectionController extends Controller implements Initial
     private void dragDropped(DragEvent event, ImageView imageView) {
         Dragboard dragboard = event.getDragboard();
         boolean dropCompleted = false;
-        if (dragboard.hasImage()) {
-            if (imageView.getImage() == null) {
+        if (dragboard.hasImage())
+        {
+            if (imageView.getImage() == null)
+            {
                 dropCompleted = handleEmptyImageView(imageView, dragboard.getImage(), event);
-            } else {
+            } else
+            {
                 dropCompleted = handleNonEmptyImageView(imageView, dragboard.getImage(), event);
             }
         }
@@ -173,20 +183,31 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
     private void devolverFotoPeon(Image image) {
 
-        if (imgAmarrillo.getImage() == null) {
+        if (imgAmarrillo.getImage() == null)
+        {
             imgAmarrillo.setImage(image);
-        } else if (imgAzul.getImage() == null) {
+        } else if (imgAzul.getImage() == null)
+        {
             imgAzul.setImage(image);
-        } else if (imgMorado.getImage() == null) {
+        } else if (imgMorado.getImage() == null)
+        {
             imgMorado.setImage(image);
-        } else if (imgRojo.getImage() == null) {
+        } else if (imgRojo.getImage() == null)
+        {
             imgRojo.setImage(image);
-        } else if (imgRosa.getImage() == null) {
+        } else if (imgRosa.getImage() == null)
+        {
             imgRosa.setImage(image);
-        } else if (imgVerde.getImage() == null) {
+        } else if (imgVerde.getImage() == null)
+        {
             imgVerde.setImage(image);
         }
 
+    }
+
+    @FXML
+    private void Siguiente(ActionEvent event) {
+        FlowController.getInstance().goViewInWindow("DifficultySelectionView");
     }
 
     @FXML
