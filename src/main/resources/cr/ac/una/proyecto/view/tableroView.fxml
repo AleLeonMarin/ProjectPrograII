@@ -14,13 +14,8 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <Pane BorderPane.alignment="CENTER">
+            <Pane prefHeight="726.0" prefWidth="1140.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="823.0" fitWidth="1219.0" layoutX="197.0" layoutY="35.0" pickOnBounds="true" smooth="false">
-                     <image>
-                        <Image url="@../resources/Tablero_2_jugadores-removebg-preview.png" />
-                     </image>
-                  </ImageView>
                   <ImageView fx:id="ruleta" fitHeight="486.0" fitWidth="614.0" layoutX="529.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/ruleta.png" />
@@ -29,10 +24,10 @@
                   <HBox layoutX="910.0" layoutY="802.0" prefHeight="84.0" prefWidth="228.0">
                      <children>
                         <Button fx:id="btnGirar" mnemonicParsing="false" onAction="#btnGirarOnAction" prefHeight="60.0" prefWidth="116.0" text="Girar" />
-                        <Button fx:id="btnReset" layoutX="159.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnResetOnAction" prefHeight="60.0" prefWidth="116.0" text="Reset" />
+                        <Button fx:id="btnReset" layoutX="159.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnResetOnAction" onDragDetected="#btnResetOnDragDetected" prefHeight="60.0" prefWidth="116.0" text="Reset" />
                      </children>
                   </HBox>
-                  <ImageView fx:id="picker" fitHeight="393.0" fitWidth="403.0" layoutX="572.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="picker" fitHeight="244.0" fitWidth="206.0" layoutX="669.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/picker.png" />
                      </image>

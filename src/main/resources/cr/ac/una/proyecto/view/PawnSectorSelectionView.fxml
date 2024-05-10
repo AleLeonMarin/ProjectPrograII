@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PawnSectorSelectionController">
+   <children>
+      <VBox alignment="CENTER" layoutX="119.0" layoutY="41.0">
+         <children>
+            <Label layoutX="143.0" layoutY="174.0" text="Peones Disponibles" />
+            <HBox alignment="CENTER" styleClass="contenedor-forms">
+               <children>
+                  <ImageView fx:id="imgAmarrillo" fitHeight="50.0" fitWidth="50.0" layoutX="424.0" layoutY="12.0" onDragDetected="#imgAmarrilloOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgAzul" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgAzulOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgMorado" fitHeight="50.0" fitWidth="50.0" layoutX="218.0" layoutY="12.0" onDragDetected="#imgMoradoOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgRojo" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgRojoOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgRosa" fitHeight="50.0" fitWidth="50.0" layoutX="12.0" layoutY="12.0" onDragDetected="#imgRosaOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgVerde" fitHeight="50.0" fitWidth="50.0" layoutX="630.0" layoutY="12.0" onDragDetected="#imgVerdeOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" styleClass="contenedor-forms">
+               <children>
+                  <ImageView fx:id="imgPeon1" fitHeight="50.0" fitWidth="50.0" layoutX="424.0" layoutY="12.0" onDragDetected="#imgPeon1OnDragDetected" onDragDropped="#imgPeon1OnDragDropped" onDragOver="#imgPeon1OnDragOver" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgPeon2" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon2OnDragDetected" onDragDropped="#imgPeon2OnDragDropped" onDragOver="#imgPeon2DragOver" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgPeon3" fitHeight="50.0" fitWidth="50.0" layoutX="218.0" layoutY="12.0" onDragDetected="#imgPeon3OnDragDetected" onDragDropped="#imgPeon3OnDragDropped" onDragOver="#imgPeon3DragOver" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgPeon4" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon4OnDragDetected" onDragDropped="#imgPeon4OnDragDropped" onDragOver="#imgPeon4OnDragOver" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgPeon5" fitHeight="50.0" fitWidth="50.0" layoutX="12.0" layoutY="12.0" onDragDetected="#imgPeon5OnDragDetected" onDragDropped="#imgPeon5OnDragDropped" onDragOver="#imgPeon5OnDragOver" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgPeon6" fitHeight="50.0" fitWidth="50.0" layoutX="630.0" layoutY="12.0" onDragDetected="#imgPeon6VerdeOnDragDetected" onDragDropped="#imgPeon6OnDragDropped" onDragOver="#imgPeon6DragOver" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <Label text="Peones Jugadores" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
