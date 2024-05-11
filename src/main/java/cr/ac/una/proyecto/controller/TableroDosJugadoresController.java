@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.model.Animacion;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,12 +14,11 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class TableroDosJugadoresController extends Controller implements Initializable {
-
-    @FXML
-    private MFXButton btnPicker;
 
     @FXML
     private ImageView ruleta;
@@ -28,7 +28,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private int playerOneCurrentPosition = 0;
 
     private int playerTwoPositionY = 0;
-    private int playerTwoPositionX = 2;
+    private int playerTwoPositionX = 3;
     private int playerTwoCurrentPosition = 0;
 
     private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
@@ -39,11 +39,10 @@ public class TableroDosJugadoresController extends Controller implements Initial
 
     private ImageView imageViewPeon1;
     private ImageView imageViewPeon2;
-
     @FXML
-    void onActionBtnPicker(ActionEvent event) {
-
-    }
+    private ImageView imvCarta;
+    @FXML
+    private ImageView imvPicker;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,6 +51,8 @@ public class TableroDosJugadoresController extends Controller implements Initial
 
     @Override
     public void initialize() {
+
+        imvCarta.setImage(new Image("file:///C:/Users/justi/Desktop/Netbeans/pruebasAnimacionImagen/src/main/resources/cr/ac/una/pruebasanimacionimagen/cara.png"));
         // Crear los ImageViews para las imágenes de los peones
         imageViewPeon1 = new ImageView();
         imageViewPeon2 = new ImageView();
@@ -114,6 +115,19 @@ public class TableroDosJugadoresController extends Controller implements Initial
     @FXML
     private void moverPeonSegundoOnAction(ActionEvent event) {
         playerTwoCurrentPosition = evaluarPos(playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, imageViewPeon2);
+    }
+
+    @FXML
+    private void moverTarjeta(MouseEvent event) {
+        Animacion animacion = new Animacion();
+        Stage stage = (Stage) imvCarta.getScene().getWindow();
+        animacion.saltoTarjeta(imvCarta, stage);
+    }
+
+    @FXML
+    private void OnMouseClickedPicker(MouseEvent event) {
+        Animacion animacion = new Animacion();
+        animacion.animacionRuleta(ruleta); // Donde 'ruleta' es la instancia de la ImageView de la ruleta en tu controlador
 
     }
 
