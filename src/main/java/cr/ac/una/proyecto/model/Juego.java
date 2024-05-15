@@ -23,6 +23,7 @@ public class Juego {
         preguntas = new ArrayList<>();
         scanner = new Scanner(System.in);
         turnoActual = 0;
+        cargarPreguntas();
     }
 
     public void agregarJugador(Jugador jugador) {
@@ -84,5 +85,23 @@ public class Juego {
                 break;
             }
         }
+    }
+
+    public void obtenerInfoJugadores() {
+        System.out.println("Informacion clase juego jugadores: ");
+        for (Jugador jugador : jugadores)
+        {
+            System.out.println(jugador.toString());
+        }
+    }
+
+    private void cargarPreguntas() {
+        agregarPregunta(new Pregunta("¿Cuál es la capital de Francia?", "Paris"));
+        agregarPregunta(new Pregunta("¿Cuál es el río más largo del mundo?", "Amazonas"));
+        agregarPregunta(new Pregunta("¿En qué año llegó el hombre a la luna por primera vez?", "1969"));
+        agregarPregunta(new Pregunta("¿Quién pintó la Mona Lisa?", "Leonardo da Vinci"));
+        agregarPregunta(new Pregunta("¿Cuál es el símbolo químico del agua?", "H2O"));
+        agregarPregunta(new Pregunta("¿Cuál es la montaña más alta del mundo?", "Everest"));
+
     }
 }

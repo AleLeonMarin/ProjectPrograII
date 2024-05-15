@@ -66,6 +66,6 @@
             <Label text="Peones Jugadores" />
          </children>
       </VBox>
-      <Button layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#Siguiente" text="Siguiente" />
+      <Button fx:id="btnSiguiente" layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#Siguiente" text="Siguiente" />
    </children>
 </AnchorPane>

@@ -2,10 +2,12 @@ package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Animacion;
 import cr.ac.una.proyecto.model.Juego;
+import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -84,6 +86,8 @@ public class TableroDosJugadoresController extends Controller implements Initial
         GridPane.setHalignment(imageViewJugador2, HPos.CENTER);
         GridPane.setValignment(imageViewJugador2, VPos.CENTER);
         juego = new Juego();
+        cargarJuegoJugadores();
+        juego.iniciarJuego();
     }
 
     private int evaluarPos(int posFija, int posInicial, int posActual, ImageView imageView) {
@@ -131,6 +135,20 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private void OnMouseClickedPicker(MouseEvent event) {
         Animacion animacion = new Animacion();
         animacion.animacionRuleta(ruleta); // Donde 'ruleta' es la instancia de la ImageView de la ruleta en tu controlador
+
+    }
+
+    private void cargarJuegoJugadores() {
+        ArrayList<Jugador> jugadores = (ArrayList<Jugador>) AppContext.getInstance().get("jugadores");
+
+        for (Jugador jugadorAux : jugadores)
+        {
+            juego.agregarJugador(jugadorAux);
+        }
+
+        juego.agregarJugador(new Jugador("Juanchis"));
+
+        juego.obtenerInfoJugadores();
 
     }
 

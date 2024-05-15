@@ -28,4 +28,10 @@ public class Jugador {
     public void moverPosicion() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Jugador: " + nombre + ", Puntos: " + puntos;
+    }
+
 }

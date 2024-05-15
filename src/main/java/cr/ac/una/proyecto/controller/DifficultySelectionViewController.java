@@ -8,6 +8,7 @@ import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
 public class DifficultySelectionViewController extends Controller implements Initializable {
 
@@ -29,6 +30,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
     @FXML
     void onActionBtnPlay(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("Tablero2jugadores");
+        ((Stage) btnPlay.getScene().getWindow()).close();
 
     }
 
@@ -41,39 +43,45 @@ public class DifficultySelectionViewController extends Controller implements Ini
     @Override
     public void initialize() {
 
-        ckbEasy.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-            if (isNowSelected) {
+        ckbEasy.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+        {
+            if (isNowSelected)
+            {
                 ckbMedium.setSelected(false);
                 ckbHard.setSelected(false);
                 ckbDuel.setSelected(false);
             }
         });
 
-        ckbMedium.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-            if (isNowSelected) {
+        ckbMedium.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+        {
+            if (isNowSelected)
+            {
                 ckbEasy.setSelected(false);
                 ckbHard.setSelected(false);
                 ckbDuel.setSelected(false);
             }
         });
 
-        ckbHard.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-            if (isNowSelected) {
+        ckbHard.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+        {
+            if (isNowSelected)
+            {
                 ckbEasy.setSelected(false);
                 ckbMedium.setSelected(false);
                 ckbDuel.setSelected(false);
             }
         });
 
-        ckbDuel.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-            if (isNowSelected) {
+        ckbDuel.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+        {
+            if (isNowSelected)
+            {
                 ckbEasy.setSelected(false);
                 ckbMedium.setSelected(false);
                 ckbHard.setSelected(false);
             }
         });
     }
-
-
 
 }

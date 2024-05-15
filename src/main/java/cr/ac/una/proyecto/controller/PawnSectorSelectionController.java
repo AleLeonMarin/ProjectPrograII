@@ -16,6 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import cr.ac.una.proyecto.util.FlowController;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class PawnSectorSelectionController extends Controller implements Initializable {
 
@@ -62,7 +64,9 @@ public class PawnSectorSelectionController extends Controller implements Initial
     @FXML
     private VBox vboxPlayer6;
 
-    private int cantJugadores=12;
+    private int cantJugadores = 12;
+    @FXML
+    private Button btnSiguiente;
 
     @Override
     public void initialize() {
@@ -217,6 +221,7 @@ public class PawnSectorSelectionController extends Controller implements Initial
     @FXML
     private void Siguiente(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+        ((Stage) btnSiguiente.getScene().getWindow()).close();
     }
 
     @FXML
