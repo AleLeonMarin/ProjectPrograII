@@ -28,7 +28,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-        FlowController.getInstance().goViewInWindow("TableroView");
+        FlowController.getInstance().goViewInWindow("Tablero2jugadores");
 
     }
 

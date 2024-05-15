@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.util.AppContext;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -61,6 +62,8 @@ public class PawnSectorSelectionController extends Controller implements Initial
     @FXML
     private VBox vboxPlayer6;
 
+    private int cantJugadores=12;
+
     @Override
     public void initialize() {
         Image imagenPeonRosa = new Image(getClass().getResourceAsStream(rutaPeonRosa));
@@ -80,9 +83,15 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
         Image imagenPeonAmarrilo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
         imgAmarrillo.setImage(imagenPeonAmarrilo);
-        
+
         habilitarCampos(false);
-        cantidadJugadores(3);//manejar cantidad de jugadores desde appcontext o algo
+        cargarSliderCantJug();
+        cantidadJugadores(cantJugadores);//manejar cantidad de jugadores desde appcontext o algo
+    }
+
+    private void cargarSliderCantJug() {
+        cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
+        System.out.println("Cantida de jugadoresEnPawnSelecion: " + cantJugadores);
     }
 
     @Override
