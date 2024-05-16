@@ -3,6 +3,7 @@ package cr.ac.una.proyecto.controller;
 import cr.ac.una.proyecto.model.Animacion;
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,6 +36,8 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private int playerTwoCurrentPosition = 0;
 
     private Juego juego;
+    private Sector sector1;
+    private Sector sector2;
 
     private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
     private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";
@@ -56,6 +59,9 @@ public class TableroDosJugadoresController extends Controller implements Initial
 
     @Override
     public void initialize() {
+
+        sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, rutaPeonRojo);
+        sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, rutaPeonVerde);
 
         imvCarta.setImage(new Image("file:///C:/Users/justi/Desktop/Netbeans/pruebasAnimacionImagen/src/main/resources/cr/ac/una/pruebasanimacionimagen/cara.png"));
         // Crear los ImageViews para las imágenes de los peones
@@ -85,43 +91,48 @@ public class TableroDosJugadoresController extends Controller implements Initial
         GridPane.setValignment(imageViewJugador1, VPos.CENTER);
         GridPane.setHalignment(imageViewJugador2, HPos.CENTER);
         GridPane.setValignment(imageViewJugador2, VPos.CENTER);
-        juego = new Juego();
-        cargarJuegoJugadores();
-        juego.iniciarJuego();
+//        juego = new Juego();
+//        cargarJuegoJugadores();
+//        juego.iniciarJuego();
     }
 
-    private int evaluarPos(int posFija, int posInicial, int posActual, ImageView imageView) {
-
-        eliminarNodoEnPosicion(posActual, posFija);
-
-        if (posActual >= posInicial + 3)
-        {
-            posActual = posInicial;
-        } else
-        {
-            posActual++;
-        }
-
-        grdpTablero.add(imageView, posActual, posFija);
-        GridPane.setHalignment(imageView, HPos.CENTER);
-        return posActual;
-    }
-
-    private void eliminarNodoEnPosicion(int columna, int fila) {
-        ObservableList<Node> children = grdpTablero.getChildren();
-        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
-    }
-
+//    private int evaluarPos(int posFija, int posInicial, int posActual, ImageView imageView) {
+//
+//        eliminarNodoEnPosicion(posActual, posFija);
+//
+//        if (posActual >= posInicial + 3)
+//        {
+//            posActual = posInicial;
+//        } else
+//        {
+//            posActual++;
+//        }
+//
+//        grdpTablero.add(imageView, posActual, posFija);
+//        GridPane.setHalignment(imageView, HPos.CENTER);
+//        return posActual;
+//    }
+//
+//    private void eliminarNodoEnPosicion(int columna, int fila) {
+//        ObservableList<Node> children = grdpTablero.getChildren();
+//        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
+//    }
     @FXML
     private void moverPeonPrimeroOnAction(ActionEvent event) {
-        System.out.println("PosicionX  = " + playerOnePositionX);
-        System.out.println("PosicionActual  = " + playerOneCurrentPosition);
-        playerOneCurrentPosition = evaluarPos(playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, imageViewJugador1);
+        System.out.println("Jug1");
+        System.out.println("PosicionX  = " + sector1.getPosicionFija());
+        System.out.println("PosicionActual  = " + sector1.getPosActual());
+        //  playerOneCurrentPosition = evaluarPos(playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, imageViewJugador1);
+        sector1.setPosActual(sector1.evaluarPos(imageViewJugador1, grdpTablero));
     }
 
     @FXML
     private void moverPeonSegundoOnAction(ActionEvent event) {
-        playerTwoCurrentPosition = evaluarPos(playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, imageViewJugador2);
+        System.out.println("Jug2");
+        System.out.println("PosicionX  = " + sector2.getPosicionFija());
+        System.out.println("PosicionActual  = " + sector2.getPosActual());
+        //playerTwoCurrentPosition = evaluarPos(playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, imageViewJugador2);
+        sector2.setPosActual(sector2.evaluarPos(imageViewJugador2, grdpTablero));
     }
 
     @FXML
