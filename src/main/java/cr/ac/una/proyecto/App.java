@@ -22,7 +22,7 @@ public class App extends Application {
         registros();
         FlowController.getInstance().InitializeFlow(stage, null);
         stage.setTitle("Preguntados Jr");
-        FlowController.getInstance().goViewInWindow("Tablero2jugadores");
+        FlowController.getInstance().goViewInWindow("DevLogIn");
 
     }
 

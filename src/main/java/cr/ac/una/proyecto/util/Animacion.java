@@ -1,4 +1,4 @@
-package cr.ac.una.proyecto.model;
+package cr.ac.una.proyecto.util;
 
 import javafx.animation.*;
 import javafx.scene.image.Image;

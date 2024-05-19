@@ -1,9 +1,9 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.model.Animacion;
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
