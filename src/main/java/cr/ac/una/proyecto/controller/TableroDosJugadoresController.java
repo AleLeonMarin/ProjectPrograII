@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.Animacion;
@@ -10,8 +11,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -38,60 +37,46 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private Animacion animacion;
 
     private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
-    private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";
+    private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";//rutas peones se deben cargar segun appcontext y ejir pj
+
     private String rutaImagen = "/cr/ac/una/proyecto/resources/HistoriaC.png";
 
     @FXML
     private GridPane grdpTablero;
 
-    private ImageView imageViewJugador1;
-    private ImageView imageViewJugador2;
     @FXML
     private ImageView imvCarta;
     @FXML
     private ImageView imvPicker;
+
+    private Juego juego;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    @Override
-    public void initialize() {
+    private void cargarDatos() {
 
         sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
         sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonVerde);
         ruleta = new Ruleta();
         animacion = new Animacion();
+    }
 
-        imvCarta.setImage(new Image(getClass().getResourceAsStream(rutaImagen)));
-        // Crear los ImageViews para las imágenes de los peones
-        imageViewJugador1 = new ImageView();
-        imageViewJugador2 = new ImageView();
+    private void cargarDatosImagenes() {
+        imvCarta.setImage(new Image(getClass().getResourceAsStream(rutaPeonVerde)));
+    }
 
-        // Cargar las imágenes desde las rutas
-        Image imagenPeonRojo = new Image(getClass().getResourceAsStream(rutaPeonRojo));
-        Image imagenPeonVerde = new Image(getClass().getResourceAsStream(rutaPeonVerde));
+    @Override
+    public void initialize() {
 
-        // Establecer el tamaño de las imágenes a 100px
-        imageViewJugador1.setFitWidth(100);
-        imageViewJugador1.setFitHeight(100);
-        imageViewJugador2.setFitWidth(100);
-        imageViewJugador2.setFitHeight(100);
-
-        // Establecer las imágenes en los ImageViews
-        imageViewJugador1.setImage(imagenPeonRojo);
-        imageViewJugador2.setImage(imagenPeonVerde);
-
-        // Agregar los ImageViews al GridPane en las posiciones especificadas y centrarlos
-        grdpTablero.add(imageViewJugador1, playerOnePositionY, playerOnePositionX);
-        grdpTablero.add(imageViewJugador2, playerTwoPositionY, playerTwoPositionX);
-
-        // Centrar los elementos dentro de las celdas del GridPane
-        GridPane.setHalignment(imageViewJugador1, HPos.CENTER);
-        GridPane.setValignment(imageViewJugador1, VPos.CENTER);
-        GridPane.setHalignment(imageViewJugador2, HPos.CENTER);
-        GridPane.setValignment(imageViewJugador2, VPos.CENTER);
+        cargarDatos();
+        cargarDatosImagenes();
+        juego = new Juego();
+        juego.agregarSector(sector1);
+        juego.agregarSector(sector2);
+        juego.datosImagenes(grdpTablero);
     }
 
     @FXML
@@ -99,8 +84,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
         System.out.println("Jug1");
         System.out.println("PosicionX  = " + sector1.getPosicionFija());
         System.out.println("PosicionActual  = " + sector1.getPosActual());
-
-        sector1.setPosActual(sector1.mover(imageViewJugador1, grdpTablero));
+        //  sector1.setPosActual(sector1.mover(imageViewJugador1, grdpTablero));
 
     }
 
@@ -109,7 +93,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
         System.out.println("Jug2");
         System.out.println("PosicionX  = " + sector2.getPosicionFija());
         System.out.println("PosicionActual  = " + sector2.getPosActual());
-        sector2.setPosActual(sector2.mover(imageViewJugador2, grdpTablero));
+        //  sector2.setPosActual(sector2.mover(imageViewJugador2, grdpTablero));
     }
 
     @FXML
@@ -131,6 +115,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
         Runnable onFinish = () ->
         {
             System.out.println("La animación de la ruleta ha terminado en: " + categoria + ", Angulo: " + anguloDetenido);
+            juego.jugar(grdpTablero);
             // Aquí puedes realizar cualquier acción adicional que desees
         };
 

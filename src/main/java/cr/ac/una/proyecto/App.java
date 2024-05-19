@@ -15,6 +15,7 @@ public class App extends Application {
 
     ArrayList<Jugador> jugadores;
     ArrayList<ImageView> imagenesJugadores;
+
     @Override
     public void start(Stage stage) throws IOException {
         registros();
@@ -31,7 +32,7 @@ public class App extends Application {
     private void registros() {
         AppContext.getInstance().set("jugadores", jugadores);
         AppContext.getInstance().set("iconPlayers", imagenesJugadores);
-       
+
     }
 
 }

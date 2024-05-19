@@ -51,15 +51,13 @@ public class Animacion {
     }
 
     public void animacionRuleta(ImageView ruletaImageView, double anguloFinal, Runnable onFinish) {
+
         RotateTransition rotate = new RotateTransition();
         rotate.setNode(ruletaImageView);
         ruletaImageView.setRotate(0);
 
         rotate.setDuration(Duration.seconds(3));
         rotate.setInterpolator(Interpolator.EASE_BOTH);
-
-        Ruleta ruletaLogic = new Ruleta(); // Instancia de la clase Ruleta para generar el ángulo aleatorio
-
         rotate.setByAngle(360 * 10 + anguloFinal);
         rotate.setAxis(Rotate.Z_AXIS);
 
