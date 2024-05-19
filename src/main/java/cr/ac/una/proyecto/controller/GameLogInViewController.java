@@ -8,7 +8,6 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class GameLogInViewController extends Controller implements Initializable{

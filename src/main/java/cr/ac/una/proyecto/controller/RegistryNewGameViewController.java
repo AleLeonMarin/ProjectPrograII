@@ -79,9 +79,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
         sldQty.valueProperty().addListener((obs, oldValue, newValue) ->
         {
             int value = newValue.intValue();
-
-            // Habilitar y mostrar los campos de texto de jugadores adicionales según el
-            // valor del slider
             txfJug3.setDisable(value < 3);
             txfJug4.setDisable(value < 4);
             txfJug5.setDisable(value < 5);
@@ -174,7 +171,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
     }
 
     private void funcionAppContext() {
-        System.out.println("Cantidad de juagadores en el slider : " + cantJugadores);
         AppContext.getInstance().set("cantJugadoresSlider", cantJugadores);
         FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
         ((Stage) btnNext.getScene().getWindow()).close();

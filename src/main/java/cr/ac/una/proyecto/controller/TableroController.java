@@ -1,5 +1,7 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.util.AppContext;
+import cr.ac.una.proyecto.util.FlowController;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +57,11 @@ public class TableroController extends Controller implements Initializable {
     @Override
     public void initialize() {
 
+      //  int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
+
+       // System.out.println("AppContextInfoSlider: " + contextSlider);
+        //  FlowController.getInstance().goView("Tablero2jugadores");
+
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -68,7 +75,6 @@ public class TableroController extends Controller implements Initializable {
         timeline.play();
 
     }
-
 
     @FXML
     private void btnResetOnDragDetected(MouseEvent event) {

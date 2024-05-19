@@ -1,21 +1,17 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.Animacion;
-import cr.ac.una.proyecto.util.AppContext;
+import cr.ac.una.proyecto.util.Ruleta;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import java.util.ArrayList;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,7 +21,7 @@ import javafx.stage.Stage;
 public class TableroDosJugadoresController extends Controller implements Initializable {
 
     @FXML
-    private ImageView ruleta;
+    private ImageView imvRuleta;
 
     private int playerOnePositionY = 0;
     private int playerOnePositionX = 0;
@@ -35,12 +31,15 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private int playerTwoPositionX = 3;
     private int playerTwoCurrentPosition = 3;
 
-    private Juego juego;
     private Sector sector1;
     private Sector sector2;
+    private String resultadoRuleta;
+    private Ruleta ruleta;
+    private Animacion animacion;
 
     private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
     private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";
+    private String rutaImagen = "/cr/ac/una/proyecto/resources/HistoriaC.png";
 
     @FXML
     private GridPane grdpTablero;
@@ -62,8 +61,10 @@ public class TableroDosJugadoresController extends Controller implements Initial
 
         sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
         sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonVerde);
+        ruleta = new Ruleta();
+        animacion = new Animacion();
 
-        imvCarta.setImage(new Image("file:///C:/Users/justi/Desktop/Netbeans/pruebasAnimacionImagen/src/main/resources/cr/ac/una/pruebasanimacionimagen/cara.png"));
+        imvCarta.setImage(new Image(getClass().getResourceAsStream(rutaImagen)));
         // Crear los ImageViews para las imágenes de los peones
         imageViewJugador1 = new ImageView();
         imageViewJugador2 = new ImageView();
@@ -91,8 +92,6 @@ public class TableroDosJugadoresController extends Controller implements Initial
         GridPane.setValignment(imageViewJugador1, VPos.CENTER);
         GridPane.setHalignment(imageViewJugador2, HPos.CENTER);
         GridPane.setValignment(imageViewJugador2, VPos.CENTER);
-        juego = new Juego();
-        cargarJuegoJugadores();
     }
 
     @FXML
@@ -102,7 +101,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
         System.out.println("PosicionActual  = " + sector1.getPosActual());
 
         sector1.setPosActual(sector1.mover(imageViewJugador1, grdpTablero));
-       // juego.iniciarJuego();
+
     }
 
     @FXML
@@ -122,24 +121,22 @@ public class TableroDosJugadoresController extends Controller implements Initial
 
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
-        Animacion animacion = new Animacion();
-        animacion.animacionRuleta(ruleta); // Donde 'ruleta' es la instancia de la ImageView de la ruleta en tu controlador
-
+        moverRuleta();
     }
 
-    private void cargarJuegoJugadores() {
-//        ArrayList<Jugador> jugadores = (ArrayList<Jugador>) AppContext.getInstance().get("jugadores");
-//
-//        for (Jugador jugadorAux : jugadores)
-//        {
-//            juego.agregarJugador(jugadorAux);
-//        }
+    private void moverRuleta() {
+        String categoria = ruleta.determinarPosicionRuleta();
+        double anguloDetenido = ruleta.getAnguloDetenido();
 
-        juego.agregarJugador(new Jugador("Juanchis"));
-        juego.agregarJugador(new Jugador("Carlos"));
+        Runnable onFinish = () ->
+        {
+            System.out.println("La animación de la ruleta ha terminado en: " + categoria + ", Angulo: " + anguloDetenido);
+            // Aquí puedes realizar cualquier acción adicional que desees
+        };
 
-        juego.obtenerInfoJugadores();
+        // Llamar al método animacionRuleta para iniciar la animación de la ruleta
+        animacion.animacionRuleta(imvRuleta, anguloDetenido, onFinish);
 
+        // Aquí puedes actualizar la UI o realizar cualquier acción necesaria con la categoría resultante
     }
-
 }

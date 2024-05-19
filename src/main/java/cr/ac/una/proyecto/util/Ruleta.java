@@ -6,15 +6,27 @@ import java.util.Random;
 
 public class Ruleta {
 
-    private ArrayList<String> opciones = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografía", "Entretenimiento", "Ciencia", "Historia"));
-    private double anguloInicial = 0;
+    private ArrayList<String> opciones;
+    private double anguloInicial;
+    private double anguloDetenido;
 
-    public int generarAnguloAleatorio() {
+    public Ruleta() {
+        opciones = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografía", "Entretenimiento", "Ciencia", "Historia"));
+        anguloInicial = 0;
+        anguloDetenido = 0;
+    }
+
+    private int generarAnguloAleatorio() {
         Random random = new Random();
         return random.nextInt(360);
     }
 
-    public String determinarPosicionRuleta(double anguloDetenido) {
+    public double getAnguloDetenido() {
+        return anguloDetenido;
+    }
+
+    public String determinarPosicionRuleta() {
+        anguloDetenido = generarAnguloAleatorio();
         double cienciaInicio = 29;
         double cienciaFin = 80;
         double geografiaInicio = 81;
@@ -31,7 +43,7 @@ public class Ruleta {
         double historiaFin = 29;
         double finalGrados = 360;
 
-        String categoria = "Angulo no encontrado" + String.valueOf(anguloDetenido);
+        String categoria = "Angulo no encontrado: " + anguloDetenido;
 
         if (anguloDetenido >= deporteInicio && anguloDetenido <= deporteFin)
         {

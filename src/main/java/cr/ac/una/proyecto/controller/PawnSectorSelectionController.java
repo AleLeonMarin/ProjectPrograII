@@ -88,9 +88,9 @@ public class PawnSectorSelectionController extends Controller implements Initial
         Image imagenPeonAmarrilo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
         imgAmarrillo.setImage(imagenPeonAmarrilo);
 
-        habilitarCampos(false);
+        habilitarEspacios(false);
         cargarSliderCantJug();
-        cantidadJugadores(cantJugadores);//manejar cantidad de jugadores desde appcontext o algo
+        mostrarEspacioJugador(cantJugadores);
     }
 
     private void cargarSliderCantJug() {
@@ -103,15 +103,7 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
     }
 
-    private void startDrag(MouseEvent event, ImageView imageView) {
-        Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
-        ClipboardContent content = new ClipboardContent();
-        content.putImage(imageView.getImage());
-        dragboard.setContent(content);
-        event.consume();
-    }
-
-    private void cantidadJugadores(int cantJug) {
+    private void mostrarEspacioJugador(int cantJug) {
         if (cantJug > 2)
         {
             if (cantJug == 3)
@@ -126,19 +118,19 @@ public class PawnSectorSelectionController extends Controller implements Initial
                 this.vboxPlayer4.setVisible(true);
             } else if (cantJug == 5)
             {
-                habilitarCampos(true);
+                habilitarEspacios(true);
                 this.vboxPlayer6.setDisable(false);
                 this.vboxPlayer6.setVisible(true);
 
             } else
             {
-                habilitarCampos(true);
+                habilitarEspacios(true);
             }
         }
 
     }
 
-    private void habilitarCampos(Boolean estado) {
+    private void habilitarEspacios(Boolean estado) {
         this.vboxPlayer3.setDisable(!estado);
         this.vboxPlayer3.setVisible(estado);
         this.vboxPlayer4.setDisable(!estado);
@@ -147,6 +139,14 @@ public class PawnSectorSelectionController extends Controller implements Initial
         this.vboxPlayer5.setVisible(estado);
         this.vboxPlayer6.setDisable(!estado);
         this.vboxPlayer6.setVisible(estado);
+    }
+
+    private void startDrag(MouseEvent event, ImageView imageView) {
+        Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
+        ClipboardContent content = new ClipboardContent();
+        content.putImage(imageView.getImage());
+        dragboard.setContent(content);
+        event.consume();
     }
 
     private void dragOver(DragEvent event) {
