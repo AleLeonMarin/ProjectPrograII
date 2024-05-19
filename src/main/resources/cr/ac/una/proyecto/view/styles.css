@@ -280,4 +280,6 @@
     -fx-background-color: TRASNPARENT;
 }
 
-.jfx-mfx-button-picker > ImageView {-fx-image: url("../resources/picker.png");}
+.jfx-mfx-button-picker > ImageView {
+    -fx-image: url("../resources/picker.png");
+}

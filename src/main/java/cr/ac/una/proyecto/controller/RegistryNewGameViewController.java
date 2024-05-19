@@ -41,7 +41,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     @FXML
     void onActionBtnNext(ActionEvent event) {
 
-        FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+        FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
         ((Stage) btnNext.getScene().getWindow()).close();
 
     }
@@ -53,7 +53,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @Override
     public void initialize() {
-
         sldQty.setMin(2);
         sldQty.setMax(6);
         sldQty.setValue(2);
@@ -79,8 +78,9 @@ public class RegistryNewGameViewController extends Controller implements Initial
             txfJug4.setVisible(value >= 4);
             txfJug5.setVisible(value >= 5);
             txfJug6.setVisible(value >= 6);
+            int position = value;
+            System.out.println("El slider quedó en la posición: " + position);
         });
-
     }
 
 }

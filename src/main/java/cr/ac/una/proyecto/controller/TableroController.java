@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -29,8 +30,6 @@ import javafx.event.EventHandler;
  */
 public class TableroController extends Controller implements Initializable {
 
-    @FXML
-    private Pane tablero;
     @FXML
     private Label lblTiempo;
     private static final int RADIO_TABLERO = 400; // Radio del tablero circular
@@ -67,8 +66,6 @@ public class TableroController extends Controller implements Initializable {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-
-
 
     }
 
@@ -156,6 +153,10 @@ public class TableroController extends Controller implements Initializable {
     @FXML
     private void btnResetOnAction(ActionEvent event) {
         ruleta.setRotate(anguloInicial);
+    }
+
+    @FXML
+    private void btnResetOnDragDetected(MouseEvent event) {
     }
 
 }

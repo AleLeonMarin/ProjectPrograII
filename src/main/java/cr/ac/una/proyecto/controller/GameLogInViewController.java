@@ -20,7 +20,7 @@ public class GameLogInViewController extends Controller implements Initializable
     private MFXButton btnLog;
 
     @FXML
-    private ImageView imgVLogo;
+    private MFXButton btnCargarPartida;
 
     @FXML
     void onActionBtnExit(ActionEvent event) {
@@ -44,6 +44,10 @@ public class GameLogInViewController extends Controller implements Initializable
     @Override
     public void initialize() {
         // TODO Auto-generated method stub
+    }
+
+    @FXML
+    private void onActionBtnCargarPartida(ActionEvent event) {
     }
 
 }
