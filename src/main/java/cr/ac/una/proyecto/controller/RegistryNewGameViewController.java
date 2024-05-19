@@ -1,15 +1,23 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import cr.ac.una.proyecto.util.FlowController;
+import cr.ac.una.proyecto.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class RegistryNewGameViewController extends Controller implements Initializable {
@@ -37,12 +45,13 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @FXML
     private MFXTextField txfJug6;
+    private int cantJugadores;
+    private ArrayList<Jugador> jugadores;
 
     @FXML
     void onActionBtnNext(ActionEvent event) {
 
-        FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
-        ((Stage) btnNext.getScene().getWindow()).close();
+        validarEspacios();
 
     }
 
@@ -53,6 +62,8 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @Override
     public void initialize() {
+        jugadores = new ArrayList<>();
+        cantJugadores = 2;
         sldQty.setMin(2);
         sldQty.setMax(6);
         sldQty.setValue(2);
@@ -65,7 +76,8 @@ public class RegistryNewGameViewController extends Controller implements Initial
         txfJug5.setVisible(false);
         txfJug6.setVisible(false);
 
-        sldQty.valueProperty().addListener((obs, oldValue, newValue) -> {
+        sldQty.valueProperty().addListener((obs, oldValue, newValue) ->
+        {
             int value = newValue.intValue();
 
             // Habilitar y mostrar los campos de texto de jugadores adicionales según el
@@ -78,9 +90,94 @@ public class RegistryNewGameViewController extends Controller implements Initial
             txfJug4.setVisible(value >= 4);
             txfJug5.setVisible(value >= 5);
             txfJug6.setVisible(value >= 6);
-            int position = value;
-            System.out.println("El slider quedó en la posición: " + position);
+            cantJugadores = value;
+            System.out.println("El slider quedó en la posición: " + cantJugadores);
         });
+    }
+
+    private boolean validarCampoVacio(String nombreCampo, TextField campoTexto) {
+        if (campoTexto.isVisible() && nombreCampo.isEmpty())
+        {
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "Espacio " + nombreCampo + " vacio");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarNombresUnicos(String... nombres) {
+        Set<String> nombresSet = new HashSet<>();
+        for (String nombre : nombres)
+        {
+            if (nombre != null && !nombre.trim().isEmpty())
+            {
+                if (!nombresSet.add(nombre.trim()))
+                {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "Los nombres deben ser únicos");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void validarEspacios() {
+        if (!validarCampoVacio(txfJug1.getText(), txfJug1)
+                || !validarCampoVacio(txfJug2.getText(), txfJug2)
+                || !validarCampoVacio(txfJug3.getText(), txfJug3)
+                || !validarCampoVacio(txfJug4.getText(), txfJug4)
+                || !validarCampoVacio(txfJug5.getText(), txfJug5)
+                || !validarCampoVacio(txfJug6.getText(), txfJug6))
+        {
+            System.out.println("ESPACIO A");
+            return;
+        }
+
+        if (!validarNombresUnicos(txfJug1.getText(), txfJug2.getText(), txfJug3.getText(), txfJug4.getText(), txfJug5.getText(), txfJug6.getText()))
+        {
+            System.out.println("ESPACIO B");
+            return;
+        }
+
+        guardarJugadoresNombres();
+        funcionAppContext();
+    }
+
+    private void guardarJugadoresNombres() {
+
+        jugadores.add(new Jugador(txfJug1.getText()));
+        jugadores.add(new Jugador(txfJug2.getText()));
+
+        if ((!txfJug3.getText().isBlank()) && (txfJug3.isVisible()))
+        {
+            jugadores.add(new Jugador(txfJug3.getText()));
+        }
+        if ((!txfJug4.getText().isBlank()) && (txfJug4.isVisible()))
+        {
+            jugadores.add(new Jugador(txfJug4.getText()));
+        }
+        if ((!txfJug5.getText().isBlank()) && (txfJug5.isVisible()))
+        {
+            jugadores.add(new Jugador(txfJug5.getText()));
+        }
+        if ((!txfJug6.getText().isBlank()) && (txfJug6.isVisible()))
+        {
+            jugadores.add(new Jugador(txfJug6.getText()));
+        }
+
+        for (Jugador jugadorAux : jugadores)
+        {
+            System.out.println("Jugador: " + jugadorAux.getNombre());
+        }
+
+        AppContext.getInstance().set("jugadores", jugadores);
+
+    }
+
+    private void funcionAppContext() {
+        System.out.println("Cantidad de juagadores en el slider : " + cantJugadores);
+        AppContext.getInstance().set("cantJugadoresSlider", cantJugadores);
+        FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
+        ((Stage) btnNext.getScene().getWindow()).close();
     }
 
 }

@@ -1,10 +1,14 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Animacion;
+import cr.ac.una.proyecto.model.Juego;
+import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,9 +31,13 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private int playerOnePositionX = 0;
     private int playerOneCurrentPosition = 0;
 
-    private int playerTwoPositionY = 0;
+    private int playerTwoPositionY = 3;
     private int playerTwoPositionX = 3;
-    private int playerTwoCurrentPosition = 0;
+    private int playerTwoCurrentPosition = 3;
+
+    private Juego juego;
+    private Sector sector1;
+    private Sector sector2;
 
     private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
     private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";
@@ -37,8 +45,8 @@ public class TableroDosJugadoresController extends Controller implements Initial
     @FXML
     private GridPane grdpTablero;
 
-    private ImageView imageViewPeon1;
-    private ImageView imageViewPeon2;
+    private ImageView imageViewJugador1;
+    private ImageView imageViewJugador2;
     @FXML
     private ImageView imvCarta;
     @FXML
@@ -52,69 +60,57 @@ public class TableroDosJugadoresController extends Controller implements Initial
     @Override
     public void initialize() {
 
+        sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
+        sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonVerde);
+
         imvCarta.setImage(new Image("file:///C:/Users/justi/Desktop/Netbeans/pruebasAnimacionImagen/src/main/resources/cr/ac/una/pruebasanimacionimagen/cara.png"));
         // Crear los ImageViews para las imágenes de los peones
-        imageViewPeon1 = new ImageView();
-        imageViewPeon2 = new ImageView();
+        imageViewJugador1 = new ImageView();
+        imageViewJugador2 = new ImageView();
 
         // Cargar las imágenes desde las rutas
         Image imagenPeonRojo = new Image(getClass().getResourceAsStream(rutaPeonRojo));
         Image imagenPeonVerde = new Image(getClass().getResourceAsStream(rutaPeonVerde));
 
         // Establecer el tamaño de las imágenes a 100px
-        imageViewPeon1.setFitWidth(100);
-        imageViewPeon1.setFitHeight(100);
-        imageViewPeon2.setFitWidth(100);
-        imageViewPeon2.setFitHeight(100);
+        imageViewJugador1.setFitWidth(100);
+        imageViewJugador1.setFitHeight(100);
+        imageViewJugador2.setFitWidth(100);
+        imageViewJugador2.setFitHeight(100);
 
         // Establecer las imágenes en los ImageViews
-        imageViewPeon1.setImage(imagenPeonRojo);
-        imageViewPeon2.setImage(imagenPeonVerde);
+        imageViewJugador1.setImage(imagenPeonRojo);
+        imageViewJugador2.setImage(imagenPeonVerde);
 
         // Agregar los ImageViews al GridPane en las posiciones especificadas y centrarlos
-        grdpTablero.add(imageViewPeon1, playerOnePositionY, playerOnePositionX);
-        grdpTablero.add(imageViewPeon2, playerTwoPositionY, playerTwoPositionX);
+        grdpTablero.add(imageViewJugador1, playerOnePositionY, playerOnePositionX);
+        grdpTablero.add(imageViewJugador2, playerTwoPositionY, playerTwoPositionX);
 
         // Centrar los elementos dentro de las celdas del GridPane
-        GridPane.setHalignment(imageViewPeon1, HPos.CENTER);
-        GridPane.setValignment(imageViewPeon1, VPos.CENTER);
-        GridPane.setHalignment(imageViewPeon2, HPos.CENTER);
-        GridPane.setValignment(imageViewPeon2, VPos.CENTER);
-
-    }
-
-    private int evaluarPos(int posFija, int posInicial, int posActual, ImageView imageView) {
-
-        eliminarNodoEnPosicion(posActual, posFija);
-
-        if (posActual >= posInicial + 3)
-        {
-            posActual = posInicial;
-        } else
-        {
-            posActual++;
-        }
-
-        grdpTablero.add(imageView, posActual, posFija);
-        GridPane.setHalignment(imageView, HPos.CENTER);
-        return posActual;
-    }
-
-    private void eliminarNodoEnPosicion(int columna, int fila) {
-        ObservableList<Node> children = grdpTablero.getChildren();
-        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
+        GridPane.setHalignment(imageViewJugador1, HPos.CENTER);
+        GridPane.setValignment(imageViewJugador1, VPos.CENTER);
+        GridPane.setHalignment(imageViewJugador2, HPos.CENTER);
+        GridPane.setValignment(imageViewJugador2, VPos.CENTER);
+        juego = new Juego();
+        cargarJuegoJugadores();
     }
 
     @FXML
     private void moverPeonPrimeroOnAction(ActionEvent event) {
-        System.out.println("PosicionX  = " + playerOnePositionX);
-        System.out.println("PosicionActual  = " + playerOneCurrentPosition);
-        playerOneCurrentPosition = evaluarPos(playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, imageViewPeon1);
+        System.out.println("Jug1");
+        System.out.println("PosicionX  = " + sector1.getPosicionFija());
+        System.out.println("PosicionActual  = " + sector1.getPosActual());
+
+        sector1.setPosActual(sector1.mover(imageViewJugador1, grdpTablero));
+       // juego.iniciarJuego();
     }
 
     @FXML
     private void moverPeonSegundoOnAction(ActionEvent event) {
-        playerTwoCurrentPosition = evaluarPos(playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, imageViewPeon2);
+        System.out.println("Jug2");
+        System.out.println("PosicionX  = " + sector2.getPosicionFija());
+        System.out.println("PosicionActual  = " + sector2.getPosActual());
+        sector2.setPosActual(sector2.mover(imageViewJugador2, grdpTablero));
     }
 
     @FXML
@@ -128,6 +124,21 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private void OnMouseClickedPicker(MouseEvent event) {
         Animacion animacion = new Animacion();
         animacion.animacionRuleta(ruleta); // Donde 'ruleta' es la instancia de la ImageView de la ruleta en tu controlador
+
+    }
+
+    private void cargarJuegoJugadores() {
+//        ArrayList<Jugador> jugadores = (ArrayList<Jugador>) AppContext.getInstance().get("jugadores");
+//
+//        for (Jugador jugadorAux : jugadores)
+//        {
+//            juego.agregarJugador(jugadorAux);
+//        }
+
+        juego.agregarJugador(new Jugador("Juanchis"));
+        juego.agregarJugador(new Jugador("Carlos"));
+
+        juego.obtenerInfoJugadores();
 
     }
 

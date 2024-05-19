@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.util.AppContext;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -15,6 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import cr.ac.una.proyecto.util.FlowController;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class PawnSectorSelectionController extends Controller implements Initializable {
 
@@ -61,6 +64,10 @@ public class PawnSectorSelectionController extends Controller implements Initial
     @FXML
     private VBox vboxPlayer6;
 
+    private int cantJugadores = 12;
+    @FXML
+    private Button btnSiguiente;
+
     @Override
     public void initialize() {
         Image imagenPeonRosa = new Image(getClass().getResourceAsStream(rutaPeonRosa));
@@ -80,9 +87,15 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
         Image imagenPeonAmarrilo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
         imgAmarrillo.setImage(imagenPeonAmarrilo);
-        
+
         habilitarCampos(false);
-        cantidadJugadores(3);//manejar cantidad de jugadores desde appcontext o algo
+        cargarSliderCantJug();
+        cantidadJugadores(cantJugadores);//manejar cantidad de jugadores desde appcontext o algo
+    }
+
+    private void cargarSliderCantJug() {
+        cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
+        System.out.println("Cantida de jugadoresEnPawnSelecion: " + cantJugadores);
     }
 
     @Override
@@ -208,6 +221,7 @@ public class PawnSectorSelectionController extends Controller implements Initial
     @FXML
     private void Siguiente(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+        ((Stage) btnSiguiente.getScene().getWindow()).close();
     }
 
     @FXML

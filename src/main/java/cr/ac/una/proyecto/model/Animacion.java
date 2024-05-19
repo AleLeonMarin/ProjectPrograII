@@ -57,7 +57,7 @@ public class Animacion {
         ParallelTransition parallelTransition = new ParallelTransition(rotateTransition, fadeOut, scaleTransition);
         SequentialTransition sequentialTransition = new SequentialTransition(translateTransition, parallelTransition, fadeIn);
         sequentialTransition.play();
-         imageView.toFront();
+        imageView.toFront();
     }
 
     public void animacionRuleta(ImageView ruleta) {
