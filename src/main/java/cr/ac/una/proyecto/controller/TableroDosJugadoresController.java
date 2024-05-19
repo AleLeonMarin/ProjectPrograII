@@ -31,9 +31,9 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private int playerOnePositionX = 0;
     private int playerOneCurrentPosition = 0;
 
-    private int playerTwoPositionY = 0;
+    private int playerTwoPositionY = 3;
     private int playerTwoPositionX = 3;
-    private int playerTwoCurrentPosition = 0;
+    private int playerTwoCurrentPosition = 3;
 
     private Juego juego;
     private Sector sector1;
@@ -60,8 +60,8 @@ public class TableroDosJugadoresController extends Controller implements Initial
     @Override
     public void initialize() {
 
-        sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, rutaPeonRojo);
-        sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, rutaPeonVerde);
+        sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
+        sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonVerde);
 
         imvCarta.setImage(new Image("file:///C:/Users/justi/Desktop/Netbeans/pruebasAnimacionImagen/src/main/resources/cr/ac/una/pruebasanimacionimagen/cara.png"));
         // Crear los ImageViews para las imágenes de los peones
@@ -91,39 +91,18 @@ public class TableroDosJugadoresController extends Controller implements Initial
         GridPane.setValignment(imageViewJugador1, VPos.CENTER);
         GridPane.setHalignment(imageViewJugador2, HPos.CENTER);
         GridPane.setValignment(imageViewJugador2, VPos.CENTER);
-//        juego = new Juego();
-//        cargarJuegoJugadores();
-//        juego.iniciarJuego();
+        juego = new Juego();
+        cargarJuegoJugadores();
     }
 
-//    private int evaluarPos(int posFija, int posInicial, int posActual, ImageView imageView) {
-//
-//        eliminarNodoEnPosicion(posActual, posFija);
-//
-//        if (posActual >= posInicial + 3)
-//        {
-//            posActual = posInicial;
-//        } else
-//        {
-//            posActual++;
-//        }
-//
-//        grdpTablero.add(imageView, posActual, posFija);
-//        GridPane.setHalignment(imageView, HPos.CENTER);
-//        return posActual;
-//    }
-//
-//    private void eliminarNodoEnPosicion(int columna, int fila) {
-//        ObservableList<Node> children = grdpTablero.getChildren();
-//        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
-//    }
     @FXML
     private void moverPeonPrimeroOnAction(ActionEvent event) {
         System.out.println("Jug1");
         System.out.println("PosicionX  = " + sector1.getPosicionFija());
         System.out.println("PosicionActual  = " + sector1.getPosActual());
-        //  playerOneCurrentPosition = evaluarPos(playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, imageViewJugador1);
-        sector1.setPosActual(sector1.evaluarPos(imageViewJugador1, grdpTablero));
+
+        sector1.setPosActual(sector1.mover(imageViewJugador1, grdpTablero));
+       // juego.iniciarJuego();
     }
 
     @FXML
@@ -131,8 +110,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
         System.out.println("Jug2");
         System.out.println("PosicionX  = " + sector2.getPosicionFija());
         System.out.println("PosicionActual  = " + sector2.getPosActual());
-        //playerTwoCurrentPosition = evaluarPos(playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, imageViewJugador2);
-        sector2.setPosActual(sector2.evaluarPos(imageViewJugador2, grdpTablero));
+        sector2.setPosActual(sector2.mover(imageViewJugador2, grdpTablero));
     }
 
     @FXML
@@ -150,14 +128,15 @@ public class TableroDosJugadoresController extends Controller implements Initial
     }
 
     private void cargarJuegoJugadores() {
-        ArrayList<Jugador> jugadores = (ArrayList<Jugador>) AppContext.getInstance().get("jugadores");
-
-        for (Jugador jugadorAux : jugadores)
-        {
-            juego.agregarJugador(jugadorAux);
-        }
+//        ArrayList<Jugador> jugadores = (ArrayList<Jugador>) AppContext.getInstance().get("jugadores");
+//
+//        for (Jugador jugadorAux : jugadores)
+//        {
+//            juego.agregarJugador(jugadorAux);
+//        }
 
         juego.agregarJugador(new Jugador("Juanchis"));
+        juego.agregarJugador(new Jugador("Carlos"));
 
         juego.obtenerInfoJugadores();
 

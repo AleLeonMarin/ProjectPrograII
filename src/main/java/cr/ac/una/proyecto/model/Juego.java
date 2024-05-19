@@ -47,6 +47,7 @@ public class Juego {
             {
                 jugadorActual.aumentarPuntos();
                 System.out.println("Respuesta correcta. ¡Has ganado un punto!");
+                
             } else
             {
                 System.out.println("Respuesta incorrecta. Siguiente jugador.");

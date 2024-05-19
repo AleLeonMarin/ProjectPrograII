@@ -13,16 +13,23 @@ public class Sector {
     private int posicionInicial;
     private int posicionCorona;
     private int posActual;
+    private int direccion;
     private String rutaImagenJugador;
 
     public Sector() {
     }
 
-    public Sector(Jugador jugador, int posicionFija, int posicionInicial, String rutaImagenJugador) {
+    public Sector(Jugador jugador, int posicionFija, int posicionInicial, int posActual, int direccion, String rutaImagenJugador) {
         this.jugador = jugador;
         this.posicionFija = posicionFija;
         this.posicionInicial = posicionInicial;
+        this.posActual = posActual;
+        this.direccion = direccion;
         this.rutaImagenJugador = rutaImagenJugador;
+    }
+
+    public int getDireccion() {
+        return direccion;
     }
 
     public Jugador getJugador() {
@@ -73,13 +80,15 @@ public class Sector {
         this.rutaImagenJugador = rutaImagenJugador;
     }
 
-  
+    private void eliminarNodoEnPosicion(int columna, int fila, GridPane grdPane) {
+        ObservableList<Node> children = grdPane.getChildren();
+        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
+    }
 
-    public int evaluarPos(ImageView imageView, GridPane grdPane) {
+    public int moverIzquierdaDerecha(ImageView imageView, GridPane grdPane) {
 
-        eliminarNodoEnPosicion(posActual, posicionFija, grdPane );
-
-        if (this.posActual >= posicionInicial + 3)
+        eliminarNodoEnPosicion(posActual, posicionFija, grdPane);
+        if (posActual >= posicionInicial + 3)
         {
             posActual = posicionInicial;
         } else
@@ -92,9 +101,46 @@ public class Sector {
         return posActual;
     }
 
-    private void eliminarNodoEnPosicion(int columna, int fila, GridPane grdPane) {
-        ObservableList<Node> children = grdPane.getChildren();
-        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
+    public int moverDerechaIzquierda(ImageView imageView, GridPane grdPane) {
+
+        eliminarNodoEnPosicion(posActual, posicionFija, grdPane);
+
+        if (posActual <= posicionInicial - 3)
+        {
+            posActual = posicionInicial;
+        } else
+        {
+            posActual--;
+        }
+
+        grdPane.add(imageView, posActual, posicionFija);
+        GridPane.setHalignment(imageView, HPos.CENTER);
+        return posActual;
+    }
+
+    public int mover(ImageView imageView, GridPane grdPane) {
+
+        System.out.println("Pos actual: " + posActual);
+        System.out.println("Pos X: " + posicionFija);
+        System.out.println("Pos Y: " + posicionInicial);
+
+        if (direccion == 1)
+        {
+            return moverIzquierdaDerecha(imageView, grdPane);
+
+        } else if (direccion == 2)
+        {
+            return moverDerechaIzquierda(imageView, grdPane);
+        } else if (direccion == 3)
+        {
+
+        } else if (direccion == 4)
+        {
+
+        }
+
+        return 0;
+
     }
 
 }
