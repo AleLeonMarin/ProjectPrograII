@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
@@ -9,63 +11,76 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PawnSelectionController">
    <children>
-      <VBox alignment="CENTER" layoutX="23.0" layoutY="14.0">
+      <VBox alignment="CENTER" layoutX="50.400001525878906" layoutY="50.400001525878906" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Label layoutX="143.0" layoutY="174.0" text="Peones Disponibles" />
-            <Label layoutX="140.0" layoutY="10.0" text="Arrastra el personaje hasta el jugador" />
-            <HBox alignment="CENTER" styleClass="contenedor-forms">
+            <VBox alignment="CENTER">
                <children>
-                  <ImageView fx:id="imgAmarrillo" fitHeight="50.0" fitWidth="50.0" layoutX="424.0" layoutY="12.0" onDragDetected="#imgAmarrilloOnDragDetected" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgAzul" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgAzulOnDragDetected" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgMorado" fitHeight="50.0" fitWidth="50.0" layoutX="218.0" layoutY="12.0" onDragDetected="#imgMoradoOnDragDetected" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgRojo" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgRojoOnDragDetected" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgRosa" fitHeight="50.0" fitWidth="50.0" layoutX="12.0" layoutY="12.0" onDragDetected="#imgRosaOnDragDetected" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="imgVerde" fitHeight="50.0" fitWidth="50.0" layoutX="630.0" layoutY="12.0" onDragDetected="#imgVerdeOnDragDetected" pickOnBounds="true" preserveRatio="true" />
+                  <Label styleClass="label-Titulos" text="Peones Disponibles" />
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <ImageView fx:id="imvRosa" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imvAmarillo" fitHeight="50.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imvVerde" fitHeight="50.0" fitWidth="50.0" layoutX="60.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imvAzul" fitHeight="50.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imvRojo" fitHeight="50.0" fitWidth="50.0" layoutX="60.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imvMorado" fitHeight="50.0" fitWidth="50.0" layoutX="111.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="4.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <MFXComboBox fx:id="cmbJugadorSector1" floatingText="Player Sector1" onAction="#cmbJugadorSector1OnAction" />
+                              <ImageView fx:id="imvJugadorSector1" fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                           <children>
+                              <MFXComboBox fx:id="cmbJugadorSector3" floatingText="Player Sector3" onAction="#cmbJugadorSector3OnAction" />
+                              <ImageView fx:id="imvJugadorSector3" fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                           <children>
+                              <MFXComboBox fx:id="cmbJugadorSector5" floatingText="Player Sector5" onAction="#cmbJugadorSector5OnAction" />
+                              <ImageView fx:id="imvJugadorSector5" fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="4.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <MFXComboBox fx:id="cmbJugadorSector2" floatingText="Player Sector2" onAction="#cmbJugadorSector2OnAction" />
+                              <ImageView fx:id="imvJugadorSector2" fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                           <children>
+                              <MFXComboBox fx:id="cmbJugadorSector4" floatingText="Player Sector4" onAction="#cmbJugadorSector4OnAction" />
+                              <ImageView fx:id="imvJugadorSector4" fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="4.0">
+                           <children>
+                              <MFXComboBox fx:id="cmbJugadorSector6" floatingText="Player Sector6" onAction="#cmbJugadorSector6OnAction" />
+                              <ImageView fx:id="imvJugadorSector6" fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" styleClass="contenedor-forms" VBox.vgrow="ALWAYS">
-               <children>
-                  <VBox fx:id="vboxPlayer1" alignment="CENTER" styleClass="contenedor-forms">
-                     <children>
-                        <ImageView fx:id="imgPeon1" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon1OnDragDetected" onDragDropped="#imgPeon1OnDragDropped" onDragOver="#imgPeon1OnDragOver" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Jugador1" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxPlayer2" alignment="CENTER" styleClass="contenedor-forms">
-                     <children>
-                        <ImageView fx:id="imgPeon2" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon2OnDragDetected" onDragDropped="#imgPeon2OnDragDropped" onDragOver="#imgPeon2DragOver" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Jugador2" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxPlayer3" alignment="CENTER" styleClass="contenedor-forms">
-                     <children>
-                        <ImageView fx:id="imgPeon3" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon3OnDragDetected" onDragDropped="#imgPeon3OnDragDropped" onDragOver="#imgPeon3DragOver" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Jugador3" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxPlayer4" alignment="CENTER" styleClass="contenedor-forms">
-                     <children>
-                        <ImageView fx:id="imgPeon4" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon4OnDragDetected" onDragDropped="#imgPeon4OnDragDropped" onDragOver="#imgPeon4OnDragOver" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Jugador4" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxPlayer5" alignment="CENTER" styleClass="contenedor-forms">
-                     <children>
-                        <ImageView fx:id="imgPeon5" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon5OnDragDetected" onDragDropped="#imgPeon5OnDragDropped" onDragOver="#imgPeon5OnDragOver" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Jugador5" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vboxPlayer6" alignment="CENTER" styleClass="contenedor-forms">
-                     <children>
-                        <ImageView fx:id="imgPeon6" fitHeight="50.0" fitWidth="50.0" onDragDetected="#imgPeon6VerdeOnDragDetected" onDragDropped="#imgPeon6OnDragDropped" onDragOver="#imgPeon6DragOver" pickOnBounds="true" preserveRatio="true" />
-                        <Label text="Jugador6" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Label fx:id="hjkhkh" text="Peones Jugadores" />
+            <Button fx:id="btnSiguiente" mnemonicParsing="false" onAction="#Siguiente" text="Siguiente" />
          </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </VBox>
-      <Button fx:id="btnSiguiente" layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#Siguiente" text="Siguiente" />
    </children>
 </AnchorPane>

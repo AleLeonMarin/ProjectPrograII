@@ -6,6 +6,7 @@ import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,14 +24,6 @@ public class TableroDosJugadoresController extends Controller implements Initial
     @FXML
     private ImageView imvRuleta;
 
-    private int playerOnePositionY = 0;
-    private int playerOnePositionX = 0;
-    private int playerOneCurrentPosition = 0;
-
-    private int playerTwoPositionY = 3;
-    private int playerTwoPositionX = 3;
-    private int playerTwoCurrentPosition = 3;
-
     private String resultadoRuleta;
     private Ruleta ruleta;
     private Animacion animacion;
@@ -45,7 +38,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private ImageView imvPicker;
 
     private Juego juego;
-    ObservableList<Sector> sectores;
+    ArrayList<Sector> sectores;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,8 +46,8 @@ public class TableroDosJugadoresController extends Controller implements Initial
     }
 
     private void cargarSectores() {
-        sectores = FXCollections.observableArrayList();
-        sectores = (ObservableList<Sector>) AppContext.getInstance().get("sectores");
+        sectores = new ArrayList<>();
+        sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
 
         for (Sector sector : sectores)
         {

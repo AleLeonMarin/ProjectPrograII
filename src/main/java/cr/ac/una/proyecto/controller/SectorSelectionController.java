@@ -134,7 +134,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
     }
 
-    private void validarBotones() {
+    private boolean validarBotones() {
         List<String> selectedCharacters = new ArrayList<>();
 
         for (MFXComboBox button : botonesCmbBox)
@@ -153,6 +153,7 @@ public class SectorSelectionController extends Controller implements Initializab
             alert.setHeaderText(null);
             alert.setContentText("Todos los jugadores han seleccionado personajes únicos.");
             alert.showAndWait();
+            return false;
         } else
         {
             Alert alert = new Alert(AlertType.ERROR);
@@ -160,13 +161,14 @@ public class SectorSelectionController extends Controller implements Initializab
             alert.setHeaderText(null);
             alert.setContentText("Cada jugador debe seleccionar un sector único.");
             alert.showAndWait();
+            return true;
         }
     }
 
     private void crearSectores(int cantidadJugadores) {//manejarLogicade inicio de sectores en tableros
 
-        ObservableList<Sector> sectores;
-        sectores = FXCollections.observableArrayList();
+        ArrayList<Sector> sectores;
+        sectores = new ArrayList<>();
 
         int playerOnePositionY = 0;
         int playerOnePositionX = 0;
@@ -176,12 +178,10 @@ public class SectorSelectionController extends Controller implements Initializab
         int playerTwoPositionX = 3;
         int playerTwoCurrentPosition = 3;
 
-        String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
-
         System.out.println("DAtos entrada: " + cantJugadores);
 
-        Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
-        Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonRojo);
+        Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, "");
+        Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, "");
 
         System.out.println(sector1.toString());
         System.out.println(sector2.toString());
@@ -189,7 +189,7 @@ public class SectorSelectionController extends Controller implements Initializab
         sectores.add(sector1);
         sectores.add(sector2);
 
-//        if (cantidadJugadores >= 3)
+//        if (cantidadJugadores >= 3)//crear los demas sectores con la informacion de posiciones segun tablero
 //        {
 //            sectores.add(sector3);
 //        }
@@ -224,9 +224,11 @@ public class SectorSelectionController extends Controller implements Initializab
     @FXML
     private void onActionBtnNext(ActionEvent event) {
         crearSectores(cantJugadores);
-        validarBotones();
-        FlowController.getInstance().goViewInWindow("DifficultySelectionView");
-        ((Stage) btnNext.getScene().getWindow()).close();
+        if (!validarBotones())
+        {
+            FlowController.getInstance().goViewInWindow("PawnSelectionView");
+            ((Stage) btnNext.getScene().getWindow()).close();
+        }
     }
 
 }
