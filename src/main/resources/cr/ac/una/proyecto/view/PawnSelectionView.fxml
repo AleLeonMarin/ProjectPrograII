@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PawnSectorSelectionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PawnSelectionController">
    <children>
       <VBox alignment="CENTER" layoutX="23.0" layoutY="14.0">
          <children>
@@ -63,7 +63,7 @@
                   </VBox>
                </children>
             </HBox>
-            <Label text="Peones Jugadores" />
+            <Label fx:id="hjkhkh" text="Peones Jugadores" />
          </children>
       </VBox>
       <Button fx:id="btnSiguiente" layoutX="274.0" layoutY="334.0" mnemonicParsing="false" onAction="#Siguiente" text="Siguiente" />

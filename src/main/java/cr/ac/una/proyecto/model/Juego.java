@@ -33,7 +33,7 @@ public class Juego {
         preguntas.add(pregunta);
     }
 
-    public void datosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
+    public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
         for (Sector sectorActual : sectores)
         {
             ImageView imvPeon = new ImageView();
@@ -63,16 +63,13 @@ public class Juego {
         if (respuesta.equalsIgnoreCase(preguntaActual.getRespuesta()))
         {
             jugadorActual.aumentarPuntos();
-            System.out.println("Respuesta correcta. ¡Has ganado un punto!" + sectorActual.getJugador().getNombre());
+            System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
         } else
         {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
+            cambiarTurno();
         }
-        cambiarTurno();
-    }
-
-    private void evaluar() {
 
     }
 

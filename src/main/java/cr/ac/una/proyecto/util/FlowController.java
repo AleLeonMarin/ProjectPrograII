@@ -29,6 +29,7 @@ import javafx.stage.WindowEvent;
 import cr.ac.una.proyecto.controller.Controller;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
+import javafx.scene.layout.AnchorPane;
 
 public class FlowController {
 
@@ -121,9 +122,9 @@ public class FlowController {
         }
         switch (location) {
             case "Center":
-                VBox vBox = ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter());
-                vBox.getChildren().clear();
-                vBox.getChildren().add(loader.getRoot());
+                AnchorPane anchor = ((AnchorPane) ((BorderPane) stage.getScene().getRoot()).getCenter());
+                anchor.getChildren().clear();
+                anchor.getChildren().add(loader.getRoot());
                 break;
             case "Top":
                 break;

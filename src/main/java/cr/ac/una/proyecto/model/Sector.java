@@ -143,4 +143,17 @@ public class Sector {
 
     }
 
+    @Override
+    public String toString() {
+        return "Sector{"
+                + "jugador=" + (jugador != null ? jugador.toString() : "null")
+                + ", posicionFija=" + posicionFija
+                + ", posicionInicial=" + posicionInicial
+                + ", posicionCorona=" + posicionCorona
+                + ", posActual=" + posActual
+                + ", direccion=" + direccion
+                + ", rutaImagenJugador='" + rutaImagenJugador + '\''
+                + '}';
+    }
+
 }
