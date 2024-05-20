@@ -2,26 +2,23 @@ package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
+import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.ImageStorage;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class PawnSelectionController extends Controller implements Initializable {
 
@@ -74,10 +71,11 @@ public class PawnSelectionController extends Controller implements Initializable
     @FXML
     private ImageView imvJugadorSector6;
 
-    private int cantJugadores;
     private ImageStorage imageViewMap;
     private ObservableList<String> nombresPeones;
     private ArrayList<MFXComboBox<String>> botonesLista;
+    private int cantJugadores;
+    private List<String> personajesSeleccionados;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,6 +85,7 @@ public class PawnSelectionController extends Controller implements Initializable
     @Override
     public void initialize() {
         nombresPeones = FXCollections.observableArrayList();
+        personajesSeleccionados = new ArrayList<>();
         imageViewMap = new ImageStorage();
         botonesLista = new ArrayList<>();
         cargarPeones();
@@ -142,14 +141,14 @@ public class PawnSelectionController extends Controller implements Initializable
         } else
         {
             System.out.println("No hay errores");
-            cargarSectores();//FlowController.getInstance().goViewInWindow("DifficultySelectionView");
-            // ((Stage) btnSiguiente.getScene().getWindow()).close();
+            cargarSectores();
+            FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+            ((Stage) btnSiguiente.getScene().getWindow()).close();
         }
     }
 
     private void cargarSliderCantJug() {
-        // cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
-        cantJugadores = 6;
+        cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
         System.out.println("Cantida de jugadoresEnPawnSelecion: " + cantJugadores);
     }
 
@@ -172,6 +171,7 @@ public class PawnSelectionController extends Controller implements Initializable
                 this.cmbJugadorSector3.setVisible(true);
                 cmbJugadorSector3.setItems(nombresPeones);
                 botonesLista.add(cmbJugadorSector3);
+
             }
             if (cantJug >= 4)
             {
@@ -186,6 +186,37 @@ public class PawnSelectionController extends Controller implements Initializable
                 this.cmbJugadorSector5.setVisible(true);
                 cmbJugadorSector5.setItems(nombresPeones);
                 botonesLista.add(cmbJugadorSector5);
+            }
+        }
+    }
+
+    private void cargarSelecionados(int cantJug) {
+
+        personajesSeleccionados.add(cmbJugadorSector1.getSelectedItem());
+        personajesSeleccionados.add(cmbJugadorSector2.getSelectedItem());
+
+        if (cantJug >= 6)
+        {
+            personajesSeleccionados.add(cmbJugadorSector3.getSelectedItem());
+            personajesSeleccionados.add(cmbJugadorSector4.getSelectedItem());
+            personajesSeleccionados.add(cmbJugadorSector5.getSelectedItem());
+            personajesSeleccionados.add(cmbJugadorSector6.getSelectedItem());
+        } else
+        {
+            if (cantJug >= 3)
+            {
+
+                personajesSeleccionados.add(cmbJugadorSector3.getSelectedItem());
+            }
+            if (cantJug >= 4)
+            {
+
+                personajesSeleccionados.add(cmbJugadorSector4.getSelectedItem());
+            }
+            if (cantJug >= 5)
+            {
+
+                personajesSeleccionados.add(cmbJugadorSector5.getSelectedItem());
 
             }
         }
@@ -263,25 +294,17 @@ public class PawnSelectionController extends Controller implements Initializable
     }
 
     private boolean validarSeleccion() {
-        List<String> personajesSeleccionados = new ArrayList<>();
-
-        // Obtener los personajes seleccionados en los ComboBox de jugadores
-        personajesSeleccionados.add(cmbJugadorSector1.getValue());
-        personajesSeleccionados.add(cmbJugadorSector2.getValue());
-        personajesSeleccionados.add(cmbJugadorSector3.getValue());
-        personajesSeleccionados.add(cmbJugadorSector4.getValue());
-        personajesSeleccionados.add(cmbJugadorSector5.getValue());
-        personajesSeleccionados.add(cmbJugadorSector6.getValue());
-
-        // Verificar si hay espacios en blanco o personajes repetidos
-        for (String personaje : personajesSeleccionados)
+        cargarSelecionados(cantJugadores);
+        for (int i = 0; i < personajesSeleccionados.size(); i++)
         {
-            if (personaje == null || personaje.isBlank() || Collections.frequency(personajesSeleccionados, personaje) > 1)
+            String personaje = personajesSeleccionados.get(i);
+            System.out.println("Personaje: " + i + personaje);
+            // Verificar si la cadena es nula, vacía o si es igual a otro elemento en la lista
+            if (personaje == null || personaje.isEmpty() || personajesSeleccionados.indexOf(personaje) != i)
             {
                 return true; // Hay personajes repetidos o espacios en blanco
             }
         }
-
         return false; // No hay personajes repetidos ni espacios en blanco
     }
 

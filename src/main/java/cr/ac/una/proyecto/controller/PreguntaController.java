@@ -1,89 +1,85 @@
 package cr.ac.una.proyecto.controller;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
-public class PreguntaController extends Controller implements Initializable {
+public class PreguntaController extends Controller implements Initializable{
 
     @FXML
-    private MFXButton btnRespuesta1;
-    @FXML
-    private MFXButton btnPorDos;
-    @FXML
-    private MFXButton btnRetry;
-    @FXML
-    private MFXButton btnNext1;
-    @FXML
-    private VBox vboxTextPregunta;
+    private VBox VboxRespuestas;
+
     @FXML
     private MFXButton btnBomb;
 
+    @FXML
+    private MFXButton btnExtraTry;
+
+    @FXML
+    private MFXButton btnPass;
+
+    @FXML
+    private MFXButton btnSecondOportunity;
+
+    @FXML
+    private TextArea txaEnunciado;
+
+    @FXML
+    void onActionBtnBomb(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onActionBtnPass(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onActionBtnSecondOportunity(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onActionExtraTry(ActionEvent event) {
+
+    }
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub
     }
 
     @Override
     public void initialize() {
-
+        btnsAnswers();
     }
 
-    @FXML
-    private void brnRespuesta1OnAcrtion(ActionEvent event) {
-        String texto = "En este ejemplo, la función dividirTexto toma el texto y la longitud máxima deseada por línea como argumentos. Divide el texto en palabras y las organiza en líneas, asegurándose de que cada línea no exceda la longitud máxima especificada. Luego, crea un objeto Text para cada línea y los agrega al contenedor VBox para mostrarlos en la interfaz de usuario.";
-        addToVbox(texto);
-        System.out.println("H1");
+    public void btnsAnswers(){
+
+        List<MFXButton> buttons = new ArrayList<>();
+        buttons.add(new MFXButton());
+        buttons.add(new MFXButton());
+        buttons.add(new MFXButton());
+        buttons.add(new MFXButton());
+
+        randomButtonsAnswers(buttons);
     }
 
-    private void addToVbox(String texto) {
-        String[] lineas = dividirTexto(texto, 95);
-        vboxTextPregunta.getChildren().clear();
-
-        for (String linea : lineas)
-        {
-            Text textComponent = new Text(linea);
-            textComponent.setStyle("-fx-font-family: 'Arial';"
-                    + "-fx-font-size: 12px;"
-                    + "-fx-font-weight: bold;"
-                    + "-fx-fill: whitesmoke;");
-            vboxTextPregunta.getChildren().add(textComponent);
+    public void randomButtonsAnswers(List<MFXButton> buttons){
+        for (int i = 0; i < buttons.size(); i++) {
+            int random = (int) (Math.random() * buttons.size());
+            MFXButton temp = buttons.get(i);
+            buttons.set(i, buttons.get(random));
+            buttons.set(random, temp);
         }
 
+        VboxRespuestas.getChildren().addAll(buttons);
     }
-
-    private String[] dividirTexto(String texto, int longitudMaxima) {
-        String[] palabras = texto.split("\\s+");
-        StringBuilder lineaActual = new StringBuilder();
-        StringBuilder lineas = new StringBuilder();
-
-        for (String palabra : palabras)
-        {
-            if (lineaActual.length() + palabra.length() <= longitudMaxima)
-            {
-
-                lineaActual.append(palabra).append(" ");
-            } else
-            {
-                lineas.append(lineaActual.toString().trim()).append("\n");
-                lineaActual = new StringBuilder(palabra + " ");
-            }
-        }
-
-        lineas.append(lineaActual.toString().trim());
-
-        return lineas.toString().split("\n");
-    }
-
-    @FXML
-    private void sads(ActionEvent event) {
-        System.out.println("H1");
-    }
-
 }

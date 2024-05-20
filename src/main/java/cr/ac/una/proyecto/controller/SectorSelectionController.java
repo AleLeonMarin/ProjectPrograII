@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class SectorSelectionController extends Controller implements Initializab
     private ObservableList<String> nombresJugadores;
     private ObservableList<Jugador> jugadores;
     private ArrayList<MFXComboBox> botonesCmbBox;
-
     @FXML
     private MFXComboBox<String> cmbSector1;
     @FXML
@@ -44,7 +44,7 @@ public class SectorSelectionController extends Controller implements Initializab
     @FXML
     private MFXComboBox<String> cmbSector6;
     @FXML
-    private Button btnConfirmar;
+    private MFXButton btnNext;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,13 +134,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
     }
 
-    @FXML
-    private void onActionBtnConfirmar(ActionEvent event) {
-        validarBotones();
-
-    }
-
-    private void validarBotones() {
+    private boolean validarBotones() {
         List<String> selectedCharacters = new ArrayList<>();
 
         for (MFXComboBox button : botonesCmbBox)
@@ -159,6 +153,7 @@ public class SectorSelectionController extends Controller implements Initializab
             alert.setHeaderText(null);
             alert.setContentText("Todos los jugadores han seleccionado personajes únicos.");
             alert.showAndWait();
+            return false;
         } else
         {
             Alert alert = new Alert(AlertType.ERROR);
@@ -166,6 +161,7 @@ public class SectorSelectionController extends Controller implements Initializab
             alert.setHeaderText(null);
             alert.setContentText("Cada jugador debe seleccionar un sector único.");
             alert.showAndWait();
+            return true;
         }
     }
 
@@ -226,10 +222,13 @@ public class SectorSelectionController extends Controller implements Initializab
     }
 
     @FXML
-    private void onActionSiguiente(ActionEvent event) {
+    private void onActionBtnNext(ActionEvent event) {
         crearSectores(cantJugadores);
-        FlowController.getInstance().goMain("tableroView");
-        ((Stage) btnConfirmar.getScene().getWindow()).close();
+        if (!validarBotones())
+        {
+            FlowController.getInstance().goViewInWindow("PawnSelectionView");
+            ((Stage) btnNext.getScene().getWindow()).close();
+        }
     }
 
 }

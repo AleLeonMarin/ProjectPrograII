@@ -30,7 +30,7 @@ public class GameLogInViewController extends Controller implements Initializable
     @FXML
     void onActionBtnLog(ActionEvent event) {
 
-        FlowController.getInstance().goViewInWindow("RegistryNewGame");
+        FlowController.getInstance().goViewInWindow("SelectingMode");
         ((Stage) btnLog.getScene().getWindow()).close();
 
     }
