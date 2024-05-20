@@ -15,11 +15,13 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
-import cr.ac.una.proyecto.util.FlowController;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
-public class PawnSectorSelectionController extends Controller implements Initializable {
+public class PawnSelectionController extends Controller implements Initializable {
 
     private String rutaPeonRosa = "/cr/ac/una/proyecto/resources/PeonRosa.png";
     private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
@@ -63,30 +65,46 @@ public class PawnSectorSelectionController extends Controller implements Initial
     private VBox vboxPlayer5;
     @FXML
     private VBox vboxPlayer6;
-
-    private int cantJugadores = 12;
     @FXML
     private Button btnSiguiente;
 
+    private int cantJugadores;
+
+    private Map<ImageView, String> imageViewMap;
+
+    private ArrayList<ImageView> jugadoresImagenes;
+    @FXML
+    private Label hjkhkh;
+
     @Override
     public void initialize() {
+        jugadoresImagenes = new ArrayList<>();
+        imageViewMap = new HashMap<>();
+        cargarDatos();
+
         Image imagenPeonRosa = new Image(getClass().getResourceAsStream(rutaPeonRosa));
         imgRosa.setImage(imagenPeonRosa);
+        imageViewMap.put(imgRosa, rutaPeonRosa);
 
         Image imagenPeonRojo = new Image(getClass().getResourceAsStream(rutaPeonRojo));
         imgRojo.setImage(imagenPeonRojo);
+        imageViewMap.put(imgRojo, rutaPeonRojo);
 
         Image imagenPeonAzul = new Image(getClass().getResourceAsStream(rutaPeonAzul));
         imgAzul.setImage(imagenPeonAzul);
+        imageViewMap.put(imgAzul, rutaPeonAzul);
 
         Image imagenPeonVerde = new Image(getClass().getResourceAsStream(rutaPeonVerde));
         imgVerde.setImage(imagenPeonVerde);
+        imageViewMap.put(imgVerde, rutaPeonVerde);
 
         Image imagenPeonMorado = new Image(getClass().getResourceAsStream(rutaPeonMorado));
         imgMorado.setImage(imagenPeonMorado);
+        imageViewMap.put(imgMorado, rutaPeonMorado);
 
         Image imagenPeonAmarrilo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
         imgAmarrillo.setImage(imagenPeonAmarrilo);
+        imageViewMap.put(imgAmarrillo, rutaPeonAmarillo);
 
         habilitarEspacios(false);
         cargarSliderCantJug();
@@ -178,6 +196,7 @@ public class PawnSectorSelectionController extends Controller implements Initial
     private boolean handleEmptyImageView(ImageView imageView, Image image, DragEvent event) {
         imageView.setImage(image);
         clearSourceImageView(event);
+        updateImageViewMap(imageView, image); // Actualiza el mapa
         return true;
     }
 
@@ -186,7 +205,46 @@ public class PawnSectorSelectionController extends Controller implements Initial
         devolverFotoPeon(currentImage);
         clearSourceImageView(event);
         imageView.setImage(image);
+        updateImageViewMap(imageView, image); // Actualiza el mapa
         return true;
+    }
+
+    private void updateImageViewMap(ImageView imageView, Image image) {
+        // Encuentra la ruta correspondiente a la imagen y actualiza el mapa
+        String imagePath = getImagePath(image);
+        if (imagePath != null)
+        {
+            imageViewMap.put(imageView, imagePath);
+        }
+    }
+
+    private String getImagePath(Image image) {
+        if (image == null)
+        {
+            return null;
+        }
+
+        if (image.equals(new Image(getClass().getResourceAsStream(rutaPeonRosa))))
+        {
+            return rutaPeonRosa;
+        } else if (image.equals(new Image(getClass().getResourceAsStream(rutaPeonRojo))))
+        {
+            return rutaPeonRojo;
+        } else if (image.equals(new Image(getClass().getResourceAsStream(rutaPeonAzul))))
+        {
+            return rutaPeonAzul;
+        } else if (image.equals(new Image(getClass().getResourceAsStream(rutaPeonVerde))))
+        {
+            return rutaPeonVerde;
+        } else if (image.equals(new Image(getClass().getResourceAsStream(rutaPeonMorado))))
+        {
+            return rutaPeonMorado;
+        } else if (image.equals(new Image(getClass().getResourceAsStream(rutaPeonAmarillo))))
+        {
+            return rutaPeonAmarillo;
+        }
+
+        return null;
     }
 
     private void clearSourceImageView(DragEvent event) {
@@ -218,10 +276,44 @@ public class PawnSectorSelectionController extends Controller implements Initial
 
     }
 
+    public String getImagePathForImageView(ImageView imageView) {
+        return imageViewMap.get(imageView);
+    }
+
+    private void cargarDatos() {
+
+        jugadoresImagenes.add(imgPeon1);
+        jugadoresImagenes.add(imgPeon2);
+
+        if (cantJugadores >= 3)
+        {
+            jugadoresImagenes.add(imgPeon3);
+        }
+        if (cantJugadores >= 4)
+        {
+            jugadoresImagenes.add(imgPeon4);
+        }
+        if (cantJugadores >= 5)
+        {
+            jugadoresImagenes.add(imgPeon5);
+        }
+
+        if (cantJugadores >= 6)
+        {
+            jugadoresImagenes.add(imgPeon6);
+        }
+    }
+
     @FXML
     private void Siguiente(ActionEvent event) {
-        FlowController.getInstance().goViewInWindow("DifficultySelectionView");
-        ((Stage) btnSiguiente.getScene().getWindow()).close();
+        int i = 0;
+        for (ImageView imagen : jugadoresImagenes)
+        {
+            i++;
+            System.out.println("Ruta de la imagen del jugador: " + i + getImagePathForImageView(imagen));
+        }
+        //FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+        // ((Stage) btnSiguiente.getScene().getWindow()).close();
     }
 
     @FXML

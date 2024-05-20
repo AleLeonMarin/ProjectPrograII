@@ -1,14 +1,15 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Juego;
-import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.Animacion;
+import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -30,15 +31,9 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private int playerTwoPositionX = 3;
     private int playerTwoCurrentPosition = 3;
 
-    private Sector sector1;
-    private Sector sector2;
     private String resultadoRuleta;
     private Ruleta ruleta;
     private Animacion animacion;
-
-    private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
-    private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";//rutas peones se deben cargar segun appcontext y ejir pj
-
     private String rutaImagen = "/cr/ac/una/proyecto/resources/HistoriaC.png";
 
     @FXML
@@ -50,50 +45,40 @@ public class TableroDosJugadoresController extends Controller implements Initial
     private ImageView imvPicker;
 
     private Juego juego;
+    ObservableList<Sector> sectores;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    private void cargarDatos() {
+    private void cargarSectores() {
+        sectores = FXCollections.observableArrayList();
+        sectores = (ObservableList<Sector>) AppContext.getInstance().get("sectores");
 
-        sector1 = new Sector(new Jugador("Jugador1Andres"), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
-        sector2 = new Sector(new Jugador("Jugador2Justin"), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonVerde);
+        for (Sector sector : sectores)
+        {
+            juego.agregarSector(sector);
+        }
+    }
+
+    private void cargarDatos() {
         ruleta = new Ruleta();
         animacion = new Animacion();
     }
 
     private void cargarDatosImagenes() {
-        imvCarta.setImage(new Image(getClass().getResourceAsStream(rutaPeonVerde)));
+        imvCarta.setImage(new Image(getClass().getResourceAsStream(rutaImagen)));
     }
 
     @Override
     public void initialize() {
-
+        juego = new Juego();
         cargarDatos();
         cargarDatosImagenes();
-        juego = new Juego();
-        juego.agregarSector(sector1);
-        juego.agregarSector(sector2);
-        juego.datosImagenes(grdpTablero);
-    }
+        cargarSectores();
 
-    @FXML
-    private void moverPeonPrimeroOnAction(ActionEvent event) {
-        System.out.println("Jug1");
-        System.out.println("PosicionX  = " + sector1.getPosicionFija());
-        System.out.println("PosicionActual  = " + sector1.getPosActual());
-        //  sector1.setPosActual(sector1.mover(imageViewJugador1, grdpTablero));
-
-    }
-
-    @FXML
-    private void moverPeonSegundoOnAction(ActionEvent event) {
-        System.out.println("Jug2");
-        System.out.println("PosicionX  = " + sector2.getPosicionFija());
-        System.out.println("PosicionActual  = " + sector2.getPosActual());
-        //  sector2.setPosActual(sector2.mover(imageViewJugador2, grdpTablero));
+        juego.cargarDatosImagenes(grdpTablero);
     }
 
     @FXML

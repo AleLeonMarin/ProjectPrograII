@@ -33,7 +33,7 @@ public class Juego {
         preguntas.add(pregunta);
     }
 
-    public void datosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
+    public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
         for (Sector sectorActual : sectores)
         {
             ImageView imvPeon = new ImageView();
@@ -70,10 +70,6 @@ public class Juego {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
             cambiarTurno();
         }
-
-    }
-
-    private void evaluar() {
 
     }
 

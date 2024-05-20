@@ -10,9 +10,10 @@ import cr.ac.una.proyecto.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,7 +47,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     @FXML
     private MFXTextField txfJug6;
     private int cantJugadores;
-    private ArrayList<Jugador> jugadores;
+    private ObservableList<Jugador> jugadores;
 
     @FXML
     void onActionBtnNext(ActionEvent event) {
@@ -62,7 +63,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @Override
     public void initialize() {
-        jugadores = new ArrayList<>();
+        jugadores = FXCollections.observableArrayList();
         cantJugadores = 2;
         sldQty.setMin(2);
         sldQty.setMax(6);
@@ -135,7 +136,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
             return;
         }
 
-        guardarJugadoresNombres();
         funcionAppContext();
     }
 
@@ -171,8 +171,9 @@ public class RegistryNewGameViewController extends Controller implements Initial
     }
 
     private void funcionAppContext() {
+        guardarJugadoresNombres();
         AppContext.getInstance().set("cantJugadoresSlider", cantJugadores);
-        FlowController.getInstance().goViewInWindow("PawnSectorSelectionView");
+        FlowController.getInstance().goViewInWindow("SectorSelectionView");
         ((Stage) btnNext.getScene().getWindow()).close();
     }
 
