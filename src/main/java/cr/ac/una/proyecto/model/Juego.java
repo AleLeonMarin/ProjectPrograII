@@ -63,13 +63,14 @@ public class Juego {
         if (respuesta.equalsIgnoreCase(preguntaActual.getRespuesta()))
         {
             jugadorActual.aumentarPuntos();
-            System.out.println("Respuesta correcta. ¡Has ganado un punto!" + sectorActual.getJugador().getNombre());
+            System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
         } else
         {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
+            cambiarTurno();
         }
-        cambiarTurno();
+
     }
 
     private void evaluar() {
