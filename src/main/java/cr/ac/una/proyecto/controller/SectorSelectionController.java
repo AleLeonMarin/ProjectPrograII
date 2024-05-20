@@ -171,8 +171,8 @@ public class SectorSelectionController extends Controller implements Initializab
 
     private void crearSectores(int cantidadJugadores) {//manejarLogicade inicio de sectores en tableros
 
-        ObservableList<Sector> sectores;
-        sectores = FXCollections.observableArrayList();
+        ArrayList<Sector> sectores;
+        sectores = new ArrayList<>();
 
         int playerOnePositionY = 0;
         int playerOnePositionX = 0;
@@ -182,12 +182,10 @@ public class SectorSelectionController extends Controller implements Initializab
         int playerTwoPositionX = 3;
         int playerTwoCurrentPosition = 3;
 
-        String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
-
         System.out.println("DAtos entrada: " + cantJugadores);
 
-        Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, rutaPeonRojo);
-        Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, rutaPeonRojo);
+        Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, "");
+        Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, "");
 
         System.out.println(sector1.toString());
         System.out.println(sector2.toString());
@@ -195,7 +193,7 @@ public class SectorSelectionController extends Controller implements Initializab
         sectores.add(sector1);
         sectores.add(sector2);
 
-//        if (cantidadJugadores >= 3)
+//        if (cantidadJugadores >= 3)//crear los demas sectores con la informacion de posiciones segun tablero
 //        {
 //            sectores.add(sector3);
 //        }
