@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ public class SectorSelectionController extends Controller implements Initializab
     private ObservableList<String> nombresJugadores;
     private ObservableList<Jugador> jugadores;
     private ArrayList<MFXComboBox> botonesCmbBox;
-
     @FXML
     private MFXComboBox<String> cmbSector1;
     @FXML
@@ -44,7 +44,7 @@ public class SectorSelectionController extends Controller implements Initializab
     @FXML
     private MFXComboBox<String> cmbSector6;
     @FXML
-    private Button btnConfirmar;
+    private MFXButton btnNext;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -131,12 +131,6 @@ public class SectorSelectionController extends Controller implements Initializab
             System.out.println("Jugador:" + jugador.getNombre());
             nombresJugadores.add(jugador.getNombre());
         }
-
-    }
-
-    @FXML
-    private void onActionBtnConfirmar(ActionEvent event) {
-        validarBotones();
 
     }
 
@@ -228,10 +222,11 @@ public class SectorSelectionController extends Controller implements Initializab
     }
 
     @FXML
-    private void onActionSiguiente(ActionEvent event) {
+    private void onActionBtnNext(ActionEvent event) {
         crearSectores(cantJugadores);
-        FlowController.getInstance().goMain("tableroView");
-        ((Stage) btnConfirmar.getScene().getWindow()).close();
+        validarBotones();
+        FlowController.getInstance().goViewInWindow("DifficultySelectionView");
+        ((Stage) btnNext.getScene().getWindow()).close();
     }
 
 }
