@@ -29,7 +29,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-        FlowController.getInstance().goMain("tableroView");
+        FlowController.getInstance().goViewInWindow("SumaryMatch");
         ((Stage) btnPlay.getScene().getWindow()).close();
     }
 

@@ -24,7 +24,7 @@ public class LoadGameViewController extends Controller implements Initializable{
 
     @FXML
     void onActionBtnChargeMatch(ActionEvent event) {
-        FlowController.getInstance().goViewInWindow("tableroView");
+        FlowController.getInstance().goMain("tableroView");
         ((Stage) btnChargeMatch.getScene().getWindow()).close();
 
     }
