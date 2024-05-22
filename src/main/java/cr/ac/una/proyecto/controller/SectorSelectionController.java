@@ -178,33 +178,38 @@ public class SectorSelectionController extends Controller implements Initializab
         int playerTwoPositionX = 3;
         int playerTwoCurrentPosition = 3;
 
+        int playerThreePositionY = 0;
+        int playerThreePositionX = 3;
+        int playerThreeCurrentPosition = 3;
+
+
         System.out.println("DAtos entrada: " + cantJugadores);
 
         Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 1, "");
         Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, playerTwoCurrentPosition, 2, "");
-
+        Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerOnePositionX, playerOnePositionY, playerOneCurrentPosition, 3, "");
         System.out.println(sector1.toString());
         System.out.println(sector2.toString());
 
         sectores.add(sector1);
         sectores.add(sector2);
 
-//        if (cantidadJugadores >= 3)//crear los demas sectores con la informacion de posiciones segun tablero
-//        {
-//            sectores.add(sector3);
-//        }
-//        if (cantidadJugadores >= 4)
-//        {
-//            sectores.add(sector4);
-//        }
-//        if (cantidadJugadores >= 5)
-//        {
-//            sectores.add(sector5);
-//        }
-//        if (cantidadJugadores >= 6)
-//        {
-//            sectores.add(sector6);
-//        }
+       // if (cantidadJugadores >= 3)//crear los demas sectores con la informacion de posiciones segun tablero
+        //{
+        //    sectores.add(sector3);
+        //}
+       //if (cantidadJugadores >= 4)
+       //{
+       //    sectores.add(sector4);
+      //}
+       //if (cantidadJugadores >= 5)
+       //{
+        //   sectores.add(sector5);
+        //}
+       //if (cantidadJugadores >= 6)
+       //{
+         //   sectores.add(sector6);
+       //}
         AppContext.getInstance().set("sectores", sectores);
     }
 

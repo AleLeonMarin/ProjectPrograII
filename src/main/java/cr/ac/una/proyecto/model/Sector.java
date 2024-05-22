@@ -19,13 +19,23 @@ public class Sector {
     public Sector() {
     }
 
-    public Sector(Jugador jugador, int posicionFija, int posicionInicial, int posActual, int direccion, String rutaImagenJugador) {
+    public Sector(Jugador jugador, int posicionFija, int posicionInicial, int posActual, int direccion,
+            String rutaImagenJugador) {
         this.jugador = jugador;
         this.posicionFija = posicionFija;
         this.posicionInicial = posicionInicial;
         this.posActual = posActual;
         this.direccion = direccion;
         this.rutaImagenJugador = rutaImagenJugador;
+    }
+
+    public Sector(Jugador jugador, int posicionFija, int posicionInicial, int direccion, String rutaImagenJugador) {
+        this.jugador = jugador;
+        this.posicionFija = posicionFija;
+        this.posicionInicial = posicionInicial;
+        this.direccion = direccion;
+        this.rutaImagenJugador = rutaImagenJugador;
+        this.posActual = this.posicionInicial;
     }
 
     public int getDireccion() {
@@ -88,11 +98,9 @@ public class Sector {
     public int moverIzquierdaDerecha(ImageView imageView, GridPane grdPane) {
 
         eliminarNodoEnPosicion(posActual, posicionFija, grdPane);
-        if (posActual >= posicionInicial + 3)
-        {
+        if (posActual >= posicionInicial + 3) {
             posActual = posicionInicial;
-        } else
-        {
+        } else {
             posActual++;
         }
 
@@ -105,11 +113,9 @@ public class Sector {
 
         eliminarNodoEnPosicion(posActual, posicionFija, grdPane);
 
-        if (posActual <= posicionInicial - 3)
-        {
+        if (posActual <= posicionInicial - 3) {
             posActual = posicionInicial;
-        } else
-        {
+        } else {
             posActual--;
         }
 
@@ -124,18 +130,14 @@ public class Sector {
         System.out.println("Pos X: " + posicionFija);
         System.out.println("Pos Y: " + posicionInicial);
 
-        if (direccion == 1)
-        {
+        if (direccion == 1) {
             return moverIzquierdaDerecha(imageView, grdPane);
 
-        } else if (direccion == 2)
-        {
+        } else if (direccion == 2) {
             return moverDerechaIzquierda(imageView, grdPane);
-        } else if (direccion == 3)
-        {
+        } else if (direccion == 3) {
 
-        } else if (direccion == 4)
-        {
+        } else if (direccion == 4) {
 
         }
 
