@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package cr.ac.una.proyecto.model;
 
 /**
@@ -10,19 +7,28 @@ package cr.ac.una.proyecto.model;
  */
 public class Pregunta {
 
-    private String pregunta;
+    private String enunciado;
     private String respuesta;
+    private String categoria;
 
-    public Pregunta(String pregunta, String respuesta) {
-        this.pregunta = pregunta;
+    public Pregunta(String pregunta, String respuesta, String categoria) {
+        this.enunciado = pregunta;
         this.respuesta = respuesta;
+        this.categoria = categoria;
     }
 
-    public String getPregunta() {
-        return pregunta;
+    public String getEnunciado() {
+        return enunciado;
     }
 
     public String getRespuesta() {
         return respuesta;
     }
+
+    public String getCategoria() {
+        return categoria;
+    }
+    
+    
+  
 }

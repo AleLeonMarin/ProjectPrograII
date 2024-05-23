@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.model;
 
+import cr.ac.una.proyecto.util.Ruleta;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javafx.geometry.HPos;
@@ -16,7 +17,11 @@ public class Juego {
     private int turnoActual;
     private Scanner scanner;
 
+    private String resultadoRuleta;
+    private Ruleta ruleta;
+
     public Juego() {
+        ruleta = new Ruleta();
         sectores = new ArrayList<>();
         preguntas = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
@@ -45,7 +50,6 @@ public class Juego {
             imagenesPeones.add(imvPeon);
             grdpTablero.add(imvPeon, sectorActual.getPosicionInicial(), sectorActual.getPosicionFija());
 
-            // Centrar los elementos dentro de las celdas del GridPane
             GridPane.setHalignment(imvPeon, HPos.CENTER);
             GridPane.setValignment(imvPeon, VPos.CENTER);
         }
@@ -57,7 +61,7 @@ public class Juego {
         Jugador jugadorActual = sectorActual.getJugador();
         System.out.println("Turno de " + jugadorActual.getNombre());
         Pregunta preguntaActual = obtenerPreguntaAleatoria();
-        System.out.println("Pregunta: " + preguntaActual.getPregunta());
+        System.out.println("Pregunta: " + preguntaActual.getEnunciado());
         System.out.print("Respuesta: ");
         String respuesta = scanner.nextLine();
         if (respuesta.equalsIgnoreCase(preguntaActual.getRespuesta()))
@@ -98,7 +102,7 @@ public class Juego {
         for (Sector sector : sectores)
         {
             Jugador jugador = sector.getJugador();
-            if (jugador.getPuntos() >= 3)
+            if (jugador.getPuntos() >= 6)
             {
                 System.out.println("¡El ganador es: " + jugador.getNombre() + " con " + jugador.getPuntos() + " puntos!");
                 break;
@@ -115,9 +119,24 @@ public class Juego {
     }
 
     private void cargarPreguntas() {
-        agregarPregunta(new Pregunta("¿1?", "1"));
-        agregarPregunta(new Pregunta("¿2?", "2"));
-        agregarPregunta(new Pregunta("¿3?", "3"));
-        agregarPregunta(new Pregunta("¿4?", "4"));
+        agregarPregunta(new Pregunta("¿1?", "1", "Historia"));
+        agregarPregunta(new Pregunta("¿2?", "2", "Deporte"));
+        agregarPregunta(new Pregunta("¿3?", "3", "Arte"));
+        agregarPregunta(new Pregunta("¿4?", "4", "Entretenimiento"));
+        agregarPregunta(new Pregunta("¿5?", "5", "Geografia"));
+        agregarPregunta(new Pregunta("¿6?", "6", "Ciencia"));
+        agregarPregunta(new Pregunta("¿7?", "7", "Corona"));
+    }
+
+    public double getRuletaAngulo() {
+        return this.ruleta.getAnguloDetenido();
+    }
+
+    public String obtenerPosicionRuleta() {
+        return this.ruleta.determinarPosicionRuleta();
+    }
+
+    public Jugador getJugadorPregunta() {
+        return sectores.get(turnoActual).getJugador();
     }
 }
