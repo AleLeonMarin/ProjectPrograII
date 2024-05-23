@@ -1,10 +1,52 @@
 /*
 Created: 5/1/2024
-Modified: 5/18/2024
+Modified: 5/23/2024
 Model: Preguntados
 Database: Oracle 11g Release 2
 */
 
+
+-- Create sequences section -------------------------------------------------
+
+CREATE SEQUENCE "PREG_PREGUNTA_SEQ01"
+ INCREMENT BY 1
+ START WITH 1
+ NOMAXVALUE
+ MINVALUE 0
+ NOCACHE
+/
+
+CREATE SEQUENCE "PREG_RESPUESTA_SEQ01"
+ INCREMENT BY 1
+ START WITH 1
+ NOMAXVALUE
+ MINVALUE 0
+ NOCACHE
+/
+
+CREATE SEQUENCE "PREG_CATEGORIA_SEQ01"
+ INCREMENT BY 1
+ START WITH 1
+ NOMAXVALUE
+ MINVALUE 0
+ NOCACHE
+/
+
+CREATE SEQUENCE "PREG_PARTIDA_SEQ01"
+ INCREMENT BY 1
+ START WITH 1
+ NOMAXVALUE
+ MINVALUE 0
+ NOCACHE
+/
+
+CREATE SEQUENCE "PREG_JUGADOR_SEQ01"
+ INCREMENT BY 1
+ START WITH 1
+ NOMAXVALUE
+ MINVALUE 0
+ NOCACHE
+/
 
 -- Create tables section -------------------------------------------------
 
@@ -27,18 +69,23 @@ ALTER TABLE "Jugador" ADD CONSTRAINT "PK_Jugador" PRIMARY KEY ("jug_id")
 
 -- Table and Columns comments section
 
-COMMENT ON COLUMN "Jugador"."jug_id" IS 'Identificador unico para reconocer a un jugador'
-;
-COMMENT ON COLUMN "Jugador"."jug_nombre" IS 'Nombre del jugador'
-;
-COMMENT ON COLUMN "Jugador"."partidasGanadas" IS 'Contador de las partidas ganadas de un jugador'
-;
-COMMENT ON COLUMN "Jugador"."jug_preguntasRespondidas" IS 'Contador general para las preguntas respondidas por el jugador'
-;
+COMMENT ON COLUMN "Jugador"."jug_id" IS 'Identificador unico para reconocer a un jugador
+'
+/
+COMMENT ON COLUMN "Jugador"."jug_nombre" IS 'Nombre del jugador
+'
+/
+COMMENT ON COLUMN "Jugador"."partidasGanadas" IS 'Contador de las partidas ganadas de un jugador
+'
+/
+COMMENT ON COLUMN "Jugador"."jug_preguntasRespondidas" IS 'Contador general para las preguntas respondidas por el jugador
+'
+/
 COMMENT ON COLUMN "Jugador"."jug_preguntasRespondidasCorrectamente" IS 'Contador general para las preguntas respondidas correctamente'
-;
-COMMENT ON COLUMN "Jugador"."jug_version" IS 'Version para la entidad Jugador'
-;
+/
+COMMENT ON COLUMN "Jugador"."jug_version" IS 'Version para la entidad Jugador
+'
+/
 
 -- Table Categoria
 
@@ -61,7 +108,7 @@ COMMENT ON COLUMN "Categoria"."cat_nombre" IS 'Identificador unico para conocer 
 /
 COMMENT ON COLUMN "Categoria"."cat_Id" IS 'Identificador para reconocer una corona por su ID'
 /
-    COMMENT ON COLUMN "Categoria"."cat_version" IS 'Version de la entidad categoria'
+COMMENT ON COLUMN "Categoria"."cat_version" IS 'Version de la entidad categoria'
 /
 
 -- Table Partida
@@ -159,6 +206,16 @@ CREATE INDEX "Respuesta_ind01" ON "Respuesta" ("pre_Id")
 ALTER TABLE "Respuesta" ADD CONSTRAINT "PK_Respuesta" PRIMARY KEY ("res_Id")
 /
 
+-- Create triggers for table Respuesta
+
+CREATE TRIGGER "Trigger1"
+  BEFORE
+  ON "Respuesta"
+  BEGIN
+    /*trigger_body*/
+END;
+/
+
 -- Table and Columns comments section
 
 COMMENT ON COLUMN "Respuesta"."res_Id" IS 'Identificador unico de una respuesta
@@ -173,6 +230,76 @@ COMMENT ON COLUMN "Respuesta"."res_estado" IS 'Estado de la respuesta (A:Activa,
 COMMENT ON COLUMN "Respuesta"."res_version" IS 'Version de la respusta'
 /
 COMMENT ON COLUMN "Respuesta"."res_correcta" IS 'Estado de si una respuesta es correcta o incorrecta (C:Correcta,X:Incorrecta)'
+/
+
+-- Trigger for sequence PREG_JUGADOR_SEQ01 for column jug_id in table Jugador ---------
+CREATE OR REPLACE TRIGGER "ts_Jugador_PREG_JUGADOR_SEQ01" BEFORE INSERT
+ON "Jugador" FOR EACH ROW
+BEGIN
+  :new."jug_id" := "PREG_JUGADOR_SEQ01".nextval;
+END;
+/
+CREATE OR REPLACE TRIGGER "tsu_Jugador_PREG_JUGADOR_SEQ01" AFTER UPDATE OF "jug_id"
+ON "Jugador" FOR EACH ROW
+BEGIN
+  RAISE_APPLICATION_ERROR(-20010,'Cannot update column "jug_id" in table "Jugador" as it uses sequence.');
+END;
+/
+
+-- Trigger for sequence PREG_CATEGORIA_SEQ01 for column cat_Id in table Categoria ---------
+CREATE OR REPLACE TRIGGER "ts_Categoria_PREG_CATEGORIA__1" BEFORE INSERT
+ON "Categoria" FOR EACH ROW
+BEGIN
+  :new."cat_Id" := "PREG_CATEGORIA_SEQ01".nextval;
+END;
+/
+CREATE OR REPLACE TRIGGER "tsu_Categoria_PREG_CATEGORIA_1" AFTER UPDATE OF "cat_Id"
+ON "Categoria" FOR EACH ROW
+BEGIN
+  RAISE_APPLICATION_ERROR(-20010,'Cannot update column "cat_Id" in table "Categoria" as it uses sequence.');
+END;
+/
+
+-- Trigger for sequence PREG_PARTIDA_SEQ01 for column par_Id in table Partida ---------
+CREATE OR REPLACE TRIGGER "ts_Partida_PREG_PARTIDA_SEQ01" BEFORE INSERT
+ON "Partida" FOR EACH ROW
+BEGIN
+  :new."par_Id" := "PREG_PARTIDA_SEQ01".nextval;
+END;
+/
+CREATE OR REPLACE TRIGGER "tsu_Partida_PREG_PARTIDA_SEQ01" AFTER UPDATE OF "par_Id"
+ON "Partida" FOR EACH ROW
+BEGIN
+  RAISE_APPLICATION_ERROR(-20010,'Cannot update column "par_Id" in table "Partida" as it uses sequence.');
+END;
+/
+
+-- Trigger for sequence PREG_PREGUNTA_SEQ01 for column pre_id in table Pregunta ---------
+CREATE OR REPLACE TRIGGER "ts_Pregunta_PREG_PREGUNTA_SE_0" BEFORE INSERT
+ON "Pregunta" FOR EACH ROW
+BEGIN
+  :new."pre_id" := "PREG_PREGUNTA_SEQ01".nextval;
+END;
+/
+CREATE OR REPLACE TRIGGER "tsu_Pregunta_PREG_PREGUNTA_S_0" AFTER UPDATE OF "pre_id"
+ON "Pregunta" FOR EACH ROW
+BEGIN
+  RAISE_APPLICATION_ERROR(-20010,'Cannot update column "pre_id" in table "Pregunta" as it uses sequence.');
+END;
+/
+
+-- Trigger for sequence PREG_RESPUESTA_SEQ01 for column res_Id in table Respuesta ---------
+CREATE OR REPLACE TRIGGER "ts_Respuesta_PREG_RESPUESTA__0" BEFORE INSERT
+ON "Respuesta" FOR EACH ROW
+BEGIN
+  :new."res_Id" := "PREG_RESPUESTA_SEQ01".nextval;
+END;
+/
+CREATE OR REPLACE TRIGGER "tsu_Respuesta_PREG_RESPUESTA_0" AFTER UPDATE OF "res_Id"
+ON "Respuesta" FOR EACH ROW
+BEGIN
+  RAISE_APPLICATION_ERROR(-20010,'Cannot update column "res_Id" in table "Respuesta" as it uses sequence.');
+END;
 /
 
 
