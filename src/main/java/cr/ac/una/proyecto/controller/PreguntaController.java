@@ -171,7 +171,7 @@ public class PreguntaController extends Controller implements Initializable {
 
         for (Respuesta respuesta : respuestas)
         {
-            VboxRespuestas.getChildren().get(index).getClass();
+          
         }
 
     }
