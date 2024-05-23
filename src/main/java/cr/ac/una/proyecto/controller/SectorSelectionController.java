@@ -289,8 +289,9 @@ public class SectorSelectionController extends Controller implements Initializab
 
             Sector sector5 = new Sector(buscarJugador(cmbSector5.getValue()), playerFivePositionX, playerFivePositionY,
                     5, "");
-            Sector sector6 = new Sector(buscarJugador(cmbSector6.getValue()), playerSixPositionX, playerSixPositionY, 6, "");
-            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5,sector6));
+            Sector sector6 = new Sector(buscarJugador(cmbSector6.getValue()), playerSixPositionX, playerSixPositionY, 6,
+                    "");
+            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5, sector6));
         }
         AppContext.getInstance().set("sectores", sectores);
     }
