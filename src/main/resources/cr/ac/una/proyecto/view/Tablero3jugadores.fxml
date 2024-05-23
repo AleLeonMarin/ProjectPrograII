@@ -20,7 +20,7 @@
             <ImageView fitHeight="172.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </MFXButton>
-      <GridPane layoutY="106.0" prefHeight="482.0" prefWidth="737.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane fx:id="grdpTablero" layoutY="106.0" prefHeight="482.0" prefWidth="737.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
