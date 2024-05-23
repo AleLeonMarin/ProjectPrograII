@@ -272,8 +272,8 @@ public class SectorSelectionController extends Controller implements Initializab
             int playerFourPositionY = 0;
             int playerFourPositionX = 0;
 
-            int playerFivePositionY = 0;
-            int playerFivePositionX = 4;
+            int playerFivePositionY = 4;
+            int playerFivePositionX = 0;
 
             int playerSixPositionY = 7;
             int playerSixPositionX = 1;
@@ -286,11 +286,11 @@ public class SectorSelectionController extends Controller implements Initializab
                     playerThreePositionY, 3, "");
             Sector sector4 = new Sector(buscarJugador(cmbSector4.getValue()), playerFourPositionX, playerFourPositionY,
                     4, "");
-
             Sector sector5 = new Sector(buscarJugador(cmbSector5.getValue()), playerFivePositionX, playerFivePositionY,
                     5, "");
-            Sector sector6 = new Sector(buscarJugador(cmbSector6.getValue()), playerSixPositionX, playerSixPositionY, 6, "");
-            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5,sector6));
+            Sector sector6 = new Sector(buscarJugador(cmbSector6.getValue()), playerSixPositionX, playerSixPositionY, 6,
+                    "");
+            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5, sector6));
         }
         AppContext.getInstance().set("sectores", sectores);
     }

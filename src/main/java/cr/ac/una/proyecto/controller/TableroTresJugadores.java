@@ -35,12 +35,9 @@ public class TableroTresJugadores extends Controller implements Initializable {
 
     ArrayList<Sector> sectores;
 
-    int cantJugadores;
 
     @Override
     public void initialize() {
-
-        cantJugadores = 0;
         juego = new Juego();
         cargarDatos();
         cargarSectores();
