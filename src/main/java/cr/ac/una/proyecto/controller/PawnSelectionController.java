@@ -88,15 +88,15 @@ public class PawnSelectionController extends Controller implements Initializable
         personajesSeleccionados = new ArrayList<>();
         imageViewMap = new ImageStorage();
         botonesLista = new ArrayList<>();
-        cargarPeones();
-        cargarDatosImagenes();
+        cargarNombresPeones();
+        cargarDatosImagenesFijaPeon();
 
         habilitarEspacios(false);
         cargarSliderCantJug();
         mostrarCmbJugadores(cantJugadores);
     }
 
-    private void cargarDatosImagenes() {
+    private void cargarDatosImagenesFijaPeon() {
         Image imagenPeonRosa = new Image(getClass().getResourceAsStream(rutaPeonRosa));
         imvRosa.setImage(imagenPeonRosa);
         imageViewMap.addImage(nombresPeones.get(0), rutaPeonRosa);
@@ -123,7 +123,7 @@ public class PawnSelectionController extends Controller implements Initializable
 
     }
 
-    private void cargarPeones() {
+    private void cargarNombresPeones() {
         String nameBase = "Peon ";
         nombresPeones.add(nameBase + "Rosa");
         nombresPeones.add(nameBase + "Amarrilo");
@@ -191,7 +191,7 @@ public class PawnSelectionController extends Controller implements Initializable
     }
 
     private void cargarSelecionados(int cantJug) {
-
+        personajesSeleccionados.clear();
         personajesSeleccionados.add(cmbJugadorSector1.getSelectedItem());
         personajesSeleccionados.add(cmbJugadorSector2.getSelectedItem());
 

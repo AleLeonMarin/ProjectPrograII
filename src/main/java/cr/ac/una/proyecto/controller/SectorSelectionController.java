@@ -161,7 +161,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
         ArrayList<Sector> sectores;
         sectores = new ArrayList<>();
-        if (cantidadJugadores >= 2) {
+        if (cantidadJugadores == 2) {
 
             int playerOnePositionY = 0;
             int playerOnePositionX = 0;
@@ -184,7 +184,7 @@ public class SectorSelectionController extends Controller implements Initializab
             sectores.add(sector2);
         }
 
-        if (cantidadJugadores >= 3)// crear los demas sectores con la informacion de posiciones segun tablero
+        if (cantidadJugadores == 3)// crear los demas sectores con la informacion de posiciones segun tablero
         {
             int playerOnePositionY = 3;
             int playerOnePositionX = 4;
@@ -204,7 +204,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
             sectores.addAll(Arrays.asList(sector1, sector2, sector3));
         }
-        if (cantidadJugadores >= 4) {
+        if (cantidadJugadores == 4) {
 
             int playerOnePositionY = 3;
             int playerOnePositionX = 4;
@@ -228,7 +228,7 @@ public class SectorSelectionController extends Controller implements Initializab
                     4, "");
             sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4));
         }
-        if (cantidadJugadores >= 5) {
+        if (cantidadJugadores == 5) {
             int playerOnePositionY = 6;
             int playerOnePositionX = 4;
 
@@ -258,7 +258,7 @@ public class SectorSelectionController extends Controller implements Initializab
             sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5));
 
         }
-        if (cantidadJugadores >= 6) {
+        if (cantidadJugadores == 6) {
 
             int playerOnePositionY = 7;
             int playerOnePositionX = 5;
