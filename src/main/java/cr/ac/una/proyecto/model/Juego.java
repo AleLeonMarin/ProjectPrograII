@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.model;
 
+import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,6 +14,7 @@ public class Juego {
 
     private ArrayList<Sector> sectores;
     private ArrayList<Pregunta> preguntas;
+    private ArrayList<Respuesta> respuestas;
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
     private Scanner scanner;
@@ -24,10 +26,12 @@ public class Juego {
         ruleta = new Ruleta();
         sectores = new ArrayList<>();
         preguntas = new ArrayList<>();
+        respuestas = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
         scanner = new Scanner(System.in);
         turnoActual = 0;
         cargarPreguntas();
+        cargarRespuestas();
     }
 
     public void agregarSector(Sector sector) {
@@ -36,6 +40,10 @@ public class Juego {
 
     public void agregarPregunta(Pregunta pregunta) {
         preguntas.add(pregunta);
+    }
+
+    private void agregarRespuesta(Respuesta respuesta) {
+        respuestas.add(respuesta);
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
@@ -119,13 +127,55 @@ public class Juego {
     }
 
     private void cargarPreguntas() {
-        agregarPregunta(new Pregunta("¿1?", "1", "Historia"));
-        agregarPregunta(new Pregunta("¿2?", "2", "Deporte"));
-        agregarPregunta(new Pregunta("¿3?", "3", "Arte"));
-        agregarPregunta(new Pregunta("¿4?", "4", "Entretenimiento"));
-        agregarPregunta(new Pregunta("¿5?", "5", "Geografia"));
-        agregarPregunta(new Pregunta("¿6?", "6", "Ciencia"));
-        agregarPregunta(new Pregunta("¿7?", "7", "Corona"));
+        agregarPregunta(new Pregunta("¿En qué año comenzó la Primera Guerra Mundial?", "1914", "Historia", 1));
+        agregarPregunta(new Pregunta("¿Quién ganó la Copa del Mundo de la FIFA en 2018?", "Francia", "Deporte", 2));
+        agregarPregunta(new Pregunta("¿Qué científica ganó dos premios Nobel en distintas disciplinas?", "Marie Curie", "Ciencia", 3));
+        agregarPregunta(new Pregunta("¿Quién pintó la Mona Lisa?", "Leonardo da Vinci", "Arte", 4));
+        agregarPregunta(new Pregunta("¿Cuál es la capital de Australia?", "Canberra", "Geografia", 5));
+        agregarPregunta(new Pregunta("¿Quién protagonizó la película 'Titanic'?", "Leonardo DiCaprio", "Entretenimiento", 6));
+        agregarPregunta(new Pregunta("¿Cuál es la piedra preciosa de la corona británica?", "Diamante Koh-i-Noor", "Corona", 7));
+
+        AppContext.getInstance().set("preguntas", preguntas);
+
+    }
+
+    private void cargarRespuestas() {
+        agregarRespuesta(new Respuesta(1, "1912", false));
+        agregarRespuesta(new Respuesta(1, "1914", true));
+        agregarRespuesta(new Respuesta(1, "1916", false));
+        agregarRespuesta(new Respuesta(1, "1918", false));
+
+        agregarRespuesta(new Respuesta(2, "Alemania", false));
+        agregarRespuesta(new Respuesta(2, "Brasil", false));
+        agregarRespuesta(new Respuesta(2, "Francia", true));
+        agregarRespuesta(new Respuesta(2, "Argentina", false));
+
+        agregarRespuesta(new Respuesta(3, "Rosalind Franklin", false));
+        agregarRespuesta(new Respuesta(3, "Lise Meitner", false));
+        agregarRespuesta(new Respuesta(3, "Marie Curie", true));
+        agregarRespuesta(new Respuesta(3, "Dorothy Hodgkin", false));
+
+        agregarRespuesta(new Respuesta(4, "Vincent van Gogh", false));
+        agregarRespuesta(new Respuesta(4, "Leonardo da Vinci", true));
+        agregarRespuesta(new Respuesta(4, "Pablo Picasso", false));
+        agregarRespuesta(new Respuesta(4, "Claude Monet", false));
+
+        agregarRespuesta(new Respuesta(5, "Sídney", false));
+        agregarRespuesta(new Respuesta(5, "Melbourne", false));
+        agregarRespuesta(new Respuesta(5, "Canberra", true));
+        agregarRespuesta(new Respuesta(5, "Brisbane", false));
+
+        agregarRespuesta(new Respuesta(6, "Brad Pitt", false));
+        agregarRespuesta(new Respuesta(6, "Tom Cruise", false));
+        agregarRespuesta(new Respuesta(6, "Leonardo DiCaprio", true));
+        agregarRespuesta(new Respuesta(6, "Johnny Depp", false));
+
+        agregarRespuesta(new Respuesta(7, "Rubí", false));
+        agregarRespuesta(new Respuesta(7, "Esmeralda", false));
+        agregarRespuesta(new Respuesta(7, "Diamante Koh-i-Noor", true));
+        agregarRespuesta(new Respuesta(7, "Zafiro", false));
+
+        AppContext.getInstance().set("respuestas", respuestas);
     }
 
     public double getRuletaAngulo() {

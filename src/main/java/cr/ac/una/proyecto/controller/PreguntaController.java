@@ -1,12 +1,17 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.Pregunta;
+import cr.ac.una.proyecto.model.Respuesta;
 import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.base.MFXCombo;
+import static io.github.palexdev.materialfx.utils.RandomUtils.random;
+import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,7 +39,10 @@ public class PreguntaController extends Controller implements Initializable {
     private TextArea txaEnunciado;
 
     private String preguntaCategoria;
+    private String respuestaCorrecta;
     private Jugador jugador;
+    private ArrayList<Pregunta> preguntas;
+    private ArrayList<Respuesta> respuestas;
 
     @FXML
     void onActionBtnBomb(ActionEvent event) {
@@ -67,6 +75,8 @@ public class PreguntaController extends Controller implements Initializable {
         btnsAnswers();
         cargarPreguntaCategoria();
         cargarJugadorPregunta();
+        cargarPreguntasRespuestas();
+        cargarEnunciadoPregunta();
     }
 
     public void btnsAnswers() {
@@ -111,4 +121,69 @@ public class PreguntaController extends Controller implements Initializable {
         }
         System.out.println("Pregunta Jugador : " + jugador.toString() + ", [cargarJugadorPregunta][PreguntaController]");
     }
+
+    private void cargarPreguntasRespuestas() {
+        preguntas = (ArrayList<Pregunta>) AppContext.getInstance().get("preguntas");
+        respuestas = (ArrayList<Respuesta>) AppContext.getInstance().get("respuestas");
+    }
+
+    private void cargarEnunciadoPregunta() {
+        ArrayList<Pregunta> preguntasPorCategoria = new ArrayList<>();
+        ArrayList<Respuesta> respuestasPorPregunta = new ArrayList<>();
+
+        System.out.println("Categoria: " + preguntaCategoria);
+        for (Pregunta pregunta : preguntas)
+        {
+            if (pregunta.getCategoria().equals(preguntaCategoria))
+            {
+                preguntasPorCategoria.add(pregunta);
+                System.out.println(pregunta.toString());
+
+            }
+        }
+
+        Random random = new Random();
+        int numeroAleatorioInt = random.nextInt(preguntasPorCategoria.size());
+
+        Pregunta preguntaTexto = preguntasPorCategoria.get(numeroAleatorioInt);
+        System.out.println("Numer");
+        int id = preguntaTexto.getId();
+        System.out.println("ID: " + id);
+        for (Respuesta respuesta : respuestas)
+        {
+            if (id == respuesta.getIdPadre())
+            {
+                respuestasPorPregunta.add(respuesta);
+                System.out.println(respuesta.toString());
+                if (respuesta.getIsCorrect())
+                {
+                    respuestaCorrecta = respuesta.getEnunciado();
+                    System.out.println("Respuesta Correcta es: " + respuestaCorrecta);
+                }
+            }
+        }
+
+        txaEnunciado.setText(preguntaTexto.getEnunciado());
+
+    }
+
+    private void cargarBotones(ArrayList<Respuesta> respuestas) {
+
+        for (Respuesta respuesta : respuestas)
+        {
+            VboxRespuestas.getChildren().get(index).getClass();
+        }
+
+    }
+
+    private void validarRespuesta(MFXButton button) {
+        if (button.getText().equals(respuestaCorrecta))
+        {
+            System.out.println("Respuesta Correcta");
+        } else
+        {
+            System.out.println("Respuesta Incorrecta");
+        }
+    }
+
 }
