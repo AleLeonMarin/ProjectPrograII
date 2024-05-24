@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  preguntados:
+    image: container-registry.oracle.com/database/express:latest
+    container_name: oracle_preguntados
+    environment:
+      - ORACLE_PWD=oracle
+      - ORACLE_USER=oracle
+  ports:
+    - "1521:3000"
+  volumes:
+    - ./scripts/oracle_preguntados:/docker-entrypoint-initdb.d
+    - oracle_preguntados_data:/u01/app/oracle/oradata

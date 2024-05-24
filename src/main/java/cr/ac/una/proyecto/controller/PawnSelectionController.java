@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.ImageStorage;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.Initializable;
 
@@ -43,7 +44,7 @@ public class PawnSelectionController extends Controller implements Initializable
     private ImageView imvMorado;
 
     @FXML
-    private Button btnSiguiente;
+    private MFXButton btnSiguiente;
 
     @FXML
     private MFXComboBox<String> cmbJugadorSector1;
@@ -134,7 +135,7 @@ public class PawnSelectionController extends Controller implements Initializable
     }
 
     @FXML
-    private void Siguiente(ActionEvent event) {
+    private void onActionBtnSiguiente(ActionEvent event) {
         if (validarSeleccion())
         {
             System.out.println("Hay errores");

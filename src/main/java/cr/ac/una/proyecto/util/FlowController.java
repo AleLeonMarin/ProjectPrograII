@@ -122,9 +122,9 @@ public class FlowController {
         }
         switch (location) {
             case "Center":
-                AnchorPane anchor = ((AnchorPane) ((BorderPane) stage.getScene().getRoot()).getCenter());
-                anchor.getChildren().clear();
-                anchor.getChildren().add(loader.getRoot());
+                VBox vbox = ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter());
+                vbox.getChildren().clear();
+                vbox.getChildren().add(loader.getRoot());
                 break;
             case "Top":
                 break;
