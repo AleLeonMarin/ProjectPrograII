@@ -11,7 +11,7 @@ public class Ruleta {
     private double anguloDetenido;
 
     public Ruleta() {
-        opciones = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografía", "Entretenimiento", "Ciencia", "Historia"));
+        opciones = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
         anguloInicial = 0;
         anguloDetenido = 0;
     }
@@ -47,25 +47,25 @@ public class Ruleta {
 
         if (anguloDetenido >= deporteInicio && anguloDetenido <= deporteFin)
         {
-            categoria = "Deporte";
+            categoria = opciones.get(0);
         } else if (anguloDetenido >= arteInicio && anguloDetenido <= arteFin)
         {
-            categoria = "Arte";
+            categoria = opciones.get(1);
         } else if (anguloDetenido >= geografiaInicio && anguloDetenido <= geografiaFin)
         {
-            categoria = "Geografía";
+            categoria = opciones.get(2);
         } else if (anguloDetenido >= cienciaInicio && anguloDetenido <= cienciaFin)
         {
-            categoria = "Ciencia";
+            categoria = opciones.get(3);
         } else if (anguloDetenido >= coronaInicio && anguloDetenido <= coronaFin)
         {
-            categoria = "Corona";
+            categoria = opciones.get(4);
         } else if (anguloDetenido >= entretenimientoInicio && anguloDetenido <= entretenimientoFin)
         {
-            categoria = "Entretenimiento";
+            categoria = opciones.get(5);
         } else if ((anguloDetenido >= historiaInicio && anguloDetenido <= finalGrados) || (anguloDetenido >= anguloInicial && anguloDetenido <= historiaFin))
         {
-            categoria = "Historia";
+            categoria = opciones.get(6);
         }
 
         return categoria;

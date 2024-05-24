@@ -49,7 +49,13 @@
                         <Insets left="40.0" right="40.0" top="20.0" />
                      </VBox.margin>
                   </TextArea>
-                  <VBox fx:id="VboxRespuestas" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0" />
+                  <VBox fx:id="VboxRespuestas" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
+                     <children>
+                        <MFXButton fx:id="btnRespuesta1" onAction="#onActionBtnRespuesta1" text=" " />
+                        <MFXButton fx:id="btnRespuesta2" layoutX="296.0" layoutY="93.0" onAction="#onActionBtnRespuesta2" text=" " />
+                        <MFXButton fx:id="btnRespuesta3" layoutX="296.0" layoutY="125.0" onAction="#onActionBtnRespuesta3" text=" " />
+                        <MFXButton fx:id="btnRespuesta4" layoutX="296.0" layoutY="158.0" onAction="#onActionBtnRespuesta4" text=" " />
+                     </children></VBox>
                </children>
             </VBox>
          </center>

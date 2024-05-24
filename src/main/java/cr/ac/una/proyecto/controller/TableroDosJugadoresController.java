@@ -90,7 +90,7 @@ public class TableroDosJugadoresController extends Controller implements Initial
 
         Runnable onFinish = () ->
         {
-            System.out.println("La animación de la ruleta ha terminado en: " + categoria + ", Angulo: " + anguloDetenido);
+            System.out.println("La animación de la ruleta ha terminado en esta categoria: " + categoria + ", Angulo: " + anguloDetenido);
             Platform.runLater(() -> llamarPreguntaView());
             // Aquí puedes realizar cualquier acción adicional que desees
 
