@@ -1,0 +1,24 @@
+devLogin -> gameLogin 
+	 -> adminLogin
+
+gameLogin-> Selecting Mode
+
+Selecting Mode->RegistryNewGame
+		->LoadGame
+
+RegistryNewGame->SectorSelectionView :regisrtry new game mejorar codigo function validarEspacios
+
+SectorSelectionView->PawnSelectionView 	: function validarCantidadSectores, se puede hacer mas genericas las validaciones, revisar la function crearSectores, Tambien revisar los espacios en blando del controller de SectorSelectionView
+
+
+
+
+PawnSelectionView-> DifficultySelectionView   : mejorar funciones cargarSeleccioados,mostrarCmbJugadores
+
+
+DifficultySelectionView->SumaryMatch
+
+
+SumaryMatch-> tableroView: mejorar function validarJugadores, revisar view en scene builder, texfield mal centrados
+
+tableroView->

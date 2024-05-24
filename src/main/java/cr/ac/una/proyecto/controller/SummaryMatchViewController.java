@@ -3,7 +3,6 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.Flow;
 
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
@@ -72,9 +71,18 @@ public class SummaryMatchViewController extends Controller implements Initializa
     private ObservableList<Jugador> jugadores;
     private ArrayList<Sector> sectores;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void initialize() {
+        initPrincipalValues();
+    }
+
     @FXML
     void onActionBtnEdit(ActionEvent event) {
-
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnEdit.getScene().getWindow()).close();
 
@@ -82,21 +90,12 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-
         FlowController.getInstance().goMain("tableroView");
         ((Stage) btnPlay.getScene().getWindow()).close();
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void initialize() {
-        // TODO Auto-generated method stub
+    private void initPrincipalValues() {
         desactivarJugadores();
         cantJugadores = 0;
         nombresJugadores = FXCollections.observableArrayList();
@@ -105,47 +104,34 @@ public class SummaryMatchViewController extends Controller implements Initializa
         getJugadoresFromAppContext();
         getSectoresFromAppContext();
         validarJugadores();
-
     }
 
     private void getCantidaDeJugadoresFromAppContext() {
         cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
-        System.out.println("Cantida de jugadores en SectorSelection: " + cantJugadores);
-        // TODO Auto-generated method stub
-
     }
 
     private void getJugadoresFromAppContext() {
-        // TODO Auto-generated method stub
         jugadores = (ObservableList<Jugador>) AppContext.getInstance().get("jugadores");
 
-        for (Jugador jugador : jugadores) {
-            System.out.println("Jugador:" + jugador.getNombre());
+        for (Jugador jugador : jugadores)
+        {
             nombresJugadores.add(jugador.getNombre());
         }
 
     }
 
-    private Jugador buscJugador(String nombreJugador) {
-        for (int index = 0; index < cantJugadores; index++) {
-            if (jugadores.get(index).getNombre() == nombreJugador) {
-                return jugadores.get(index);
-            }
-        }
-        return null;
-    }
-
-    private void validarJugadores() {
+    private void validarJugadores() {//mejorar funcion
 
         String rutaImagenJug1 = sectores.get(0).getRutaImagenJugador();
         String rutaImagenJug2 = sectores.get(1).getRutaImagenJugador();
-        
+
         lblJuagdor1.setText(jugadores.get(0).getNombre());
         imgFicha1.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug1)));
         lblJugador2.setText(jugadores.get(1).getNombre());
         imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
-        
-        if (cantJugadores >= 3) {
+
+        if (cantJugadores >= 3)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
@@ -156,7 +142,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
         }
-        if (cantJugadores >= 4) {
+        if (cantJugadores >= 4)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -172,7 +159,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador4.setText(jugadores.get(3).getNombre());
             imgFicha4.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug4)));
         }
-        if (cantJugadores >= 5) {
+        if (cantJugadores >= 5)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -193,7 +181,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador5.setText(jugadores.get(4).getNombre());
             imgFicha5.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug5)));
         }
-        if (cantJugadores == 6) {
+        if (cantJugadores == 6)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -245,13 +234,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
     }
 
     private void getSectoresFromAppContext() {
-        // Obtén el ArrayList del AppContext
         sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
-
-        // Imprime para verificar (opcional)
-        for (Sector sector : sectores) {
-            System.out.println("Sector: " + sector.getRutaImagenJugador());
-        }
     }
 
 }

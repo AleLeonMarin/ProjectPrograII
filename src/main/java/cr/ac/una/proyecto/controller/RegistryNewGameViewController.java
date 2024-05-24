@@ -63,6 +63,12 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @Override
     public void initialize() {
+        initValues();
+        actulizarEstadoSliderJugadores();
+    }
+
+    private void initValues() {
+
         jugadores = FXCollections.observableArrayList();
         cantJugadores = 2;
         sldQty.setMin(2);
@@ -76,7 +82,9 @@ public class RegistryNewGameViewController extends Controller implements Initial
         txfJug4.setVisible(false);
         txfJug5.setVisible(false);
         txfJug6.setVisible(false);
+    }
 
+    private void actulizarEstadoSliderJugadores() {
         sldQty.valueProperty().addListener((obs, oldValue, newValue) ->
         {
             int value = newValue.intValue();
@@ -89,14 +97,32 @@ public class RegistryNewGameViewController extends Controller implements Initial
             txfJug5.setVisible(value >= 5);
             txfJug6.setVisible(value >= 6);
             cantJugadores = value;
-            System.out.println("El slider quedó en la posición: " + cantJugadores);
         });
+    }
+
+    private void validarEspacios() {//mejorar usando bucles y lista de textflied
+        if (!validarCampoVacio(txfJug1.getText(), txfJug1)
+                || !validarCampoVacio(txfJug2.getText(), txfJug2)
+                || !validarCampoVacio(txfJug3.getText(), txfJug3)
+                || !validarCampoVacio(txfJug4.getText(), txfJug4)
+                || !validarCampoVacio(txfJug5.getText(), txfJug5)
+                || !validarCampoVacio(txfJug6.getText(), txfJug6))
+        {
+            return;
+        }
+
+        if (!validarNombresUnicos(txfJug1.getText(), txfJug2.getText(), txfJug3.getText(), txfJug4.getText(), txfJug5.getText(), txfJug6.getText()))
+        {
+            return;
+        }
+
+        funcionAppContext();
     }
 
     private boolean validarCampoVacio(String nombreCampo, TextField campoTexto) {
         if (campoTexto.isVisible() && nombreCampo.isEmpty())
         {
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "Espacio " + nombreCampo + " vacio");
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "Existe uno o mas espacios en blanco.");
             return false;
         }
         return true;
@@ -110,33 +136,12 @@ public class RegistryNewGameViewController extends Controller implements Initial
             {
                 if (!nombresSet.add(nombre.trim()))
                 {
-                    new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "Los nombres deben ser únicos");
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "El nombre de cada jugador debe ser único");
                     return false;
                 }
             }
         }
         return true;
-    }
-
-    private void validarEspacios() {
-        if (!validarCampoVacio(txfJug1.getText(), txfJug1)
-                || !validarCampoVacio(txfJug2.getText(), txfJug2)
-                || !validarCampoVacio(txfJug3.getText(), txfJug3)
-                || !validarCampoVacio(txfJug4.getText(), txfJug4)
-                || !validarCampoVacio(txfJug5.getText(), txfJug5)
-                || !validarCampoVacio(txfJug6.getText(), txfJug6))
-        {
-            System.out.println("ESPACIO A");
-            return;
-        }
-
-        if (!validarNombresUnicos(txfJug1.getText(), txfJug2.getText(), txfJug3.getText(), txfJug4.getText(), txfJug5.getText(), txfJug6.getText()))
-        {
-            System.out.println("ESPACIO B");
-            return;
-        }
-
-        funcionAppContext();
     }
 
     private void guardarJugadoresNombres() {
@@ -159,11 +164,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
         if ((!txfJug6.getText().isBlank()) && (txfJug6.isVisible()))
         {
             jugadores.add(new Jugador(txfJug6.getText()));
-        }
-
-        for (Jugador jugadorAux : jugadores)
-        {
-            System.out.println("Jugador: " + jugadorAux.getNombre());
         }
 
         AppContext.getInstance().set("jugadores", jugadores);

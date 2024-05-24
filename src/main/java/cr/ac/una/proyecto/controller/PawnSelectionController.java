@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.ImageStorage;
+import cr.ac.una.proyecto.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.Initializable;
@@ -18,7 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class PawnSelectionController extends Controller implements Initializable {
@@ -85,43 +86,45 @@ public class PawnSelectionController extends Controller implements Initializable
 
     @Override
     public void initialize() {
+        initPrincipalValues();
+    }
+
+    private void initPrincipalValues() {
         nombresPeones = FXCollections.observableArrayList();
         personajesSeleccionados = new ArrayList<>();
         imageViewMap = new ImageStorage();
         botonesLista = new ArrayList<>();
         cargarNombresPeones();
-        cargarDatosImagenesFijaPeon();
+        cargarDatosImagenesFijasPeon();
 
         habilitarEspacios(false);
         cargarSliderCantJug();
         mostrarCmbJugadores(cantJugadores);
     }
 
-    private void cargarDatosImagenesFijaPeon() {
-        Image imagenPeonRosa = new Image(getClass().getResourceAsStream(rutaPeonRosa));
-        imvRosa.setImage(imagenPeonRosa);
-        imageViewMap.addImage(nombresPeones.get(0), rutaPeonRosa);
+    private void cargarDatosImagenesFijasPeon() {
+        String[] rutasPeones =
+        {
+            rutaPeonRosa, rutaPeonAmarillo, rutaPeonVerde, rutaPeonAzul, rutaPeonRojo, rutaPeonMorado
+        };
+        ImageView[] imageViews =
+        {
+            imvRosa, imvAmarillo, imvVerde, imvAzul, imvRojo, imvMorado
+        };
 
-        Image imagenPeonAmarillo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
-        imvAmarillo.setImage(imagenPeonAmarillo);
-        imageViewMap.addImage(nombresPeones.get(1), rutaPeonAmarillo);
-
-        Image imagenPeonVerde = new Image(getClass().getResourceAsStream(rutaPeonVerde));
-        imvVerde.setImage(imagenPeonVerde);
-        imageViewMap.addImage(nombresPeones.get(2), rutaPeonVerde);
-
-        Image imagenPeonAzul = new Image(getClass().getResourceAsStream(rutaPeonAzul));
-        imvAzul.setImage(imagenPeonAzul);
-        imageViewMap.addImage(nombresPeones.get(3), rutaPeonAzul);
-
-        Image imagenPeonRojo = new Image(getClass().getResourceAsStream(rutaPeonRojo));
-        imvRojo.setImage(imagenPeonRojo);
-        imageViewMap.addImage(nombresPeones.get(4), rutaPeonRojo);
-
-        Image imagenPeonMorado = new Image(getClass().getResourceAsStream(rutaPeonMorado));
-        imvMorado.setImage(imagenPeonMorado);
-        imageViewMap.addImage(nombresPeones.get(5), rutaPeonMorado);
-
+        for (int index = 0; index < rutasPeones.length; index++)
+        {
+            try
+            {
+                Image imagenPeon = new Image(getClass().getResourceAsStream(rutasPeones[index]));
+                imageViews[index].setImage(imagenPeon);
+                imageViewMap.addImage(nombresPeones.get(index), rutasPeones[index]);
+            } catch (Exception e)
+            {
+                System.err.println("Error al cargar la imagen para " + nombresPeones.get(index) + " desde la ruta " + rutasPeones[index]);
+                e.printStackTrace();
+            }
+        }
     }
 
     private void cargarNombresPeones() {
@@ -138,10 +141,9 @@ public class PawnSelectionController extends Controller implements Initializable
     private void onActionBtnSiguiente(ActionEvent event) {
         if (validarSeleccion())
         {
-            System.out.println("Hay errores");
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Error de usuario", getStage(), "Cada jugador debe seleccionar un 'Peon' distinto");
         } else
         {
-            System.out.println("No hay errores");
             cargarSectores();
             FlowController.getInstance().goViewInWindow("DifficultySelectionView");
             ((Stage) btnSiguiente.getScene().getWindow()).close();
@@ -150,10 +152,9 @@ public class PawnSelectionController extends Controller implements Initializable
 
     private void cargarSliderCantJug() {
         cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
-        System.out.println("Cantida de jugadoresEnPawnSelecion: " + cantJugadores);
     }
 
-    private void mostrarCmbJugadores(int cantJug) {
+    private void mostrarCmbJugadores(int cantJug) {// mejorar funcion
 
         cmbJugadorSector1.setItems(nombresPeones);
         cmbJugadorSector2.setItems(nombresPeones);
@@ -191,7 +192,7 @@ public class PawnSelectionController extends Controller implements Initializable
         }
     }
 
-    private void cargarSelecionados(int cantJug) {
+    private void cargarSelecionados(int cantJug) {//mejorar funcion
         personajesSeleccionados.clear();
         personajesSeleccionados.add(cmbJugadorSector1.getSelectedItem());
         personajesSeleccionados.add(cmbJugadorSector2.getSelectedItem());
@@ -246,22 +247,27 @@ public class PawnSelectionController extends Controller implements Initializable
         }
     }
 
-    public String getImagePathForImageView(String MFXBOXContent) {
-        return imageViewMap.getPathByName(MFXBOXContent);
+    public String getImagePathForImageView(String mfxButtonContent) {
+        return imageViewMap.getPathByName(mfxButtonContent);
     }
 
     private void setImagenMfxButton(ActionEvent event, MFXComboBox<String> comboBox, ImageView imageView) {
-        if (!comboBox.getValue().isBlank() || comboBox.getValue() != null)
+        if (comboBox.getValue() != null && !comboBox.getValue().isBlank())
         {
             String rutaImagen = imageViewMap.getPathByName(comboBox.getSelectedItem());
-            System.out.println("ruta imagen: " + rutaImagen);
-            Image image = new Image(getClass().getResourceAsStream(rutaImagen));
-            if (image != null)
+            try
             {
-                imageView.setImage(image);
+                Image image = new Image(getClass().getResourceAsStream(rutaImagen));
+                if (image != null)
+                {
+                    imageView.setImage(image);
+                }
+            } catch (Exception e)
+            {
+                System.err.println("Error al cargar la imagen desde la ruta: " + rutaImagen);
+                e.printStackTrace();
             }
         }
-
     }
 
     @FXML
@@ -296,12 +302,10 @@ public class PawnSelectionController extends Controller implements Initializable
 
     private boolean validarSeleccion() {
         cargarSelecionados(cantJugadores);
-        for (int i = 0; i < personajesSeleccionados.size(); i++)
+        for (int index = 0; index < personajesSeleccionados.size(); index++)
         {
-            String personaje = personajesSeleccionados.get(i);
-            System.out.println("Personaje: " + i + personaje);
-            // Verificar si la cadena es nula, vacía o si es igual a otro elemento en la lista
-            if (personaje == null || personaje.isEmpty() || personajesSeleccionados.indexOf(personaje) != i)
+            String personaje = personajesSeleccionados.get(index);
+            if (personaje == null || personaje.isEmpty() || personajesSeleccionados.indexOf(personaje) != index)
             {
                 return true; // Hay personajes repetidos o espacios en blanco
             }
