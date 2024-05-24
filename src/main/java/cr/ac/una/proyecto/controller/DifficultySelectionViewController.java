@@ -16,9 +16,6 @@ public class DifficultySelectionViewController extends Controller implements Ini
     private MFXButton btnPlay;
 
     @FXML
-    private MFXCheckbox ckbDuel;
-
-    @FXML
     private MFXCheckbox ckbEasy;
 
     @FXML
@@ -48,7 +45,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
             {
                 ckbMedium.setSelected(false);
                 ckbHard.setSelected(false);
-                ckbDuel.setSelected(false);
+        
             }
         });
 
@@ -58,7 +55,6 @@ public class DifficultySelectionViewController extends Controller implements Ini
             {
                 ckbEasy.setSelected(false);
                 ckbHard.setSelected(false);
-                ckbDuel.setSelected(false);
             }
         });
 
@@ -68,19 +64,10 @@ public class DifficultySelectionViewController extends Controller implements Ini
             {
                 ckbEasy.setSelected(false);
                 ckbMedium.setSelected(false);
-                ckbDuel.setSelected(false);
             }
         });
 
-        ckbDuel.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-        {
-            if (isNowSelected)
-            {
-                ckbEasy.setSelected(false);
-                ckbMedium.setSelected(false);
-                ckbHard.setSelected(false);
-            }
-        });
+        
     }
 
 }
