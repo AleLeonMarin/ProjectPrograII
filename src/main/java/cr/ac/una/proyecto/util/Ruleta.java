@@ -27,20 +27,20 @@ public class Ruleta {
 
     public String determinarPosicionRuleta() {
         anguloDetenido = generarAnguloAleatorio();
-        double cienciaInicio = 29;
-        double cienciaFin = 80;
-        double geografiaInicio = 81;
-        double geografiaFin = 134;
-        double coronaInicio = 135;
-        double coronaFin = 183;
-        double entretenimientoInicio = 184;
-        double entretenimientoFin = 233;
-        double arteInicio = 234;
-        double arteFin = 284;
-        double deporteInicio = 285;
-        double deporteFin = 336;
-        double historiaInicio = 337;
-        double historiaFin = 29;
+        double cienciaInicio = 25;
+        double cienciaFin = 76;
+        double geografiaInicio = 77;
+        double geografiaFin = 127;
+        double coronaInicio = 128;
+        double coronaFin = 178;
+        double entretenimientoInicio = 179;
+        double entretenimientoFin = 231;
+        double arteInicio = 232;
+        double arteFin = 280;
+        double deporteInicio = 281;
+        double deporteFin = 331;
+        double historiaInicio = 332;
+        double historiaFin = 24;
         double finalGrados = 360;
 
         String categoria = "Angulo no encontrado: " + anguloDetenido;

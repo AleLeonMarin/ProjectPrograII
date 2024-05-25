@@ -27,9 +27,6 @@
             <RowConstraints maxHeight="241.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="116.0" vgrow="SOMETIMES" />
          </rowConstraints>
-         <children>
-            <ImageView fx:id="imvCarta" fitHeight="157.0" fitWidth="81.0" onMouseClicked="#moverTarjeta" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-         </children>
       </GridPane>
       <ImageView fx:id="imvPicker" fitHeight="84.0" fitWidth="81.0" layoutX="360.0" layoutY="258.0" onMouseClicked="#OnMouseClickedPicker" pickOnBounds="true">
          <image>

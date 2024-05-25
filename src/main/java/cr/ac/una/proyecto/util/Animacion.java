@@ -1,6 +1,5 @@
 package cr.ac.una.proyecto.util;
 
-import java.util.function.Consumer;
 import javafx.animation.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -62,8 +61,6 @@ public class Animacion {
         rotate.setAxis(Rotate.Z_AXIS);
 
         rotate.setOnFinished(event -> onFinish.run());
-
-        // Iniciar la animación
         rotate.play();
     }
 

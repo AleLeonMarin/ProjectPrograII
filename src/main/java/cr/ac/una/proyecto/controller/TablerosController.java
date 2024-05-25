@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.scene.control.TextField;
 
 public class TablerosController extends Controller implements Initializable {
 
@@ -28,14 +29,12 @@ public class TablerosController extends Controller implements Initializable {
     private Animacion animacion;
     private Juego juego;
     ArrayList<Sector> sectores;
-    @FXML
-    private ImageView imvCarta;
+    private TextField txfRuletaPrueba;
 
     @Override
     public void initialize() {
         iniciarClases();
         cargarSectores();
-
         juego.cargarDatosImagenes(grdpTablero);
     }
 
@@ -82,10 +81,6 @@ public class TablerosController extends Controller implements Initializable {
 
     private void llamarPreguntaView() {
         FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) imvRuleta.getScene().getWindow()), true);
-    }
-
-    @FXML
-    private void moverTarjeta(MouseEvent event) {
     }
 
 }
