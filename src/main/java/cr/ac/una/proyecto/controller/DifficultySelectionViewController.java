@@ -8,6 +8,7 @@ import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 public class DifficultySelectionViewController extends Controller implements Initializable {
@@ -38,36 +39,27 @@ public class DifficultySelectionViewController extends Controller implements Ini
 
     @Override
     public void initialize() {
+        initPrincipalValues();
+    }
 
-        ckbEasy.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+    private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
+        CheckBox[] checkboxes =
         {
-            if (isNowSelected)
-            {
-                ckbMedium.setSelected(false);
-                ckbHard.setSelected(false);
-        
-            }
-        });
-
-        ckbMedium.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+            ckbEasy, ckbMedium, ckbHard
+        };
+        for (CheckBox checkbox : checkboxes)
         {
-            if (isNowSelected)
+            if (checkbox != selectedCheckbox)
             {
-                ckbEasy.setSelected(false);
-                ckbHard.setSelected(false);
+                checkbox.setSelected(false);
             }
-        });
+        }
+    }
 
-        ckbHard.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-        {
-            if (isNowSelected)
-            {
-                ckbEasy.setSelected(false);
-                ckbMedium.setSelected(false);
-            }
-        });
-
-        
+    private void initPrincipalValues() {
+        ckbEasy.setOnAction(e -> deseleccionarOtrasCasillas(ckbEasy));
+        ckbMedium.setOnAction(e -> deseleccionarOtrasCasillas(ckbMedium));
+        ckbHard.setOnAction(e -> deseleccionarOtrasCasillas(ckbHard));
     }
 
 }

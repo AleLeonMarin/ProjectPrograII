@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.ImageStorage;
+import cr.ac.una.proyecto.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.Initializable;
@@ -18,63 +19,40 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class PawnSelectionController extends Controller implements Initializable {
 
-    private String rutaPeonRosa = "/cr/ac/una/proyecto/resources/PeonRosa.png";
-    private String rutaPeonRojo = "/cr/ac/una/proyecto/resources/PeonRojo.png";
-    private String rutaPeonVerde = "/cr/ac/una/proyecto/resources/PeonVerde.png";
-    private String rutaPeonAzul = "/cr/ac/una/proyecto/resources/PeonAzul.png";
-    private String rutaPeonAmarillo = "/cr/ac/una/proyecto/resources/PeonAmarrillo.png";
-    private String rutaPeonMorado = "/cr/ac/una/proyecto/resources/PeonMorado.png";
+    private static final String[] RUTAS_PEONES =
+    {
+        "/cr/ac/una/proyecto/resources/PeonRosa.png",
+        "/cr/ac/una/proyecto/resources/PeonAmarillo.png",
+        "/cr/ac/una/proyecto/resources/PeonVerde.png",
+        "/cr/ac/una/proyecto/resources/PeonAzul.png",
+        "/cr/ac/una/proyecto/resources/PeonRojo.png",
+        "/cr/ac/una/proyecto/resources/PeonMorado.png"
+    };
+
+    private static final String[] NOMBRES_PEONES =
+    {
+        "Peon Rosa", "Peon Amarillo", "Peon Verde", "Peon Azul", "Peon Rojo", "Peon Morado"
+    };
 
     @FXML
-    private ImageView imvAmarillo;
-    @FXML
-    private ImageView imvAzul;
-    @FXML
-    private ImageView imvRojo;
-    @FXML
-    private ImageView imvRosa;
-    @FXML
-    private ImageView imvVerde;
-    @FXML
-    private ImageView imvMorado;
+    private ImageView imvAmarillo, imvAzul, imvRojo, imvRosa, imvVerde, imvMorado;
 
     @FXML
     private MFXButton btnSiguiente;
+    @FXML
+    private MFXComboBox<String> cmbJugadorSector1, cmbJugadorSector2, cmbJugadorSector3, cmbJugadorSector4, cmbJugadorSector5, cmbJugadorSector6;
 
     @FXML
-    private MFXComboBox<String> cmbJugadorSector1;
-    @FXML
-    private MFXComboBox<String> cmbJugadorSector2;
-    @FXML
-    private MFXComboBox<String> cmbJugadorSector3;
-    @FXML
-    private MFXComboBox<String> cmbJugadorSector4;
-    @FXML
-    private MFXComboBox<String> cmbJugadorSector5;
-    @FXML
-    private MFXComboBox<String> cmbJugadorSector6;
-
-    @FXML
-    private ImageView imvJugadorSector1;
-    @FXML
-    private ImageView imvJugadorSector2;
-    @FXML
-    private ImageView imvJugadorSector3;
-    @FXML
-    private ImageView imvJugadorSector4;
-    @FXML
-    private ImageView imvJugadorSector5;
-    @FXML
-    private ImageView imvJugadorSector6;
+    private ImageView imvJugadorSector1, imvJugadorSector2, imvJugadorSector3, imvJugadorSector4, imvJugadorSector5, imvJugadorSector6;
 
     private ImageStorage imageViewMap;
     private ObservableList<String> nombresPeones;
-    private ArrayList<MFXComboBox<String>> botonesLista;
+    private List<MFXComboBox<String>> botonesLista;
     private int cantJugadores;
     private List<String> personajesSeleccionados;
 
@@ -85,63 +63,48 @@ public class PawnSelectionController extends Controller implements Initializable
 
     @Override
     public void initialize() {
-        nombresPeones = FXCollections.observableArrayList();
+        initPrincipalValues();
+    }
+
+    private void initPrincipalValues() {
+        nombresPeones = FXCollections.observableArrayList(NOMBRES_PEONES);
         personajesSeleccionados = new ArrayList<>();
         imageViewMap = new ImageStorage();
-        botonesLista = new ArrayList<>();
-        cargarNombresPeones();
-        cargarDatosImagenesFijaPeon();
-
+        botonesLista = List.of(cmbJugadorSector1, cmbJugadorSector2, cmbJugadorSector3, cmbJugadorSector4, cmbJugadorSector5, cmbJugadorSector6);
+        cargarDatosImagenesFijasPeon();
         habilitarEspacios(false);
         cargarSliderCantJug();
         mostrarCmbJugadores(cantJugadores);
     }
 
-    private void cargarDatosImagenesFijaPeon() {
-        Image imagenPeonRosa = new Image(getClass().getResourceAsStream(rutaPeonRosa));
-        imvRosa.setImage(imagenPeonRosa);
-        imageViewMap.addImage(nombresPeones.get(0), rutaPeonRosa);
+    private void cargarDatosImagenesFijasPeon() {
+        ImageView[] imageViews =
+        {
+            imvRosa, imvAmarillo, imvVerde, imvAzul, imvRojo, imvMorado
+        };
 
-        Image imagenPeonAmarillo = new Image(getClass().getResourceAsStream(rutaPeonAmarillo));
-        imvAmarillo.setImage(imagenPeonAmarillo);
-        imageViewMap.addImage(nombresPeones.get(1), rutaPeonAmarillo);
-
-        Image imagenPeonVerde = new Image(getClass().getResourceAsStream(rutaPeonVerde));
-        imvVerde.setImage(imagenPeonVerde);
-        imageViewMap.addImage(nombresPeones.get(2), rutaPeonVerde);
-
-        Image imagenPeonAzul = new Image(getClass().getResourceAsStream(rutaPeonAzul));
-        imvAzul.setImage(imagenPeonAzul);
-        imageViewMap.addImage(nombresPeones.get(3), rutaPeonAzul);
-
-        Image imagenPeonRojo = new Image(getClass().getResourceAsStream(rutaPeonRojo));
-        imvRojo.setImage(imagenPeonRojo);
-        imageViewMap.addImage(nombresPeones.get(4), rutaPeonRojo);
-
-        Image imagenPeonMorado = new Image(getClass().getResourceAsStream(rutaPeonMorado));
-        imvMorado.setImage(imagenPeonMorado);
-        imageViewMap.addImage(nombresPeones.get(5), rutaPeonMorado);
-
-    }
-
-    private void cargarNombresPeones() {
-        String nameBase = "Peon ";
-        nombresPeones.add(nameBase + "Rosa");
-        nombresPeones.add(nameBase + "Amarrilo");
-        nombresPeones.add(nameBase + "Verde");
-        nombresPeones.add(nameBase + "Azul");
-        nombresPeones.add(nameBase + "Rojo");
-        nombresPeones.add(nameBase + "Morado");
+        for (int index = 0; index < RUTAS_PEONES.length; index++)
+        {
+            try
+            {
+                Image imagenPeon = new Image(getClass().getResourceAsStream(RUTAS_PEONES[index]));
+                imageViews[index].setImage(imagenPeon);
+                imageViewMap.addImage(NOMBRES_PEONES[index], RUTAS_PEONES[index]);
+            } catch (Exception e)
+            {
+                System.err.println("Error al cargar la imagen para " + NOMBRES_PEONES[index] + " desde la ruta " + RUTAS_PEONES[index]);
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
     private void onActionBtnSiguiente(ActionEvent event) {
         if (validarSeleccion())
         {
-            System.out.println("Hay errores");
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Error de usuario", getStage(), "Cada jugador debe seleccionar un 'Peon' distinto");
         } else
         {
-            System.out.println("No hay errores");
             cargarSectores();
             FlowController.getInstance().goViewInWindow("DifficultySelectionView");
             ((Stage) btnSiguiente.getScene().getWindow()).close();
@@ -149,119 +112,61 @@ public class PawnSelectionController extends Controller implements Initializable
     }
 
     private void cargarSliderCantJug() {
-        cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
-        System.out.println("Cantida de jugadoresEnPawnSelecion: " + cantJugadores);
+        cantJugadores = (Integer) AppContext.getInstance().get("cantJugadoresSlider");
     }
 
     private void mostrarCmbJugadores(int cantJug) {
-
-        cmbJugadorSector1.setItems(nombresPeones);
-        cmbJugadorSector2.setItems(nombresPeones);
-
-        botonesLista.add(cmbJugadorSector1);
-        botonesLista.add(cmbJugadorSector2);
-
-        if (cantJug >= 6)
+        for (int index = 0; index < botonesLista.size(); index++)
         {
-            habilitarEspacios(true);
-        } else
-        {
-            if (cantJug >= 3)
+            MFXComboBox<String> comboBox = botonesLista.get(index);
+            if (index < cantJug)
             {
-                this.cmbJugadorSector3.setDisable(false);
-                this.cmbJugadorSector3.setVisible(true);
-                cmbJugadorSector3.setItems(nombresPeones);
-                botonesLista.add(cmbJugadorSector3);
-
-            }
-            if (cantJug >= 4)
+                comboBox.setDisable(false);
+                comboBox.setVisible(true);
+                comboBox.setItems(nombresPeones);
+            } else
             {
-                this.cmbJugadorSector4.setDisable(false);
-                this.cmbJugadorSector4.setVisible(true);
-                cmbJugadorSector4.setItems(nombresPeones);
-                botonesLista.add(cmbJugadorSector4);
-            }
-            if (cantJug >= 5)
-            {
-                this.cmbJugadorSector5.setDisable(false);
-                this.cmbJugadorSector5.setVisible(true);
-                cmbJugadorSector5.setItems(nombresPeones);
-                botonesLista.add(cmbJugadorSector5);
+                comboBox.setDisable(true);
+                comboBox.setVisible(false);
             }
         }
     }
 
     private void cargarSelecionados(int cantJug) {
         personajesSeleccionados.clear();
-        personajesSeleccionados.add(cmbJugadorSector1.getSelectedItem());
-        personajesSeleccionados.add(cmbJugadorSector2.getSelectedItem());
-
-        if (cantJug >= 6)
+        for (int i = 0; i < cantJug; i++)
         {
-            personajesSeleccionados.add(cmbJugadorSector3.getSelectedItem());
-            personajesSeleccionados.add(cmbJugadorSector4.getSelectedItem());
-            personajesSeleccionados.add(cmbJugadorSector5.getSelectedItem());
-            personajesSeleccionados.add(cmbJugadorSector6.getSelectedItem());
-        } else
-        {
-            if (cantJug >= 3)
-            {
-
-                personajesSeleccionados.add(cmbJugadorSector3.getSelectedItem());
-            }
-            if (cantJug >= 4)
-            {
-
-                personajesSeleccionados.add(cmbJugadorSector4.getSelectedItem());
-            }
-            if (cantJug >= 5)
-            {
-
-                personajesSeleccionados.add(cmbJugadorSector5.getSelectedItem());
-
-            }
+            personajesSeleccionados.add(botonesLista.get(i).getSelectedItem());
         }
     }
 
-    private void habilitarEspacios(Boolean estado) {
-        this.cmbJugadorSector3.setDisable(!estado);
-        this.cmbJugadorSector3.setVisible(estado);
-        this.cmbJugadorSector4.setDisable(!estado);
-        this.cmbJugadorSector4.setVisible(estado);
-        this.cmbJugadorSector5.setDisable(!estado);
-        this.cmbJugadorSector5.setVisible(estado);
-        this.cmbJugadorSector6.setDisable(!estado);
-        this.cmbJugadorSector6.setVisible(estado);
-
-        if (estado)
+    private void habilitarEspacios(boolean estado) {
+        for (MFXComboBox<String> comboBox : botonesLista)
         {
-            cmbJugadorSector3.setItems(nombresPeones);
-            cmbJugadorSector4.setItems(nombresPeones);
-            cmbJugadorSector5.setItems(nombresPeones);
-            cmbJugadorSector6.setItems(nombresPeones);
-            botonesLista.add(cmbJugadorSector3);
-            botonesLista.add(cmbJugadorSector4);
-            botonesLista.add(cmbJugadorSector5);
-            botonesLista.add(cmbJugadorSector6);
+            comboBox.setDisable(!estado);
+            comboBox.setVisible(estado);
+            if (estado)
+            {
+                comboBox.setItems(nombresPeones);
+            }
         }
-    }
-
-    public String getImagePathForImageView(String MFXBOXContent) {
-        return imageViewMap.getPathByName(MFXBOXContent);
     }
 
     private void setImagenMfxButton(ActionEvent event, MFXComboBox<String> comboBox, ImageView imageView) {
-        if (!comboBox.getValue().isBlank() || comboBox.getValue() != null)
+        String selectedItem = comboBox.getSelectedItem();
+        if (selectedItem != null && !selectedItem.isBlank())
         {
-            String rutaImagen = imageViewMap.getPathByName(comboBox.getSelectedItem());
-            System.out.println("ruta imagen: " + rutaImagen);
-            Image image = new Image(getClass().getResourceAsStream(rutaImagen));
-            if (image != null)
+            String rutaImagen = imageViewMap.getPathByName(selectedItem);
+            try
             {
+                Image image = new Image(getClass().getResourceAsStream(rutaImagen));
                 imageView.setImage(image);
+            } catch (Exception e)
+            {
+                System.err.println("Error al cargar la imagen desde la ruta: " + rutaImagen);
+                e.printStackTrace();
             }
         }
-
     }
 
     @FXML
@@ -296,30 +201,28 @@ public class PawnSelectionController extends Controller implements Initializable
 
     private boolean validarSeleccion() {
         cargarSelecionados(cantJugadores);
-        for (int i = 0; i < personajesSeleccionados.size(); i++)
+        for (int indexPersonaje = 0; indexPersonaje < personajesSeleccionados.size(); indexPersonaje++)
         {
-            String personaje = personajesSeleccionados.get(i);
-            System.out.println("Personaje: " + i + personaje);
-            // Verificar si la cadena es nula, vacía o si es igual a otro elemento en la lista
-            if (personaje == null || personaje.isEmpty() || personajesSeleccionados.indexOf(personaje) != i)
+            String personaje = personajesSeleccionados.get(indexPersonaje);
+            if (personaje == null || personaje.isEmpty() || personajesSeleccionados.indexOf(personaje) != indexPersonaje)
             {
-                return true; // Hay personajes repetidos o espacios en blanco
+                return true;
             }
         }
-        return false; // No hay personajes repetidos ni espacios en blanco
+        return false;
     }
 
     private void cargarSectores() {
-        ArrayList<Sector> sectores;
-        sectores = new ArrayList<>();
-        sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
-
+        List<Sector> sectores = (List<Sector>) AppContext.getInstance().get("sectores");
         for (int index = 0; index < cantJugadores; index++)
         {
-            String rutaButon = getImagePathForImageView(botonesLista.get(index).getSelectedItem());
-            sectores.get(index).setRutaImagenJugador(rutaButon);
-            sectores.toString();
+            String rutaButton = getImagePathForImageView(botonesLista.get(index).getSelectedItem());
+            sectores.get(index).setRutaImagenJugador(rutaButton);
         }
+    }
+
+    public String getImagePathForImageView(String mfxButtonContent) {
+        return imageViewMap.getPathByName(mfxButtonContent);
     }
 
 }

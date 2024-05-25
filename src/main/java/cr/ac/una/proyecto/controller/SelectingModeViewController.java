@@ -9,7 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-public class SelectingModeViewController extends Controller implements Initializable{
+public class SelectingModeViewController extends Controller implements Initializable {
 
     @FXML
     private MFXButton btnChargeMatch;
@@ -28,20 +28,19 @@ public class SelectingModeViewController extends Controller implements Initializ
     void onActionBtnNewMatch(ActionEvent event) {
 
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
-        ((Stage) btnNewMatch.getScene().getWindow()).close();   
-
+        ((Stage) btnNewMatch.getScene().getWindow()).close();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void initialize() {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
