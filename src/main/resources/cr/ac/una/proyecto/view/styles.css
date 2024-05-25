@@ -372,6 +372,46 @@
     -fx-label-padding: 2px;
 }
 
+.image-icon{
+
+    -fx-image: url("../resources/logo.jpg");
+}
+
+.jfx-mfx-btn-edit-question > ImageView {
+    -fx-image: url("../resources/edit.png");
+}
+
+.jfx-mfx-btn-edit-question,.jfx-mfx-btn-edit-question:armed,.jfx-mfx-btn-edit-question:focused , .jfx-mfx-btn-edit-question:hover{
+    -fx-background-color: #874CCC;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-txfs-mantenimiento , .jfx-txfs-mantenimiento:focused , .jfx-txfs-mantenimiento:hover ,
+	.jfx-txfs-mantenimiento:armed , .jfx-txfs-mantenimiento:selected , .jfx-txfs-mantenimiento:unfocused{
+		-fx-background-color: transparent; /* Fondo transparente */
+		-fx-border-color: transparent;    /* Borde transparente */
+		-fx-border-width: 0;              /* Ancho del borde a 0 */
+		-fx-border-style: none;           /* Sin estilo de borde */
+		-fx-padding: 0;                   /* Sin relleno */
+		-fx-background-insets: 0;         /* Sin insets de fondo */
+		-fx-background-radius: 0;         /* Sin radio de fondo */
+	}
+	
+
+	
+	.jfx-txfs-mantenimiento-container , .jfx-txfs-mantenimiento-container:focused , .jfx-txfs-mantenimiento-container:hover ,
+	.jfx-txfs-mantenimiento-container:armed , .jfx-txfs-mantenimiento-container:selected, .jfx-txfs-mantenimiento-container:unfocused{
+		-fx-border-color: BLACK;    /* Borde transparente */
+		-fx-border-width: 0 0 1 0;        /* Línea inferior */
+		-fx-border-style: solid;          /* Estilo de línea sólido */
+		-fx-border-radius: 0;             /* Sin radio */
+	}
+
+
 
 
 

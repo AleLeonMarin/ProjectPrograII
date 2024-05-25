@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.AdminController">
+   <left>
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="167.0" spacing="40.0" BorderPane.alignment="CENTER">
+         <children>
+            <MFXButton fx:id="btnMantenimiento" onAction="#onActionBtnMantenimiento" prefHeight="60.0" prefWidth="159.0" styleClass="jfx-mfx-btn-edit-question" text="Mantenimiento Preguntas" textAlignment="CENTER" wrapText="true">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="bntSalir" onAction="#onActionBntSalir" styleClass="jfx-mfx-btn-salir" text="Salir" textAlignment="CENTER" wrapText="true">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </MFXButton>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label styleClass="label-Titulo-Principal" text="Preguntados Jr" />
+            <ImageView fitHeight="88.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" styleClass="image-icon" />
+         </children></HBox>
+   </top>
+</BorderPane>
