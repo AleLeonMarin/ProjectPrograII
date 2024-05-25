@@ -115,7 +115,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
         for (Jugador jugador : jugadores)
         {
-            nombresJugadores.add(jugador.getNombre());
+            nombresJugadores.add(jugador.getNombre()); 
         }
 
     }
