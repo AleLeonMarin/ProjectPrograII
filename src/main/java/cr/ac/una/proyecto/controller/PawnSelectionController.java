@@ -5,6 +5,7 @@ import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.ImageStorage;
 import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.Initializable;
@@ -100,6 +101,9 @@ public class PawnSelectionController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnSiguiente(ActionEvent event) {
+
+        Sound sound = new Sound();
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
         if (validarSeleccion())
         {
             new Mensaje().showModal(Alert.AlertType.ERROR, "Error de usuario", getStage(), "Cada jugador debe seleccionar un 'Peon' distinto");

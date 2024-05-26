@@ -8,6 +8,7 @@ import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
+import cr.ac.una.proyecto.util.Sound;
 import javafx.stage.Stage;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.collections.FXCollections;
@@ -71,6 +72,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
     private ObservableList<Jugador> jugadores;
     private ArrayList<Sector> sectores;
 
+    Sound sound = new Sound();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
@@ -83,6 +86,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     @FXML
     void onActionBtnEdit(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement2.mp3");
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnEdit.getScene().getWindow()).close();
 
@@ -90,6 +94,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
         FlowController.getInstance().goMain("tableroView");
         ((Stage) btnPlay.getScene().getWindow()).close();
 

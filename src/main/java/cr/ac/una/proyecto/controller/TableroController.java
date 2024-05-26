@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 
 import java.net.URL;
@@ -19,12 +20,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -35,6 +38,12 @@ public class TableroController extends Controller implements Initializable {
 
     @FXML
     private MFXButton btnIniciar;
+
+    @FXML
+    private MFXButton btnSalir;
+
+    @FXML
+    private MFXButton btnGuardar;
 
     @FXML
     private ImageView imgvArteJug1;
@@ -162,6 +171,8 @@ public class TableroController extends Controller implements Initializable {
     @FXML
     private Label lblJugador6;
 
+    Sound sound = new Sound();
+
     @FXML
     private Label lblTiempo;
     private int segundos = 0;
@@ -243,11 +254,28 @@ public class TableroController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnIniciar(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
         startTimer();
         validarCantidadJugadores();
         btnIniciar.setVisible(false);
         btnIniciar.setDisable(true);
 
+    }
+
+    @FXML
+    private void onActionBtnSalir(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/quitExited.mp3");
+        PauseTransition pause = new PauseTransition(Duration.millis(600));
+        pause.setOnFinished(e -> {
+            ((Stage) btnSalir.getScene().getWindow()).close();
+        });
+        pause.play();
+    }
+
+    @FXML
+    private void onActionBtnGuardar(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Chance_audio.mp3");
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar", getStage(), "Partida Guardada");
     }
 
     public void showPlayer() {

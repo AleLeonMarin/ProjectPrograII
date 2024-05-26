@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXSlider;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -14,9 +15,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +57,8 @@ public class RegistryNewGameViewController extends Controller implements Initial
     private Integer cantJugadores;
     private ObservableList<Jugador> jugadores;
     private ArrayList<MFXTextField> textFields;
+
+    Sound sound = new Sound();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,11 +111,18 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @FXML
     void onActionBtnNext(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+
         if (validateFields() && validateUniqueNames())
         {
             savePlayerNames();
             proceedToNextView();
         }
+    }
+
+    @FXML
+    void onDragDetectedSldQty(MouseEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/SelectNumberOfPlayers.mp3");
     }
 
     private boolean validateFields() {
@@ -160,5 +174,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     private void showAlert(String title, String message) {
         new Mensaje().showModal(Alert.AlertType.ERROR, title, getStage(), message);
     }
+   
+
 
 }

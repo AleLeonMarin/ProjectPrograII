@@ -5,6 +5,7 @@ import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -40,6 +42,8 @@ public class SectorSelectionController extends Controller implements Initializab
     @FXML
     private MFXButton btnNext;
 
+    Sound sound = new Sound();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -64,6 +68,8 @@ public class SectorSelectionController extends Controller implements Initializab
 
     @FXML
     private void onActionBtnNext(ActionEvent event) {
+
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
         if (!validarBotones())
         {
             crearSectores(cantJugadores);
@@ -162,4 +168,6 @@ public class SectorSelectionController extends Controller implements Initializab
                 return new int[0][0];
         }
     }
+
+
 }
