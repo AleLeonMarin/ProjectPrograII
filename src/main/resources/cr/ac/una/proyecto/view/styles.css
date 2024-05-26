@@ -411,7 +411,66 @@
 		-fx-border-radius: 0;             /* Sin radio */
 	}
 
+    .jfx-mfx-btn-delete > ImageView {
+        -fx-image: url("../resources/delete.png");
+    }
 
+    .jfx-mfx-btn-delete,.jfx-mfx-btn-delete:armed,.jfx-mfx-btn-delete:focused , .jfx-mfx-btn-delete:hover{
+        -fx-background-color: #FF0000;
+        -fx-text-fill: black;
+        -fx-font-size: 18px;
+        -fx-font-weight: bold;
+        -fx-alignment: CENTER;
+        -fx-label-padding: 2px;
+    }
 
+    .jfx-mfx-btn-clean > ImageView {
+        -fx-image: url("../resources/clean.png");
+    }
+
+    .jfx-mfx-btn-clean,.jfx-mfx-btn-clean:armed,.jfx-mfx-btn-clean:focused , .jfx-mfx-btn-clean:hover{
+        -fx-background-color: #C65BCF;
+        -fx-text-fill: black;
+        -fx-font-size: 18px;
+        -fx-font-weight: bold;
+        -fx-alignment: CENTER;
+        -fx-label-padding: 2px;
+    }
+
+    .jfx-mfx-btn-new > ImageView {
+        -fx-image: url("../resources/new.png");
+    }
+
+    .jfx-mfx-btn-new,.jfx-mfx-btn-new:armed,.jfx-mfx-btn-new:focused , .jfx-mfx-btn-new:hover{
+        -fx-background-color: #68D2E8;
+        -fx-text-fill: black;
+        -fx-font-size: 18px;
+        -fx-font-weight: bold;
+        -fx-alignment: CENTER;
+        -fx-label-padding: 2px;
+    }
+
+    .jfx-background-panel{
+        -fx-background-color: #DD761C;
+        -fx-opacity: 0.8;
+    }
+
+    .jfx-background-panel > AnchorPane{
+        -fx-background-color: #FFBF00;
+        /*-fx-opacity: 0.9;*/
+    }
+
+    .jfx-principal-pane { 
+        -fx-background-color: #FFFFFF;
+        -fx-background-radius: 4.0;
+        -fx-padding: 25 15 15 15;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.7, 0, 1.5);
+    }
+
+    .jfx-panel-container{
+        -fx-background-color: #FFFFFF;
+        -fx-background-radius: 4.0;
+        -fx-padding: 15 15 15 15;
+    }
 
 
