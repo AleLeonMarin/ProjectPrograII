@@ -6,14 +6,16 @@ import java.util.Random;
 
 public class Ruleta {
 
-    private ArrayList<String> opciones;
+    private ArrayList<String> categorias;
     private double anguloInicial;
     private double anguloDetenido;
 
     public Ruleta() {
-        opciones = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
+        categorias = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
         anguloInicial = 0;
         anguloDetenido = 0;
+        
+         AppContext.getInstance().set("categoriasRuleta", categorias);
     }
 
     private int generarAnguloAleatorio() {
@@ -47,25 +49,25 @@ public class Ruleta {
 
         if (anguloDetenido >= deporteInicio && anguloDetenido <= deporteFin)
         {
-            categoria = opciones.get(0);
+            categoria = categorias.get(0);
         } else if (anguloDetenido >= arteInicio && anguloDetenido <= arteFin)
         {
-            categoria = opciones.get(1);
+            categoria = categorias.get(1);
         } else if (anguloDetenido >= geografiaInicio && anguloDetenido <= geografiaFin)
         {
-            categoria = opciones.get(2);
+            categoria = categorias.get(2);
         } else if (anguloDetenido >= cienciaInicio && anguloDetenido <= cienciaFin)
         {
-            categoria = opciones.get(3);
+            categoria = categorias.get(3);
         } else if (anguloDetenido >= coronaInicio && anguloDetenido <= coronaFin)
         {
-            categoria = opciones.get(4);
+            categoria = categorias.get(4);
         } else if (anguloDetenido >= entretenimientoInicio && anguloDetenido <= entretenimientoFin)
         {
-            categoria = opciones.get(5);
+            categoria = categorias.get(5);
         } else if ((anguloDetenido >= historiaInicio && anguloDetenido <= finalGrados) || (anguloDetenido >= anguloInicial && anguloDetenido <= historiaFin))
         {
-            categoria = opciones.get(6);
+            categoria = categorias.get(6);
         }
 
         return categoria;

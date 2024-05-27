@@ -3,6 +3,7 @@ package cr.ac.una.proyecto.controller;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.Pregunta;
 import cr.ac.una.proyecto.model.Respuesta;
+import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,13 +11,19 @@ import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.util.Collections;
 import java.util.Random;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PreguntaController extends Controller implements Initializable {
+
+    private Animacion animacion;
 
     @FXML
     private VBox VboxRespuestas;
@@ -53,6 +60,8 @@ public class PreguntaController extends Controller implements Initializable {
     private MFXButton btnRespuesta3;
     @FXML
     private MFXButton btnRespuesta4;
+    @FXML
+    private AnchorPane acpRootPane;
 
     @FXML
     void onActionBtnBomb(ActionEvent event) {
@@ -81,10 +90,11 @@ public class PreguntaController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
+        animacion = new Animacion();
         cargarBotonesToList();
         cargarDatosDesdeAppContext();
         cargarEnunciadoPregunta();
-
+        animacion.simpleFadeIn(acpRootPane);
     }
 
     public void cargarBotonesToList() {

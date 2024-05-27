@@ -1,6 +1,7 @@
 package cr.ac.una.proyecto.util;
 
 import javafx.animation.*;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Rotate;
@@ -62,6 +63,35 @@ public class Animacion {
 
         rotate.setOnFinished(event -> onFinish.run());
         rotate.play();
+    }
+
+    public void animarFadeOut(Node node, Runnable onFinish) {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setNode(node);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> onFinish.run());
+        fadeTransition.play();
+    }
+
+    public void animarFadeIn(Node node, Runnable onFinish) {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setNode(node);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.setOnFinished(event -> onFinish.run());
+        fadeTransition.play();
+    }
+
+    public void simpleFadeIn(Node node) {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setNode(node);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
     }
 
 }
