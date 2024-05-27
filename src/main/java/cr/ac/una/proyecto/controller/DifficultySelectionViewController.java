@@ -3,12 +3,14 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import cr.ac.una.proyecto.util.FlowController;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class DifficultySelectionViewController extends Controller implements Initializable {
@@ -25,8 +27,11 @@ public class DifficultySelectionViewController extends Controller implements Ini
     @FXML
     private MFXCheckbox ckbMedium;
 
+    Sound sound = new Sound();
+
     @FXML
     void onActionBtnPlay(ActionEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
         FlowController.getInstance().goViewInWindow("SumaryMatch");
         ((Stage) btnPlay.getScene().getWindow()).close();
     }
@@ -43,14 +48,11 @@ public class DifficultySelectionViewController extends Controller implements Ini
     }
 
     private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
-        CheckBox[] checkboxes =
-        {
-            ckbEasy, ckbMedium, ckbHard
+        CheckBox[] checkboxes = {
+                ckbEasy, ckbMedium, ckbHard
         };
-        for (CheckBox checkbox : checkboxes)
-        {
-            if (checkbox != selectedCheckbox)
-            {
+        for (CheckBox checkbox : checkboxes) {
+            if (checkbox != selectedCheckbox) {
                 checkbox.setSelected(false);
             }
         }
@@ -60,6 +62,21 @@ public class DifficultySelectionViewController extends Controller implements Ini
         ckbEasy.setOnAction(e -> deseleccionarOtrasCasillas(ckbEasy));
         ckbMedium.setOnAction(e -> deseleccionarOtrasCasillas(ckbMedium));
         ckbHard.setOnAction(e -> deseleccionarOtrasCasillas(ckbHard));
+    }
+
+    @FXML
+    void onActionDificil(MouseEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+    }
+
+    @FXML
+    void onActionFacil(MouseEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+    }
+
+    @FXML
+    void onActionMedio(MouseEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
     }
 
 }

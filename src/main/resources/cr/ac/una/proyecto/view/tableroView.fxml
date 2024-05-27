@@ -97,7 +97,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <MFXButton styleClass="jfx-mfx-btn-save" text="Guardar">
+            <MFXButton fx:id="btnGuardar" onAction="#onActionBtnGuardar" styleClass="jfx-mfx-btn-save" text="Guardar">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
@@ -107,7 +107,7 @@
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MFXButton>
-            <MFXButton styleClass="jfx-mfx-btn-salir" text="Salir">
+            <MFXButton fx:id="btnSalir" onAction="#onActionBtnSalir" styleClass="jfx-mfx-btn-salir" text="Salir">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>

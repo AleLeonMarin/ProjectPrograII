@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="jfx-background-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.MantenimientoController">
+   <children>
+      <AnchorPane layoutX="300.0" layoutY="194.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="580.0" prefWidth="780.0" styleClass="jfx-panel-container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Label styleClass="label-Titulo-Principal" text="Mantenimeinto de Preguntas" />
+                  <VBox alignment="CENTER" prefHeight="537.0" prefWidth="830.0" styleClass="jfx-principal-pane">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="107.0" prefWidth="880.0" spacing="40.0">
+                           <children>
+                              <MFXTextField floatMode="BORDER" floatingText="Id" prefHeight="49.0" prefWidth="248.0">
+                                 <styleClass>
+                                    <String fx:value="jfx-txfs-mantenimiento" />
+                                    <String fx:value="jfx-txfs-mantenimiento-container" />
+                                 </styleClass>
+                              </MFXTextField>
+                              <MFXTextField floatMode="BORDER" floatingText="Categoria" layoutX="271.0" layoutY="38.0" prefHeight="49.0" prefWidth="248.0">
+                                 <styleClass>
+                                    <String fx:value="jfx-txfs-mantenimiento" />
+                                    <String fx:value="jfx-txfs-mantenimiento-container" />
+                                 </styleClass>
+                              </MFXTextField>
+                              <MFXCheckbox text="Activo" />
+                           </children>
+                        </HBox>
+                        <VBox alignment="CENTER" prefHeight="474.0" prefWidth="880.0" spacing="10.0">
+                           <children>
+                              <TextArea prefHeight="136.0" prefWidth="820.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="30.0" right="30.0" top="20.0" />
+                                 </VBox.margin>
+                              </TextArea>
+                              <HBox alignment="CENTER" prefHeight="72.0" prefWidth="880.0" spacing="20.0">
+                                 <children>
+                                    <MFXTextField prefHeight="50.0" prefWidth="290.0">
+                                       <styleClass>
+                                          <String fx:value="jfx-txfs-mantenimiento" />
+                                          <String fx:value="jfx-txfs-mantenimiento-container" />
+                                       </styleClass>
+                                    </MFXTextField>
+                                    <MFXCheckbox text="Correcta" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <MFXTextField prefHeight="50.0" prefWidth="290.0">
+                                       <styleClass>
+                                          <String fx:value="jfx-txfs-mantenimiento" />
+                                          <String fx:value="jfx-txfs-mantenimiento-container" />
+                                       </styleClass>
+                                    </MFXTextField>
+                                    <MFXCheckbox text="Correcta" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                 <children>
+                                    <MFXTextField prefHeight="50.0" prefWidth="290.0">
+                                       <styleClass>
+                                          <String fx:value="jfx-txfs-mantenimiento" />
+                                          <String fx:value="jfx-txfs-mantenimiento-container" />
+                                       </styleClass>
+                                    </MFXTextField>
+                                    <MFXCheckbox text="Correcta" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="107.0" prefWidth="880.0" spacing="20.0">
+                                 <children>
+                                    <MFXTextField prefHeight="50.0" prefWidth="290.0">
+                                       <styleClass>
+                                          <String fx:value="jfx-txfs-mantenimiento" />
+                                          <String fx:value="jfx-txfs-mantenimiento-container" />
+                                       </styleClass>
+                                    </MFXTextField>
+                                    <MFXCheckbox text="Correcta" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="123.0" prefWidth="830.0" spacing="30.0">
+                     <children>
+                        <MFXButton fx:id="btnGuardar" styleClass="jfx-mfx-btn-save" text="Guardar">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnGuardar1" layoutX="257.0" layoutY="23.0" styleClass="jfx-mfx-btn-new" text="Nuevo">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnEliminar" layoutX="399.0" layoutY="23.0" styleClass="jfx-mfx-btn-delete" text="Eliminar">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnLimpiar" layoutX="450.0" layoutY="23.0" styleClass="jfx-mfx-btn-clean" text="Limpiar">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

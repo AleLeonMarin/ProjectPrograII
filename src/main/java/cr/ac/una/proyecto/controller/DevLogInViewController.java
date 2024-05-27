@@ -28,7 +28,8 @@ public class DevLogInViewController extends Controller implements Initializable 
     @FXML
     void onActionBtnAdmin(ActionEvent event) {
 
-        FlowController.getInstance().goViewInWindow("AdminLogIn");
+        FlowController.getInstance().goMain("AdminView");
+        ((Stage) btnAdmin.getScene().getWindow()).close();
 
     }
 

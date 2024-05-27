@@ -32,7 +32,7 @@
                   <MFXTextField fx:id="txfJug6" floatingText="Jugador 6" prefWidth="140.0" />
                </children>
             </HBox>
-            <MFXSlider fx:id="sldQty" prefHeight="3.0" prefWidth="91.0" />
+            <MFXSlider fx:id="sldQty" onDragDetected="#onDragDetectedSldQty" prefHeight="3.0" prefWidth="91.0" />
             <MFXButton fx:id="btnNext" onAction="#onActionBtnNext" styleClass="jfx-mfx-btn-next" text="Siguiente">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />

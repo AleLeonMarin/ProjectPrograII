@@ -13,13 +13,13 @@
       <VBox alignment="CENTER" layoutX="24.0" layoutY="38.0" prefHeight="488.0" prefWidth="401.0" spacing="30.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label styleClass="label-Titulo-Principal" text="Seleccion de dificultad" />
-            <MFXCheckbox fx:id="ckbEasy" text="Facil">
+            <MFXCheckbox fx:id="ckbEasy" onMouseClicked="#onActionFacil" text="Facil">
                <VBox.margin>
                   <Insets right="40.0" />
                </VBox.margin>
             </MFXCheckbox>
-            <MFXCheckbox fx:id="ckbMedium" text="Intermedio" />
-            <MFXCheckbox fx:id="ckbHard" text="Dificil">
+            <MFXCheckbox fx:id="ckbMedium" onMouseClicked="#onActionMedio" text="Intermedio" />
+            <MFXCheckbox fx:id="ckbHard" onMouseClicked="#onActionDificil" text="Dificil">
                <VBox.margin>
                   <Insets right="30.0" />
                </VBox.margin>
