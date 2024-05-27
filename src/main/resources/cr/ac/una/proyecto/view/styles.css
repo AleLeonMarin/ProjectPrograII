@@ -39,6 +39,17 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,1), 10, 0, 0, 0);
 }
 
+.contenedores{
+    -fx-padding: 5 5 5 5;
+    -fx-spacing: 10px;   
+}
+
+.lblTexto{
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF8A08;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 10.0, 0.7, 0.0, 1.5);
+}
 
 .contenedorBotones{
     -fx-padding: 2 2 2 2;

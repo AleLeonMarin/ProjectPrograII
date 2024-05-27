@@ -4,33 +4,83 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="540.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.SummaryMatchViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.SummaryMatchViewController">
    <children>
-      <Label layoutX="151.0" layoutY="40.0" styleClass="label-Titulo-Principal" text="Resumen Pre-Partida" />
-      <MFXButton fx:id="btnPlay" layoutX="299.0" layoutY="733.0" onAction="#onActionBtnPlay" styleClass="jfx-mfx-btn-play" text="Iniciar Partida">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic>
-      </MFXButton>
-      <MFXButton fx:id="btnEdit" layoutX="31.0" layoutY="733.0" onAction="#onActionBtnEdit" styleClass="jfx-mfx-btn-edit" text="Editar Información">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-         </graphic>
-      </MFXButton>
-      <Label fx:id="lblJuagdor1" layoutX="127.0" layoutY="186.0" prefHeight="17.0" prefWidth="28.0" text="Label" />
-      <Label fx:id="lblJugador2" layoutX="375.0" layoutY="178.0" text="Label" />
-      <ImageView fx:id="imgFicha1" fitHeight="107.0" fitWidth="102.0" layoutX="90.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgFicha2" fitHeight="107.0" fitWidth="102.0" layoutX="338.0" layoutY="222.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblJugador3" layoutX="127.0" layoutY="342.0" text="Label" />
-      <ImageView fx:id="imgFicha3" fitHeight="107.0" fitWidth="102.0" layoutX="90.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblJugador4" layoutX="376.0" layoutY="342.0" text="Label" />
-      <ImageView fx:id="imgFicha4" fitHeight="107.0" fitWidth="102.0" layoutX="346.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblJugador5" layoutX="127.0" layoutY="499.0" text="Label" />
-      <ImageView fx:id="imgFicha5" fitHeight="107.0" fitWidth="102.0" layoutX="90.0" layoutY="544.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblJugador6" layoutX="376.0" layoutY="499.0" text="Label" />
-      <ImageView fx:id="imgFicha6" fitHeight="107.0" fitWidth="102.0" layoutX="339.0" layoutY="544.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="108.0" layoutY="103.0" styleClass="label-Titulo-Principal" text="Dificultad :" />
-      <Label fx:id="lblDifficulty" layoutX="286.0" layoutY="103.0" styleClass="label-Titulo-Principal" text="Label" />
+      <VBox alignment="CENTER" layoutX="1.0" layoutY="40.0" styleClass="contenedores" stylesheets="@styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="label-Titulo-Principal" text="Resumen Pre-Partida" />
+            <HBox alignment="CENTER" styleClass="contenedores">
+               <children>
+                  <Label styleClass="label-Titulo-Principal" text="Dificultad :" />
+                  <Label fx:id="lblDifficulty" styleClass="label-Titulo-Principal" text="Label" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJuagdor1" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha1" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador2" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha2" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador3" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha3" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador4" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha4" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador5" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha5" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador6" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha6" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores">
+               <children>
+                  <MFXButton fx:id="btnEdit" onAction="#onActionBtnEdit" styleClass="jfx-mfx-btn-edit" text="Editar Información">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                  </MFXButton>
+                  <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" styleClass="jfx-mfx-btn-play" text="Iniciar Partida">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                  </MFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
