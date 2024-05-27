@@ -6,7 +6,6 @@ module cr.ac.una.proyecto {
     requires java.base;
     requires javafx.graphics;
     requires javafx.media;
-    requires javafx.base;
 
     opens cr.ac.una.proyecto to javafx.fxml;
     exports cr.ac.una.proyecto;
