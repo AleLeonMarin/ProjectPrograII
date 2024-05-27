@@ -50,6 +50,7 @@ public class PreguntaController extends Controller implements Initializable {
     private ArrayList<Pregunta> preguntas;
     private ArrayList<Respuesta> respuestas;
     private Pregunta preguntaSeleccionada;
+    private Boolean valorRespuesta;
 
     private ArrayList<MFXButton> botones;
     @FXML
@@ -196,11 +197,18 @@ public class PreguntaController extends Controller implements Initializable {
     private void validarRespuesta(MFXButton button) {
         if (button.getText().equals(respuestaCorrecta))
         {
+            valorRespuesta = true;
             System.out.println("Respuesta Correcta");
+
         } else
         {
+            valorRespuesta = false;
             System.out.println("Respuesta Incorrecta");
         }
+
+        ((Stage) acpRootPane.getScene().getWindow()).close();
+        AppContext.getInstance().set("valorRespuesta", valorRespuesta);
+
     }
 
     @FXML

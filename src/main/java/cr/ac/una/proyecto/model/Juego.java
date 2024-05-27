@@ -17,10 +17,10 @@ public class Juego {
     private ArrayList<Respuesta> respuestas;
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
-    private Scanner scanner;
 
     private String resultadoRuleta;
     private Ruleta ruleta;
+    private Boolean valorRespuesta;
 
     public Juego() {
         ruleta = new Ruleta();
@@ -28,7 +28,6 @@ public class Juego {
         preguntas = new ArrayList<>();
         respuestas = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
-        scanner = new Scanner(System.in);
         turnoActual = 0;
         cargarPreguntas();
         cargarRespuestas();
@@ -63,16 +62,12 @@ public class Juego {
         }
     }
 
-    public void jugar(GridPane grdpTablero) {// manejo turnos de los jugadores->Sectores->Imagenes
+    public void jugar(GridPane grdpTablero) {
         Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         Jugador jugadorActual = sectorActual.getJugador();
-        System.out.println("Turno de " + jugadorActual.getNombre());
-        Pregunta preguntaActual = obtenerPreguntaAleatoria();
-        System.out.println("Pregunta: " + preguntaActual.getEnunciado());
-        System.out.print("Respuesta: ");
-        String respuesta = scanner.nextLine();
-        if (respuesta.equalsIgnoreCase(preguntaActual.getRespuesta()))
+        cargarPreguntaViewValorRespuesta();
+        if (valorRespuesta)
         {
             jugadorActual.aumentarPuntos();
             System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
@@ -83,6 +78,10 @@ public class Juego {
             cambiarTurno();
         }
 
+    }
+
+    private void cargarPreguntaViewValorRespuesta() {
+        valorRespuesta = (Boolean) AppContext.getInstance().get("valorRespuesta");
     }
 
     private boolean hayGanador() {
@@ -115,14 +114,6 @@ public class Juego {
                 System.out.println("¡El ganador es: " + jugador.getNombre() + " con " + jugador.getPuntos() + " puntos!");
                 break;
             }
-        }
-    }
-
-    public void obtenerInfoSectores() {
-        System.out.println("Informacion clase juego sectores: ");
-        for (Sector sector : sectores)
-        {
-            System.out.println(sector.getJugador().toString());
         }
     }
 

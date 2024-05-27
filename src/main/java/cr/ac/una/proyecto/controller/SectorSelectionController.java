@@ -100,9 +100,9 @@ public class SectorSelectionController extends Controller implements Initializab
         cantJugadores = (Integer) AppContext.getInstance().get("cantJugadoresSlider");
         jugadores = (ObservableList<Jugador>) AppContext.getInstance().get("jugadores");
     }
-    
-    private void cargarNombresJugadores(){
-      jugadores.forEach(jugador -> nombresJugadores.add(jugador.getNombre()));
+
+    private void cargarNombresJugadores() {
+        jugadores.forEach(jugador -> nombresJugadores.add(jugador.getNombre()));
     }
 
     private boolean validarBotones() {
@@ -135,39 +135,174 @@ public class SectorSelectionController extends Controller implements Initializab
         return jugadores.stream().filter(jugador -> jugador.getNombre().equals(nombreJugador)).findFirst().orElse(null);
     }
 
-    private void crearSectores(int cantidadJugadores) {
-        List<Sector> sectores = new ArrayList<>();
-        int[][] posiciones = obtenerPosicionesIniciales(cantidadJugadores);
+    private void crearSectores(int cantidadJugadores) {// manejarLogicade inicio de sectores en tableros
 
-        for (int index = 0; index < cantidadJugadores; index++)
+        ArrayList<Sector> sectores;
+        sectores = new ArrayList<>();
+        if (cantidadJugadores == 2)
         {
-            MFXComboBox<String> comboBox = botonesCmbBox.get(index);
-            Jugador jugador = buscarJugador(comboBox.getValue());
-            int x = posiciones[index][0];
-            int y = posiciones[index][1];
-            int posicionActual = index + 1;
-            sectores.add(new Sector(jugador, x, y, posicionActual, posicionActual, ""));
+
+            int playerOnePositionY = 0;
+            int playerOnePositionX = 0;
+            int playerOneCurrentPosition = 0;
+
+            int playerTwoPositionY = 3;
+            int playerTwoPositionX = 3;
+            int playerTwoCurrentPosition = 3;
+
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY,
+                    playerOneCurrentPosition, 1, "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY,
+                    playerTwoCurrentPosition, 2, "");
+
+            sectores.add(sector1);
+            sectores.add(sector2);
         }
 
+        if (cantidadJugadores == 3)// crear los demas sectores con la informacion de posiciones segun tablero
+        {
+            int playerOnePositionY = 3;
+            int playerOnePositionX = 4;
+
+            int playerTwoPositionY = 0;
+            int playerTwoPositionX = 3;
+
+            int playerThreePositionY = 3;
+            int playerThreePositionX = 0;
+
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1,
+                    "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2,
+                    "");
+            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX,
+                    playerThreePositionY, 3, "");
+
+            sectores.addAll(Arrays.asList(sector1, sector2, sector3));
+        }
+        if (cantidadJugadores == 4)
+        {
+
+            int playerOnePositionY = 3;
+            int playerOnePositionX = 4;
+
+            int playerTwoPositionY = 0;
+            int playerTwoPositionX = 3;
+
+            int playerThreePositionY = 1;
+            int playerThreePositionX = 0;
+
+            int playerFourPositionY = 4;
+            int playerFourPositionX = 1;
+
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1,
+                    "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2,
+                    "");
+            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX,
+                    playerThreePositionY, 3, "");
+            Sector sector4 = new Sector(buscarJugador(cmbSector4.getValue()), playerFourPositionX, playerFourPositionY,
+                    4, "");
+            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4));
+        }
+        if (cantidadJugadores == 5)
+        {
+            int playerOnePositionY = 6;
+            int playerOnePositionX = 4;
+
+            int playerTwoPositionY = 2;
+            int playerTwoPositionX = 4;
+
+            int playerThreePositionY = 0;
+            int playerThreePositionX = 2;
+
+            int playerFourPositionY = 2;
+            int playerFourPositionX = 0;
+
+            int playerFivePositionY = 6;
+            int playerFivePositionX = 0;
+
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1,
+                    "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2,
+                    "");
+            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX,
+                    playerThreePositionY, 3, "");
+            Sector sector4 = new Sector(buscarJugador(cmbSector4.getValue()), playerFourPositionX, playerFourPositionY,
+                    4, "");
+
+            Sector sector5 = new Sector(buscarJugador(cmbSector5.getValue()), playerFivePositionX, playerFivePositionY,
+                    5, "");
+            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5));
+
+        }
+        if (cantidadJugadores == 6)
+        {
+
+            int playerOnePositionY = 7;
+            int playerOnePositionX = 5;
+
+            int playerTwoPositionY = 3;
+            int playerTwoPositionX = 5;
+
+            int playerThreePositionY = 0;
+            int playerThreePositionX = 4;
+
+            int playerFourPositionY = 0;
+            int playerFourPositionX = 0;
+
+            int playerFivePositionY = 4;
+            int playerFivePositionX = 0;
+
+            int playerSixPositionY = 7;
+            int playerSixPositionX = 1;
+
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1,
+                    "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2,
+                    "");
+            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX,
+                    playerThreePositionY, 3, "");
+            Sector sector4 = new Sector(buscarJugador(cmbSector4.getValue()), playerFourPositionX, playerFourPositionY,
+                    4, "");
+            Sector sector5 = new Sector(buscarJugador(cmbSector5.getValue()), playerFivePositionX, playerFivePositionY,
+                    5, "");
+            Sector sector6 = new Sector(buscarJugador(cmbSector6.getValue()), playerSixPositionX, playerSixPositionY, 6,
+                    "");
+            sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4, sector5, sector6));
+        }
         AppContext.getInstance().set("sectores", sectores);
     }
-    
-    private int[][] obtenerPosicionesIniciales(int cantidadJugadores) {
-        switch (cantidadJugadores) {
-            case 2:
-                return new int[][]{{0, 0}, {3, 3}};//sector uno y dos posiciones tablero dos jugadores
-            case 3:
-                return new int[][]{{4, 3}, {3, 0}, {0, 3}};//sector uno ,dos,tres posiciones tablero 3 jugadores
-            case 4:
-                return new int[][]{{4, 3}, {3, 0}, {0, 1}, {1, 4}};
-            case 5:
-                return new int[][]{{4, 6}, {4, 2}, {2, 0}, {0, 2}, {0, 6}};
-            case 6:
-                return new int[][]{{5, 7}, {5, 3}, {4, 0}, {0, 0}, {0, 4}, {1, 7}};//sector uno ,dos,tres,4,5,6 posiciones tablero 6 jugadores
-            default:
-                return new int[0][0];
-        }
-    }
 
-
+//    private int[][] obtenerPosicionesIniciales(int cantidadJugadores) {
+//        switch (cantidadJugadores) {
+//            case 2:
+//                return new int[][]{{0, 0}, {3, 3}};//sector uno y dos posiciones tablero dos jugadores
+//            case 3:
+//                return new int[][]{{4, 3}, {3, 0}, {0, 3}};//sector uno ,dos,tres posiciones tablero 3 jugadores
+//            case 4:
+//                return new int[][]{{4, 3}, {3, 0}, {0, 1}, {1, 4}};
+//            case 5:
+//                return new int[][]{{4, 6}, {4, 2}, {2, 0}, {0, 2}, {0, 6}};
+//            case 6:
+//                return new int[][]{{5, 7}, {5, 3}, {4, 0}, {0, 0}, {0, 4}, {1, 7}};//sector uno ,dos,tres,4,5,6 posiciones tablero 6 jugadores
+//            default:
+//                return new int[0][0];
+//        }
+//    }
+//         private void crearSectores(int cantidadJugadores) {//se ocupa saber la dirrecion de los sectores, reeplanter la idea de como moverse en el tablero
+//        List<Sector> sectores = new ArrayList<>();
+//        int[][] posiciones = obtenerPosicionesIniciales(cantidadJugadores);
+//
+//        for (int index = 0; index < cantidadJugadores; index++)
+//        {
+//            MFXComboBox<String> comboBox = botonesCmbBox.get(index);
+//            Jugador jugador = buscarJugador(comboBox.getValue());
+//            int x = posiciones[index][0];
+//            int y = posiciones[index][1];
+//            int posicionActual = index + 1;
+//            sectores.add(new Sector(jugador, x, y, posicionActual, posicionActual, ""));
+//        }
+//
+//        AppContext.getInstance().set("sectores", sectores);
+//    }
 }

@@ -85,6 +85,7 @@ public class TablerosController extends Controller implements Initializable {
         {
             System.out.println("La animación de la ruleta ha terminado en esta categoria: " + categoria + ", Angulo: " + anguloDetenido);
             Platform.runLater(() -> mostrarTarjetas());
+
         };
 
         animacion.animacionRuleta(imvRuleta, anguloDetenido, onFinish);
@@ -101,31 +102,33 @@ public class TablerosController extends Controller implements Initializable {
         if (categoria == categoriasRuleta.get(0))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports", ((Stage) imvRuleta.getScene().getWindow()), true);
-            llamarPreguntaView();
+            // llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(1))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardArt", ((Stage) imvRuleta.getScene().getWindow()), true);
-            llamarPreguntaView();
+            //llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(2))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy", ((Stage) imvRuleta.getScene().getWindow()), true);
-            llamarPreguntaView();
+            // llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(3))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience", ((Stage) imvRuleta.getScene().getWindow()), true);
-            llamarPreguntaView();
+            // llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(4))
         {
             System.out.println("Categoria: " + categoria);//categoriaCorona
         } else if (categoria == categoriasRuleta.get(5))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient", ((Stage) imvRuleta.getScene().getWindow()), true);
-            llamarPreguntaView();
+            // llamarPreguntaView();
         } else
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory", ((Stage) imvRuleta.getScene().getWindow()), true);
-            llamarPreguntaView();
+            // llamarPreguntaView();
         }
+        llamarPreguntaView();
+        juego.jugar(grdpTablero);
     }
 
 }
