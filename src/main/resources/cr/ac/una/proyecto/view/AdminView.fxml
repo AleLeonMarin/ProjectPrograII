@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -15,6 +16,14 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
+            </MFXButton>
+            <MFXButton fx:id="btnEstadisticas" onAction="#onActionBtnEstadisticas" styleClass="jfx-mfx-btn-statistics" text="Estadisticas Pregunta" textAlignment="CENTER" wrapText="true">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
             </MFXButton>
             <MFXButton fx:id="bntSalir" onAction="#onActionBntSalir" styleClass="jfx-mfx-btn-salir" text="Salir" textAlignment="CENTER" wrapText="true">
                <graphic>

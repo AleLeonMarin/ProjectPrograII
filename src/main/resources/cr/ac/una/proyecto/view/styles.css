@@ -484,4 +484,17 @@
         -fx-padding: 15 15 15 15;
     }
 
+    .jfx-mfx-btn-statistics > ImageView {
+        -fx-image: url("../resources/statistics.png");
+    }
+
+    .jfx-mfx-btn-statistics,.jfx-mfx-btn-statistics:armed,.jfx-mfx-btn-statistics:focused , .jfx-mfx-btn-statistics:hover{
+        -fx-background-color: #FFC700;
+        -fx-text-fill: black;
+        -fx-font-size: 16px;
+        -fx-font-weight: bold;
+        -fx-alignment: CENTER;
+        -fx-label-padding: 2px;
+    }
+
 

@@ -19,8 +19,11 @@ public class AdminController extends Controller implements Initializable{
     private MFXButton btnMantenimiento;
 
     @FXML
+    private MFXButton btnEstadisticas;
+
+    @FXML
     void onActionBntSalir(ActionEvent event) {
-        ((Stage) bntSalir.getScene().getWindow()).close();
+       FlowController.getInstance().salir();
 
     }
 
@@ -28,6 +31,13 @@ public class AdminController extends Controller implements Initializable{
     void onActionBtnMantenimiento(ActionEvent event) {
 
         FlowController.getInstance().goView("MantenimientoPreguntas");
+
+    }
+
+    @FXML
+    void onActionBtnEstadisticas(ActionEvent event) {
+
+        FlowController.getInstance().goView("Estadisticas");
 
     }
 
