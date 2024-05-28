@@ -1,17 +1,14 @@
 package cr.ac.una.proyecto.model;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class Sector {
 
     private Jugador jugador;
-    private int posicionFija;
-    private int posicionInicial;
-    private int posicionCorona;
+    private int posicionX;
+    private int posicionY;
     private int posActual;
     private int direccion;
     private String rutaImagenJugador;
@@ -19,23 +16,24 @@ public class Sector {
     public Sector() {
     }
 
-    public Sector(Jugador jugador, int posicionFija, int posicionInicial, int posActual, int direccion,
-            String rutaImagenJugador) {
+    public Sector(Jugador jugador, int Xpos, int Ypos, int direccion, String rutaImagenJugador) {
         this.jugador = jugador;
-        this.posicionFija = posicionFija;
-        this.posicionInicial = posicionInicial;
-        this.posActual = posActual;
+        this.posicionX = Xpos;
+        this.posicionY = Ypos;
         this.direccion = direccion;
         this.rutaImagenJugador = rutaImagenJugador;
+        setActualPosition();
+
     }
 
-    public Sector(Jugador jugador, int posicionFija, int posicionInicial, int direccion, String rutaImagenJugador) {
-        this.jugador = jugador;
-        this.posicionFija = posicionFija;
-        this.posicionInicial = posicionInicial;
-        this.direccion = direccion;
-        this.rutaImagenJugador = rutaImagenJugador;
-        this.posActual = this.posicionInicial;
+    private void setActualPosition() {
+        if (direccion == 1 || direccion == 2)
+        {
+            this.posActual = this.posicionY;
+        } else
+        {
+            this.posActual = this.posicionX;
+        }
     }
 
     public int getDireccion() {
@@ -51,27 +49,19 @@ public class Sector {
     }
 
     public int getPosicionFija() {
-        return posicionFija;
+        return posicionX;
     }
 
     public void setPosicionFija(int posicionFija) {
-        this.posicionFija = posicionFija;
+        this.posicionX = posicionFija;
     }
 
     public int getPosicionInicial() {
-        return posicionInicial;
+        return posicionY;
     }
 
     public void setPosicionInicial(int posicionInicial) {
-        this.posicionInicial = posicionInicial;
-    }
-
-    public int getPosicionCorona() {
-        return posicionCorona;
-    }
-
-    public void setPosicionCorona(int posicionCorona) {
-        this.posicionCorona = posicionCorona;
+        this.posicionY = posicionInicial;
     }
 
     public int getPosActual() {
@@ -90,72 +80,85 @@ public class Sector {
         this.rutaImagenJugador = rutaImagenJugador;
     }
 
-    private void eliminarNodoEnPosicion(int columna, int fila, GridPane grdPane) {
-        ObservableList<Node> children = grdPane.getChildren();
-        children.removeIf(node -> GridPane.getRowIndex(node) == fila && GridPane.getColumnIndex(node) == columna);
+    private void moverNodoA(ImageView imageView, int columna, int fila) {
+        GridPane.setColumnIndex(imageView, columna);
+        GridPane.setRowIndex(imageView, fila);
+        GridPane.setHalignment(imageView, HPos.CENTER);
     }
 
-    public int moverIzquierdaDerecha(ImageView imageView, GridPane grdPane) {
-
-        eliminarNodoEnPosicion(posActual, posicionFija, grdPane);
-        if (posActual >= posicionInicial + 3) {
-            posActual = posicionInicial;
-        } else {
+    public int moverDerecha(ImageView imageView, GridPane grdPane) {
+        if (posActual >= posicionY + 3)
+        {
+            posActual = posicionY;
+        } else
+        {
             posActual++;
         }
-
-        grdPane.add(imageView, posActual, posicionFija);
-        GridPane.setHalignment(imageView, HPos.CENTER);
+        moverNodoA(imageView, posActual, posicionX);
         return posActual;
     }
 
-    public int moverDerechaIzquierda(ImageView imageView, GridPane grdPane) {
-
-        eliminarNodoEnPosicion(posActual, posicionFija, grdPane);
-
-        if (posActual <= posicionInicial - 3) {
-            posActual = posicionInicial;
-        } else {
+    public int moverIzquierda(ImageView imageView, GridPane grdPane) {
+        if (posActual <= posicionY - 3)
+        {
+            posActual = posicionY;
+        } else
+        {
             posActual--;
         }
+        moverNodoA(imageView, posActual, posicionX);
+        return posActual;
+    }
 
-        grdPane.add(imageView, posActual, posicionFija);
-        GridPane.setHalignment(imageView, HPos.CENTER);
+    public int moverAbajo(ImageView imageView, GridPane grdPane) {
+        if (posActual >= posicionX + 3)
+        {
+            posActual = posicionX;
+        } else
+        {
+            posActual++;
+        }
+        moverNodoA(imageView, posicionY, posActual);
+        return posActual;
+    }
+
+    public int moverArriba(ImageView imageView, GridPane grdPane) {
+        if (posActual <= posicionX - 3)
+        {
+            posActual = posicionX;
+        } else
+        {
+            posActual--;
+        }
+        moverNodoA(imageView, posicionY, posActual);
         return posActual;
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-
-        System.out.println("Pos actual: " + posActual);
-        System.out.println("Pos X: " + posicionFija);
-        System.out.println("Pos Y: " + posicionInicial);
-
-        if (direccion == 1) {
-            return moverIzquierdaDerecha(imageView, grdPane);
-
-        } else if (direccion == 2) {
-            return moverDerechaIzquierda(imageView, grdPane);
-        } else if (direccion == 3) {
-
-        } else if (direccion == 4) {
-
+        switch (direccion)
+        {
+            case 1:
+                return moverDerecha(imageView, grdPane);
+            case 2:
+                return moverIzquierda(imageView, grdPane);
+            case 3:
+                return moverAbajo(imageView, grdPane);
+            case 4:
+                return moverArriba(imageView, grdPane);
+            default:
+                throw new IllegalArgumentException("Dirección no válida: " + direccion);
         }
-
-        return 0;
-
     }
 
     @Override
     public String toString() {
         return "Sector{"
                 + "jugador=" + (jugador != null ? jugador.toString() : "null")
-                + ", posicionFija=" + posicionFija
-                + ", posicionInicial=" + posicionInicial
-                + ", posicionCorona=" + posicionCorona
+                + ", posicionFija=" + posicionX
+                + ", posicionInicial=" + posicionY
                 + ", posActual=" + posActual
                 + ", direccion=" + direccion
                 + ", rutaImagenJugador='" + rutaImagenJugador + '\''
                 + '}';
     }
-
 }

@@ -144,22 +144,18 @@ public class SectorSelectionController extends Controller implements Initializab
 
             int playerOnePositionY = 0;
             int playerOnePositionX = 0;
-            int playerOneCurrentPosition = 0;
 
             int playerTwoPositionY = 3;
             int playerTwoPositionX = 3;
-            int playerTwoCurrentPosition = 3;
 
-            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY,
-                    playerOneCurrentPosition, 1, "");
-            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY,
-                    playerTwoCurrentPosition, 2, "");
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1, "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2, "");
 
             sectores.add(sector1);
             sectores.add(sector2);
         }
 
-        if (cantidadJugadores == 3)// crear los demas sectores con la informacion de posiciones segun tablero
+        if (cantidadJugadores == 3)
         {
             int playerOnePositionY = 3;
             int playerOnePositionX = 4;
@@ -170,39 +166,34 @@ public class SectorSelectionController extends Controller implements Initializab
             int playerThreePositionY = 3;
             int playerThreePositionX = 0;
 
-            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1,
-                    "");
-            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2,
-                    "");
-            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX,
-                    playerThreePositionY, 3, "");
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 2, "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 4, "");
+            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX, playerThreePositionY, 3, "");
 
             sectores.addAll(Arrays.asList(sector1, sector2, sector3));
         }
         if (cantidadJugadores == 4)
         {
 
-            int playerOnePositionY = 3;
-            int playerOnePositionX = 4;
+            int playerOnePositionY = 1;
+            int playerOnePositionX = 0;
 
-            int playerTwoPositionY = 0;
-            int playerTwoPositionX = 3;
+            int playerTwoPositionY = 1;
+            int playerTwoPositionX = 4;
 
-            int playerThreePositionY = 1;
-            int playerThreePositionX = 0;
+            int playerThreePositionY = 3;
+            int playerThreePositionX = 4;
 
-            int playerFourPositionY = 4;
-            int playerFourPositionX = 1;
+            int playerFourPositionY = 3;
+            int playerFourPositionX = 0;
 
-            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1,
-                    "");
-            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionX, playerTwoPositionY, 2,
-                    "");
-            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX,
-                    playerThreePositionY, 3, "");
-            Sector sector4 = new Sector(buscarJugador(cmbSector4.getValue()), playerFourPositionX, playerFourPositionY,
-                    4, "");
+            Sector sector1 = new Sector(buscarJugador(cmbSector1.getValue()), playerOnePositionX, playerOnePositionY, 1, "");
+            Sector sector2 = new Sector(buscarJugador(cmbSector2.getValue()), playerTwoPositionY, playerTwoPositionX, 3, "");
+            Sector sector3 = new Sector(buscarJugador(cmbSector3.getValue()), playerThreePositionX, playerThreePositionY, 2, "");
+            Sector sector4 = new Sector(buscarJugador(cmbSector4.getValue()), playerFourPositionY, playerFourPositionX, 4, "");
+
             sectores.addAll(Arrays.asList(sector1, sector2, sector3, sector4));
+
         }
         if (cantidadJugadores == 5)
         {
