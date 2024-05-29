@@ -37,6 +37,8 @@ public class FlowController {
     private static Stage mainStage;
     private static ResourceBundle idioma;
     private static HashMap<String, FXMLLoader> loaders = new HashMap<>();
+    public Image icon;
+    String iconString;
 
 
     private FlowController() {
@@ -153,7 +155,9 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        //stage.getIcons().add(new Image("src/main/resources/cr/ac/una/proyecto/resources/principalIcon.png"));
+        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
+        icon = new Image(iconString);
+        stage.getIcons().add(icon);
         stage.setTitle("Preguntados JR");
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
@@ -173,7 +177,9 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        //stage.getIcons().add(new Image("src/main/resources/cr/ac/una/proyecto/resources/principalIcon.png"));
+        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
+        icon = new Image(iconString);
+        stage.getIcons().add(icon);
         stage.setTitle("Preguntados JR");
         stage.setResizable(resizable);
         stage.setOnHidden((WindowEvent event) -> {

@@ -8,6 +8,7 @@ import java.io.IOException;
 import cr.ac.una.proyecto.util.FlowController;
 import java.util.ArrayList;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class App extends Application {
@@ -16,12 +17,17 @@ public class App extends Application {
     ArrayList<ImageView> imagenesJugadores;
 
     public static Scene scene;
+    public Image icon;
+    String iconString;
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
+        icon = new Image(iconString);
         registros();
         FlowController.getInstance().InitializeFlow(stage, null);
-        //stage.getIcons().add(new javafx.scene.image.Image("src/main/resources/cr/ac/una/proyecto/resources/principalIcon.png"));
+        stage.getIcons().add(icon);
         stage.setTitle("Preguntados JR");
         FlowController.getInstance().goViewInWindow("DevLogIn");
 
