@@ -23,9 +23,9 @@ import java.util.List;
 @NamedQueries(
         {
             @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
-            /*@NamedQuery(name = "Categoria.findByCatNombre", query = "SELECT c FROM Categoria c WHERE c.catNombre = :catNombre"),
+        /*@NamedQuery(name = "Categoria.findByCatNombre", query = "SELECT c FROM Categoria c WHERE c.catNombre = :catNombre"),
             @NamedQuery(name = "Categoria.findByCatId", query = "SELECT c FROM Categoria c WHERE c.catId = :catId"),
-            @NamedQuery(name = "Categoria.findByCatVersion", query = "SELECT c FROM Categoria c WHERE c.catVersion = :catVersion")*/        
+            @NamedQuery(name = "Categoria.findByCatVersion", query = "SELECT c FROM Categoria c WHERE c.catVersion = :catVersion")*/
         })
 public class Categoria implements Serializable {
 
@@ -102,11 +102,13 @@ public class Categoria implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Categoria)) {
+        if (!(object instanceof Categoria))
+        {
             return false;
         }
         Categoria other = (Categoria) object;
-        if ((this.nombre == null && other.nombre != null) || (this.nombre != null && !this.nombre.equals(other.nombre))) {
+        if ((this.nombre == null && other.nombre != null) || (this.nombre != null && !this.nombre.equals(other.nombre)))
+        {
             return false;
         }
         return true;

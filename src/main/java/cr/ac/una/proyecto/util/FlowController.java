@@ -210,9 +210,9 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
-        icon = new Image(iconString);
-        stage.getIcons().add(icon);
+//        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
+//        icon = new Image(iconString);
+//        stage.getIcons().add(icon);
         stage.setTitle("Preguntados JR");
         stage.setResizable(resizable);
         stage.setOnHidden((WindowEvent event) ->

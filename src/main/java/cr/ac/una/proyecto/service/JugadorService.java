@@ -16,21 +16,25 @@ public class JugadorService {
     private EntityTransaction et;
 
     public Respuesta guardarJugadores(List<JugadorDto> jugadoresDto) {
-        et = em.getTransaction();
-        try {
+        try
+        {
             et = em.getTransaction();
             et.begin();
-            for (JugadorDto jugadorDto : jugadoresDto) {
+            for (JugadorDto jugadorDto : jugadoresDto)
+            {
                 Jugador jugador;
-                if (jugadorDto.getId() != null && jugadorDto.getId() > 0) {
+                if (jugadorDto.getId() != null && jugadorDto.getId() > 0)
+                {
                     jugador = em.find(Jugador.class, jugadorDto.getId());
-                    if (jugador == null) {
+                    if (jugador == null)
+                    {
                         return new Respuesta(false, "No se encontró el jugador a modificar.",
                                 "guardarJugador NoResultException");
                     }
                     jugador.actualizar(jugadorDto);
                     jugador = em.merge(jugador);
-                } else {
+                } else
+                {
                     jugador = new Jugador(jugadorDto);
                     em.persist(jugador);
                 }
@@ -42,8 +46,10 @@ public class JugadorService {
             et.commit();
             return new Respuesta(true, "", "", "Jugadores", jugadoresDto);
 
-        } catch (Exception ex) {
-            if (et != null && et.isActive()) {
+        } catch (Exception ex)
+        {
+            if (et != null && et.isActive())
+            {
                 et.rollback();
             }
             Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error guardando los jugadores.", ex);

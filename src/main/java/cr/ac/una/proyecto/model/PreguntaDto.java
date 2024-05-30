@@ -1,13 +1,15 @@
 package cr.ac.una.proyecto.model;
 
 import java.io.Serializable;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class PreguntaDto implements Serializable {
 
     public SimpleStringProperty id;
+    public SimpleStringProperty nombreCategoria;
     public SimpleStringProperty enunciado;
-    public SimpleStringProperty estado;
+    public SimpleBooleanProperty estado;
     public SimpleStringProperty aparicion;
     public SimpleStringProperty aciertos;
     private Long version;
@@ -15,8 +17,9 @@ public class PreguntaDto implements Serializable {
 
     public PreguntaDto() {
         this.id = new SimpleStringProperty("");
+        this.nombreCategoria = new SimpleStringProperty("");
         this.enunciado = new SimpleStringProperty("");
-        this.estado = new SimpleStringProperty("");
+        this.estado = new SimpleBooleanProperty(false);
         this.aparicion = new SimpleStringProperty("");
         this.aciertos = new SimpleStringProperty("");
         this.modificado = false;
@@ -25,8 +28,9 @@ public class PreguntaDto implements Serializable {
     public PreguntaDto(Pregunta pregunta) {
         this();
         this.id.set(pregunta.getId().toString());
+        this.nombreCategoria.set(pregunta.getNombreCategoria().getNombre());
         this.enunciado.set(pregunta.getEnunciado());
-        this.estado.set(pregunta.getEstado());
+        this.estado.set(pregunta.getEstado().equals(""));
         this.aparicion.set(pregunta.getAparicion());
         this.aciertos.set(pregunta.getAciertos());
         this.version = pregunta.getVersion();
@@ -44,7 +48,7 @@ public class PreguntaDto implements Serializable {
         this.id.set(id.toString());
     }
 
-    public String gerEnunciado() {
+    public String getEnunciado() {
         return enunciado.get();
     }
 
@@ -53,11 +57,11 @@ public class PreguntaDto implements Serializable {
     }
 
     public String getEstado() {
-        return estado.get();
+        return estado.get() ? "A" : "I";
     }
 
     public void setEstado(String estado) {
-        this.estado.set(estado);
+        this.estado.set(estado.equalsIgnoreCase("A"));
     }
 
     public String getAparicion() {

@@ -7,7 +7,7 @@ module cr.ac.una.proyecto {
     requires javafx.graphics;
     requires javafx.media;
     requires com.oracle.database.jdbc;
-    //requires eclipselink;
+    requires eclipselink;
     requires jakarta.persistence;
      requires jakarta.xml.bind;
     requires java.sql;

@@ -39,7 +39,7 @@ public class EntityManagerHelper {
     public static EntityManager getManager() {
         if (em == null)
         {
-            emf = Persistence.createEntityManagerFactory("ProyectoPu");
+            emf = Persistence.createEntityManagerFactory("ProyectoPU");
             em = emf.createEntityManager();
         }
         return em;

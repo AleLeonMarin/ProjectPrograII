@@ -25,8 +25,8 @@ import java.util.List;
 @NamedQueries(
         {
             @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
-            /*@NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.id = :preId"),
-            @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.enunciado = :preEnunciado"),
+            @NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.id = :preId"),
+        /* @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.enunciado = :preEnunciado"),
             @NamedQuery(name = "Pregunta.findByPreEstado", query = "SELECT p FROM Pregunta p WHERE p.estado = :preEstado"),
             @NamedQuery(name = "Pregunta.findByPreAparicion", query = "SELECT p FROM Pregunta p WHERE p.aparicion = :preAparicion"),
             @NamedQuery(name = "Pregunta.findByPreAciertos", query = "SELECT p FROM Pregunta p WHERE p.aciertos = :preAciertos"),
@@ -73,7 +73,7 @@ public class Pregunta implements Serializable {
     }
 
     public void actualizar(PreguntaDto preguntaDto) {
-        this.enunciado = preguntaDto.gerEnunciado();
+        this.enunciado = preguntaDto.getEnunciado();
         this.estado = preguntaDto.getEstado();
         this.aparicion = preguntaDto.getAparicion();
         this.aciertos = preguntaDto.getAciertos();
@@ -153,11 +153,13 @@ public class Pregunta implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Pregunta)) {
+        if (!(object instanceof Pregunta))
+        {
             return false;
         }
         Pregunta other = (Pregunta) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+        {
             return false;
         }
         return true;
