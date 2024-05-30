@@ -48,7 +48,7 @@ public class PreguntaService {
         try
         {
             Query qryPregunta = em.createNamedQuery("Pregunta.findByPreId", Pregunta.class);
-            qryPregunta.setParameter("id", id);
+            qryPregunta.setParameter("preId", id);
             PreguntaDto preguntaDto = new PreguntaDto((Pregunta) qryPregunta.getSingleResult());
             return new Respuesta(true, "", "", "Pregunta", preguntaDto);
         } catch (NoResultException ex)

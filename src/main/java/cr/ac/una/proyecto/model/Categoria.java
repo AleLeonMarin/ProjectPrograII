@@ -23,7 +23,7 @@ import java.util.List;
 @NamedQueries(
         {
             @NamedQuery(name = "Categoria.findAll", query = "SELECT c FROM Categoria c"),
-        /*@NamedQuery(name = "Categoria.findByCatNombre", query = "SELECT c FROM Categoria c WHERE c.catNombre = :catNombre"),
+        /*    @NamedQuery(name = "Categoria.findByCatNombre", query = "SELECT c FROM Categoria c WHERE c.catNombre = :catNombre"),
             @NamedQuery(name = "Categoria.findByCatId", query = "SELECT c FROM Categoria c WHERE c.catId = :catId"),
             @NamedQuery(name = "Categoria.findByCatVersion", query = "SELECT c FROM Categoria c WHERE c.catVersion = :catVersion")*/
         })

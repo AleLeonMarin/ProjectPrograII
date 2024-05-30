@@ -229,4 +229,28 @@ public class Formato {
         });
         return integerFormat;
     }
+
+    public TextFormatter<String> anyCharacterFormatWithMaxLength(int maxLength) {
+        TextFormatter<String> anyCharacterFormat = new TextFormatter<>(c ->
+        {
+            if (c.getControlNewText().isEmpty())
+            {
+                return c;
+            }
+            if (maxLength > 0)
+            {
+                if (((TextInputControl) c.getControl()).getLength() >= maxLength && !c.isDeleted())
+                {
+                    return null;
+                }
+                if (c.getText().length() > maxLength && !c.isDeleted())
+                {
+                    return null;
+                }
+            }
+            return c;
+        });
+        return anyCharacterFormat;
+    }
+
 }

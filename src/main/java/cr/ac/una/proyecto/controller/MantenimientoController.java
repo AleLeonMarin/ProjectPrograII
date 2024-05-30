@@ -1,7 +1,9 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.PreguntaDto;
+import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.service.PreguntaService;
+import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Formato;
 import cr.ac.una.proyecto.util.Mensaje;
@@ -19,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,6 +61,7 @@ public class MantenimientoController extends Controller implements Initializable
     private MFXButton btnBuscar;
 
     private PreguntaDto preguntaDto;
+    ObservableList<RespuestaDto> respuestas = FXCollections.observableArrayList();
     List<Node> requeridos = new ArrayList<>();
     @FXML
     private TextArea txaPreguntaEnunciado;
@@ -66,8 +71,13 @@ public class MantenimientoController extends Controller implements Initializable
         preguntaDto = new PreguntaDto();
         txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormat());
         txfPreguntaCategoria.delegateSetTextFormatter(Formato.getInstance().letrasFormat(15));
-        txaPreguntaEnunciado.setTextFormatter(Formato.getInstance().cedulaFormat(200));
+        txaPreguntaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
         chkPreguntaEstado.setSelected(true);
+        txfPreguntaRespuesta1.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+        txfPreguntaRespuesta2.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+        txfPreguntaRespuesta3.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+        txfPreguntaRespuesta4.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+
         nuevaPregunta();
         IndicarRequeridos();
     }
@@ -143,6 +153,7 @@ public class MantenimientoController extends Controller implements Initializable
         txfPreguntaCategoria.textProperty().bindBidirectional(preguntaDto.nombreCategoria);
         txaPreguntaEnunciado.textProperty().bindBidirectional(preguntaDto.enunciado);
         chkPreguntaEstado.selectedProperty().bindBidirectional(preguntaDto.estado);
+
     }
 
     private void unbindPregunta() {
@@ -226,6 +237,7 @@ public class MantenimientoController extends Controller implements Initializable
                 this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
                 bindPregunta(false);
                 validarRequeridos();
+                cargarRespuestas(id);
             } else
             {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Empleado", getStage(), respuesta.getMensaje());
@@ -237,6 +249,52 @@ public class MantenimientoController extends Controller implements Initializable
                     .getName()).log(Level.SEVERE, "Error consultando la pregunta.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(), "Ocurrio un error consultando la pregunta.");
         }
+    }
+
+    private void cargarRespuestas(Long preguntaId) {
+
+        try
+        {
+            RespuestaService respuestaService = new RespuestaService();
+            Respuesta respuesta = respuestaService.getPreguntaRespuestas(preguntaId);
+
+            if (respuesta.getEstado())
+            {
+                unbindRespuestas();
+                respuestas.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
+                bindRespuestas(false);
+                validarRequeridos();
+            } else
+            {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Empleado", getStage(), respuesta.getMensaje());
+
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(MantenimientoController.class
+                    .getName()).log(Level.SEVERE, "Error consultando la pregunta.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(), "Ocurrio un error consultando la pregunta.");
+        }
+
+    }
+
+    private void bindRespuestas(Boolean nuevo) {//to do
+//        if (!nuevo)
+//        {//
+//            txfPreguntaId.textProperty().bind(preguntaDto.id);
+//        }
+//        txfPreguntaCategoria.textProperty().bindBidirectional(preguntaDto.nombreCategoria);
+//        txaPreguntaEnunciado.textProperty().bindBidirectional(preguntaDto.enunciado);
+//        chkPreguntaEstado.selectedProperty().bindBidirectional(preguntaDto.estado);
+
+    }
+
+    private void unbindRespuestas() {//to do
+//        txfPreguntaId.textProperty().unbind();
+//        txfPreguntaCategoria.textProperty().unbindBidirectional(preguntaDto.nombreCategoria);
+//        txaPreguntaEnunciado.textProperty().unbindBidirectional(preguntaDto.enunciado);
+//        chkPreguntaEstado.selectedProperty().unbindBidirectional(preguntaDto.estado);
+
     }
 
 }
