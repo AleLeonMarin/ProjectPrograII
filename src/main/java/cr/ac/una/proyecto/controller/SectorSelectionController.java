@@ -1,6 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
@@ -14,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -24,7 +23,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
     private int cantJugadores;
     private ObservableList<String> nombresJugadores;
-    private ObservableList<Jugador> jugadores;
+    private ObservableList<JugadorDto> jugadores;
     private List<MFXComboBox<String>> botonesCmbBox;
 
     @FXML
@@ -98,7 +97,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
     private void obtenerDatosDesdeAppContext() {
         cantJugadores = (Integer) AppContext.getInstance().get("cantJugadoresSlider");
-        jugadores = (ObservableList<Jugador>) AppContext.getInstance().get("jugadores");
+        jugadores = (ObservableList<JugadorDto>) AppContext.getInstance().get("jugadores");
     }
 
     private void cargarNombresJugadores() {
@@ -131,7 +130,7 @@ public class SectorSelectionController extends Controller implements Initializab
         return false;
     }
 
-    private Jugador buscarJugador(String nombreJugador) {
+    private JugadorDto buscarJugador(String nombreJugador) {
         return jugadores.stream().filter(jugador -> jugador.getNombre().equals(nombreJugador)).findFirst().orElse(null);
     }
 

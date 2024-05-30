@@ -1,6 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
@@ -177,10 +177,11 @@ public class TableroController extends Controller implements Initializable {
     private Label lblTiempo;
     private int segundos = 0;
     private ObservableList<String> nombresJugadores;
-    private ObservableList<Jugador> jugadores;
+    private ObservableList<JugadorDto> jugadores;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("Inicializador con resources");
         lblTiempo.setVisible(false);
         nombresJugadores = FXCollections.observableArrayList();
         jugadores = FXCollections.observableArrayList();
@@ -188,6 +189,11 @@ public class TableroController extends Controller implements Initializable {
         disablePlayer();
         showPlayer();
 
+    }
+
+    @Override
+    public void initialize() {
+        System.out.println("Inicializador normal");
     }
 
     private void timer() {
@@ -211,38 +217,40 @@ public class TableroController extends Controller implements Initializable {
 
     private void validarCantidadJugadores() {
 
-        try {
+        try
+        {
             int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
             System.out.println("AppContextInfoSlider: " + contextSlider);
 
-            if (contextSlider == 6) {
+            if (contextSlider == 6)
+            {
                 System.out.println("6 personas");
 
                 FlowController.getInstance().goView("Tablero6jugadores");
-            } else if (contextSlider == 5) {
+            } else if (contextSlider == 5)
+            {
                 FlowController.getInstance().goView("Tablero5jugadores");
-            } else if (contextSlider == 4) {
+            } else if (contextSlider == 4)
+            {
                 FlowController.getInstance().goView("Tablero4jugadores");
-            } else if (contextSlider == 3) {
+            } else if (contextSlider == 3)
+            {
                 FlowController.getInstance().goView("Tablero3jugadores");
-            } else {
+            } else
+            {
                 System.out.println("2 personas");
                 FlowController.getInstance().goView("Tablero2jugadores");
 
             }
 
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
 
             Logger.getLogger(TableroController.class
                     .getName()).log(Level.SEVERE, "Esta mamando papito", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Subtablero", getStage(), "Esta mamando papito");
 
         }
-
-    }
-
-    @Override
-    public void initialize() {
 
     }
 
@@ -266,7 +274,8 @@ public class TableroController extends Controller implements Initializable {
     private void onActionBtnSalir(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/quitExited.mp3");
         PauseTransition pause = new PauseTransition(Duration.millis(600));
-        pause.setOnFinished(e -> {
+        pause.setOnFinished(e ->
+        {
             ((Stage) btnSalir.getScene().getWindow()).close();
         });
         pause.play();
@@ -283,7 +292,8 @@ public class TableroController extends Controller implements Initializable {
         int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
         System.out.println("AppContextInfoSlider: " + contextSlider);
 
-        if (contextSlider == 2) {
+        if (contextSlider == 2)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             disablePlayerThree();
@@ -291,7 +301,8 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 3) {
+        if (contextSlider == 3)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -299,7 +310,8 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 4) {
+        if (contextSlider == 4)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -308,7 +320,8 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerSix();
 
         }
-        if (contextSlider == 5) {
+        if (contextSlider == 5)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -316,7 +329,8 @@ public class TableroController extends Controller implements Initializable {
             enablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 6) {
+        if (contextSlider == 6)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -510,9 +524,10 @@ public class TableroController extends Controller implements Initializable {
 
     private void getJugadoresFromAppContext() {
         // TODO Auto-generated method stub
-        jugadores = (ObservableList<Jugador>) AppContext.getInstance().get("jugadores");
+        jugadores = (ObservableList<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (Jugador jugador : jugadores) {
+        for (JugadorDto jugador : jugadores)
+        {
             System.out.println("Jugador:" + jugador.getNombre());
             nombresJugadores.add(jugador.getNombre());
         }
@@ -523,7 +538,7 @@ public class TableroController extends Controller implements Initializable {
 
         lblTiempo.setVisible(true);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            
+
             @Override
             public void handle(ActionEvent event) {
                 segundos++;

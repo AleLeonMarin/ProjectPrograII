@@ -21,6 +21,8 @@ public class App extends Application {
 //        FlowController.getInstance().InitializeFlow(stage, null);
 //        stage.getIcons().add(icon);
 //        stage.setTitle("Preguntados JR");
+        FlowController.getInstance().InitializeFlow(stage, null);
+        stage.setTitle("Preguntados Jr");
         FlowController.getInstance().goViewInWindow("DevLogIn");
 
     }

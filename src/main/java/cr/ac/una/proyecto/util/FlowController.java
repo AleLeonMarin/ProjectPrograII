@@ -40,14 +40,16 @@ public class FlowController {
     public Image icon;
     String iconString;
 
-
     private FlowController() {
     }
 
     private static void createInstance() {
-        if (INSTANCE == null) {
-            synchronized (FlowController.class) {
-                if (INSTANCE == null) {
+        if (INSTANCE == null)
+        {
+            synchronized (FlowController.class)
+            {
+                if (INSTANCE == null)
+                {
                     INSTANCE = new FlowController();
                 }
             }
@@ -55,7 +57,8 @@ public class FlowController {
     }
 
     public static FlowController getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null)
+        {
             createInstance();
         }
         return INSTANCE;
@@ -74,14 +77,19 @@ public class FlowController {
 
     private FXMLLoader getLoader(String name) {
         FXMLLoader loader = loaders.get(name);
-        if (loader == null) {
-            synchronized (FlowController.class) {
-                if (loader == null) {
-                    try {
+        if (loader == null)
+        {
+            synchronized (FlowController.class)
+            {
+                if (loader == null)
+                {
+                    try
+                    {
                         loader = new FXMLLoader(App.class.getResource("view/" + name + ".fxml"), this.idioma);
                         loader.load();
                         loaders.put(name, loader);
-                    } catch (Exception ex) {
+                    } catch (Exception ex)
+                    {
                         loader = null;
                         Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE,
                                 "Creando loader [" + name + "].", ex);
@@ -93,12 +101,14 @@ public class FlowController {
     }
 
     public void goMain(String viewName) {
-        try {
+        try
+        {
             this.mainStage.setScene(
                     new Scene(FXMLLoader.load(App.class.getResource("view/" + viewName + ".fxml"), this.idioma)));
             MFXThemeManager.addOn(this.mainStage.getScene(), Themes.DEFAULT, Themes.LEGACY);
             this.mainStage.show();
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             java.util.logging.Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE,
                     "Error inicializando la vista base.", ex);
         }
@@ -118,11 +128,13 @@ public class FlowController {
         controller.setAccion(accion);
         controller.initialize();
         Stage stage = controller.getStage();
-        if (stage == null) {
+        if (stage == null)
+        {
             stage = this.mainStage;
             controller.setStage(stage);
         }
-        switch (location) {
+        switch (location)
+        {
             case "Center":
                 VBox vbox = ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter());
                 vbox.getChildren().clear();
@@ -149,20 +161,41 @@ public class FlowController {
         MFXThemeManager.addOn(stage.getScene(), Themes.DEFAULT, Themes.LEGACY);
 
     }
+//
+//    public void goViewInWindow(String viewName) {
+//        FXMLLoader loader = getLoader(viewName);
+//        Controller controller = loader.getController();
+//        controller.initialize();
+//        Stage stage = new Stage();
+//        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
+//        icon = new Image(iconString);
+//       stage.getIcons().add(icon);
+//        stage.setTitle("Preguntados JR");
+//        stage.setOnHidden((WindowEvent event) ->
+//        {
+//            controller.getStage().getScene().setRoot(new Pane());
+//            controller.setStage(null);
+//        });
+//        controller.setStage(stage);
+//        Parent root = loader.getRoot();
+//        Scene scene = new Scene(root);
+//        MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
+//        stage.setScene(scene);
+//        stage.centerOnScreen();
+//        stage.show();
+//    }
 
     public void goViewInWindow(String viewName) {
         FXMLLoader loader = getLoader(viewName);
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-//        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
-//        icon = new Image(iconString);
-//        stage.getIcons().add(icon);
-//        stage.setTitle("Preguntados JR");
-//        stage.setOnHidden((WindowEvent event) -> {
-//            controller.getStage().getScene().setRoot(new Pane());
-//            controller.setStage(null);
-//        });
+
+        stage.setOnHidden((WindowEvent event) ->
+        {
+            controller.getStage().getScene().setRoot(new Pane());
+            controller.setStage(null);
+        });
         controller.setStage(stage);
         Parent root = loader.getRoot();
         Scene scene = new Scene(root);
@@ -182,7 +215,8 @@ public class FlowController {
         stage.getIcons().add(icon);
         stage.setTitle("Preguntados JR");
         stage.setResizable(resizable);
-        stage.setOnHidden((WindowEvent event) -> {
+        stage.setOnHidden((WindowEvent event) ->
+        {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
         });

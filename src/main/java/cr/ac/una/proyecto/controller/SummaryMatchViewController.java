@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
@@ -69,7 +69,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     private int cantJugadores;
     private ObservableList<String> nombresJugadores;
-    private ObservableList<Jugador> jugadores;
+    private ObservableList<JugadorDto> jugadores;
     private ArrayList<Sector> sectores;
 
     Sound sound = new Sound();
@@ -116,11 +116,11 @@ public class SummaryMatchViewController extends Controller implements Initializa
     }
 
     private void getJugadoresFromAppContext() {
-        jugadores = (ObservableList<Jugador>) AppContext.getInstance().get("jugadores");
+        jugadores = (ObservableList<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (Jugador jugador : jugadores)
+        for (JugadorDto jugador : jugadores)
         {
-            nombresJugadores.add(jugador.getNombre()); 
+            nombresJugadores.add(jugador.getNombre());
         }
 
     }

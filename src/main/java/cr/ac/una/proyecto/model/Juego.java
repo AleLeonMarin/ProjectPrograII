@@ -63,7 +63,7 @@ public class Juego {
     public void jugar(GridPane grdpTablero) {
         Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
-        Jugador jugadorActual = sectorActual.getJugador();
+        JugadorDto jugadorActual = sectorActual.getJugador();
         cargarPreguntaViewValorRespuesta();
         if (valorRespuesta)
         {
@@ -103,7 +103,7 @@ public class Juego {
         return this.ruleta.determinarPosicionRuleta();
     }
 
-    public Jugador getJugadorPregunta() {
+    public JugadorDto getJugadorPregunta() {
         return sectores.get(turnoActual).getJugador();
     }
 }

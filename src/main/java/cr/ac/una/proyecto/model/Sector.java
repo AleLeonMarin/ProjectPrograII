@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 
 public class Sector {
 
-    private Jugador jugador;
+    private JugadorDto jugador;
     private int posicionX;
     private int posicionY;
     private int posActual;
@@ -16,7 +16,7 @@ public class Sector {
     public Sector() {
     }
 
-    public Sector(Jugador jugador, int Xpos, int Ypos, int direccion, String rutaImagenJugador) {
+    public Sector(JugadorDto jugador, int Xpos, int Ypos, int direccion, String rutaImagenJugador) {
         this.jugador = jugador;
         this.posicionX = Xpos;
         this.posicionY = Ypos;
@@ -27,9 +27,11 @@ public class Sector {
     }
 
     private void setActualPosition() {
-        if (direccion == 1 || direccion == 2) {
+        if (direccion == 1 || direccion == 2)
+        {
             this.posActual = this.posicionY;
-        } else {
+        } else
+        {
             this.posActual = this.posicionX;
         }
     }
@@ -38,11 +40,11 @@ public class Sector {
         return direccion;
     }
 
-    public Jugador getJugador() {
+    public JugadorDto getJugador() {
         return jugador;
     }
 
-    public void setJugador(Jugador jugador) {
+    public void setJugador(JugadorDto jugador) {
         this.jugador = jugador;
     }
 
@@ -85,9 +87,11 @@ public class Sector {
     }
 
     public int moverDerecha(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionY + 3) {
+        if (posActual >= posicionY + 3)
+        {
             posActual = posicionY;
-        } else {
+        } else
+        {
             posActual++;
         }
         moverNodoA(imageView, posActual, posicionX);
@@ -95,9 +99,11 @@ public class Sector {
     }
 
     public int moverIzquierda(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionY - 3) {
+        if (posActual <= posicionY - 3)
+        {
             posActual = posicionY;
-        } else {
+        } else
+        {
             posActual--;
         }
         moverNodoA(imageView, posActual, posicionX);
@@ -105,9 +111,11 @@ public class Sector {
     }
 
     public int moverAbajo(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionX + 3) {
+        if (posActual >= posicionX + 3)
+        {
             posActual = posicionX;
-        } else {
+        } else
+        {
             posActual++;
         }
         moverNodoA(imageView, posicionY, posActual);
@@ -115,9 +123,11 @@ public class Sector {
     }
 
     public int moverArriba(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionX - 3) {
+        if (posActual <= posicionX - 3)
+        {
             posActual = posicionX;
-        } else {
+        } else
+        {
             posActual--;
         }
         moverNodoA(imageView, posicionY, posActual);
@@ -125,7 +135,8 @@ public class Sector {
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-        switch (direccion) {
+        switch (direccion)
+        {
             case 1:
                 return moverDerecha(imageView, grdPane);
             case 2:
