@@ -96,8 +96,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     }
 
     private void initializeComponents() {
-
-        jugadores = FXCollections.observableArrayList();
+        jugadores = new ArrayList<>();
         sldQty.setMin(2);
         sldQty.setMax(6);
         cargarSliderCantidad();
@@ -145,11 +144,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
                 Respuesta respuesta = jugadorService.guardarJugadores(jugadores);
 
                 if (respuesta.getEstado()) {
-                    for (JugadorDto jugadorGuardado : jugadores) {
-                        unbindJugador();
-                        this.jugadorDto = (JugadorDto) respuesta.getResultado("Jugadores");
-                        bindJugador(false);
-                    }
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugadores", getStage(),
                             "Jugadores guardados correctamente.");
                     proceedToNextView();

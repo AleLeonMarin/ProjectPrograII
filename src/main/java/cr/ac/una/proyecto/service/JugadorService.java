@@ -1,13 +1,10 @@
 package cr.ac.una.proyecto.service;
 
 import java.util.List;
-import java.util.ArrayList;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.util.EntityManagerHelper;

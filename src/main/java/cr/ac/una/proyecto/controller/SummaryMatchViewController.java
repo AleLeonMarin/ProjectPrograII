@@ -2,6 +2,7 @@ package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import cr.ac.una.proyecto.model.JugadorDto;
@@ -69,7 +70,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     private int cantJugadores;
     private ObservableList<String> nombresJugadores;
-    private ObservableList<JugadorDto> jugadores;
+    private List<JugadorDto> jugadores;
     private ArrayList<Sector> sectores;
 
     Sound sound = new Sound();
@@ -104,7 +105,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
         desactivarJugadores();
         cantJugadores = 0;
         nombresJugadores = FXCollections.observableArrayList();
-        jugadores = FXCollections.observableArrayList();
+        jugadores = new ArrayList<>();
         getCantidaDeJugadoresFromAppContext();
         getJugadoresFromAppContext();
         getSectoresFromAppContext();
@@ -116,7 +117,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
     }
 
     private void getJugadoresFromAppContext() {
-        jugadores = (ObservableList<JugadorDto>) AppContext.getInstance().get("jugadores");
+        jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
         for (JugadorDto jugador : jugadores)
         {

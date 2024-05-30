@@ -23,7 +23,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
     private int cantJugadores;
     private ObservableList<String> nombresJugadores;
-    private ObservableList<JugadorDto> jugadores;
+    private List<JugadorDto> jugadores;
     private List<MFXComboBox<String>> botonesCmbBox;
 
     @FXML
@@ -56,7 +56,7 @@ public class SectorSelectionController extends Controller implements Initializab
     private void initializeComponents() {
         cantJugadores = 0;
         nombresJugadores = FXCollections.observableArrayList();
-        jugadores = FXCollections.observableArrayList();
+        jugadores = new ArrayList<>();
         botonesCmbBox = Arrays.asList(cmbSector1, cmbSector2, cmbSector3, cmbSector4, cmbSector5, cmbSector6);
 
         desactivarBotones();
@@ -97,7 +97,7 @@ public class SectorSelectionController extends Controller implements Initializab
 
     private void obtenerDatosDesdeAppContext() {
         cantJugadores = (Integer) AppContext.getInstance().get("cantJugadoresSlider");
-        jugadores = (ObservableList<JugadorDto>) AppContext.getInstance().get("jugadores");
+        jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
     }
 
     private void cargarNombresJugadores() {

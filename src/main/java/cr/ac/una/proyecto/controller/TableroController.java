@@ -8,6 +8,8 @@ import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -177,14 +179,14 @@ public class TableroController extends Controller implements Initializable {
     private Label lblTiempo;
     private int segundos = 0;
     private ObservableList<String> nombresJugadores;
-    private ObservableList<JugadorDto> jugadores;
+    private List<JugadorDto> jugadores;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Inicializador con resources");
         lblTiempo.setVisible(false);
         nombresJugadores = FXCollections.observableArrayList();
-        jugadores = FXCollections.observableArrayList();
+        jugadores = new ArrayList<>();
         getJugadoresFromAppContext();
         disablePlayer();
         showPlayer();
@@ -524,7 +526,7 @@ public class TableroController extends Controller implements Initializable {
 
     private void getJugadoresFromAppContext() {
         // TODO Auto-generated method stub
-        jugadores = (ObservableList<JugadorDto>) AppContext.getInstance().get("jugadores");
+        jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
         for (JugadorDto jugador : jugadores)
         {
