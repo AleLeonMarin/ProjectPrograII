@@ -1,6 +1,7 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Jugador;
+import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
@@ -55,7 +56,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     private MFXTextField txfJug6;
 
     private Integer cantJugadores;
-    private ObservableList<Jugador> jugadores;
+    private ObservableList<JugadorDto> jugadores;
     private ArrayList<MFXTextField> textFields;
 
     Sound sound = new Sound();
@@ -159,7 +160,9 @@ public class RegistryNewGameViewController extends Controller implements Initial
         {
             if (textField.isVisible() && !textField.getText().isBlank())
             {
-                jugadores.add(new Jugador(textField.getText()));
+                JugadorDto jugador = new JugadorDto(textField.getText());
+                System.out.println("Jugador nombre" + jugador.getNombre());
+                jugadores.add(jugador);
             }
         }
         AppContext.getInstance().set("jugadores", jugadores);
@@ -174,7 +177,5 @@ public class RegistryNewGameViewController extends Controller implements Initial
     private void showAlert(String title, String message) {
         new Mensaje().showModal(Alert.AlertType.ERROR, title, getStage(), message);
     }
-   
-
 
 }

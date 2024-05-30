@@ -1,24 +1,92 @@
 package cr.ac.una.proyecto.model;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
+import java.io.Serializable;
+import java.util.List;
+
 /**
  *
- * @author justi
+ * @author Justin Mendez & Alejandro Leon
  */
-public class Pregunta {
+@Entity
+@Table(name = "PREGUNTA")
+@NamedQueries(
+        {
+            @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
+            @NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.preId = :preId"),
+            @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.preEnunciado = :preEnunciado"),
+            @NamedQuery(name = "Pregunta.findByPreEstado", query = "SELECT p FROM Pregunta p WHERE p.preEstado = :preEstado"),
+            @NamedQuery(name = "Pregunta.findByPreAparicion", query = "SELECT p FROM Pregunta p WHERE p.preAparicion = :preAparicion"),
+            @NamedQuery(name = "Pregunta.findByPreAciertos", query = "SELECT p FROM Pregunta p WHERE p.preAciertos = :preAciertos"),
+            @NamedQuery(name = "Pregunta.findByPreVersion", query = "SELECT p FROM Pregunta p WHERE p.preVersion = :preVersion")
+        })
+public class Pregunta implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @Column(name = "PRE_ID")
+    private Long id;
+    @Basic(optional = false)
+    @Column(name = "PRE_ENUNCIADO")
     private String enunciado;
-    private String respuesta;
-    private String categoria;
-    private int id;
+    @Basic(optional = false)
+    @Column(name = "PRE_ESTADO")
+    private String estado;
+    @Basic(optional = false)
+    @Column(name = "PRE_APARICION")
+    private String aparicion;
+    @Basic(optional = false)
+    @Column(name = "PRE_ACIERTOS")
+    private String aciertos;
+    @Version
+    @Column(name = "PRE_VERSION")
+    private Long version;
+    @JoinColumn(name = "CAT_NOMBRE", referencedColumnName = "CAT_NOMBRE")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Categoria nombreCategoria;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preId", fetch = FetchType.LAZY)
+    private List<Respuesta> respuestas;
 
-    public Pregunta(String enunciado, String respuesta, String categoria, int id) {
-        this.enunciado = enunciado;
-        this.respuesta = respuesta;
-        this.categoria = categoria;
+    public Pregunta() {
+    }
+
+    public Pregunta(Long id) {
         this.id = id;
     }
 
-    public Pregunta() {
+    public Pregunta(PreguntaDto preguntaDto) {
+        this.id = preguntaDto.getId();
+        actualizar(preguntaDto);
+    }
+
+    public void actualizar(PreguntaDto preguntaDto) {
+        this.enunciado = preguntaDto.gerEnunciado();
+        this.estado = preguntaDto.getEstado();
+        this.aparicion = preguntaDto.getAparicion();
+        this.aciertos = preguntaDto.getAciertos();
+        this.version = preguntaDto.getVersion();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEnunciado() {
@@ -29,38 +97,79 @@ public class Pregunta {
         this.enunciado = enunciado;
     }
 
-    public String getRespuesta() {
-        return respuesta;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setRespuesta(String respuesta) {
-        this.respuesta = respuesta;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public String getAparicion() {
+        return aparicion;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setAparicion(String aparicion) {
+        this.aparicion = aparicion;
     }
 
-    public int getId() {
-        return id;
+    public String getAciertos() {
+        return aciertos;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAciertos(String aciertos) {
+        this.aciertos = aciertos;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Categoria getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(Categoria nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public List<Respuesta> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<Respuesta> respuestas) {
+        this.respuestas = respuestas;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Pregunta))
+        {
+            return false;
+        }
+        Pregunta other = (Pregunta) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+        {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Pregunta{"
-                + "enunciado='" + enunciado + '\''
-                + ", respuesta='" + respuesta + '\''
-                + ", categoria='" + categoria + '\''
-                + ", id=" + id
-                + '}';
+        return "cr.ac.una.proyecto.model.Pregunta[ preId=" + id + " ]";
     }
 
 }

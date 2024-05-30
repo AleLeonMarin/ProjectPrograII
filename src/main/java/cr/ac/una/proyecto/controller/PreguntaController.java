@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.util.Collections;
 import java.util.Random;
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +18,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class PreguntaController extends Controller implements Initializable {
 
@@ -135,52 +133,51 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     public void cargarEnunciadoPregunta() {
-        preguntaSeleccionada = cargarPreguntasPorCategoria();
+        // preguntaSeleccionada = cargarPreguntasPorCategoria();
         cargarRespuestasPorPregunta(preguntaSeleccionada);
     }
 
-    private Pregunta cargarPreguntasPorCategoria() {
-        ArrayList<Pregunta> preguntasPorCategoria = new ArrayList<>();
-
-        System.out.println("Categoriaa: " + preguntaCategoria);
-        for (Pregunta pregunta : preguntas)
-        {
-            if (pregunta.getCategoria().equals(preguntaCategoria))
-            {
-                preguntasPorCategoria.add(pregunta);
-                System.out.println(pregunta.toString());
-            }
-        }
-
-        Random random = new Random();
-        int numeroAleatorioInt = random.nextInt(preguntasPorCategoria.size());
-
-        Pregunta preguntaSeleccionada = preguntasPorCategoria.get(numeroAleatorioInt);
-        System.out.println("Número aleatorio: " + numeroAleatorioInt);
-        System.out.println("ID: " + preguntaSeleccionada.getId());
-
-        txaEnunciado.setText(preguntaSeleccionada.getEnunciado());
-
-        return preguntaSeleccionada;
-    }
-
+//    private Pregunta cargarPreguntasPorCategoria() {
+//        ArrayList<Pregunta> preguntasPorCategoria = new ArrayList<>();
+//
+//        System.out.println("Categoriaa: " + preguntaCategoria);
+//        for (Pregunta pregunta : preguntas)
+//        {
+//            if (pregunta.getCategoria().equals(preguntaCategoria))
+//            {
+//                preguntasPorCategoria.add(pregunta);
+//                System.out.println(pregunta.toString());
+//            }
+//        }
+//
+//        Random random = new Random();
+//        int numeroAleatorioInt = random.nextInt(preguntasPorCategoria.size());
+//
+//        Pregunta preguntaSeleccionada = preguntasPorCategoria.get(numeroAleatorioInt);
+//        System.out.println("Número aleatorio: " + numeroAleatorioInt);
+//        System.out.println("ID: " + preguntaSeleccionada.getId());
+//
+//        txaEnunciado.setText(preguntaSeleccionada.getEnunciado());
+//
+//        return preguntaSeleccionada;
+//    }
     private void cargarRespuestasPorPregunta(Pregunta preguntaSeleccionada) {
-        ArrayList<Respuesta> respuestasPorPregunta = new ArrayList<>();
-        int id = preguntaSeleccionada.getId();
-
-        for (Respuesta respuesta : respuestas)
-        {
-            if (id == respuesta.getIdPadre())
-            {
-                respuestasPorPregunta.add(respuesta);
-                if (respuesta.getIsCorrect())
-                {
-                    respuestaCorrecta = respuesta.getEnunciado();
-                }
-            }
-        }
-        Collections.shuffle(respuestasPorPregunta);
-        cargarBotones(respuestasPorPregunta);
+//        ArrayList<Respuesta> respuestasPorPregunta = new ArrayList<>();
+//        int id = preguntaSeleccionada.getId();
+//
+//        for (Respuesta respuesta : respuestas)
+//        {
+//            if (id == respuesta.getIdPadre())
+//            {
+//                respuestasPorPregunta.add(respuesta);
+//                if (respuesta.getIsCorrect())
+//                {
+//                    respuestaCorrecta = respuesta.getEnunciado();
+//                }
+//            }
+//        }
+//        Collections.shuffle(respuestasPorPregunta);
+//        cargarBotones(respuestasPorPregunta);
     }
 
     private void cargarBotones(ArrayList<Respuesta> respuestas) {
@@ -188,7 +185,7 @@ public class PreguntaController extends Controller implements Initializable {
         int index = 0;
         for (MFXButton boton : botones)
         {
-            boton.setText(respuestas.get(index).getEnunciado());
+            //   boton.setText(respuestas.get(index).getEnunciado());
             index++;
         }
 

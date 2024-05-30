@@ -155,14 +155,14 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
-        icon = new Image(iconString);
-        stage.getIcons().add(icon);
-        stage.setTitle("Preguntados JR");
-        stage.setOnHidden((WindowEvent event) -> {
-            controller.getStage().getScene().setRoot(new Pane());
-            controller.setStage(null);
-        });
+//        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
+//        icon = new Image(iconString);
+//        stage.getIcons().add(icon);
+//        stage.setTitle("Preguntados JR");
+//        stage.setOnHidden((WindowEvent event) -> {
+//            controller.getStage().getScene().setRoot(new Pane());
+//            controller.setStage(null);
+//        });
         controller.setStage(stage);
         Parent root = loader.getRoot();
         Scene scene = new Scene(root);

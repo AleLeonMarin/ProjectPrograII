@@ -27,11 +27,9 @@ public class Sector {
     }
 
     private void setActualPosition() {
-        if (direccion == 1 || direccion == 2)
-        {
+        if (direccion == 1 || direccion == 2) {
             this.posActual = this.posicionY;
-        } else
-        {
+        } else {
             this.posActual = this.posicionX;
         }
     }
@@ -87,11 +85,9 @@ public class Sector {
     }
 
     public int moverDerecha(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionY + 3)
-        {
+        if (posActual >= posicionY + 3) {
             posActual = posicionY;
-        } else
-        {
+        } else {
             posActual++;
         }
         moverNodoA(imageView, posActual, posicionX);
@@ -99,11 +95,9 @@ public class Sector {
     }
 
     public int moverIzquierda(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionY - 3)
-        {
+        if (posActual <= posicionY - 3) {
             posActual = posicionY;
-        } else
-        {
+        } else {
             posActual--;
         }
         moverNodoA(imageView, posActual, posicionX);
@@ -111,11 +105,9 @@ public class Sector {
     }
 
     public int moverAbajo(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionX + 3)
-        {
+        if (posActual >= posicionX + 3) {
             posActual = posicionX;
-        } else
-        {
+        } else {
             posActual++;
         }
         moverNodoA(imageView, posicionY, posActual);
@@ -123,11 +115,9 @@ public class Sector {
     }
 
     public int moverArriba(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionX - 3)
-        {
+        if (posActual <= posicionX - 3) {
             posActual = posicionX;
-        } else
-        {
+        } else {
             posActual--;
         }
         moverNodoA(imageView, posicionY, posActual);
@@ -135,8 +125,7 @@ public class Sector {
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-        switch (direccion)
-        {
+        switch (direccion) {
             case 1:
                 return moverDerecha(imageView, grdPane);
             case 2:
