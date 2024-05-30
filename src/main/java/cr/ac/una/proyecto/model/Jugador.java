@@ -4,32 +4,37 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "JUGADOR")
+@Table(name = "JUGADOR" , schema = "PREGUNTADOS")
 @NamedQueries(
         {
             @NamedQuery(name = "Jugador.findAll", query = "SELECT j FROM Jugador j"),
-            @NamedQuery(name = "Jugador.findByJugId", query = "SELECT j FROM Jugador j WHERE j.jugId = :jugId"),
-            @NamedQuery(name = "Jugador.findByJugNombre", query = "SELECT j FROM Jugador j WHERE j.jugNombre = :jugNombre"),
+            /*@NamedQuery(name = "Jugador.findByJugId", query = "SELECT j FROM Jugador j WHERE j.jugId = :id"),
+            @NamedQuery(name = "Jugador.findByJugNombre", query = "SELECT j FROM Jugador j WHERE j.jugNombre = :nombre"),
             @NamedQuery(name = "Jugador.findByJugPartidasganadas", query = "SELECT j FROM Jugador j WHERE j.jugPartidasganadas = :jugPartidasganadas"),
             @NamedQuery(name = "Jugador.findByJugPreguntasrespondidas", query = "SELECT j FROM Jugador j WHERE j.jugPreguntasrespondidas = :jugPreguntasrespondidas"),
             @NamedQuery(name = "Jugador.findByPreResCorrectamente", query = "SELECT j FROM Jugador j WHERE j.preResCorrectamente = :preResCorrectamente"),
-            @NamedQuery(name = "Jugador.findByJugVersion", query = "SELECT j FROM Jugador j WHERE j.jugVersion = :jugVersion")
+            @NamedQuery(name = "Jugador.findByJugVersion", query = "SELECT j FROM Jugador j WHERE j.jugVersion = :jugVersion")*/
         })
 public class Jugador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "JUGADOR_JUG_ID_GENERATOR", sequenceName = "PREG_JUGADOR_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "JUGADOR_JUG_ID_GENERATOR")
     @Basic(optional = false)
     @Column(name = "JUG_ID")
     private Long id;
@@ -38,13 +43,13 @@ public class Jugador implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @Column(name = "JUG_PARTIDASGANADAS")
-    private String partidasGanadas;
+    private Integer partidasGanadas;
     @Basic(optional = false)
     @Column(name = "JUG_PREGUNTASRESPONDIDAS")
-    private String preguntasRespondidas;
+    private Integer preguntasRespondidas;
     @Basic(optional = false)
     @Column(name = "PRE_RES_CORRECTAMENTE")
-    private String preRespondidasCorrectamente;
+    private Integer preRespondidasCorrectamente;
     @Version
     @Column(name = "JUG_VERSION")
     private Long version;
@@ -87,27 +92,27 @@ public class Jugador implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getPartidasGanadas() {
+    public Integer getPartidasGanadas() {
         return partidasGanadas;
     }
 
-    public void setPartidasGanadas(String partidasGanadas) {
+    public void setPartidasGanadas(Integer partidasGanadas) {
         this.partidasGanadas = partidasGanadas;
     }
 
-    public String getPreguntasRespondidas() {
+    public Integer getPreguntasRespondidas() {
         return preguntasRespondidas;
     }
 
-    public void setPreguntasRespondidas(String preguntasRespondidas) {
+    public void setPreguntasRespondidas(Integer preguntasRespondidas) {
         this.preguntasRespondidas = preguntasRespondidas;
     }
 
-    public String getPreRespondidasCorrectamente() {
+    public Integer getPreRespondidasCorrectamente() {
         return preRespondidasCorrectamente;
     }
 
-    public void setPreRespondidasCorrectamente(String preRespondidasCorrectamente) {
+    public void setPreRespondidasCorrectamente(Integer preRespondidasCorrectamente) {
         this.preRespondidasCorrectamente = preRespondidasCorrectamente;
     }
 

@@ -25,17 +25,16 @@ import java.util.List;
 @NamedQueries(
         {
             @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
-            @NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.preId = :preId"),
-            @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.preEnunciado = :preEnunciado"),
-            @NamedQuery(name = "Pregunta.findByPreEstado", query = "SELECT p FROM Pregunta p WHERE p.preEstado = :preEstado"),
-            @NamedQuery(name = "Pregunta.findByPreAparicion", query = "SELECT p FROM Pregunta p WHERE p.preAparicion = :preAparicion"),
-            @NamedQuery(name = "Pregunta.findByPreAciertos", query = "SELECT p FROM Pregunta p WHERE p.preAciertos = :preAciertos"),
-            @NamedQuery(name = "Pregunta.findByPreVersion", query = "SELECT p FROM Pregunta p WHERE p.preVersion = :preVersion")
+            /*@NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.id = :preId"),
+            @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.enunciado = :preEnunciado"),
+            @NamedQuery(name = "Pregunta.findByPreEstado", query = "SELECT p FROM Pregunta p WHERE p.estado = :preEstado"),
+            @NamedQuery(name = "Pregunta.findByPreAparicion", query = "SELECT p FROM Pregunta p WHERE p.aparicion = :preAparicion"),
+            @NamedQuery(name = "Pregunta.findByPreAciertos", query = "SELECT p FROM Pregunta p WHERE p.aciertos = :preAciertos"),
+            @NamedQuery(name = "Pregunta.findByPreVersion", query = "SELECT p FROM Pregunta p WHERE p.version = :preVersion")*/
         })
 public class Pregunta implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @Column(name = "PRE_ID")
@@ -58,7 +57,7 @@ public class Pregunta implements Serializable {
     @JoinColumn(name = "CAT_NOMBRE", referencedColumnName = "CAT_NOMBRE")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Categoria nombreCategoria;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId", fetch = FetchType.LAZY)
     private List<Respuesta> respuestas;
 
     public Pregunta() {
@@ -154,14 +153,11 @@ public class Pregunta implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pregunta))
-        {
+        if (!(object instanceof Pregunta)) {
             return false;
         }
         Pregunta other = (Pregunta) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -171,5 +167,4 @@ public class Pregunta implements Serializable {
     public String toString() {
         return "cr.ac.una.proyecto.model.Pregunta[ preId=" + id + " ]";
     }
-
 }

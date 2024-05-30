@@ -23,10 +23,10 @@ import java.util.List;
 @NamedQueries(
         {
             @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p"),
-            @NamedQuery(name = "Partida.findByParId", query = "SELECT p FROM Partida p WHERE p.parId = :parId"),
+           /*  @NamedQuery(name = "Partida.findByParId", query = "SELECT p FROM Partida p WHERE p.parId = :parId"),
             @NamedQuery(name = "Partida.findByParRondas", query = "SELECT p FROM Partida p WHERE p.parRondas = :parRondas"),
             @NamedQuery(name = "Partida.findByParDificultad", query = "SELECT p FROM Partida p WHERE p.parDificultad = :parDificultad"),
-            @NamedQuery(name = "Partida.findByParVersion", query = "SELECT p FROM Partida p WHERE p.parVersion = :parVersion")
+            @NamedQuery(name = "Partida.findByParVersion", query = "SELECT p FROM Partida p WHERE p.parVersion = :parVersion")*/
         })
 public class Partida implements Serializable {
 

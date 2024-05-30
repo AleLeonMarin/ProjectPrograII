@@ -22,12 +22,12 @@ import java.io.Serializable;
 @NamedQueries(
         {
             @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r"),
-            @NamedQuery(name = "Respuesta.findByResId", query = "SELECT r FROM Respuesta r WHERE r.resId = :resId"),
+            /*@NamedQuery(name = "Respuesta.findByResId", query = "SELECT r FROM Respuesta r WHERE r.resId = :resId"),
             @NamedQuery(name = "Respuesta.findByResEnunciado", query = "SELECT r FROM Respuesta r WHERE r.resEnunciado = :resEnunciado"),
             @NamedQuery(name = "Respuesta.findByResContador", query = "SELECT r FROM Respuesta r WHERE r.resContador = :resContador"),
             @NamedQuery(name = "Respuesta.findByResEstado", query = "SELECT r FROM Respuesta r WHERE r.resEstado = :resEstado"),
             @NamedQuery(name = "Respuesta.findByResVersion", query = "SELECT r FROM Respuesta r WHERE r.resVersion = :resVersion"),
-            @NamedQuery(name = "Respuesta.findByResCorrecta", query = "SELECT r FROM Respuesta r WHERE r.resCorrecta = :resCorrecta")
+            @NamedQuery(name = "Respuesta.findByResCorrecta", query = "SELECT r FROM Respuesta r WHERE r.resCorrecta = :resCorrecta")*/
         })
 public class Respuesta implements Serializable {
 

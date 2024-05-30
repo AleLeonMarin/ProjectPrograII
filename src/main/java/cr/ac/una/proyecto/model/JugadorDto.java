@@ -2,6 +2,8 @@ package cr.ac.una.proyecto.model;
 
 import java.io.Serializable;
 import java.util.List;
+
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class JugadorDto implements Serializable {
@@ -10,35 +12,39 @@ public class JugadorDto implements Serializable {
 
     public SimpleStringProperty id;
     public SimpleStringProperty nombre;
-    public SimpleStringProperty partidasGanadas;
-    public SimpleStringProperty preguntasRespondidas;
-    public SimpleStringProperty preRespondidasCorrectamente;
+    public SimpleIntegerProperty partidasGanadas;
+    public SimpleIntegerProperty preguntasRespondidas;
+    public SimpleIntegerProperty preRespondidasCorrectamente;
     private Long version;
     private boolean modificado;
     private List<Partida> partidas;
+    private List<JugadorDto> jugadorDtos;
 
     public JugadorDto() {
         this.id = new SimpleStringProperty("");
         this.nombre = new SimpleStringProperty("");
-        this.partidasGanadas = new SimpleStringProperty("");
-        this.preguntasRespondidas = new SimpleStringProperty("");
-        this.preRespondidasCorrectamente = new SimpleStringProperty("");
+        this.partidasGanadas = new SimpleIntegerProperty(0);
+        this.preguntasRespondidas = new SimpleIntegerProperty(0);
+        this.preRespondidasCorrectamente = new SimpleIntegerProperty(0);
         this.modificado = false;
     }
-
+    
     public JugadorDto(Jugador jugador) {
         this();
-        this.id.set(jugador.getId().toString());
+        this.id.set(jugador.getId() != null ? jugador.getId().toString() : "");
         this.nombre.set(jugador.getNombre());
         this.partidasGanadas.set(jugador.getPartidasGanadas());
         this.preguntasRespondidas.set(jugador.getPreguntasRespondidas());
         this.preRespondidasCorrectamente.set(jugador.getPreRespondidasCorrectamente());
         this.version = jugador.getVersion();
     }
-
+    
     public JugadorDto(String nombre) {
-        this.nombre = new SimpleStringProperty(nombre);
+        this();
+        this.nombre.set(nombre);
     }
+    
+
 
     public Long getId() {
         if (this.id.get() != null && !this.id.get().isBlank())
@@ -60,27 +66,27 @@ public class JugadorDto implements Serializable {
         this.nombre.set(nombre);
     }
 
-    public String getPartidasGanadas() {
+    public Integer getPartidasGanadas() {
         return partidasGanadas.get();
     }
 
-    public void setPartidasGanas(String partidasGanadas) {
+    public void setPartidasGanas(Integer partidasGanadas) {
         this.partidasGanadas.set(partidasGanadas);
     }
 
-    public String getPRespondidasCorrectamente() {
+    public Integer getPRespondidasCorrectamente() {
         return preRespondidasCorrectamente.get();
     }
 
-    public void setPRespondidasCorrectamente(String preRespondidasCorrectamente) {
+    public void setPRespondidasCorrectamente(Integer preRespondidasCorrectamente) {
         this.preRespondidasCorrectamente.set(preRespondidasCorrectamente);
     }
 
-    public String getPreguntasRespondidas() {
+    public Integer getPreguntasRespondidas() {
         return preguntasRespondidas.get();
     }
 
-    public void setPreguntasRespondidas(String preguntasRespondidas) {
+    public void setPreguntasRespondidas(Integer preguntasRespondidas) {
         this.preguntasRespondidas.set(preguntasRespondidas);
     }
 
@@ -113,6 +119,14 @@ public class JugadorDto implements Serializable {
 
     public void setPartidas(List<Partida> partidas) {
         this.partidas = partidas;
+    }
+
+    public List<JugadorDto> getJugadorDtos() {
+        return jugadorDtos;
+    }
+
+    public void setJugadorDtos(List<JugadorDto> jugadorDtos) {
+        this.jugadorDtos = jugadorDtos;
     }
 
     @Override
