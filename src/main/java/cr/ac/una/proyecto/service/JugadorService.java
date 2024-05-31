@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.util.EntityManagerHelper;
-import cr.ac.una.proyecto.util.Respuesta;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 
 public class JugadorService {
 
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public Respuesta guardarJugadores(List<JugadorDto> jugadoresDto) {
+    public RespuestaUtil guardarJugadores(List<JugadorDto> jugadoresDto) {
         try
         {
             et = em.getTransaction();
@@ -28,7 +28,7 @@ public class JugadorService {
                     jugador = em.find(Jugador.class, jugadorDto.getId());
                     if (jugador == null)
                     {
-                        return new Respuesta(false, "No se encontró el jugador a modificar.",
+                        return new RespuestaUtil(false, "No se encontró el jugador a modificar.",
                                 "guardarJugador NoResultException");
                     }
                     jugador.actualizar(jugadorDto);
@@ -44,7 +44,7 @@ public class JugadorService {
             em.clear();
 
             et.commit();
-            return new Respuesta(true, "", "", "Jugadores", jugadoresDto);
+            return new RespuestaUtil(true, "", "", "Jugadores", jugadoresDto);
 
         } catch (Exception ex)
         {
@@ -53,7 +53,7 @@ public class JugadorService {
                 et.rollback();
             }
             Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error guardando los jugadores.", ex);
-            return new Respuesta(false, "Error guardando los jugadores.", "guardarJugadores " + ex.getMessage());
+            return new RespuestaUtil(false, "Error guardando los jugadores.", "guardarJugadores " + ex.getMessage());
         }
     }
 

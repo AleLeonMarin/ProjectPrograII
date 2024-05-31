@@ -22,7 +22,8 @@ import java.io.Serializable;
 @NamedQueries(
         {
             @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r"),
-            /*@NamedQuery(name = "Respuesta.findByResId", query = "SELECT r FROM Respuesta r WHERE r.resId = :resId"),
+            @NamedQuery(name = "Respuesta.findByPreguntaId", query = "SELECT r FROM Respuesta r WHERE r.preguntaId.id  = :preguntaId")
+        /*  @NamedQuery(name = "Respuesta.findByResId", query = "SELECT r FROM Respuesta r WHERE r.resId = :resId"),
             @NamedQuery(name = "Respuesta.findByResEnunciado", query = "SELECT r FROM Respuesta r WHERE r.resEnunciado = :resEnunciado"),
             @NamedQuery(name = "Respuesta.findByResContador", query = "SELECT r FROM Respuesta r WHERE r.resContador = :resContador"),
             @NamedQuery(name = "Respuesta.findByResEstado", query = "SELECT r FROM Respuesta r WHERE r.resEstado = :resEstado"),
@@ -70,7 +71,7 @@ public class Respuesta implements Serializable {
         this.estado = respuestaDto.getEstado();
         this.isCorrect = respuestaDto.getIsCorrect();
         this.version = respuestaDto.getVersion();
-        this.preguntaId = respuestaDto.getPregunta();
+        //  this.preguntaId = respuestaDto.getPreguntaId();
     }
 
     public Long getId() {

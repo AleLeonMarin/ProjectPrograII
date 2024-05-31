@@ -13,7 +13,7 @@ import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
-import cr.ac.una.proyecto.util.Respuesta;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Sound;
 import javafx.stage.Stage;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -109,7 +109,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
         try {
             getJugadoresFromAppContext();
             JugadorService jugadorService = new JugadorService();
-            Respuesta respuesta = jugadorService.guardarJugadores(jugadores);
+            RespuestaUtil respuesta = jugadorService.guardarJugadores(jugadores);
 
             if (respuesta.getEstado()) {
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugadores", getStage(),

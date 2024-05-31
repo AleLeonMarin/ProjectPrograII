@@ -182,7 +182,7 @@ public class TableroController extends Controller implements Initializable {
     private Label lblJugador6;
 
     Sound sound = new Sound();
-    
+
     @FXML
     private Label lblTiempo;
     private int segundos = 0;
@@ -190,7 +190,9 @@ public class TableroController extends Controller implements Initializable {
     private List<JugadorDto> jugadores;
     private Juego juego;
     private ArrayList<String> loadToJson;
-    
+
+    TablerosController busquedaController;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Inicializador con resources");
@@ -202,7 +204,6 @@ public class TableroController extends Controller implements Initializable {
         getJugadoresFromAppContext();
         disablePlayer();
         showPlayer();
-        
     }
 
     @Override
@@ -238,21 +239,23 @@ public class TableroController extends Controller implements Initializable {
 
             if (contextSlider == 6)
             {
-                System.out.println("6 personas");
-
+                busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero6jugadores");
                 FlowController.getInstance().goView("Tablero6jugadores");
             } else if (contextSlider == 5)
             {
+                busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero5jugadores");
                 FlowController.getInstance().goView("Tablero5jugadores");
             } else if (contextSlider == 4)
             {
+                busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero4jugadores");
                 FlowController.getInstance().goView("Tablero4jugadores");
             } else if (contextSlider == 3)
             {
+                busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero3jugadores");
                 FlowController.getInstance().goView("Tablero3jugadores");
             } else
             {
-                System.out.println("2 personas");
+                busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero2jugadores");
                 FlowController.getInstance().goView("Tablero2jugadores");
 
             }
@@ -298,8 +301,9 @@ public class TableroController extends Controller implements Initializable {
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Chance_audio.mp3");
-        createJson();
+        cargarJuegoClass();
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar", getStage(), "Partida Guardada");
+
     }
 
     public void showPlayer() {
@@ -567,22 +571,33 @@ public class TableroController extends Controller implements Initializable {
 
     }
 
-    public void loadToJsonData(){
+    public void loadToJsonData() {
         loadToJson.add(juego.toString());
-
     }
 
-    private void createJson(){
+    private void createJson() {
         loadToJsonData();
         System.out.println(loadToJson.toString());
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
-        try{
+        try
+        {
             FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
             file.write(json);
             file.close();
-        }catch(IOException ex){
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
+        }
+    }
+
+    private void cargarJuegoClass() {
+
+        juego = busquedaController.getJuego();
+
+        if (juego != null)
+        {
+            createJson();
         }
     }
 

@@ -3,7 +3,7 @@ package cr.ac.una.proyecto.controller;
 import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.util.Formato;
-import cr.ac.una.proyecto.util.Respuesta;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.net.URL;
@@ -98,7 +98,7 @@ public class BuscarPreguntaController extends Controller implements Initializabl
     }
 
     private void obtenerTodasLasPreguntas() {
-        Respuesta respuesta = preService.getAll();
+        RespuestaUtil respuesta = preService.getAll();
         if (respuesta.getEstado())
         {
             categorias.clear();

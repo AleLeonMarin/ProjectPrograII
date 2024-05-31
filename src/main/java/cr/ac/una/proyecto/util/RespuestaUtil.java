@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author ccarranza
  */
-public class Respuesta implements Serializable {
+public class RespuestaUtil implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -20,18 +20,18 @@ public class Respuesta implements Serializable {
     private String mensajeInterno;
     private HashMap<String, Object> resultado; 
 
-    public Respuesta() {
+    public RespuestaUtil() {
         this.resultado = new HashMap<>();
     }
 
-    public Respuesta(Boolean estado, String mensaje, String mensajeInterno) {
+    public RespuestaUtil(Boolean estado, String mensaje, String mensajeInterno) {
         this.estado = estado;
         this.mensaje = mensaje;
         this.mensajeInterno = mensajeInterno;
         this.resultado = new HashMap<>();
     }
     
-    public Respuesta(Boolean estado, String mensaje, String mensajeInterno, String nombre, Object resultado) {
+    public RespuestaUtil(Boolean estado, String mensaje, String mensajeInterno, String nombre, Object resultado) {
         this.estado = estado;
         this.mensaje = mensaje;
         this.mensajeInterno = mensajeInterno;

@@ -7,7 +7,7 @@ import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Formato;
 import cr.ac.una.proyecto.util.Mensaje;
-import cr.ac.una.proyecto.util.Respuesta;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import java.net.URL;
 import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -62,24 +62,14 @@ public class MantenimientoController extends Controller implements Initializable
 
     private PreguntaDto preguntaDto;
     ObservableList<RespuestaDto> respuestas = FXCollections.observableArrayList();
+    private RespuestaDto respuestaDtoAux;
     List<Node> requeridos = new ArrayList<>();
     @FXML
     private TextArea txaPreguntaEnunciado;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        preguntaDto = new PreguntaDto();
-        txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormat());
-        txfPreguntaCategoria.delegateSetTextFormatter(Formato.getInstance().letrasFormat(15));
-        txaPreguntaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
-        chkPreguntaEstado.setSelected(true);
-        txfPreguntaRespuesta1.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
-        txfPreguntaRespuesta2.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
-        txfPreguntaRespuesta3.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
-        txfPreguntaRespuesta4.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
-
-        nuevaPregunta();
-        IndicarRequeridos();
+        initValues();
     }
 
     @Override
@@ -136,13 +126,41 @@ public class MantenimientoController extends Controller implements Initializable
         }
     }
 
+    private void initValues() {
+
+        preguntaDto = new PreguntaDto();
+        respuestaDtoAux = new RespuestaDto();
+        txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormat());
+        txfPreguntaCategoria.delegateSetTextFormatter(Formato.getInstance().letrasFormat(15));
+        txaPreguntaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
+        chkPreguntaEstado.setSelected(true);
+        txfPreguntaRespuesta1.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+        txfPreguntaRespuesta2.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+        txfPreguntaRespuesta3.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+        txfPreguntaRespuesta4.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
+
+        nuevaPregunta();
+        IndicarRequeridos();
+
+    }
+
     private void nuevaPregunta() {
         unbindPregunta();
         preguntaDto = new PreguntaDto();
         bindPregunta(true);
         txfPreguntaId.clear();
         txfPreguntaId.requestFocus();
+        nuevasRespuestas();
 
+    }
+
+    private void nuevasRespuestas() {
+        unbindRespuestas();
+        bindRespuestas(true);
+        txfPreguntaRespuesta1.clear();
+        txfPreguntaRespuesta2.clear();
+        txfPreguntaRespuesta3.clear();
+        txfPreguntaRespuesta4.clear();
     }
 
     private void bindPregunta(Boolean nuevo) {
@@ -229,7 +247,7 @@ public class MantenimientoController extends Controller implements Initializable
         try
         {
             PreguntaService preguntaService = new PreguntaService();
-            Respuesta respuesta = preguntaService.getPregunta(id);
+            RespuestaUtil respuesta = preguntaService.getPregunta(id);
 
             if (respuesta.getEstado())
             {
@@ -240,7 +258,7 @@ public class MantenimientoController extends Controller implements Initializable
                 cargarRespuestas(id);
             } else
             {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Empleado", getStage(), respuesta.getMensaje());
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(), respuesta.getMensaje());
 
             }
         } catch (Exception ex)
@@ -252,48 +270,71 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     private void cargarRespuestas(Long preguntaId) {
-
+        respuestas.clear();
         try
         {
             RespuestaService respuestaService = new RespuestaService();
-            Respuesta respuesta = respuestaService.getPreguntaRespuestas(preguntaId);
+            RespuestaUtil respuesta = respuestaService.getPreguntaRespuestas(preguntaId);
 
             if (respuesta.getEstado())
             {
                 unbindRespuestas();
                 respuestas.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
                 bindRespuestas(false);
-                validarRequeridos();
             } else
             {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Empleado", getStage(), respuesta.getMensaje());
+                new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), respuesta.getMensaje());
 
             }
         } catch (Exception ex)
         {
             Logger.getLogger(MantenimientoController.class
-                    .getName()).log(Level.SEVERE, "Error consultando la pregunta.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(), "Ocurrio un error consultando la pregunta.");
+                    .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), "Ocurrio un error consultando las repuestas.");
         }
 
     }
 
     private void bindRespuestas(Boolean nuevo) {//to do
-//        if (!nuevo)
-//        {//
-//            txfPreguntaId.textProperty().bind(preguntaDto.id);
-//        }
-//        txfPreguntaCategoria.textProperty().bindBidirectional(preguntaDto.nombreCategoria);
-//        txaPreguntaEnunciado.textProperty().bindBidirectional(preguntaDto.enunciado);
-//        chkPreguntaEstado.selectedProperty().bindBidirectional(preguntaDto.estado);
+        if (!nuevo)
+        {
+            //txfPreguntaId.textProperty().bind(preguntaDto.id);
+        }
+
+        if (respuestas.size() > 0)
+        {
+            txfPreguntaRespuesta1.textProperty().bindBidirectional(respuestas.get(0).enunciado);
+            txfPreguntaRespuesta2.textProperty().bindBidirectional(respuestas.get(1).enunciado);
+            txfPreguntaRespuesta3.textProperty().bindBidirectional(respuestas.get(2).enunciado);
+            txfPreguntaRespuesta4.textProperty().bindBidirectional(respuestas.get(3).enunciado);
+            //check boxes activs
+        } else
+        {
+            txfPreguntaRespuesta1.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta2.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta3.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta4.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
+        }
 
     }
 
     private void unbindRespuestas() {//to do
-//        txfPreguntaId.textProperty().unbind();
-//        txfPreguntaCategoria.textProperty().unbindBidirectional(preguntaDto.nombreCategoria);
-//        txaPreguntaEnunciado.textProperty().unbindBidirectional(preguntaDto.enunciado);
-//        chkPreguntaEstado.selectedProperty().unbindBidirectional(preguntaDto.estado);
+
+        if (respuestas.size() > 0)
+        {
+            txfPreguntaRespuesta1.textProperty().unbindBidirectional(respuestas.get(0).enunciado);
+            txfPreguntaRespuesta2.textProperty().unbindBidirectional(respuestas.get(1).enunciado);
+            txfPreguntaRespuesta3.textProperty().unbindBidirectional(respuestas.get(2).enunciado);
+            txfPreguntaRespuesta4.textProperty().unbindBidirectional(respuestas.get(3).enunciado);
+
+        } else
+        {
+
+            txfPreguntaRespuesta1.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta2.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta3.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta4.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
+        }
 
     }
 

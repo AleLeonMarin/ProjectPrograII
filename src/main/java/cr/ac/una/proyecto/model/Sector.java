@@ -152,7 +152,7 @@ public class Sector {
 
     @Override
     public String toString() {
-        return jugador.getNombre() + posActual + direccion + rutaImagenJugador;
+        return jugador.getNombre() + "," + posActual + "," + direccion + "," + rutaImagenJugador;
     }
 
 }

@@ -131,4 +131,8 @@ public class TablerosController extends Controller implements Initializable {
         juego.jugar(grdpTablero);
     }
 
+    public Juego getJuego() {
+        return this.juego;
+    }
+
 }

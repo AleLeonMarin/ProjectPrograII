@@ -9,9 +9,9 @@ public class RespuestaDto {
     public SimpleStringProperty id;
     public SimpleStringProperty enunciado;
     public SimpleStringProperty contador;
-    public SimpleStringProperty estado;
+    public SimpleStringProperty estado;//change to simpleBooleanProperty
     public SimpleStringProperty isCorrect;
-    public Pregunta pregunta;
+    public SimpleStringProperty preguntaId;
     private Long version;
     private boolean modificado;
 
@@ -21,12 +21,14 @@ public class RespuestaDto {
         this.contador = new SimpleStringProperty("");
         this.estado = new SimpleStringProperty("");
         this.isCorrect = new SimpleStringProperty("");
+        this.preguntaId = new SimpleStringProperty("");
         this.modificado = false;
     }
 
     public RespuestaDto(Respuesta respuesta) {
         this();
         this.id.set(respuesta.getId().toString());
+        this.preguntaId.set(respuesta.getPreguntaId().toString());
         this.enunciado.set(respuesta.getEnunciado());
         this.contador.set(respuesta.getContador());
         this.estado.set(respuesta.getEstado());
@@ -78,12 +80,12 @@ public class RespuestaDto {
         this.isCorrect.set(preguntasRespondidas);
     }
 
-    public Pregunta getPregunta() {
-        return pregunta;
+    public String getPreguntaId() {
+        return preguntaId.get();
     }
 
-    public void setPregunta(Pregunta pregunta) {
-        this.pregunta = pregunta;
+    public void setPreguntaId(String preguntaId) {
+        this.preguntaId.set(preguntaId);
     }
 
     public Long getVersion() {

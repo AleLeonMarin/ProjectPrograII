@@ -3,7 +3,7 @@ package cr.ac.una.proyecto.service;
 import cr.ac.una.proyecto.model.Pregunta;
 import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.util.EntityManagerHelper;
-import cr.ac.una.proyecto.util.Respuesta;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
@@ -19,7 +19,7 @@ public class PreguntaService {
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public Respuesta getAll() {
+    public RespuestaUtil getAll() {
         try
         {
             Query qryPregunta = em.createNamedQuery("Pregunta.findAll", Pregunta.class);
@@ -29,39 +29,39 @@ public class PreguntaService {
             {
                 preguntasDto.add(new PreguntaDto(pregunta));
             }
-            return new Respuesta(true, "", "", "Preguntas", preguntasDto);
+            return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
         } catch (NoResultException ex)
         {
-            return new Respuesta(false, "No existe una tipoPlanilla con el código ingresado.", "getTipoPlanilla NoResultException");
+            return new RespuestaUtil(false, "No existe una tipoPlanilla con el código ingresado.", "getTipoPlanilla NoResultException");
         } catch (NonUniqueResultException ex)
         {
             Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la tipoPlanilla.", ex);
-            return new Respuesta(false, "Ocurrio un error al consultar la tipoPlanilla.", "getTipoPlanilla NonUniqueResultException");
+            return new RespuestaUtil(false, "Ocurrio un error al consultar la tipoPlanilla.", "getTipoPlanilla NonUniqueResultException");
         } catch (Exception ex)
         {
             Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Error obteniendo la tipoPlanilla ", ex);
-            return new Respuesta(false, "Error obteniendo la tipoPlanilla.", "getTipoPlanilla " + ex.getMessage());
+            return new RespuestaUtil(false, "Error obteniendo la tipoPlanilla.", "getTipoPlanilla " + ex.getMessage());
         }
     }
 
-    public Respuesta getPregunta(Long id) {
+    public RespuestaUtil getPregunta(Long id) {
         try
         {
             Query qryPregunta = em.createNamedQuery("Pregunta.findByPreId", Pregunta.class);
             qryPregunta.setParameter("preId", id);
             PreguntaDto preguntaDto = new PreguntaDto((Pregunta) qryPregunta.getSingleResult());
-            return new Respuesta(true, "", "", "Pregunta", preguntaDto);
+            return new RespuestaUtil(true, "", "", "Pregunta", preguntaDto);
         } catch (NoResultException ex)
         {
-            return new Respuesta(false, "No existe una pregunta con el código ingresado.", "getPregunta NoResultException");
+            return new RespuestaUtil(false, "No existe una pregunta con el código ingresado.", "getPregunta NoResultException");
         } catch (NonUniqueResultException ex)
         {
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la pregunta.", ex);
-            return new Respuesta(false, "Ocurrio un error al consultar la pregunta.", "getPregunta NonUniqueResultException");
+            return new RespuestaUtil(false, "Ocurrio un error al consultar la pregunta.", "getPregunta NonUniqueResultException");
         } catch (Exception ex)
         {
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo la pregunta [" + id + "]", ex);
-            return new Respuesta(false, "Error obteniendo la pregunta.", "getPregunta " + ex.getMessage());
+            return new RespuestaUtil(false, "Error obteniendo la pregunta.", "getPregunta " + ex.getMessage());
         }
     }
 }
