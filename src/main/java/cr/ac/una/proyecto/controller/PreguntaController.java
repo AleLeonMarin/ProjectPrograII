@@ -107,7 +107,6 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarDatosDesdeAppContext() {
         cargarPreguntaCategoriaYJugadorTurno();
-        cargarPreguntasRespuestas();
     }
 
     private void cargarPreguntaCategoriaYJugadorTurno() {
@@ -125,11 +124,6 @@ public class PreguntaController extends Controller implements Initializable {
             System.out.println("Jugador nulo");
         }
         System.out.println("Pregunta Jugador : " + jugador.toString() + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
-    }
-
-    private void cargarPreguntasRespuestas() {
-        preguntas = (ArrayList<Pregunta>) AppContext.getInstance().get("preguntas");
-        respuestas = (ArrayList<Respuesta>) AppContext.getInstance().get("respuestas");
     }
 
     public void cargarEnunciadoPregunta() {

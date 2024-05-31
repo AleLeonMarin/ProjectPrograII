@@ -8,7 +8,6 @@ import cr.ac.una.proyecto.util.FlowController;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
 
 public class TablerosController extends Controller implements Initializable {
 
@@ -102,30 +100,29 @@ public class TablerosController extends Controller implements Initializable {
         if (categoria == categoriasRuleta.get(0))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports", ((Stage) imvRuleta.getScene().getWindow()), true);
-            // llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(1))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardArt", ((Stage) imvRuleta.getScene().getWindow()), true);
-            //llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(2))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy", ((Stage) imvRuleta.getScene().getWindow()), true);
-            // llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(3))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience", ((Stage) imvRuleta.getScene().getWindow()), true);
-            // llamarPreguntaView();
         } else if (categoria == categoriasRuleta.get(4))
         {
-            System.out.println("Categoria: " + categoria);//categoriaCorona
+            FlowController.getInstance().goViewInWindowModal("FrontalCardCrownView", ((Stage) imvRuleta.getScene().getWindow()), true);
+            SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController.getInstance().getController("SelectCrownDecisionView");
+            FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView", ((Stage) imvRuleta.getScene().getWindow()), true);
+            categoria = controladorCoronaSelection.getResultado();
+            mostrarTarjetas();
+
         } else if (categoria == categoriasRuleta.get(5))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient", ((Stage) imvRuleta.getScene().getWindow()), true);
-            // llamarPreguntaView();
         } else
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory", ((Stage) imvRuleta.getScene().getWindow()), true);
-            // llamarPreguntaView();
         }
         llamarPreguntaView();
         juego.jugar(grdpTablero);
