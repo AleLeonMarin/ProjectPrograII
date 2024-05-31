@@ -5,9 +5,11 @@ import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.model.Respuesta;
 import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.service.PreguntaService;
+import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Formato;
+import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,9 +17,12 @@ import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -48,8 +53,8 @@ public class PreguntaController extends Controller implements Initializable {
     private JugadorDto jugador;
     private PreguntaDto preguntaDto;
     private ArrayList<PreguntaDto> preguntas;
-    private ArrayList<Respuesta> respuestas;
-    private Boolean valorRespuesta;
+    private ArrayList<RespuestaDto> respuestas;
+    private Boolean resultado;
 
     private ArrayList<MFXButton> botones;
     @FXML
@@ -92,10 +97,11 @@ public class PreguntaController extends Controller implements Initializable {
     public void initialize() {
         animacion = new Animacion();
         preguntas = new ArrayList<>();
+        respuestas = new ArrayList<>();
         txaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
         cargarBotonesToList();
         cargarDatosDesdeAppContext();
-        obtenerTodasLasPreguntas();
+        obtenerPreguntasCategoria();
         animacion.simpleFadeIn(acpRootPane);
         cargarEnunciadoPregunta();
     }
@@ -129,7 +135,7 @@ public class PreguntaController extends Controller implements Initializable {
         System.out.println("Pregunta Jugador : " + jugador.toString() + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
     }
 
-    private void obtenerTodasLasPreguntas() {
+    private void obtenerPreguntasCategoria() {
         PreguntaService preService = new PreguntaService();
         RespuestaUtil respuesta = preService.getPreguntasActivasPorCategoria(preguntaCategoria);
         if (respuesta.getEstado())
@@ -148,8 +154,40 @@ public class PreguntaController extends Controller implements Initializable {
 
     }
 
+    private void cargarRespuestas(Long preguntaId) {
+        respuestas.clear();
+        try
+        {
+            RespuestaService respuestaService = new RespuestaService();
+            RespuestaUtil respuesta = respuestaService.getPreguntaRespuestas(preguntaId);
+
+            if (respuesta.getEstado())
+            {
+                // unbindRespuestas();
+                respuestas.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
+                System.out.println("VARAS DE GEI");
+                for (RespuestaDto res : respuestas)
+                {
+                    System.out.println("EnunRes: " + res.getEnunciado());
+                }
+                // bindRespuestas(false);
+            } else
+            {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), respuesta.getMensaje());
+
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(MantenimientoController.class
+                    .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), "Ocurrio un error consultando las repuestas.");
+        }
+
+    }
+
     public void cargarEnunciadoPregunta() {
         preguntaDto = cargarPreguntasPorCategoria();
+        cargarRespuestas(preguntaDto.getId());
         txaEnunciado.setText(preguntaDto.getEnunciado());
     }
 
@@ -191,7 +229,7 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     public boolean getResultado() {
-        return this.valorRespuesta;
+        return this.resultado;
 
     }
 
