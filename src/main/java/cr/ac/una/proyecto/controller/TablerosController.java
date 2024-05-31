@@ -34,7 +34,7 @@ public class TablerosController extends Controller implements Initializable {
     @FXML
     private AnchorPane acpRootPane;
     private ArrayList<String> categoriasRuleta;
-    String categoria;
+    private String categoria;
 
     @Override
     public void initialize() {

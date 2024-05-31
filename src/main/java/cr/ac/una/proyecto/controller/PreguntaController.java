@@ -1,15 +1,19 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.model.Jugador;
-import cr.ac.una.proyecto.model.Pregunta;
+import cr.ac.una.proyecto.model.JugadorDto;
+import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.model.Respuesta;
+import cr.ac.una.proyecto.model.RespuestaDto;
+import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
+import cr.ac.una.proyecto.util.Formato;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +21,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class PreguntaController extends Controller implements Initializable {
 
@@ -42,12 +45,10 @@ public class PreguntaController extends Controller implements Initializable {
     private TextArea txaEnunciado;
 
     private String preguntaCategoria;
-    private String respuestaCorrecta;
-    private Jugador jugador;
-
-    private ArrayList<Pregunta> preguntas;
+    private JugadorDto jugador;
+    private PreguntaDto preguntaDto;
+    private ArrayList<PreguntaDto> preguntas;
     private ArrayList<Respuesta> respuestas;
-    private Pregunta preguntaSeleccionada;
     private Boolean valorRespuesta;
 
     private ArrayList<MFXButton> botones;
@@ -90,10 +91,13 @@ public class PreguntaController extends Controller implements Initializable {
     @Override
     public void initialize() {
         animacion = new Animacion();
+        preguntas = new ArrayList<>();
+        txaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
         cargarBotonesToList();
         cargarDatosDesdeAppContext();
-        cargarEnunciadoPregunta();
+        obtenerTodasLasPreguntas();
         animacion.simpleFadeIn(acpRootPane);
+        cargarEnunciadoPregunta();
     }
 
     public void cargarBotonesToList() {
@@ -106,18 +110,17 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void cargarDatosDesdeAppContext() {
-        cargarPreguntaCategoriaYJugadorTurno();
+        cargarCategoriaAppContext();
+        cargarJugadorAppContext();
     }
 
-    private void cargarPreguntaCategoriaYJugadorTurno() {
-        preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
+    private void cargarCategoriaAppContext() {
 
-        if (preguntaCategoria == null)
-        {
-            preguntaCategoria = "";
-        }
-        System.out.println("Pregunta Categoria : " + preguntaCategoria + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
-        jugador = ((Jugador) AppContext.getInstance().get("preguntaJugador"));
+        this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
+    }
+
+    private void cargarJugadorAppContext() {
+        jugador = ((JugadorDto) AppContext.getInstance().get("preguntaJugador"));
 
         if (jugador == null)
         {
@@ -126,100 +129,70 @@ public class PreguntaController extends Controller implements Initializable {
         System.out.println("Pregunta Jugador : " + jugador.toString() + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
     }
 
-    public void cargarEnunciadoPregunta() {
-        // preguntaSeleccionada = cargarPreguntasPorCategoria();
-        cargarRespuestasPorPregunta(preguntaSeleccionada);
-    }
-
-//    private Pregunta cargarPreguntasPorCategoria() {
-//        ArrayList<Pregunta> preguntasPorCategoria = new ArrayList<>();
-//
-//        System.out.println("Categoriaa: " + preguntaCategoria);
-//        for (Pregunta pregunta : preguntas)
-//        {
-//            if (pregunta.getCategoria().equals(preguntaCategoria))
-//            {
-//                preguntasPorCategoria.add(pregunta);
-//                System.out.println(pregunta.toString());
-//            }
-//        }
-//
-//        Random random = new Random();
-//        int numeroAleatorioInt = random.nextInt(preguntasPorCategoria.size());
-//
-//        Pregunta preguntaSeleccionada = preguntasPorCategoria.get(numeroAleatorioInt);
-//        System.out.println("Número aleatorio: " + numeroAleatorioInt);
-//        System.out.println("ID: " + preguntaSeleccionada.getId());
-//
-//        txaEnunciado.setText(preguntaSeleccionada.getEnunciado());
-//
-//        return preguntaSeleccionada;
-//    }
-    private void cargarRespuestasPorPregunta(Pregunta preguntaSeleccionada) {
-//        ArrayList<Respuesta> respuestasPorPregunta = new ArrayList<>();
-//        int id = preguntaSeleccionada.getId();
-//
-//        for (Respuesta respuesta : respuestas)
-//        {
-//            if (id == respuesta.getIdPadre())
-//            {
-//                respuestasPorPregunta.add(respuesta);
-//                if (respuesta.getIsCorrect())
-//                {
-//                    respuestaCorrecta = respuesta.getEnunciado();
-//                }
-//            }
-//        }
-//        Collections.shuffle(respuestasPorPregunta);
-//        cargarBotones(respuestasPorPregunta);
-    }
-
-    private void cargarBotones(ArrayList<Respuesta> respuestas) {
-
-        int index = 0;
-        for (MFXButton boton : botones)
+    private void obtenerTodasLasPreguntas() {
+        PreguntaService preService = new PreguntaService();
+        RespuestaUtil respuesta = preService.getPreguntasActivasPorCategoria(preguntaCategoria);
+        if (respuesta.getEstado())
         {
-            //   boton.setText(respuestas.get(index).getEnunciado());
-            index++;
-        }
+            preguntas.clear();
+            preguntas.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
+            for (PreguntaDto pre : preguntas)
+            {
 
-    }
-
-    private void validarRespuesta(MFXButton button) {
-        if (button.getText().equals(respuestaCorrecta))
-        {
-            valorRespuesta = true;
-            System.out.println("Respuesta Correcta");
-
+                System.out.println("Enunciado: " + pre.getEnunciado());
+            }
         } else
         {
-            valorRespuesta = false;
-            System.out.println("Respuesta Incorrecta");
+            System.err.println("Error al obtener las preguntas: " + respuesta.getMensajeInterno());
         }
 
-        ((Stage) acpRootPane.getScene().getWindow()).close();
-        AppContext.getInstance().set("valorRespuesta", valorRespuesta);
+    }
+
+    public void cargarEnunciadoPregunta() {
+        preguntaDto = cargarPreguntasPorCategoria();
+        txaEnunciado.setText(preguntaDto.getEnunciado());
+    }
+
+    private PreguntaDto cargarPreguntasPorCategoria() {
+
+        Random random = new Random();
+        int numeroAleatorioInt = random.nextInt(preguntas.size());
+
+        PreguntaDto preguntaDto = preguntas.get(numeroAleatorioInt);
+        System.out.println("Número aleatorio: " + numeroAleatorioInt);
+        System.out.println("ID: " + preguntaDto.getId());
+        System.out.println("Enunciado de pregunta: " + preguntaDto.getEnunciado());
+        preguntas.remove(numeroAleatorioInt);
+        return preguntaDto;
+    }
+
+    private void cargarRespuestasPorPregunta(PreguntaDto preguntaSeleccionada) {
 
     }
 
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
-        validarRespuesta(btnRespuesta1);
+
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
-        validarRespuesta(btnRespuesta2);
+
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
-        validarRespuesta(btnRespuesta3);
+
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
-        validarRespuesta(btnRespuesta4);
+
+    }
+
+    public boolean getResultado() {
+        return this.valorRespuesta;
+
     }
 
 }

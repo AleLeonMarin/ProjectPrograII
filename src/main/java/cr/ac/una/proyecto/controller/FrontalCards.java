@@ -1,7 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.util.Animacion;
-import cr.ac.una.proyecto.util.FlowController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;

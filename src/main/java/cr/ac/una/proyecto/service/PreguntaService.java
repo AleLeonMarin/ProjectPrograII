@@ -64,4 +64,33 @@ public class PreguntaService {
             return new RespuestaUtil(false, "Error obteniendo la pregunta.", "getPregunta " + ex.getMessage());
         }
     }
+
+    public RespuestaUtil getPreguntasActivasPorCategoria(String nombreCat) {
+        try
+        {
+            Query qryPregunta = em.createNamedQuery("Pregunta.findByPreCat", Pregunta.class);
+            qryPregunta.setParameter("nombreCategoria", nombreCat);
+            qryPregunta.setParameter("estadoPregunta", "A");
+            List<Pregunta> preguntasDb = (List<Pregunta>) qryPregunta.getResultList();
+            List<PreguntaDto> preguntasDto = new ArrayList<>();
+
+            for (Pregunta preguntaDb : preguntasDb)
+            {
+                preguntasDto.add(new PreguntaDto(preguntaDb));
+            }
+
+            return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
+        } catch (NoResultException ex)
+        {
+            return new RespuestaUtil(false, "No existen preguntas con el nombre de categoria ingresado.", "getPreguntasPorCategoria NoResultException");
+        } catch (NonUniqueResultException ex)
+        {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar las preguntas.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar las preguntas.", "getPreguntasPorCategoria NonUniqueResultException");
+        } catch (Exception ex)
+        {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo las preguntas de la categoria [" + nombreCat + "]", ex);
+            return new RespuestaUtil(false, "Error obteniendo las preguntas.", "getPreguntasPorCategoria " + ex.getMessage());
+        }
+    }
 }
