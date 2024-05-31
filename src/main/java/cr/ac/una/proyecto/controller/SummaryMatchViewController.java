@@ -4,11 +4,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
+import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.Respuesta;
 import cr.ac.una.proyecto.util.Sound;
 import javafx.stage.Stage;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -17,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -72,12 +78,16 @@ public class SummaryMatchViewController extends Controller implements Initializa
     private ObservableList<String> nombresJugadores;
     private List<JugadorDto> jugadores;
     private ArrayList<Sector> sectores;
+    private List<String> jugadoresEnAppContext;
+
+    private JugadorDto jugadorDto;
 
     Sound sound = new Sound();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
+        jugadorDto = new JugadorDto();
     }
 
     @Override
@@ -96,8 +106,27 @@ public class SummaryMatchViewController extends Controller implements Initializa
     @FXML
     void onActionBtnPlay(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
-        FlowController.getInstance().goMain("tableroView");
-        ((Stage) btnPlay.getScene().getWindow()).close();
+        try {
+            getJugadoresFromAppContext();
+            JugadorService jugadorService = new JugadorService();
+            Respuesta respuesta = jugadorService.guardarJugadores(jugadores);
+
+            if (respuesta.getEstado()) {
+                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugadores", getStage(),
+                        "Jugadores guardados correctamente.");
+
+                FlowController.getInstance().goMain("tableroView");
+                ((Stage) btnPlay.getScene().getWindow()).close();
+            } else {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
+                        respuesta.getMensaje());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RegistryNewGameViewController.class.getName()).log(Level.SEVERE,
+                    "Error guardando los jugadores.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
+                    "Ocurrió un error guardando los Jugadores.");
+        }
 
     }
 
@@ -119,14 +148,15 @@ public class SummaryMatchViewController extends Controller implements Initializa
     private void getJugadoresFromAppContext() {
         jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (JugadorDto jugador : jugadores)
-        {
+        for (JugadorDto jugador : jugadores) {
             nombresJugadores.add(jugador.getNombre());
         }
 
+        jugadoresEnAppContext = nombresJugadores;
+
     }
 
-    private void validarJugadores() {//mejorar funcion
+    private void validarJugadores() {// mejorar funcion
 
         String rutaImagenJug1 = sectores.get(0).getRutaImagenJugador();
         String rutaImagenJug2 = sectores.get(1).getRutaImagenJugador();
@@ -136,8 +166,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
         lblJugador2.setText(jugadores.get(1).getNombre());
         imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
 
-        if (cantJugadores >= 3)
-        {
+        if (cantJugadores >= 3) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
@@ -148,8 +177,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
         }
-        if (cantJugadores >= 4)
-        {
+        if (cantJugadores >= 4) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -165,8 +193,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador4.setText(jugadores.get(3).getNombre());
             imgFicha4.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug4)));
         }
-        if (cantJugadores >= 5)
-        {
+        if (cantJugadores >= 5) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -187,8 +214,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador5.setText(jugadores.get(4).getNombre());
             imgFicha5.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug5)));
         }
-        if (cantJugadores == 6)
-        {
+        if (cantJugadores == 6) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);

@@ -18,9 +18,11 @@ public class Juego {
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
 
+
     private String resultadoRuleta;
     private Ruleta ruleta;
     private Boolean valorRespuesta;
+
 
     public Juego() {
         ruleta = new Ruleta();
@@ -33,14 +35,6 @@ public class Juego {
 
     public void agregarSector(Sector sector) {
         sectores.add(sector);
-    }
-
-    public void agregarPregunta(Pregunta pregunta) {
-        preguntas.add(pregunta);
-    }
-
-    private void agregarRespuesta(Respuesta respuesta) {
-        respuestas.add(respuesta);
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
@@ -106,4 +100,10 @@ public class Juego {
     public JugadorDto getJugadorPregunta() {
         return sectores.get(turnoActual).getJugador();
     }
+
+    public String toString(){
+        return sectores.toString() + turnoActual ;
+    }
+
+    
 }

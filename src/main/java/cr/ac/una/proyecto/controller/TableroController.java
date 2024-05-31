@@ -1,20 +1,28 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.JugadorDto;
+import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.google.gson.Gson;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -174,23 +182,27 @@ public class TableroController extends Controller implements Initializable {
     private Label lblJugador6;
 
     Sound sound = new Sound();
-
+    
     @FXML
     private Label lblTiempo;
     private int segundos = 0;
     private ObservableList<String> nombresJugadores;
     private List<JugadorDto> jugadores;
-
+    private Juego juego;
+    private ArrayList<String> loadToJson;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Inicializador con resources");
         lblTiempo.setVisible(false);
         nombresJugadores = FXCollections.observableArrayList();
         jugadores = new ArrayList<>();
+        juego = new Juego();
+        loadToJson = new ArrayList<>();
         getJugadoresFromAppContext();
         disablePlayer();
         showPlayer();
-
+        
     }
 
     @Override
@@ -286,6 +298,7 @@ public class TableroController extends Controller implements Initializable {
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Chance_audio.mp3");
+        createJson();
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar", getStage(), "Partida Guardada");
     }
 
@@ -552,6 +565,25 @@ public class TableroController extends Controller implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
+    }
+
+    public void loadToJsonData(){
+        loadToJson.add(juego.toString());
+
+    }
+
+    private void createJson(){
+        loadToJsonData();
+        System.out.println(loadToJson.toString());
+        Gson gson = new Gson();
+        String json = gson.toJson(loadToJson.toString());
+        try{
+            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
+            file.write(json);
+            file.close();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
 
 }

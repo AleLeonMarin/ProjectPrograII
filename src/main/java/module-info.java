@@ -11,6 +11,7 @@ module cr.ac.una.proyecto {
     requires jakarta.persistence;
      requires jakarta.xml.bind;
     requires java.sql;
+    requires com.google.gson;
     
     opens cr.ac.una.proyecto to javafx.fxml, javafx.graphics;
     exports cr.ac.una.proyecto;

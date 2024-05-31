@@ -152,13 +152,7 @@ public class Sector {
 
     @Override
     public String toString() {
-        return "Sector{"
-                + "jugador=" + (jugador != null ? jugador.toString() : "null")
-                + ", posicionFija=" + posicionX
-                + ", posicionInicial=" + posicionY
-                + ", posActual=" + posActual
-                + ", direccion=" + direccion
-                + ", rutaImagenJugador='" + rutaImagenJugador + '\''
-                + '}';
+        return jugador.getNombre() + posActual + direccion + rutaImagenJugador;
     }
+
 }

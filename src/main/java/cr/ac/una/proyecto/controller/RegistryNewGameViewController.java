@@ -132,32 +132,10 @@ public class RegistryNewGameViewController extends Controller implements Initial
     void onActionBtnNext(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
 
-        try {
-            String invalidos = validarRequeridos();
-
-            if (!invalidos.isBlank() && validateUniqueNames()) {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(), invalidos);
-            } else {
-                // Assuming you have a list of JugadorDto objects to save
-                savePlayerNames();
-                JugadorService jugadorService = new JugadorService();
-                Respuesta respuesta = jugadorService.guardarJugadores(jugadores);
-
-                if (respuesta.getEstado()) {
-                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugadores", getStage(),
-                            "Jugadores guardados correctamente.");
-                    proceedToNextView();
-                } else {
-                    new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
-                            respuesta.getMensaje());
-                }
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(RegistryNewGameViewController.class.getName()).log(Level.SEVERE,
-                    "Error guardando los jugadores.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
-                    "Ocurrió un error guardando los Jugadores.");
+        if (validateFields() && validateUniqueNames())
+        {
+            savePlayerNames();
+            proceedToNextView();
         }
     }
 
