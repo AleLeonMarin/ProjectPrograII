@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.util.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
 import cr.ac.una.proyecto.util.FlowController;
@@ -27,11 +28,14 @@ public class DifficultySelectionViewController extends Controller implements Ini
     @FXML
     private MFXCheckbox ckbMedium;
 
-    Sound sound = new Sound();
+    private Sound sound = new Sound();
+
+    private String dificultad;
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        AppContext.getInstance().set("dificultad", dificultad);
         FlowController.getInstance().goViewInWindow("SumaryMatch");
         ((Stage) btnPlay.getScene().getWindow()).close();
     }
@@ -48,11 +52,14 @@ public class DifficultySelectionViewController extends Controller implements Ini
     }
 
     private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
-        CheckBox[] checkboxes = {
-                ckbEasy, ckbMedium, ckbHard
+        CheckBox[] checkboxes =
+        {
+            ckbEasy, ckbMedium, ckbHard
         };
-        for (CheckBox checkbox : checkboxes) {
-            if (checkbox != selectedCheckbox) {
+        for (CheckBox checkbox : checkboxes)
+        {
+            if (checkbox != selectedCheckbox)
+            {
                 checkbox.setSelected(false);
             }
         }
@@ -67,16 +74,19 @@ public class DifficultySelectionViewController extends Controller implements Ini
     @FXML
     void onActionDificil(MouseEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+        this.dificultad = "Dificil";
     }
 
     @FXML
     void onActionFacil(MouseEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+        this.dificultad = "Facil";
     }
 
     @FXML
     void onActionMedio(MouseEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+        this.dificultad = "Media";
     }
 
 }

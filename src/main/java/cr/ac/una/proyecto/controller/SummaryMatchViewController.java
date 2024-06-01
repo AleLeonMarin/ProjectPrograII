@@ -82,6 +82,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     private JugadorDto jugadorDto;
 
+    private String dificultad;
+
     Sound sound = new Sound();
 
     @Override
@@ -106,22 +108,26 @@ public class SummaryMatchViewController extends Controller implements Initializa
     @FXML
     void onActionBtnPlay(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
-        try {
+        try
+        {
             getJugadoresFromAppContext();
             JugadorService jugadorService = new JugadorService();
             RespuestaUtil respuesta = jugadorService.guardarJugadores(jugadores);
 
-            if (respuesta.getEstado()) {
+            if (respuesta.getEstado())
+            {
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugadores", getStage(),
                         "Jugadores guardados correctamente.");
 
                 FlowController.getInstance().goMain("tableroView");
                 ((Stage) btnPlay.getScene().getWindow()).close();
-            } else {
+            } else
+            {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
                         respuesta.getMensaje());
             }
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             Logger.getLogger(RegistryNewGameViewController.class.getName()).log(Level.SEVERE,
                     "Error guardando los jugadores.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
@@ -135,20 +141,23 @@ public class SummaryMatchViewController extends Controller implements Initializa
         cantJugadores = 0;
         nombresJugadores = FXCollections.observableArrayList();
         jugadores = new ArrayList<>();
-        getCantidaDeJugadoresFromAppContext();
+        getDificultadYCantidadJugadoresAppContext();
         getJugadoresFromAppContext();
         getSectoresFromAppContext();
         validarJugadores();
     }
 
-    private void getCantidaDeJugadoresFromAppContext() {
+    private void getDificultadYCantidadJugadoresAppContext() {
         cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
+        dificultad = ((String) AppContext.getInstance().get("dificultad"));
+        this.lblDifficulty.setText(dificultad);
     }
 
     private void getJugadoresFromAppContext() {
         jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (JugadorDto jugador : jugadores) {
+        for (JugadorDto jugador : jugadores)
+        {
             nombresJugadores.add(jugador.getNombre());
         }
 
@@ -166,7 +175,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
         lblJugador2.setText(jugadores.get(1).getNombre());
         imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
 
-        if (cantJugadores >= 3) {
+        if (cantJugadores >= 3)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
@@ -177,7 +187,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
         }
-        if (cantJugadores >= 4) {
+        if (cantJugadores >= 4)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -193,7 +204,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador4.setText(jugadores.get(3).getNombre());
             imgFicha4.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug4)));
         }
-        if (cantJugadores >= 5) {
+        if (cantJugadores >= 5)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -214,7 +226,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador5.setText(jugadores.get(4).getNombre());
             imgFicha5.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug5)));
         }
-        if (cantJugadores == 6) {
+        if (cantJugadores == 6)
+        {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -267,6 +280,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     private void getSectoresFromAppContext() {
         sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
+
     }
 
 }

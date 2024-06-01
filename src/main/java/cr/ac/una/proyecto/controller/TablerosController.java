@@ -19,14 +19,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class TablerosController extends Controller implements Initializable {
-
+    
     @FXML
     private ImageView imvRuleta;
     @FXML
     private GridPane grdpTablero;
     @FXML
     private ImageView imvPicker;
-
+    
     private Animacion animacion;
     private Juego juego;
     ArrayList<Sector> sectores;
@@ -35,67 +35,69 @@ public class TablerosController extends Controller implements Initializable {
     private AnchorPane acpRootPane;
     private ArrayList<String> categoriasRuleta;
     private String categoria;
-
+    
     @Override
     public void initialize() {
         iniciarClases();
         cargarSectores();
         juego.cargarDatosImagenes(grdpTablero);
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
-
+    
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
+        this.imvPicker.setDisable(true);
         moverRuleta();
     }
-
+    
     private void cargarSectores() {
         sectores = new ArrayList<>();
         sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
-
+        
         for (Sector sector : sectores)
         {
             juego.agregarSector(sector);
         }
     }
-
+    
     private void cargarCategoriasRuleta() {
         categoriasRuleta = (ArrayList<String>) AppContext.getInstance().get("categoriasRuleta");
     }
-
+    
     private void iniciarClases() {
         categoriasRuleta = new ArrayList<>();
         juego = new Juego();
         animacion = new Animacion();
         cargarCategoriasRuleta();
     }
-
+    
     private void moverRuleta() {
-
+        
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
-
+        
         Runnable onFinish = () ->
         {
             System.out.println("La animación de la ruleta ha terminado en esta categoria: " + categoria + ", Angulo: " + anguloDetenido);
             Platform.runLater(() -> mostrarTarjetas());
-
+            this.imvPicker.setDisable(false);
+            
         };
-
+        
         animacion.animacionRuleta(imvRuleta, anguloDetenido, onFinish);
         AppContext.getInstance().set("preguntaCategoria", categoria);
         AppContext.getInstance().set("preguntaJugador", juego.getJugadorPregunta());
     }
-
+    
     private void llamarPreguntaView() {
-
+        
         FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) imvRuleta.getScene().getWindow()), true);
     }
-
+    
     private void mostrarTarjetas() {
         if (categoria == categoriasRuleta.get(0))
         {
@@ -117,7 +119,7 @@ public class TablerosController extends Controller implements Initializable {
             categoria = controladorCoronaSelection.getResultado();
             AppContext.getInstance().set("preguntaCategoria", categoria);
             mostrarTarjetas();
-
+            
         } else if (categoria == categoriasRuleta.get(5))
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient", ((Stage) imvRuleta.getScene().getWindow()), true);
@@ -128,9 +130,9 @@ public class TablerosController extends Controller implements Initializable {
         llamarPreguntaView();
         juego.jugar(grdpTablero);
     }
-
+    
     public Juego getJuego() {
         return this.juego;
     }
-
+    
 }

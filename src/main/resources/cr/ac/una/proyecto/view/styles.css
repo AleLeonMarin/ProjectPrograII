@@ -112,17 +112,17 @@
     -fx-opacity: 1;
 }
 
-.mfx-btn-bomb > ImageView {
-    -fx-image: url("../resources/bomb.png");
+.imagenAyudaBomba {
+    -fx-background-image: url("../resources/bomb.png");
 }
-.mfx-btn-porDos > ImageView {
-    -fx-image: url("../resources/porDos.png");
+.imagenAyudaSegundaOportunidad{
+    -fx-background-image: url("../resources/porDos.png");
 }
-.mfx-btn-btnRetry > ImageView {
-    -fx-image: url("../resources/reiniciar.png");
+.imagenAyudaTirarRuleta {
+    -fx-background-image: url("../resources/reiniciar.png");
 }
-.mfx-btn-next > ImageView {
-    -fx-image: url("../resources/next.png");
+.imagenAyudaSiguientePregunta{
+    -fx-background-image: url("../resources/next.png");
 }
 
 .mfx-btn-bomb,.mfx-btn-bomb:armed,.mfx-btn-bomb:focused{

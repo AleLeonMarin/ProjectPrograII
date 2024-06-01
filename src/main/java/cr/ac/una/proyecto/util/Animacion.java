@@ -51,7 +51,6 @@ public class Animacion {
     }
 
     public void animacionRuleta(ImageView ruletaImageView, double anguloFinal, Runnable onFinish) {
-
         RotateTransition rotate = new RotateTransition();
         rotate.setNode(ruletaImageView);
         ruletaImageView.setRotate(0);

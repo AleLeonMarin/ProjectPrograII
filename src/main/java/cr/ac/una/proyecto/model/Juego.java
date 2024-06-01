@@ -18,11 +18,9 @@ public class Juego {
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
 
-
     private String resultadoRuleta;
     private Ruleta ruleta;
     private Boolean valorRespuesta;
-
 
     public Juego() {
         ruleta = new Ruleta();
@@ -58,7 +56,9 @@ public class Juego {
         Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
+        setJugadorDtoAppContext(jugadorActual);
         cargarPreguntaViewValorRespuesta();
+
         if (valorRespuesta)
         {
             //jugadorActual sumarCorona
@@ -74,6 +74,10 @@ public class Juego {
 
     private void cargarPreguntaViewValorRespuesta() {
         valorRespuesta = (Boolean) AppContext.getInstance().get("valorRespuesta");
+    }
+
+    private void setJugadorDtoAppContext(JugadorDto jugador) {
+        AppContext.getInstance().set("preguntaJugador", jugador);
     }
 
     private Pregunta obtenerPreguntaAleatoria() {
@@ -101,9 +105,8 @@ public class Juego {
         return sectores.get(turnoActual).getJugador();
     }
 
-    public String toString(){
-        return sectores.toString() + turnoActual ;
+    public String toString() {
+        return sectores.toString() + turnoActual;
     }
 
-    
 }

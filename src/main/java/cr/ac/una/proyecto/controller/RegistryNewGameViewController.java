@@ -90,7 +90,8 @@ public class RegistryNewGameViewController extends Controller implements Initial
         sldQty.setValue(cantJugadores);
 
         textFields = new ArrayList<>(List.of(txfJug1, txfJug2, txfJug3, txfJug4, txfJug5, txfJug6));
-        for (int i = 2; i < textFields.size(); i++) {
+        for (int i = 2; i < textFields.size(); i++)
+        {
             textFields.get(i).setDisable(true);
             textFields.get(i).setVisible(false);
         }
@@ -98,16 +99,19 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     private void cargarSliderCantidad() {
         cantJugadores = (Integer) AppContext.getInstance().get("cantJugadoresSlider");
-        if (cantJugadores == null || cantJugadores > 6) {
+        if (cantJugadores == null || cantJugadores > 6)
+        {
             cantJugadores = 2;
         }
 
     }
 
     private void setupSliderListener() {
-        sldQty.valueProperty().addListener((obs, oldValue, newValue) -> {
+        sldQty.valueProperty().addListener((obs, oldValue, newValue) ->
+        {
             int value = newValue.intValue();
-            for (int index = 2; index < textFields.size(); index++) {
+            for (int index = 2; index < textFields.size(); index++)
+            {
                 textFields.get(index).setDisable(index >= value);
                 textFields.get(index).setVisible(index < value);
             }
@@ -132,8 +136,10 @@ public class RegistryNewGameViewController extends Controller implements Initial
     }
 
     private boolean validateFields() {
-        for (MFXTextField textField : textFields) {
-            if (textField.isVisible() && textField.getText().isEmpty()) {
+        for (MFXTextField textField : textFields)
+        {
+            if (textField.isVisible() && textField.getText().isEmpty())
+            {
                 showAlert("Error", "Existe uno o más espacios en blanco.");
                 return false;
             }
@@ -143,10 +149,13 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     private boolean validateUniqueNames() {
         Set<String> namesSet = new HashSet<>();
-        for (MFXTextField textField : textFields) {
-            if (textField.isVisible()) {
+        for (MFXTextField textField : textFields)
+        {
+            if (textField.isVisible())
+            {
                 String name = textField.getText().trim();
-                if (!name.isEmpty() && !namesSet.add(name)) {
+                if (!name.isEmpty() && !namesSet.add(name))
+                {
                     showAlert("Error", "El nombre de cada jugador debe ser único");
                     return false;
                 }
@@ -156,8 +165,10 @@ public class RegistryNewGameViewController extends Controller implements Initial
     }
 
     private void savePlayerNames() {
-        for (MFXTextField textField : textFields) {
-            if (textField.isVisible() && !textField.getText().isBlank()) {
+        for (MFXTextField textField : textFields)
+        {
+            if (textField.isVisible() && !textField.getText().isBlank())
+            {
                 JugadorDto jugador = new JugadorDto(textField.getText());
                 System.out.println("Jugador nombre" + jugador.getNombre());
                 jugadores.add(jugador);
@@ -179,48 +190,64 @@ public class RegistryNewGameViewController extends Controller implements Initial
     public String validarRequeridos() {
         Boolean validos = true;
         String invalidos = "";
-        for (Node node : requeridos) {
+        for (Node node : requeridos)
+        {
             if (node instanceof MFXTextField
-                    && (((MFXTextField) node).getText() == null || ((MFXTextField) node).getText().isBlank())) {
-                if (validos) {
+                    && (((MFXTextField) node).getText() == null || ((MFXTextField) node).getText().isBlank()))
+            {
+                if (validos)
+                {
                     invalidos += ((MFXTextField) node).getFloatingText();
-                } else {
+                } else
+                {
                     invalidos += "," + ((MFXTextField) node).getFloatingText();
                 }
                 validos = false;
             } else if (node instanceof MFXPasswordField
-                    && (((MFXPasswordField) node).getText() == null || ((MFXPasswordField) node).getText().isBlank())) {
-                if (validos) {
+                    && (((MFXPasswordField) node).getText() == null || ((MFXPasswordField) node).getText().isBlank()))
+            {
+                if (validos)
+                {
                     invalidos += ((MFXPasswordField) node).getFloatingText();
-                } else {
+                } else
+                {
                     invalidos += "," + ((MFXPasswordField) node).getFloatingText();
                 }
                 validos = false;
-            } else if (node instanceof MFXDatePicker && ((MFXDatePicker) node).getValue() == null) {
-                if (validos) {
+            } else if (node instanceof MFXDatePicker && ((MFXDatePicker) node).getValue() == null)
+            {
+                if (validos)
+                {
                     invalidos += ((MFXDatePicker) node).getFloatingText();
-                } else {
+                } else
+                {
                     invalidos += "," + ((MFXDatePicker) node).getFloatingText();
                 }
                 validos = false;
-            } else if (node instanceof MFXComboBox && ((MFXComboBox) node).getSelectionModel().getSelectedIndex() < 0) {
-                if (validos) {
+            } else if (node instanceof MFXComboBox && ((MFXComboBox) node).getSelectionModel().getSelectedIndex() < 0)
+            {
+                if (validos)
+                {
                     invalidos += ((MFXComboBox) node).getFloatingText();
-                } else {
+                } else
+                {
                     invalidos += "," + ((MFXComboBox) node).getFloatingText();
                 }
                 validos = false;
             }
         }
-        if (validos) {
+        if (validos)
+        {
             return "";
-        } else {
+        } else
+        {
             return "Campos requeridos o con problemas de formato [" + invalidos + "].";
         }
     }
 
     private void bindJugador(Boolean nuevo) {
-        if (!nuevo) {
+        if (!nuevo)
+        {
             txfJug1.textProperty().bind(jugadorDto.nombre);
             txfJug2.textProperty().bind(jugadorDto.nombre);
             txfJug3.textProperty().bind(jugadorDto.nombre);

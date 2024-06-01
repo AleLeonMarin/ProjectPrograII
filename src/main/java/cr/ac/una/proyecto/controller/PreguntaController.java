@@ -24,6 +24,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -36,22 +38,10 @@ public class PreguntaController extends Controller implements Initializable {
     private VBox VboxRespuestas;
 
     @FXML
-    private MFXButton btnBomb;
-
-    @FXML
-    private MFXButton btnExtraTry;
-
-    @FXML
-    private MFXButton btnPass;
-
-    @FXML
-    private MFXButton btnSecondOportunity;
-
-    @FXML
     private TextArea txaEnunciado;
 
     private String preguntaCategoria;
-    private JugadorDto jugador;
+    private JugadorDto jugadorDto;
     private PreguntaDto preguntaDto;
     private RespuestaDto respuetaDtoAux;
     private ArrayList<PreguntaDto> preguntasDto;
@@ -70,26 +60,14 @@ public class PreguntaController extends Controller implements Initializable {
     private MFXButton btnRespuesta4;
     @FXML
     private AnchorPane acpRootPane;
-
     @FXML
-    void onActionBtnBomb(ActionEvent event) {
-
-    }
-
+    private ImageView imvBomba;
     @FXML
-    void onActionBtnPass(ActionEvent event) {
-
-    }
-
+    private ImageView imvNext;
     @FXML
-    void onActionBtnSecondOportunity(ActionEvent event) {
-
-    }
-
+    private ImageView imvSecondOportunity;
     @FXML
-    void onActionExtraTry(ActionEvent event) {
-
-    }
+    private ImageView imvTirarRuleta;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,6 +83,7 @@ public class PreguntaController extends Controller implements Initializable {
         preguntaDto = new PreguntaDto();
         this.intentos = 1;
         txaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
+
         cargarBotonesToList();
         cargarDatosDesdeAppContext();
         obtenerPreguntasCategoria();
@@ -133,13 +112,15 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void cargarJugadorAppContext() {
-        jugador = ((JugadorDto) AppContext.getInstance().get("preguntaJugador"));
+        jugadorDto = ((JugadorDto) AppContext.getInstance().get("preguntaJugador"));
 
-        if (jugador == null)
+        if (jugadorDto == null)
         {
             System.out.println("Jugador nulo");
+        } else
+        {
+            System.out.println("Pregunta Jugador : " + jugadorDto.getInfoJugador() + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
         }
-        System.out.println("Pregunta Jugador : " + jugador.toString() + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
     }
 
     private void obtenerPreguntasCategoria() {
@@ -268,28 +249,57 @@ public class PreguntaController extends Controller implements Initializable {
     private void validarRespuetaCorrecta(int btnIndice) {
         RespuestaDto respuestaDto = new RespuestaDto();
         respuestaDto = respuestasDto.get(btnIndice - 1);
+        jugadorDto.setPreguntasRespondidas(jugadorDto.getPreguntasRespondidas() + 1);
 
         if (respuestaDto.getIsCorrect().equals("C"))
         {
             intentos--;
             this.resultadoValorRespuesta = true;
-            validarIntentos();
+            validarIntentos(true);
 
         } else
         {
             intentos--;
             this.resultadoValorRespuesta = false;
-            validarIntentos();
+            validarIntentos(false);
         }
 
     }
 
-    private void validarIntentos() {
-        if (intentos <= 0)
+    private void validarIntentos(boolean value) {
+
+        if (value == true)
         {
-            AppContext.getInstance().set("valorRespuesta", resultadoValorRespuesta);
+            ((Stage) acpRootPane.getScene().getWindow()).close();
+
+        } else if (intentos <= 0)
+        {
             ((Stage) acpRootPane.getScene().getWindow()).close();
         }
+
+        AppContext.getInstance().set("valorRespuesta", resultadoValorRespuesta);
+    }
+
+    @FXML
+    private void onMouseClickedBomba(MouseEvent event) {
+        System.out.println("PreguntaController.onMouseClickedBomba()");
+    }
+
+    @FXML
+    private void onMouseClickedNext(MouseEvent event) {
+        System.out.println("PreguntaController.onMouseClickedNext()");
+    }
+
+    @FXML
+    private void onMouseOportunidadDoble(MouseEvent event) {
+        this.intentos += 1;
+        this.imvSecondOportunity.setDisable(true);
+        this.imvSecondOportunity.setVisible(false);
+    }
+
+    @FXML
+    private void onMouseTirarRuleta(MouseEvent event) {
+        System.out.println("PreguntaController.onMouseTirarRuleta()");
     }
 
 }
