@@ -295,7 +295,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private void bindRespuestas(Boolean nuevo) {//to do
+    private void bindRespuestas(Boolean nuevo) {
         if (!nuevo)
         {
             //txfPreguntaId.textProperty().bind(preguntaDto.id);

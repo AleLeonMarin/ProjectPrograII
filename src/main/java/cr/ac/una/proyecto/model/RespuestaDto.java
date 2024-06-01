@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.model;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class RespuestaDto {
@@ -9,8 +10,8 @@ public class RespuestaDto {
     public SimpleStringProperty id;
     public SimpleStringProperty enunciado;
     public SimpleStringProperty contador;
-    public SimpleStringProperty estado;//change to simpleBooleanProperty
-    public SimpleStringProperty isCorrect;
+    public SimpleBooleanProperty estado;
+    public SimpleBooleanProperty isCorrect;
     public SimpleStringProperty preguntaId;
     private Long version;
     private boolean modificado;
@@ -19,8 +20,8 @@ public class RespuestaDto {
         this.id = new SimpleStringProperty("");
         this.enunciado = new SimpleStringProperty("");
         this.contador = new SimpleStringProperty("");
-        this.estado = new SimpleStringProperty("");
-        this.isCorrect = new SimpleStringProperty("");
+        this.estado = new SimpleBooleanProperty(false);
+        this.isCorrect = new SimpleBooleanProperty(false);
         this.preguntaId = new SimpleStringProperty("");
         this.modificado = false;
     }
@@ -31,8 +32,8 @@ public class RespuestaDto {
         this.preguntaId.set(respuesta.getPreguntaId().toString());
         this.enunciado.set(respuesta.getEnunciado());
         this.contador.set(respuesta.getContador());
-        this.estado.set(respuesta.getEstado());
-        this.isCorrect.set(respuesta.getIsCorrect());
+        this.estado.set(respuesta.getEstado().equals("A"));
+        this.isCorrect.set(respuesta.getIsCorrect().equals("C"));
         this.version = respuesta.getVersion();
     }
 
@@ -65,19 +66,19 @@ public class RespuestaDto {
     }
 
     public String getEstado() {
-        return estado.get();
+        return estado.get() ? "A" : "I";
     }
 
     public void setEstado(String estado) {
-        this.estado.set(estado);
+        this.estado.set(estado.equalsIgnoreCase("A"));
     }
 
     public String getIsCorrect() {
-        return isCorrect.get();
+        return isCorrect.get() ? "C" : "X";
     }
 
-    public void setIsCorrect(String preguntasRespondidas) {
-        this.isCorrect.set(preguntasRespondidas);
+    public void setIsCorrect(String isCorrect) {
+        this.isCorrect.set(isCorrect.equalsIgnoreCase("C"));
     }
 
     public String getPreguntaId() {

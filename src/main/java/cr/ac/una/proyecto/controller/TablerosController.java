@@ -115,6 +115,7 @@ public class TablerosController extends Controller implements Initializable {
             SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController.getInstance().getController("SelectCrownDecisionView");
             FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView", ((Stage) imvRuleta.getScene().getWindow()), true);
             categoria = controladorCoronaSelection.getResultado();
+            AppContext.getInstance().set("preguntaCategoria", categoria);
             mostrarTarjetas();
 
         } else if (categoria == categoriasRuleta.get(5))
