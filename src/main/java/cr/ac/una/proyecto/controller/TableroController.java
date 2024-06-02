@@ -2,27 +2,22 @@ package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.JugadorDto;
-import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.google.gson.Gson;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

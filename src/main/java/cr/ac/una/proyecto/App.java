@@ -9,20 +9,15 @@ import javafx.scene.image.Image;
 
 public class App extends Application {
 
-    public static Scene scene;
-    public Image icon;
-    String iconString;
+    public static Scene scene; 
 
     @Override
     public void start(Stage stage) throws IOException {
 
-//        iconString = "cr/ac/una/proyecto/resources/logo.jpg";
-//        icon = new Image(iconString);
-//        FlowController.getInstance().InitializeFlow(stage, null);
-//        stage.getIcons().add(icon);
-//        stage.setTitle("Preguntados JR");
+
         FlowController.getInstance().InitializeFlow(stage, null);
         stage.setTitle("Preguntados Jr");
+        stage.getIcons().add(new Image(getClass().getResource("/cr/ac/una/proyecto/resources/logo.jpg").toExternalForm()));
         FlowController.getInstance().goViewInWindow("DevLogIn");
 
     }
