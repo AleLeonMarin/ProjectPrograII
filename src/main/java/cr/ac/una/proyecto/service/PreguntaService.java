@@ -117,4 +117,35 @@ public class PreguntaService {
             return new RespuestaUtil(false, "Error obteniendo Preguntas.", "getPreguntasByFiltros " + ex.getMessage());
         }
     }
+
+    public RespuestaUtil guardarPregunta(PreguntaDto preguntaDto) {
+        try
+        {
+            et = em.getTransaction();
+            et.begin();
+            Pregunta pregunta;
+            if (preguntaDto.getId() != null && preguntaDto.getId() > 0)
+            {
+                pregunta = em.find(Pregunta.class, preguntaDto.getId());
+                if (pregunta == null)
+                {
+                    return new RespuestaUtil(false, "No se encontro en la tipoPlanilla a guardar", "guardarTipoPlanilla noResultExeption");
+                }
+                pregunta.actualizar(preguntaDto);
+                pregunta = em.merge(pregunta);
+            } else
+            {
+                pregunta = new Pregunta(preguntaDto);
+                em.persist(pregunta);
+            }
+            et.commit();
+            return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
+
+        } catch (Exception ex)
+        {
+            et.rollback();
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error guardando la pregunta", ex);
+            return new RespuestaUtil(false, "Error guardando la pregunta.", "guardarPregunta" + ex.getMessage());
+        }
+    }
 }

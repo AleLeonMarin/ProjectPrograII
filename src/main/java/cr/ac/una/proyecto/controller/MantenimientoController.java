@@ -59,13 +59,21 @@ public class MantenimientoController extends Controller implements Initializable
     private MFXButton btnNuevo;
     @FXML
     private MFXButton btnBuscar;
+    @FXML
+    private TextArea txaPreguntaEnunciado;
+    @FXML
+    private MFXCheckbox chkValidarRespuesta1;
+    @FXML
+    private MFXCheckbox chkValidarRespuesta2;
+    @FXML
+    private MFXCheckbox chkValidarRespuesta3;
+    @FXML
+    private MFXCheckbox chkValidarRespuesta4;
 
     private PreguntaDto preguntaDto;
     ObservableList<RespuestaDto> respuestas = FXCollections.observableArrayList();
     private RespuestaDto respuestaDtoAux;
     List<Node> requeridos = new ArrayList<>();
-    @FXML
-    private TextArea txaPreguntaEnunciado;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,6 +91,40 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
+        guardarPregunta();
+    }
+
+    private void guardarPregunta() {
+        try
+        {
+            String invalidos = validarRequeridos();
+            if (!invalidos.isBlank())
+            {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), invalidos);
+            } else
+            {
+                PreguntaService preService = new PreguntaService();
+                RespuestaUtil respuesta = preService.guardarPregunta(this.preguntaDto);
+                if (respuesta.getEstado())
+                {
+                    unbindPregunta();
+                    this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
+                    bindPregunta(true);
+                    guardarRespuestas();
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Pregunta", getStage(), "Pregunta guardada correctamente.");
+                } else
+                {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), respuesta.getMensaje());
+                }
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al guardar la pregunta.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), "Ocurrió un error al guardar la pregunta.");
+        }
+    }
+
+    private void guardarRespuestas() {
     }
 
     @FXML
@@ -151,7 +193,6 @@ public class MantenimientoController extends Controller implements Initializable
         txfPreguntaId.clear();
         txfPreguntaId.requestFocus();
         nuevasRespuestas();
-
     }
 
     private void nuevasRespuestas() {
@@ -183,7 +224,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     private void IndicarRequeridos() {
         requeridos.clear();
-        requeridos.addAll(Arrays.asList(txfPreguntaId, txfPreguntaCategoria, txaPreguntaEnunciado));
+        requeridos.addAll(Arrays.asList(txfPreguntaCategoria, txaPreguntaEnunciado));
     }
 
     public String validarRequeridos() {
@@ -306,18 +347,27 @@ public class MantenimientoController extends Controller implements Initializable
             txfPreguntaRespuesta2.textProperty().bindBidirectional(respuestas.get(1).enunciado);
             txfPreguntaRespuesta3.textProperty().bindBidirectional(respuestas.get(2).enunciado);
             txfPreguntaRespuesta4.textProperty().bindBidirectional(respuestas.get(3).enunciado);
-            //check boxes activs
+
+            chkValidarRespuesta1.selectedProperty().bindBidirectional(respuestas.get(0).isCorrect);
+            chkValidarRespuesta2.selectedProperty().bindBidirectional(respuestas.get(1).isCorrect);
+            chkValidarRespuesta3.selectedProperty().bindBidirectional(respuestas.get(2).isCorrect);
+            chkValidarRespuesta4.selectedProperty().bindBidirectional(respuestas.get(3).isCorrect);
         } else
         {
             txfPreguntaRespuesta1.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
             txfPreguntaRespuesta2.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
             txfPreguntaRespuesta3.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
             txfPreguntaRespuesta4.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
+
+            chkValidarRespuesta1.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta2.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta3.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta4.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
         }
 
     }
 
-    private void unbindRespuestas() {//to do
+    private void unbindRespuestas() {
 
         if (respuestas.size() > 0)
         {
@@ -326,6 +376,11 @@ public class MantenimientoController extends Controller implements Initializable
             txfPreguntaRespuesta3.textProperty().unbindBidirectional(respuestas.get(2).enunciado);
             txfPreguntaRespuesta4.textProperty().unbindBidirectional(respuestas.get(3).enunciado);
 
+            chkValidarRespuesta1.selectedProperty().unbindBidirectional(respuestas.get(0).isCorrect);
+            chkValidarRespuesta2.selectedProperty().unbindBidirectional(respuestas.get(1).isCorrect);
+            chkValidarRespuesta3.selectedProperty().unbindBidirectional(respuestas.get(2).isCorrect);
+            chkValidarRespuesta4.selectedProperty().unbindBidirectional(respuestas.get(3).isCorrect);
+
         } else
         {
 
@@ -333,6 +388,11 @@ public class MantenimientoController extends Controller implements Initializable
             txfPreguntaRespuesta2.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
             txfPreguntaRespuesta3.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
             txfPreguntaRespuesta4.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
+
+            chkValidarRespuesta1.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta2.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta3.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta4.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
         }
 
     }
