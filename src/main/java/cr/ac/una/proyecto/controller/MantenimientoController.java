@@ -21,13 +21,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -71,9 +70,11 @@ public class MantenimientoController extends Controller implements Initializable
     private MFXCheckbox chkValidarRespuesta4;
 
     private PreguntaDto preguntaDto;
-    ObservableList<RespuestaDto> respuestas = FXCollections.observableArrayList();
+    ArrayList<RespuestaDto> respuestas = new ArrayList<>();
+    ArrayList<RespuestaDto> respuestasAuxDto = new ArrayList<>();
     private RespuestaDto respuestaDtoAux;
     List<Node> requeridos = new ArrayList<>();
+    private ArrayList<CheckBox> checkboxes;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,10 +92,42 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
-        guardarPregunta();
+        if (validarComboBoxes())
+        {
+            if (guardarPregunta())
+            {
+                guardarRespuestas();
+            }
+        }
+
     }
 
-    private void guardarPregunta() {
+    private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
+
+        for (CheckBox checkbox : checkboxes)
+        {
+            if (checkbox != selectedCheckbox)
+            {
+                checkbox.setSelected(false);
+            }
+        }
+    }
+
+    private void initCheckboxesValues() {
+        this.checkboxes = new ArrayList<>();
+        checkboxes.add(chkValidarRespuesta1);
+        checkboxes.add(chkValidarRespuesta2);
+        checkboxes.add(chkValidarRespuesta3);
+        checkboxes.add(chkValidarRespuesta4);
+
+        chkValidarRespuesta1.setOnAction(e -> deseleccionarOtrasCasillas(chkValidarRespuesta1));
+        chkValidarRespuesta2.setOnAction(e -> deseleccionarOtrasCasillas(chkValidarRespuesta2));
+        chkValidarRespuesta3.setOnAction(e -> deseleccionarOtrasCasillas(chkValidarRespuesta3));
+        chkValidarRespuesta4.setOnAction(e -> deseleccionarOtrasCasillas(chkValidarRespuesta4));
+
+    }
+
+    private boolean guardarPregunta() {
         try
         {
             String invalidos = validarRequeridos();
@@ -110,8 +143,8 @@ public class MantenimientoController extends Controller implements Initializable
                     unbindPregunta();
                     this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
                     bindPregunta(true);
-                    guardarRespuestas();
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Pregunta", getStage(), "Pregunta guardada correctamente.");
+                    return true;
                 } else
                 {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), respuesta.getMensaje());
@@ -122,9 +155,41 @@ public class MantenimientoController extends Controller implements Initializable
             Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al guardar la pregunta.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), "Ocurrió un error al guardar la pregunta.");
         }
+        return false;
     }
 
     private void guardarRespuestas() {
+        try
+        {
+            ArrayList<RespuestaDto> respuestasAux = new ArrayList<>();
+
+            if (respuestas.size() > 0)
+            {
+                respuestasAux = this.respuestas;
+            } else
+            {
+                respuestasAux = this.respuestasAuxDto;
+            }
+
+            RespuestaService respuestaService = new RespuestaService();
+            RespuestaUtil respuesta = respuestaService.guardarRespuestasPregunta(respuestasAux);
+            if (respuesta.getEstado())
+            {
+                unbindPregunta();
+                this.respuestas = (ArrayList<RespuestaDto>) respuesta.getResultado("GRespuestas");
+                bindPregunta(true);
+                nuevaPregunta();
+                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Respuestas", getStage(), "Respuestas guardadas correctamente.");
+            } else
+            {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(), respuesta.getMensaje());
+            }
+
+        } catch (Exception ex)
+        {
+            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al guardar las respuestas.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(), "Ocurrió un error al guardar las respuestas.");
+        }
     }
 
     @FXML
@@ -137,6 +202,62 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnEliminar(ActionEvent event) {
+        eliminarRespuestas();
+    }
+
+    private void eliminarPregunta() {
+        try
+        {
+            System.out.println("EstadoPregunta: " + preguntaDto.getId());
+            if (this.preguntaDto.getId() == null)
+            {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta ", getStage(), "Favor consultar la pregunta a eliminar.");
+            } else
+            {
+
+                PreguntaService preService = new PreguntaService();
+                RespuestaUtil respuesta = preService.eliminarPregunta(this.preguntaDto.getId());
+                if (respuesta.getEstado())
+                {
+                    nuevaPregunta();
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Eliminar Pregunta", getStage(), "La Pregunta se elimino correctamente");
+                } else
+                {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta", getStage(), respuesta.getMensaje());
+                }
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al la pregunta.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta", getStage(), "Ocurrió un error al eliminar la pregunta.");
+        }
+    }
+
+    private void eliminarRespuestas() {
+        try
+        {
+            if (this.preguntaDto.getId() == null)
+            {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Respuestas ", getStage(), "Favor consultar las Respuestas a eliminar.");
+            } else
+            {
+
+                RespuestaService resService = new RespuestaService();
+                RespuestaUtil respuesta = resService.eliminarRespuestas(respuestas);
+                if (respuesta.getEstado())
+                {
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Eliminar Respuestas", getStage(), "Las Respuestas se eliminaron correctamente");
+                    eliminarPregunta();
+                } else
+                {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Respuestas", getStage(), respuesta.getMensaje());
+                }
+            }
+        } catch (Exception ex)
+        {
+            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al eliminar las respuestas.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Respuestas", getStage(), "Ocurrió un error al eliminar las respuestas.");
+        }
     }
 
     @FXML
@@ -183,12 +304,13 @@ public class MantenimientoController extends Controller implements Initializable
 
         nuevaPregunta();
         IndicarRequeridos();
+        initCheckboxesValues();
 
     }
 
     private void nuevaPregunta() {
-        unbindPregunta();
         preguntaDto = new PreguntaDto();
+        unbindPregunta();
         bindPregunta(true);
         txfPreguntaId.clear();
         txfPreguntaId.requestFocus();
@@ -196,6 +318,11 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     private void nuevasRespuestas() {
+
+        for (int index = 0; index < 4; index++)
+        {
+            respuestasAuxDto.add(new RespuestaDto());
+        }
         unbindRespuestas();
         bindRespuestas(true);
         txfPreguntaRespuesta1.clear();
@@ -224,7 +351,21 @@ public class MantenimientoController extends Controller implements Initializable
 
     private void IndicarRequeridos() {
         requeridos.clear();
-        requeridos.addAll(Arrays.asList(txfPreguntaCategoria, txaPreguntaEnunciado));
+        requeridos.addAll(Arrays.asList(txaPreguntaEnunciado, txfPreguntaRespuesta1, txfPreguntaRespuesta2, txfPreguntaRespuesta3,
+                txfPreguntaRespuesta4));
+    }
+
+    private boolean validarComboBoxes() {
+
+        for (CheckBox checkbox : checkboxes)
+        {
+            if (checkbox.isSelected())
+            {
+                return true;
+            }
+        }
+        new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(), "Debes Seleccionar una respuesta como correcta");
+        return false;
     }
 
     public String validarRequeridos() {
@@ -283,11 +424,11 @@ public class MantenimientoController extends Controller implements Initializable
         }
     }
 
-    private void cargarPregunta(Long id) {
+    private void cargarPregunta(Long preId) {
         try
         {
             PreguntaService preguntaService = new PreguntaService();
-            RespuestaUtil respuesta = preguntaService.getPregunta(id);
+            RespuestaUtil respuesta = preguntaService.getPregunta(preId);
 
             if (respuesta.getEstado())
             {
@@ -295,7 +436,7 @@ public class MantenimientoController extends Controller implements Initializable
                 this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
                 bindPregunta(false);
                 validarRequeridos();
-                cargarRespuestas(id);
+                cargarRespuestas(preId);
             } else
             {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(), respuesta.getMensaje());
@@ -354,15 +495,15 @@ public class MantenimientoController extends Controller implements Initializable
             chkValidarRespuesta4.selectedProperty().bindBidirectional(respuestas.get(3).isCorrect);
         } else
         {
-            txfPreguntaRespuesta1.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
-            txfPreguntaRespuesta2.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
-            txfPreguntaRespuesta3.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
-            txfPreguntaRespuesta4.textProperty().bindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta1.textProperty().bindBidirectional(respuestasAuxDto.get(0).enunciado);
+            txfPreguntaRespuesta2.textProperty().bindBidirectional(respuestasAuxDto.get(1).enunciado);
+            txfPreguntaRespuesta3.textProperty().bindBidirectional(respuestasAuxDto.get(2).enunciado);
+            txfPreguntaRespuesta4.textProperty().bindBidirectional(respuestasAuxDto.get(3).enunciado);
 
-            chkValidarRespuesta1.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
-            chkValidarRespuesta2.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
-            chkValidarRespuesta3.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
-            chkValidarRespuesta4.selectedProperty().bindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta1.selectedProperty().bindBidirectional(respuestasAuxDto.get(0).isCorrect);
+            chkValidarRespuesta2.selectedProperty().bindBidirectional(respuestasAuxDto.get(1).isCorrect);
+            chkValidarRespuesta3.selectedProperty().bindBidirectional(respuestasAuxDto.get(2).isCorrect);
+            chkValidarRespuesta4.selectedProperty().bindBidirectional(respuestasAuxDto.get(3).isCorrect);
         }
 
     }
@@ -384,15 +525,15 @@ public class MantenimientoController extends Controller implements Initializable
         } else
         {
 
-            txfPreguntaRespuesta1.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
-            txfPreguntaRespuesta2.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
-            txfPreguntaRespuesta3.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
-            txfPreguntaRespuesta4.textProperty().unbindBidirectional(respuestaDtoAux.enunciado);
+            txfPreguntaRespuesta1.textProperty().unbindBidirectional(respuestasAuxDto.get(0).enunciado);
+            txfPreguntaRespuesta2.textProperty().unbindBidirectional(respuestasAuxDto.get(1).enunciado);
+            txfPreguntaRespuesta3.textProperty().unbindBidirectional(respuestasAuxDto.get(2).enunciado);
+            txfPreguntaRespuesta4.textProperty().unbindBidirectional(respuestasAuxDto.get(3).enunciado);
 
-            chkValidarRespuesta1.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
-            chkValidarRespuesta2.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
-            chkValidarRespuesta3.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
-            chkValidarRespuesta4.selectedProperty().unbindBidirectional(respuestaDtoAux.isCorrect);
+            chkValidarRespuesta1.selectedProperty().unbindBidirectional(respuestasAuxDto.get(0).isCorrect);
+            chkValidarRespuesta2.selectedProperty().unbindBidirectional(respuestasAuxDto.get(1).isCorrect);
+            chkValidarRespuesta3.selectedProperty().unbindBidirectional(respuestasAuxDto.get(2).isCorrect);
+            chkValidarRespuesta4.selectedProperty().unbindBidirectional(respuestasAuxDto.get(3).isCorrect);
         }
 
     }

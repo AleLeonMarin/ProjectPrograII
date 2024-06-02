@@ -124,21 +124,24 @@ public class PreguntaService {
             et = em.getTransaction();
             et.begin();
             Pregunta pregunta;
+
             if (preguntaDto.getId() != null && preguntaDto.getId() > 0)
             {
                 pregunta = em.find(Pregunta.class, preguntaDto.getId());
                 if (pregunta == null)
                 {
-                    return new RespuestaUtil(false, "No se encontro en la tipoPlanilla a guardar", "guardarTipoPlanilla noResultExeption");
+                    return new RespuestaUtil(false, "No se encontro en la pregunta a guardar", "guardarPregunta noResultExeption");
                 }
                 pregunta.actualizar(preguntaDto);
                 pregunta = em.merge(pregunta);
             } else
             {
+
                 pregunta = new Pregunta(preguntaDto);
                 em.persist(pregunta);
             }
             et.commit();
+            System.out.println("despues del commit");
             return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
 
         } catch (Exception ex)
@@ -147,5 +150,37 @@ public class PreguntaService {
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error guardando la pregunta", ex);
             return new RespuestaUtil(false, "Error guardando la pregunta.", "guardarPregunta" + ex.getMessage());
         }
+    }
+
+    public RespuestaUtil eliminarPregunta(Long id) {
+        try
+        {
+            et = em.getTransaction();
+            et.begin();
+            Pregunta pregunta;
+            if (id != null && id > 0)
+            {
+                pregunta = em.find(Pregunta.class, id);
+                if (pregunta == null)
+                {
+                    return new RespuestaUtil(false, "No se encontro una pregunta a eliminar", "eliminarPregunta noResultExeption");
+                }
+
+                em.remove(pregunta);
+            } else
+            {
+                return new RespuestaUtil(false, "Favor consultar la pregunta a eliminar", "");
+
+            }
+            et.commit();
+            return new RespuestaUtil(true, "", "");
+
+        } catch (Exception ex)
+        {
+            et.rollback();
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error eliminando la Pregunta.", ex);
+            return new RespuestaUtil(false, "Error elimnando la Pregunta.", "eliminarPregunta" + ex.getMessage());
+        }
+
     }
 }

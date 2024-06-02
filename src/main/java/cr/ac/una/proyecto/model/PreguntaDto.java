@@ -37,11 +37,13 @@ public class PreguntaDto implements Serializable {
     }
 
     public Long getId() {
-        if (this.id.get() != null && !this.id.get().isBlank())
+        if (id.get() != null && !id.get().isEmpty())
         {
-            return Long.valueOf(this.id.get());
+            return Long.valueOf(id.get());
+        } else
+        {
+            return null;
         }
-        return null;
     }
 
     public void setId(Long id) {
