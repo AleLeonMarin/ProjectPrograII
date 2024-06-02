@@ -141,7 +141,6 @@ public class PreguntaService {
                 em.persist(pregunta);
             }
             et.commit();
-            System.out.println("despues del commit");
             return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
 
         } catch (Exception ex)

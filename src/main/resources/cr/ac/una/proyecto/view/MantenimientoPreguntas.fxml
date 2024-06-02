@@ -35,7 +35,7 @@
                                     <String fx:value="jfx-txfs-mantenimiento-container" />
                                  </styleClass>
                               </MFXTextField>
-                              <MFXCheckbox fx:id="chkPreguntaEstado" onAction="#OnActionChklPreguntaEstado" text="Activo" />
+                              <MFXCheckbox fx:id="chkPreguntaEstado" text="Activo" />
                            </children>
                         </HBox>
                         <VBox alignment="CENTER" prefHeight="474.0" prefWidth="880.0" spacing="10.0">

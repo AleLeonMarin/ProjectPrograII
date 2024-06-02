@@ -71,7 +71,7 @@ public class Respuesta implements Serializable {
         this.estado = respuestaDto.getEstado();
         this.isCorrect = respuestaDto.getIsCorrect();
         this.version = respuestaDto.getVersion();
-        //  this.preguntaId = respuestaDto.getPreguntaId();
+        //this.preguntaId = respuestaDto.getPreguntaId(); check this
     }
 
     public Long getId() {
