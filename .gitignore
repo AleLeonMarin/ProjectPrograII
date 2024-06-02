@@ -2,3 +2,7 @@
 
 target/
 .vscode/
+
+#Binaries files
+
+*.json

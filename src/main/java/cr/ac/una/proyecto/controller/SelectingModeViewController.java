@@ -1,7 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
 import cr.ac.una.proyecto.util.FlowController;
@@ -11,8 +10,6 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class SelectingModeViewController extends Controller implements Initializable {
 

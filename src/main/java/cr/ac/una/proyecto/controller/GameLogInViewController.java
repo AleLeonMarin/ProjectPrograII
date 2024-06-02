@@ -1,7 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Sound;
@@ -10,8 +9,6 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class GameLogInViewController extends Controller implements Initializable {
@@ -26,6 +23,7 @@ public class GameLogInViewController extends Controller implements Initializable
     private MFXButton btnCargarPartida;
 
     Sound sound = new Sound();
+
 
     PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(600));
 
@@ -57,7 +55,6 @@ public class GameLogInViewController extends Controller implements Initializable
 
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
     }
 
     @FXML
