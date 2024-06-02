@@ -93,4 +93,28 @@ public class PreguntaService {
             return new RespuestaUtil(false, "Error obteniendo las preguntas.", "getPreguntasPorCategoria " + ex.getMessage());
         }
     }
+
+    public RespuestaUtil getPreguntasByFiltros(String preguntaId, String preCategoria, String preEnunciado) {
+        try
+        {
+            Query query = em.createNamedQuery("Pregunta.findByFilters", Pregunta.class);
+            query.setParameter("preId", ("%" + preguntaId + "%"));
+            query.setParameter("preCat", "%" + preCategoria + "%");
+            query.setParameter("preEnun", "%" + preEnunciado + "%");
+            List<Pregunta> preguntasDb = (List<Pregunta>) query.getResultList();
+            List<PreguntaDto> preguntasDto = new ArrayList<>();
+            for (Pregunta preguntaDb : preguntasDb)
+            {
+                preguntasDto.add(new PreguntaDto(preguntaDb));
+            }
+            return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
+        } catch (NoResultException ex)
+        {
+            return new RespuestaUtil(false, "No existen preguntas con esos detalles.", "getPreguntasByFiltros NoResultException");
+        } catch (Exception ex)
+        {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo las preguntas.", ex);
+            return new RespuestaUtil(false, "Error obteniendo Preguntas.", "getPreguntasByFiltros " + ex.getMessage());
+        }
+    }
 }

@@ -27,6 +27,7 @@ import java.util.List;
             @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
             @NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.id = :preId"),
             @NamedQuery(name = "Pregunta.findByPreCat", query = "SELECT p FROM Pregunta p WHERE p.nombreCategoria.nombre = :nombreCategoria AND p.estado = :estadoPregunta"),
+            @NamedQuery(name = "Pregunta.findByFilters", query = "SELECT p FROM Pregunta p WHERE p.id like :preId and UPPER(p.nombreCategoria.nombre) like :preCat and UPPER(p.enunciado) like :preEnun")
         /* @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.enunciado = :preEnunciado"),
             @NamedQuery(name = "Pregunta.findByPreEstado", query = "SELECT p FROM Pregunta p WHERE p.estado = :preEstado"),
             @NamedQuery(name = "Pregunta.findByPreAparicion", query = "SELECT p FROM Pregunta p WHERE p.aparicion = :preAparicion"),

@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  */
 public class BuscarPreguntaController extends Controller implements Initializable {
 
-    ObservableList<PreguntaDto> categorias = FXCollections.observableArrayList();
+    ObservableList<PreguntaDto> preguntas = FXCollections.observableArrayList();
     private PreguntaDto resultado;
     private PreguntaService preService;
 
@@ -56,19 +56,20 @@ public class BuscarPreguntaController extends Controller implements Initializabl
     public void initialize(URL url, ResourceBundle rb) {
 
         preService = new PreguntaService();
-        txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormat());
-        txfEnunciadoPregunta.delegateSetTextFormatter(Formato.getInstance().cedulaFormat(50));
+        txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormatWithMaxLength(4));
+        txfCategoria.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(15));
+        txfEnunciadoPregunta.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
 
         clmPreguntaId.setCellValueFactory(cd -> cd.getValue().id);
         clmPreguntaEnunciado.setCellValueFactory(cd -> cd.getValue().enunciado);
-        clmPreguntaCategoria.setCellValueFactory(cd -> cd.getValue().nombreCategoria);//
+        clmPreguntaCategoria.setCellValueFactory(cd -> cd.getValue().nombreCategoria);
 
-        //  obtenterTodo();
+        obtenerTodasLasPreguntas();
     }
 
     @FXML
     private void onActionBtnFiltrar(ActionEvent event) {
-        obtenerTodasLasPreguntas();
+        filtrarDatos();
     }
 
     @FXML
@@ -79,31 +80,31 @@ public class BuscarPreguntaController extends Controller implements Initializabl
     }
 
     private void filtrarDatos() {
-//        String codigo = txfCodigo.getText();
-//        String descripcion = txfDescripcion.getText();
-//        String planillasXMes = txfPlanillasXMes.getText();
-//
-//        Respuesta respuesta = tplaService.getTiposPlanillaFiltros(codigo, descripcion, planillasXMes);
-//        if (respuesta.getEstado())
-//        {
-//            tiposPlanilla.clear();
-//            tiposPlanilla.addAll((List<TipoPlanillaDto>) respuesta.getResultado("TiposPlanilla"));
-//            tbvTablaEmpleados.setItems(tiposPlanilla);
-//            tbvTablaEmpleados.refresh();
-//
-//        } else
-//        {
-//            System.err.println("Error al obtener las tipoPlanillas: " + respuesta.getMensajeInterno());
-//        }
+        String idPregunta = txfPreguntaId.getText();
+        String categoria = txfCategoria.getText().toUpperCase();
+        String enunciado = txfEnunciadoPregunta.getText().toUpperCase();
+
+        RespuestaUtil pregunta = preService.getPreguntasByFiltros(idPregunta, categoria, enunciado);
+        if (pregunta.getEstado())
+        {
+            preguntas.clear();
+            preguntas.addAll((List<PreguntaDto>) pregunta.getResultado("Preguntas"));
+            tbvTablaPreguntas.setItems(preguntas);
+            tbvTablaPreguntas.refresh();
+
+        } else
+        {
+            System.err.println("Error al obtener las tipoPlanillas: " + pregunta.getMensajeInterno());
+        }
     }
 
     private void obtenerTodasLasPreguntas() {
         RespuestaUtil respuesta = preService.getAll();
         if (respuesta.getEstado())
         {
-            categorias.clear();
-            categorias.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
-            tbvTablaPreguntas.setItems(categorias);
+            preguntas.clear();
+            preguntas.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
+            tbvTablaPreguntas.setItems(preguntas);
             tbvTablaPreguntas.refresh();
 
         } else

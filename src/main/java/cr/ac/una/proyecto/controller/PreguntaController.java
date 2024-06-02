@@ -214,21 +214,13 @@ public class PreguntaController extends Controller implements Initializable {
         int numeroAleatorioInt = random.nextInt(preguntasDto.size());
 
         PreguntaDto preguntaDto = preguntasDto.get(numeroAleatorioInt);
-        System.out.println("Número aleatorio: " + numeroAleatorioInt);
-        System.out.println("ID: " + preguntaDto.getId());
-        System.out.println("Enunciado de pregunta: " + preguntaDto.getEnunciado());
         preguntasDto.remove(numeroAleatorioInt);
         return preguntaDto;
-    }
-
-    private void cargarRespuestasPorPregunta(PreguntaDto preguntaSeleccionada) {
-
     }
 
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
         validarRespuetaCorrecta(1);
-
     }
 
     @FXML

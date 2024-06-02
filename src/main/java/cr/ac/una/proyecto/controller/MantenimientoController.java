@@ -133,7 +133,7 @@ public class MantenimientoController extends Controller implements Initializable
         txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormat());
         txfPreguntaCategoria.delegateSetTextFormatter(Formato.getInstance().letrasFormat(15));
         txaPreguntaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
-        chkPreguntaEstado.setSelected(true);
+        chkPreguntaEstado.setSelected(false);
         txfPreguntaRespuesta1.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
         txfPreguntaRespuesta2.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
         txfPreguntaRespuesta3.delegateSetTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(50));
@@ -171,7 +171,6 @@ public class MantenimientoController extends Controller implements Initializable
         txfPreguntaCategoria.textProperty().bindBidirectional(preguntaDto.nombreCategoria);
         txaPreguntaEnunciado.textProperty().bindBidirectional(preguntaDto.enunciado);
         chkPreguntaEstado.selectedProperty().bindBidirectional(preguntaDto.estado);
-
     }
 
     private void unbindPregunta() {
