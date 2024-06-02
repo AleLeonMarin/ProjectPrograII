@@ -53,7 +53,7 @@
                                           <String fx:value="jfx-txfs-mantenimiento-container" />
                                        </styleClass>
                                     </MFXTextField>
-                                    <MFXCheckbox text="Correcta" />
+                                    <MFXCheckbox fx:id="chkValidarRespuesta1" text="Correcta" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -64,7 +64,7 @@
                                           <String fx:value="jfx-txfs-mantenimiento-container" />
                                        </styleClass>
                                     </MFXTextField>
-                                    <MFXCheckbox text="Correcta" />
+                                    <MFXCheckbox fx:id="chkValidarRespuesta2" text="Correcta" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
@@ -75,7 +75,7 @@
                                           <String fx:value="jfx-txfs-mantenimiento-container" />
                                        </styleClass>
                                     </MFXTextField>
-                                    <MFXCheckbox text="Correcta" />
+                                    <MFXCheckbox fx:id="chkValidarRespuesta3" text="Correcta" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="107.0" prefWidth="880.0" spacing="20.0">
@@ -86,7 +86,7 @@
                                           <String fx:value="jfx-txfs-mantenimiento-container" />
                                        </styleClass>
                                     </MFXTextField>
-                                    <MFXCheckbox text="Correcta" />
+                                    <MFXCheckbox fx:id="chkValidarRespuesta4" text="Correcta" />
                                  </children>
                               </HBox>
                            </children>

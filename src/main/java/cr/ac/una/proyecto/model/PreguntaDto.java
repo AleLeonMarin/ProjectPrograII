@@ -30,7 +30,7 @@ public class PreguntaDto implements Serializable {
         this.id.set(pregunta.getId().toString());
         this.nombreCategoria.set(pregunta.getNombreCategoria().getNombre());
         this.enunciado.set(pregunta.getEnunciado());
-        this.estado.set(pregunta.getEstado().equals(""));
+        this.estado.set(pregunta.getEstado().equals("A"));
         this.aparicion.set(pregunta.getAparicion());
         this.aciertos.set(pregunta.getAciertos());
         this.version = pregunta.getVersion();

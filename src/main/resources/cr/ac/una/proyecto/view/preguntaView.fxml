@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -16,28 +17,28 @@
             <HBox prefHeight="60.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
          </top>
          <bottom>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <MFXButton fx:id="btnBomb" ellipsisString="" onAction="#onActionBtnBomb" prefHeight="44.0" prefWidth="0.0" styleClass="mfx-btn-bomb">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic>
-                  </MFXButton>
-                  <MFXButton fx:id="btnExtraTry" ellipsisString="" onAction="#onActionExtraTry" prefHeight="44.0" prefWidth="47.0" styleClass="mfx-btn-btnRetry">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic>
-                  </MFXButton>
-                  <MFXButton fx:id="btnSecondOportunity" ellipsisString="" onAction="#onActionBtnSecondOportunity" prefHeight="44.0" prefWidth="37.0" styleClass="mfx-btn-porDos">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic>
-                  </MFXButton>
-                  <MFXButton fx:id="btnPass" ellipsisString="" onAction="#onActionBtnPass" prefHeight="44.0" prefWidth="0.0" styleClass="mfx-btn-next">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                     </graphic>
-                  </MFXButton>
+                  <ImageView fx:id="imvBomba" fitHeight="55.0" fitWidth="55.0" onMouseClicked="#onMouseClickedBomba" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/bomb.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imvNext" fitHeight="55.0" fitWidth="55.0" layoutX="283.0" layoutY="32.0" onMouseClicked="#onMouseClickedNext" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/next.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imvSecondOportunity" fitHeight="55.0" fitWidth="55.0" layoutX="240.0" layoutY="32.0" onMouseClicked="#onMouseOportunidadDoble" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/porDos.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imvTirarRuleta" fitHeight="55.0" fitWidth="55.0" layoutX="325.0" layoutY="32.0" onMouseClicked="#onMouseTirarRuleta" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/ruleta.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </bottom>

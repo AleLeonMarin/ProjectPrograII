@@ -28,7 +28,7 @@ public class JugadorDto implements Serializable {
         this.preRespondidasCorrectamente = new SimpleIntegerProperty(0);
         this.modificado = false;
     }
-    
+
     public JugadorDto(Jugador jugador) {
         this();
         this.id.set(jugador.getId() != null ? jugador.getId().toString() : "");
@@ -38,13 +38,11 @@ public class JugadorDto implements Serializable {
         this.preRespondidasCorrectamente.set(jugador.getPreRespondidasCorrectamente());
         this.version = jugador.getVersion();
     }
-    
+
     public JugadorDto(String nombre) {
         this();
         this.nombre.set(nombre);
     }
-    
-
 
     public Long getId() {
         if (this.id.get() != null && !this.id.get().isBlank())
@@ -144,9 +142,13 @@ public class JugadorDto implements Serializable {
         return true;
     }
 
+    public String getInfoJugador() {
+        return "Jugador: " + this.getNombre() + " ID: " + getId() + ", Partidas Ganadas: " + this.partidasGanadas + ", Preguntas Respondidas: " + this.preguntasRespondidas + ", preCorrectas: " + this.preRespondidasCorrectamente;
+    }
+
     @Override
     public String toString() {
-        return "cr.ac.una.proyecto.model.JugadorDto[ jugId=" + id + " ]";
+        return "Nombre" + id + " ]";
     }
 
 }
