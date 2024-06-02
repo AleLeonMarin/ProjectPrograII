@@ -88,5 +88,4 @@ public class DifficultySelectionViewController extends Controller implements Ini
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
         this.dificultad = "Media";
     }
-
 }

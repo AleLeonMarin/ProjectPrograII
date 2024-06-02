@@ -3,7 +3,6 @@ package cr.ac.una.proyecto.model;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 import java.util.ArrayList;
-import java.util.Scanner;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
@@ -14,11 +13,8 @@ public class Juego {
 
     private ArrayList<Sector> sectores;
     private ArrayList<Pregunta> preguntas;
-    private ArrayList<Respuesta> respuestas;
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
-
-    private String resultadoRuleta;
     private Ruleta ruleta;
     private Boolean valorRespuesta;
 
@@ -26,7 +22,6 @@ public class Juego {
         ruleta = new Ruleta();
         sectores = new ArrayList<>();
         preguntas = new ArrayList<>();
-        respuestas = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
         turnoActual = 0;
     }

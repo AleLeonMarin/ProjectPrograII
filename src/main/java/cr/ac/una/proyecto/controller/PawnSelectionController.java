@@ -9,7 +9,6 @@ import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
