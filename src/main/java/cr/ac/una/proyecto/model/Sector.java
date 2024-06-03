@@ -1,5 +1,7 @@
 package cr.ac.una.proyecto.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.HPos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -12,6 +14,7 @@ public class Sector {
     private int posActual;
     private int direccion;
     private String rutaImagenJugador;
+    private ArrayList<Ayuda> ayudas;
 
     public Sector() {
     }
@@ -22,6 +25,7 @@ public class Sector {
         this.posicionY = Ypos;
         this.direccion = direccion;
         this.rutaImagenJugador = rutaImagenJugador;
+        this.ayudas = new ArrayList<>();
         setActualPosition();
 
     }
@@ -78,6 +82,14 @@ public class Sector {
 
     public void setRutaImagenJugador(String rutaImagenJugador) {
         this.rutaImagenJugador = rutaImagenJugador;
+    }
+
+    public ArrayList<Ayuda> getAyudas() {
+        return ayudas;
+    }
+
+    public void setAyudas(ArrayList<Ayuda> ayudas) {
+        this.ayudas = ayudas;
     }
 
     private void moverNodoA(ImageView imageView, int columna, int fila) {

@@ -1,8 +1,10 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.model.Ayuda;
 import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.model.RespuestaDto;
+import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.Animacion;
@@ -42,11 +44,13 @@ public class PreguntaController extends Controller implements Initializable {
 
     private String preguntaCategoria;
     private JugadorDto jugadorDto;
+    private Sector sectorDto;
     private PreguntaDto preguntaDto;
     private RespuestaDto respuetaDtoAux;
     private ArrayList<PreguntaDto> preguntasDto;
     private ArrayList<RespuestaDto> respuestasDto;
     private Boolean resultadoValorRespuesta;
+    private String dificultad;
     private int intentos;
 
     private ArrayList<MFXButton> botones;
@@ -76,20 +80,23 @@ public class PreguntaController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
+        this.sectorDto = new Sector();
         animacion = new Animacion();
         preguntasDto = new ArrayList<>();
         respuestasDto = new ArrayList<>();
         respuetaDtoAux = new RespuestaDto();
         preguntaDto = new PreguntaDto();
         this.intentos = 1;
-        txaEnunciado.setTextFormatter(Formato.getInstance().anyCharacterFormatWithMaxLength(200));
-
         cargarBotonesToList();
         cargarDatosDesdeAppContext();
         obtenerPreguntasCategoria();
         animacion.simpleFadeIn(acpRootPane);
         cargarEnunciadoPregunta();
         unbindRespuestas();
+        cargarDificultadFromAppContext();
+        disableAll();
+        cargarAyudasDisponibles(sectorDto);
+
     }
 
     public void cargarBotonesToList() {
@@ -103,7 +110,7 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarDatosDesdeAppContext() {
         cargarCategoriaAppContext();
-        cargarJugadorAppContext();
+        cargarSectorJugadorDtoAppContext();
     }
 
     private void cargarCategoriaAppContext() {
@@ -111,8 +118,10 @@ public class PreguntaController extends Controller implements Initializable {
         this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
     }
 
-    private void cargarJugadorAppContext() {
-        jugadorDto = ((JugadorDto) AppContext.getInstance().get("preguntaJugador"));
+    private void cargarSectorJugadorDtoAppContext() {
+        sectorDto = ((Sector) AppContext.getInstance().get("preguntaSector"));
+        System.out.println("Info Sector: " + sectorDto.getRutaImagenJugador());
+        jugadorDto = sectorDto.getJugador();
 
         if (jugadorDto == null)
         {
@@ -220,25 +229,25 @@ public class PreguntaController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
-        validarRespuetaCorrecta(1);
+        validarRespuestaCorrecta(1);
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
-        validarRespuetaCorrecta(2);
+        validarRespuestaCorrecta(2);
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
-        validarRespuetaCorrecta(3);
+        validarRespuestaCorrecta(3);
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
-        validarRespuetaCorrecta(4);
+        validarRespuestaCorrecta(4);
     }
 
-    private void validarRespuetaCorrecta(int btnIndice) {
+    private void validarRespuestaCorrecta(int btnIndice) {
         RespuestaDto respuestaDto = new RespuestaDto();
         respuestaDto = respuestasDto.get(btnIndice - 1);
         jugadorDto.setPreguntasRespondidas(jugadorDto.getPreguntasRespondidas() + 1);
@@ -262,11 +271,16 @@ public class PreguntaController extends Controller implements Initializable {
 
         if (value == true)
         {
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Correcta", "Has respondido Correctamente");
             ((Stage) acpRootPane.getScene().getWindow()).close();
 
         } else if (intentos <= 0)
         {
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", "Has respondido Incorrectamente");
             ((Stage) acpRootPane.getScene().getWindow()).close();
+        } else
+        {
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
         }
 
         AppContext.getInstance().set("valorRespuesta", resultadoValorRespuesta);
@@ -292,6 +306,59 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onMouseTirarRuleta(MouseEvent event) {
         System.out.println("PreguntaController.onMouseTirarRuleta()");
+    }
+
+    private void cargarDificultadFromAppContext() {
+        dificultad = ((String) AppContext.getInstance().get("dificultad"));
+
+        if (dificultad.equals("Dificil"))
+        {
+            disableAll();
+        } else
+        {
+            cargarAyudasDisponibles(sectorDto);
+        }
+    }
+
+    private void disableAll() {
+
+        habilitarAyudaImagen(false, imvNext);
+        habilitarAyudaImagen(false, imvBomba);
+        habilitarAyudaImagen(false, imvSecondOportunity);
+        habilitarAyudaImagen(false, imvTirarRuleta);
+
+    }
+
+    private void deshabilitarPorAyuda(Ayuda ayuda) {
+
+        if (ayuda.getNombre().equals("Bomba"))
+        {
+            habilitarAyudaImagen(true, imvBomba);
+        } else if (ayuda.getNombre().equals("Pasar"))
+        {
+            habilitarAyudaImagen(true, imvNext);
+        } else if (ayuda.getNombre().equals("DobleOportunidadDobleOportunidad"))
+        {
+            habilitarAyudaImagen(true, imvSecondOportunity);
+        } else if (ayuda.getNombre().equals("TirarRuleta"))
+        {
+            habilitarAyudaImagen(true, imvTirarRuleta);
+        }
+
+    }
+
+    private void habilitarAyudaImagen(boolean valor, ImageView imagen) {
+        imagen.setDisable(!valor);
+        imagen.setVisible(valor);
+
+    }
+
+    private void cargarAyudasDisponibles(Sector sector) {
+
+        for (Ayuda ayuda : sector.getAyudas())
+        {
+            deshabilitarPorAyuda(ayuda);
+        }
     }
 
 }

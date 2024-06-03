@@ -3,6 +3,7 @@ package cr.ac.una.proyecto.model;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
@@ -12,18 +13,19 @@ import javafx.scene.layout.GridPane;
 public class Juego {
 
     private ArrayList<Sector> sectores;
-    private ArrayList<Pregunta> preguntas;
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
     private Ruleta ruleta;
     private Boolean valorRespuesta;
+    private String dificultad;
 
     public Juego() {
         ruleta = new Ruleta();
         sectores = new ArrayList<>();
-        preguntas = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
         turnoActual = 0;
+        dificultad = "";
+        cargarDificultadFromAppContext();
     }
 
     public void agregarSector(Sector sector) {
@@ -47,11 +49,16 @@ public class Juego {
         }
     }
 
+    public void cargarSectorActualAppContext() {
+        Sector sectorActual = sectores.get(turnoActual);
+        setSectorJugadorDtoAppContext(sectorActual);
+        System.out.println("Info Sector: " + sectorActual.getRutaImagenJugador());
+    }
+
     public void jugar(GridPane grdpTablero) {
         Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
-        setJugadorDtoAppContext(jugadorActual);
         cargarPreguntaViewValorRespuesta();
 
         if (valorRespuesta)
@@ -71,13 +78,39 @@ public class Juego {
         valorRespuesta = (Boolean) AppContext.getInstance().get("valorRespuesta");
     }
 
-    private void setJugadorDtoAppContext(JugadorDto jugador) {
-        AppContext.getInstance().set("preguntaJugador", jugador);
+    private void cargarDificultadFromAppContext() {
+        dificultad = (String) AppContext.getInstance().get("dificultad");
+
+        if (dificultad.equals("Facil"))
+        {
+
+            for (Sector sector : sectores)
+            {
+                System.out.println("SeteandoAyudasFacil");
+                sector.setAyudas(getAllAyudas());
+            }
+        }
     }
 
-    private Pregunta obtenerPreguntaAleatoria() {
-        int indicePregunta = (int) (Math.random() * preguntas.size());
-        return preguntas.get(indicePregunta);
+    private ArrayList<Ayuda> getAllAyudas() {
+        ArrayList<Ayuda> ayudas = new ArrayList<>();
+        ArrayList<String> nombresAyudas = new ArrayList<>();
+
+        nombresAyudas.add("Bomba");
+        nombresAyudas.add("Pasar");
+        nombresAyudas.add("DobleOportunidadDobleOportunidad");
+        nombresAyudas.add("TirarRuleta");
+
+        ayudas.add(new Ayuda(nombresAyudas.get(0), true));
+        ayudas.add(new Ayuda(nombresAyudas.get(1), true));
+        ayudas.add(new Ayuda(nombresAyudas.get(2), true));
+        ayudas.add(new Ayuda(nombresAyudas.get(3), true));
+        return ayudas;
+
+    }
+
+    private void setSectorJugadorDtoAppContext(Sector sector) {
+        AppContext.getInstance().set("preguntaSector", sector);
     }
 
     private void cambiarTurno() {
@@ -102,6 +135,14 @@ public class Juego {
 
     public String toString() {
         return sectores.toString() + turnoActual;
+    }
+
+    public int getTurnoActual() {
+        return turnoActual;
+    }
+
+    public void setTurnoActual(int turnoActual) {
+        this.turnoActual = turnoActual;
     }
 
 }
