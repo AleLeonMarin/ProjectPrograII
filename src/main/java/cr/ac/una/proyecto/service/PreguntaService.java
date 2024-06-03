@@ -20,162 +20,156 @@ public class PreguntaService {
     private EntityTransaction et;
 
     public RespuestaUtil getAll() {
-        try
-        {
+        try {
             Query qryPregunta = em.createNamedQuery("Pregunta.findAll", Pregunta.class);
             List<Pregunta> preguntasDB = (List<Pregunta>) qryPregunta.getResultList();
             List<PreguntaDto> preguntasDto = new ArrayList<>();
-            for (Pregunta pregunta : preguntasDB)
-            {
+            for (Pregunta pregunta : preguntasDB) {
                 preguntasDto.add(new PreguntaDto(pregunta));
             }
             return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
-        } catch (NoResultException ex)
-        {
-            return new RespuestaUtil(false, "No existe una tipoPlanilla con el código ingresado.", "getTipoPlanilla NoResultException");
-        } catch (NonUniqueResultException ex)
-        {
-            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la tipoPlanilla.", ex);
-            return new RespuestaUtil(false, "Ocurrio un error al consultar la tipoPlanilla.", "getTipoPlanilla NonUniqueResultException");
-        } catch (Exception ex)
-        {
-            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Error obteniendo la tipoPlanilla ", ex);
+        } catch (NoResultException ex) {
+            return new RespuestaUtil(false, "No existe una tipoPlanilla con el código ingresado.",
+                    "getTipoPlanilla NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE,
+                    "Ocurrio un error al consultar la tipoPlanilla.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar la tipoPlanilla.",
+                    "getTipoPlanilla NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Error obteniendo la tipoPlanilla ",
+                    ex);
             return new RespuestaUtil(false, "Error obteniendo la tipoPlanilla.", "getTipoPlanilla " + ex.getMessage());
         }
     }
 
     public RespuestaUtil getPregunta(Long id) {
-        try
-        {
+        try {
             Query qryPregunta = em.createNamedQuery("Pregunta.findByPreId", Pregunta.class);
             qryPregunta.setParameter("preId", id);
             PreguntaDto preguntaDto = new PreguntaDto((Pregunta) qryPregunta.getSingleResult());
             return new RespuestaUtil(true, "", "", "Pregunta", preguntaDto);
-        } catch (NoResultException ex)
-        {
-            return new RespuestaUtil(false, "No existe una pregunta con el código ingresado.", "getPregunta NoResultException");
-        } catch (NonUniqueResultException ex)
-        {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la pregunta.", ex);
-            return new RespuestaUtil(false, "Ocurrio un error al consultar la pregunta.", "getPregunta NonUniqueResultException");
-        } catch (Exception ex)
-        {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo la pregunta [" + id + "]", ex);
+        } catch (NoResultException ex) {
+            return new RespuestaUtil(false, "No existe una pregunta con el código ingresado.",
+                    "getPregunta NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
+                    "Ocurrio un error al consultar la pregunta.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar la pregunta.",
+                    "getPregunta NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
+                    "Error obteniendo la pregunta [" + id + "]", ex);
             return new RespuestaUtil(false, "Error obteniendo la pregunta.", "getPregunta " + ex.getMessage());
         }
     }
 
     public RespuestaUtil getPreguntasActivasPorCategoria(String nombreCat) {
-        try
-        {
+        try {
             Query qryPregunta = em.createNamedQuery("Pregunta.findByPreCat", Pregunta.class);
             qryPregunta.setParameter("nombreCategoria", nombreCat);
             qryPregunta.setParameter("estadoPregunta", "A");
             List<Pregunta> preguntasDb = (List<Pregunta>) qryPregunta.getResultList();
             List<PreguntaDto> preguntasDto = new ArrayList<>();
 
-            for (Pregunta preguntaDb : preguntasDb)
-            {
+            for (Pregunta preguntaDb : preguntasDb) {
                 preguntasDto.add(new PreguntaDto(preguntaDb));
             }
 
             return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
-        } catch (NoResultException ex)
-        {
-            return new RespuestaUtil(false, "No existen preguntas con el nombre de categoria ingresado.", "getPreguntasPorCategoria NoResultException");
-        } catch (NonUniqueResultException ex)
-        {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar las preguntas.", ex);
-            return new RespuestaUtil(false, "Ocurrio un error al consultar las preguntas.", "getPreguntasPorCategoria NonUniqueResultException");
-        } catch (Exception ex)
-        {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo las preguntas de la categoria [" + nombreCat + "]", ex);
-            return new RespuestaUtil(false, "Error obteniendo las preguntas.", "getPreguntasPorCategoria " + ex.getMessage());
+        } catch (NoResultException ex) {
+            return new RespuestaUtil(false, "No existen preguntas con el nombre de categoria ingresado.",
+                    "getPreguntasPorCategoria NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
+                    "Ocurrio un error al consultar las preguntas.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar las preguntas.",
+                    "getPreguntasPorCategoria NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
+                    "Error obteniendo las preguntas de la categoria [" + nombreCat + "]", ex);
+            return new RespuestaUtil(false, "Error obteniendo las preguntas.",
+                    "getPreguntasPorCategoria " + ex.getMessage());
         }
     }
 
     public RespuestaUtil getPreguntasByFiltros(String preguntaId, String preCategoria, String preEnunciado) {
-        try
-        {
+        try {
             Query query = em.createNamedQuery("Pregunta.findByFilters", Pregunta.class);
             query.setParameter("preId", ("%" + preguntaId + "%"));
             query.setParameter("preCat", "%" + preCategoria + "%");
             query.setParameter("preEnun", "%" + preEnunciado + "%");
             List<Pregunta> preguntasDb = (List<Pregunta>) query.getResultList();
             List<PreguntaDto> preguntasDto = new ArrayList<>();
-            for (Pregunta preguntaDb : preguntasDb)
-            {
+            for (Pregunta preguntaDb : preguntasDb) {
                 preguntasDto.add(new PreguntaDto(preguntaDb));
             }
             return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
-        } catch (NoResultException ex)
-        {
-            return new RespuestaUtil(false, "No existen preguntas con esos detalles.", "getPreguntasByFiltros NoResultException");
-        } catch (Exception ex)
-        {
+        } catch (NoResultException ex) {
+            return new RespuestaUtil(false, "No existen preguntas con esos detalles.",
+                    "getPreguntasByFiltros NoResultException");
+        } catch (Exception ex) {
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo las preguntas.", ex);
             return new RespuestaUtil(false, "Error obteniendo Preguntas.", "getPreguntasByFiltros " + ex.getMessage());
         }
     }
 
     public RespuestaUtil guardarPregunta(PreguntaDto preguntaDto) {
-        try
-        {
+        try {
             et = em.getTransaction();
             et.begin();
             Pregunta pregunta;
 
-            if (preguntaDto.getId() != null && preguntaDto.getId() > 0)
-            {
+            if (preguntaDto.getId() != null && preguntaDto.getId() > 0) {
                 pregunta = em.find(Pregunta.class, preguntaDto.getId());
-                if (pregunta == null)
-                {
-                    return new RespuestaUtil(false, "No se encontro en la pregunta a guardar", "guardarPregunta noResultExeption");
+                if (pregunta == null) {
+                    return new RespuestaUtil(false, "No se encontro en la pregunta a guardar",
+                            "guardarPregunta noResultExeption");
                 }
                 pregunta.actualizar(preguntaDto);
                 pregunta = em.merge(pregunta);
-            } else
-            {
+            } else {
 
                 pregunta = new Pregunta(preguntaDto);
                 em.persist(pregunta);
             }
+
+            em.flush();
+            em.clear();
+
             et.commit();
             return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
 
-        } catch (Exception ex)
-        {
-            et.rollback();
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error guardando la pregunta", ex);
-            return new RespuestaUtil(false, "Error guardando la pregunta.", "guardarPregunta" + ex.getMessage());
+        } catch (Exception ex) {
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error guardando las preguntas.", ex);
+            return new RespuestaUtil(false, "Error guardando las preguntas.", "guardarPregunta " + ex.getMessage());
         }
     }
 
     public RespuestaUtil eliminarPregunta(Long id) {
-        try
-        {
+        try {
             et = em.getTransaction();
             et.begin();
             Pregunta pregunta;
-            if (id != null && id > 0)
-            {
+            if (id != null && id > 0) {
                 pregunta = em.find(Pregunta.class, id);
-                if (pregunta == null)
-                {
-                    return new RespuestaUtil(false, "No se encontro una pregunta a eliminar", "eliminarPregunta noResultExeption");
+                if (pregunta == null) {
+                    return new RespuestaUtil(false, "No se encontro una pregunta a eliminar",
+                            "eliminarPregunta noResultExeption");
                 }
 
                 em.remove(pregunta);
-            } else
-            {
+            } else {
                 return new RespuestaUtil(false, "Favor consultar la pregunta a eliminar", "");
 
             }
             et.commit();
             return new RespuestaUtil(true, "", "");
 
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             et.rollback();
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error eliminando la Pregunta.", ex);
             return new RespuestaUtil(false, "Error elimnando la Pregunta.", "eliminarPregunta" + ex.getMessage());

@@ -2,16 +2,19 @@ package cr.ac.una.proyecto.model;
 
 import java.io.Serializable;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class PreguntaDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public SimpleStringProperty id;
     public SimpleStringProperty nombreCategoria;
     public SimpleStringProperty enunciado;
     public SimpleBooleanProperty estado;
-    public SimpleStringProperty aparicion;
-    public SimpleStringProperty aciertos;
+    public SimpleIntegerProperty aparicion;
+    public SimpleIntegerProperty aciertos;
     private Long version;
     private boolean modificado;
 
@@ -19,16 +22,16 @@ public class PreguntaDto implements Serializable {
         this.id = new SimpleStringProperty("");
         this.nombreCategoria = new SimpleStringProperty("");
         this.enunciado = new SimpleStringProperty("");
-        this.estado = new SimpleBooleanProperty(false);
-        this.aparicion = new SimpleStringProperty("");
-        this.aciertos = new SimpleStringProperty("");
+        this.estado = new SimpleBooleanProperty(true);
+        this.aparicion = new SimpleIntegerProperty(0);
+        this.aciertos = new SimpleIntegerProperty(0);
         this.modificado = false;
     }
 
     public PreguntaDto(Pregunta pregunta) {
         this();
         this.id.set(pregunta.getId().toString());
-        this.nombreCategoria.set(pregunta.getNombreCategoria().getNombre());
+        this.nombreCategoria = new SimpleStringProperty(pregunta.getNombreCategoria().getNombre());
         this.enunciado.set(pregunta.getEnunciado());
         this.estado.set(pregunta.getEstado().equals("A"));
         this.aparicion.set(pregunta.getAparicion());
@@ -58,6 +61,14 @@ public class PreguntaDto implements Serializable {
         this.enunciado.set(enunciado);
     }
 
+    public String getNombreCategoria() {
+        return nombreCategoria.get();
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria.set(nombreCategoria);
+    }
+
     public String getEstado() {
         return estado.get() ? "A" : "I";
     }
@@ -66,19 +77,19 @@ public class PreguntaDto implements Serializable {
         this.estado.set(estado.equalsIgnoreCase("A"));
     }
 
-    public String getAparicion() {
+    public Integer getAparicion() {
         return aparicion.get();
     }
 
-    public void setAparicion(String aparicion) {
+    public void setAparicion(Integer aparicion) {
         this.aparicion.set(aparicion);
     }
 
-    public String getAciertos() {
+    public Integer getAciertos() {
         return aciertos.get();
     }
 
-    public void setAciertos(String aciertos) {
+    public void setAciertos(Integer aciertos) {
         this.aciertos.set(aciertos);
     }
 
@@ -96,6 +107,10 @@ public class PreguntaDto implements Serializable {
 
     public void setModificado(boolean modificado) {
         this.modificado = modificado;
+    }
+
+    public SimpleStringProperty nombreCat(){
+        return nombreCategoria;
     }
 
     @Override

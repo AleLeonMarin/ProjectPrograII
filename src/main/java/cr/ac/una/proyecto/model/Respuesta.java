@@ -4,11 +4,14 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
@@ -36,6 +39,8 @@ public class Respuesta implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "RESPUESTA_RES_ID_GENERATOR", sequenceName = "PREG_RESPUESTA_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RESPUESTA_RES_ID_GENERATOR")
     @Column(name = "RES_ID")
     private Long id;
     @Basic(optional = false)
@@ -43,7 +48,7 @@ public class Respuesta implements Serializable {
     private String enunciado;
     @Basic(optional = false)
     @Column(name = "RES_CONTADOR")
-    private String contador;
+    private Integer contador;
     @Basic(optional = false)
     @Column(name = "RES_ESTADO")
     private String estado;
@@ -71,7 +76,7 @@ public class Respuesta implements Serializable {
         this.estado = respuestaDto.getEstado();
         this.isCorrect = respuestaDto.getIsCorrect();
         this.version = respuestaDto.getVersion();
-        //this.preguntaId = respuestaDto.getPreguntaId(); check this
+        this.preguntaId = new Pregunta(respuestaDto.getPreguntaId());
     }
 
     public Long getId() {
@@ -90,11 +95,11 @@ public class Respuesta implements Serializable {
         this.enunciado = enunciado;
     }
 
-    public String getContador() {
+    public Integer getContador() {
         return contador;
     }
 
-    public void setContador(String contador) {
+    public void setContador(Integer contador) {
         this.contador = contador;
     }
 

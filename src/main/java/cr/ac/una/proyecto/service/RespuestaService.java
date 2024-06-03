@@ -50,6 +50,7 @@ public class RespuestaService {
     public RespuestaUtil guardarRespuestasPregunta(ArrayList<RespuestaDto> respuestasDto) {
         try
         {
+
             et = em.getTransaction();
             et.begin();
             for (int index = 0; index < respuestasDto.size(); index++)

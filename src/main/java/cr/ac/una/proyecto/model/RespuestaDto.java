@@ -1,6 +1,7 @@
 package cr.ac.una.proyecto.model;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class RespuestaDto {
@@ -9,7 +10,7 @@ public class RespuestaDto {
 
     public SimpleStringProperty id;
     public SimpleStringProperty enunciado;
-    public SimpleStringProperty contador;
+    public SimpleIntegerProperty contador;
     public SimpleBooleanProperty estado;
     public SimpleBooleanProperty isCorrect;
     public SimpleStringProperty preguntaId;
@@ -19,8 +20,8 @@ public class RespuestaDto {
     public RespuestaDto() {
         this.id = new SimpleStringProperty("");
         this.enunciado = new SimpleStringProperty("");
-        this.contador = new SimpleStringProperty("");
-        this.estado = new SimpleBooleanProperty(false);
+        this.contador = new SimpleIntegerProperty(0);
+        this.estado = new SimpleBooleanProperty(true);
         this.isCorrect = new SimpleBooleanProperty(false);
         this.preguntaId = new SimpleStringProperty("");
         this.modificado = false;
@@ -57,11 +58,11 @@ public class RespuestaDto {
         this.enunciado.set(enunciado);
     }
 
-    public String getContador() {
+    public Integer getContador() {
         return contador.get();
     }
 
-    public void setContador(String contador) {
+    public void setContador(Integer contador) {
         this.contador.set(contador);
     }
 
@@ -81,12 +82,16 @@ public class RespuestaDto {
         this.isCorrect.set(isCorrect.equalsIgnoreCase("C"));
     }
 
-    public String getPreguntaId() {
-        return preguntaId.get();
+    public Long getPreguntaId() {
+        if (this.preguntaId.get() != null && !this.preguntaId.get().isBlank())
+        {
+            return Long.valueOf(this.preguntaId.get());
+        }
+        return null;
     }
 
-    public void setPreguntaId(String preguntaId) {
-        this.preguntaId.set(preguntaId);
+    public void setPreguntaId(Long preguntaId) {
+        this.preguntaId.set(preguntaId.toString());
     }
 
     public Long getVersion() {

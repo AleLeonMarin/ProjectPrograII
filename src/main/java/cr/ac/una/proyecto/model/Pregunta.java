@@ -5,12 +5,15 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
@@ -39,6 +42,8 @@ public class Pregunta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "PREGUNTA_PRE_ID_GENERATOR", sequenceName = "PREG_PREGUNTA_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PREGUNTA_PRE_ID_GENERATOR")
     @Column(name = "PRE_ID")
     private Long id;
     @Basic(optional = false)
@@ -49,10 +54,10 @@ public class Pregunta implements Serializable {
     private String estado;
     @Basic(optional = false)
     @Column(name = "PRE_APARICION")
-    private String aparicion;
+    private Integer aparicion;
     @Basic(optional = false)
     @Column(name = "PRE_ACIERTOS")
-    private String aciertos;
+    private Integer aciertos;
     @Version
     @Column(name = "PRE_VERSION")
     private Long version;
@@ -76,6 +81,7 @@ public class Pregunta implements Serializable {
 
     public void actualizar(PreguntaDto preguntaDto) {
         this.enunciado = preguntaDto.getEnunciado();
+        this.nombreCategoria = new Categoria(preguntaDto.getNombreCategoria());
         this.estado = preguntaDto.getEstado();
         this.aparicion = preguntaDto.getAparicion();
         this.aciertos = preguntaDto.getAciertos();
@@ -106,19 +112,19 @@ public class Pregunta implements Serializable {
         this.estado = estado;
     }
 
-    public String getAparicion() {
+    public Integer getAparicion() {
         return aparicion;
     }
 
-    public void setAparicion(String aparicion) {
+    public void setAparicion(Integer aparicion) {
         this.aparicion = aparicion;
     }
 
-    public String getAciertos() {
+    public Integer getAciertos() {
         return aciertos;
     }
 
-    public void setAciertos(String aciertos) {
+    public void setAciertos(Integer aciertos) {
         this.aciertos = aciertos;
     }
 
