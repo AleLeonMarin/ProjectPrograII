@@ -87,24 +87,16 @@ public class PreguntaController extends Controller implements Initializable {
         respuetaDtoAux = new RespuestaDto();
         preguntaDto = new PreguntaDto();
         this.intentos = 1;
-        cargarBotonesToList();
+
         cargarDatosDesdeAppContext();
         obtenerPreguntasCategoria();
-        animacion.simpleFadeIn(acpRootPane);
         cargarEnunciadoPregunta();
         unbindRespuestas();
         cargarDificultadFromAppContext();
         disableAll();
         cargarAyudasDisponibles(sectorDto);
 
-    }
-
-    public void cargarBotonesToList() {
-        botones = new ArrayList<>();
-        botones.add(btnRespuesta1);
-        botones.add(btnRespuesta2);
-        botones.add(btnRespuesta3);
-        botones.add(btnRespuesta4);
+        animacion.simpleFadeIn(acpRootPane);
 
     }
 
@@ -126,9 +118,6 @@ public class PreguntaController extends Controller implements Initializable {
         if (jugadorDto == null)
         {
             System.out.println("Jugador nulo");
-        } else
-        {
-            System.out.println("Pregunta Jugador : " + jugadorDto.getInfoJugador() + ", [cargarPreguntaCategoriaYJugadorTurno][PreguntaController]");
         }
     }
 
@@ -329,7 +318,9 @@ public class PreguntaController extends Controller implements Initializable {
 
     }
 
-    private void deshabilitarPorAyuda(Ayuda ayuda) {
+    private void habilitarPorAyuda(Ayuda ayuda) {
+
+        System.out.println("Ayuda nombre: " + ayuda.getNombre());
 
         if (ayuda.getNombre().equals("Bomba"))
         {
@@ -337,7 +328,7 @@ public class PreguntaController extends Controller implements Initializable {
         } else if (ayuda.getNombre().equals("Pasar"))
         {
             habilitarAyudaImagen(true, imvNext);
-        } else if (ayuda.getNombre().equals("DobleOportunidadDobleOportunidad"))
+        } else if (ayuda.getNombre().equals("DobleOportunidad"))
         {
             habilitarAyudaImagen(true, imvSecondOportunity);
         } else if (ayuda.getNombre().equals("TirarRuleta"))
@@ -357,7 +348,7 @@ public class PreguntaController extends Controller implements Initializable {
 
         for (Ayuda ayuda : sector.getAyudas())
         {
-            deshabilitarPorAyuda(ayuda);
+            habilitarPorAyuda(ayuda);
         }
     }
 

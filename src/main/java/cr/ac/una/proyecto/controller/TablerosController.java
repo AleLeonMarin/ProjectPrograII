@@ -35,12 +35,14 @@ public class TablerosController extends Controller implements Initializable {
     private AnchorPane acpRootPane;
     private ArrayList<String> categoriasRuleta;
     private String categoria;
+    private String dificultad;
 
     @Override
     public void initialize() {
         iniciarClases();
         cargarSectores();
         juego.cargarDatosImagenes(grdpTablero);
+        cargarAyudasFacil();
     }
 
     @Override
@@ -62,6 +64,20 @@ public class TablerosController extends Controller implements Initializable {
         {
             juego.agregarSector(sector);
         }
+    }
+
+    private void cargarAyudasFacil() {
+        dificultad = (String) AppContext.getInstance().get("dificultad");
+        if (dificultad.equals("Facil"))
+        {
+
+            for (Sector sector : sectores)
+            {
+                System.out.println("SeteandoAyudasFacil");
+                sector.setAyudas(juego.getAllAyudas());
+            }
+        }
+
     }
 
     private void cargarCategoriasRuleta() {
@@ -119,6 +135,7 @@ public class TablerosController extends Controller implements Initializable {
             categoria = controladorCoronaSelection.getResultado();
             AppContext.getInstance().set("preguntaCategoria", categoria);
             mostrarTarjetas();
+            return;
 
         } else if (categoria == categoriasRuleta.get(5))
         {

@@ -30,6 +30,7 @@ public class Juego {
 
     public void agregarSector(Sector sector) {
         sectores.add(sector);
+
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
@@ -80,25 +81,15 @@ public class Juego {
 
     private void cargarDificultadFromAppContext() {
         dificultad = (String) AppContext.getInstance().get("dificultad");
-
-        if (dificultad.equals("Facil"))
-        {
-
-            for (Sector sector : sectores)
-            {
-                System.out.println("SeteandoAyudasFacil");
-                sector.setAyudas(getAllAyudas());
-            }
-        }
     }
 
-    private ArrayList<Ayuda> getAllAyudas() {
+    public ArrayList<Ayuda> getAllAyudas() {
         ArrayList<Ayuda> ayudas = new ArrayList<>();
         ArrayList<String> nombresAyudas = new ArrayList<>();
 
         nombresAyudas.add("Bomba");
         nombresAyudas.add("Pasar");
-        nombresAyudas.add("DobleOportunidadDobleOportunidad");
+        nombresAyudas.add("DobleOportunidad");
         nombresAyudas.add("TirarRuleta");
 
         ayudas.add(new Ayuda(nombresAyudas.get(0), true));
