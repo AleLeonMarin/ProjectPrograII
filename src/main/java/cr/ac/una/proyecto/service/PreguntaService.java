@@ -2,6 +2,8 @@ package cr.ac.una.proyecto.service;
 
 import cr.ac.una.proyecto.model.Pregunta;
 import cr.ac.una.proyecto.model.PreguntaDto;
+import cr.ac.una.proyecto.model.Respuesta;
+import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.util.EntityManagerHelper;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import jakarta.persistence.EntityManager;
@@ -127,10 +129,28 @@ public class PreguntaService {
                             "guardarPregunta noResultExeption");
                 }
                 pregunta.actualizar(preguntaDto);
+
+                for (RespuestaDto respuestaDto : preguntaDto.getRespuestas()) {
+                    if(respuestaDto.getId() != null && respuestaDto.getId() > 0){
+                        for (Respuesta respuesta : pregunta.getRespuestas()) {
+                            if (respuesta.getId() == respuestaDto.getId()) {
+                                respuesta.actualizar(respuestaDto);
+                            }
+                        }
+                    } else {
+                        Respuesta respuesta = new Respuesta(respuestaDto);
+                        respuesta.setPreguntaId(pregunta);
+                        pregunta.getRespuestas().add(respuesta);
+                    }
+                }
                 pregunta = em.merge(pregunta);
             } else {
-
                 pregunta = new Pregunta(preguntaDto);
+                for (RespuestaDto res : preguntaDto.getRespuestas()) {
+                    Respuesta respuesta = new Respuesta(res);
+                    respuesta.setPreguntaId(pregunta);
+                    pregunta.getRespuestas().add(respuesta);
+                }
                 em.persist(pregunta);
             }
 

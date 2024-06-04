@@ -1,6 +1,9 @@
 package cr.ac.una.proyecto.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,6 +18,7 @@ public class PreguntaDto implements Serializable {
     public SimpleBooleanProperty estado;
     public SimpleIntegerProperty aparicion;
     public SimpleIntegerProperty aciertos;
+    private List<RespuestaDto> respuestas;
     private Long version;
     private boolean modificado;
 
@@ -26,6 +30,7 @@ public class PreguntaDto implements Serializable {
         this.aparicion = new SimpleIntegerProperty(0);
         this.aciertos = new SimpleIntegerProperty(0);
         this.modificado = false;
+        this.respuestas = new ArrayList<>();
     }
 
     public PreguntaDto(Pregunta pregunta) {
@@ -91,6 +96,14 @@ public class PreguntaDto implements Serializable {
 
     public void setAciertos(Integer aciertos) {
         this.aciertos.set(aciertos);
+    }
+
+    public List<RespuestaDto> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<RespuestaDto> respuestas) {
+        this.respuestas = respuestas;
     }
 
     public Long getVersion() {

@@ -73,7 +73,6 @@ public class MantenimientoController extends Controller implements Initializable
     private MFXCheckbox chkValidarRespuesta4;
 
     private PreguntaDto preguntaDto;
-    private CategoriaDto categoriaDto;
     private RespuestaDto respuesta1;
     private RespuestaDto respuesta2;
     private RespuestaDto respuesta3;
@@ -98,20 +97,15 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
-        if (validarComboBoxes())
-        {
-            if (guardarPregunta())
-            {
-                guardarRespuestas();
-            }
+        if (validarComboBoxes()) {
+            guardarPregunta();
         }
     }
 
     @FXML
     private void onActionBtnNuevo(ActionEvent event) {
         if (new Mensaje().showConfirmation("Limpiar Pregunta", getStage(),
-                "¿Esta seguro que desea limpiar el registro?"))
-        {
+                "¿Esta seguro que desea limpiar el registro?")) {
             nuevaPregunta();
         }
     }
@@ -119,8 +113,7 @@ public class MantenimientoController extends Controller implements Initializable
     @FXML
     private void onActionBtnLimpiar(ActionEvent event) {
         if (new Mensaje().showConfirmation("Limpiar Pregunta", getStage(),
-                "¿Esta seguro que desea limipiar el registro?"))
-        {
+                "¿Esta seguro que desea limipiar el registro?")) {
             nuevaPregunta();
         }
     }
@@ -132,13 +125,13 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void onActionBtnBuscar(ActionEvent event) {
-        BuscarPreguntaController busquedaController = (BuscarPreguntaController) FlowController.getInstance().getController("BuscarPreguntaView");
+        BuscarPreguntaController busquedaController = (BuscarPreguntaController) FlowController.getInstance()
+                .getController("BuscarPreguntaView");
         FlowController.getInstance().goViewInWindowModal("BuscarPreguntaView",
                 ((Stage) btnBuscar.getScene().getWindow()), true);
         preguntaDto = (PreguntaDto) busquedaController.getResultado();
 
-        if (preguntaDto != null)
-        {
+        if (preguntaDto != null) {
             cargarPregunta(preguntaDto.getId());
             cargarRespuestasDtoSingular();
         }
@@ -147,8 +140,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     @FXML
     private void OnKeyPressedPreguntaId(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER && !txfPreguntaId.getText().isBlank())
-        {
+        if (event.getCode() == KeyCode.ENTER && !txfPreguntaId.getText().isBlank()) {
             cargarPregunta(Long.valueOf(txfPreguntaId.getText()));
         }
     }
@@ -209,86 +201,68 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private Boolean guardarPregunta() {
-        try
-        {
+    private void guardarPregunta() {
+        try {
             String invalidos = validarRequeridos();
-            if (!invalidos.isBlank())
-            {
+            if (!invalidos.isBlank()) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), invalidos);
-            } else
-            {
+            } else {
                 PreguntaService preService = new PreguntaService();
                 RespuestaUtil respuesta = preService.guardarPregunta(this.preguntaDto);
-                if (respuesta.getEstado())
-                {
+                if (respuesta.getEstado()) {
+                    cargarRespuestasDtoList();
                     unbindPregunta();
                     this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
                     bindPregunta(false);
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Pregunta", getStage(),
                             "Pregunta guardada correctamente.");
-                    return true;
 
-                } else
-                {
+                } else {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(),
                             respuesta.getMensaje());
                 }
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al guardar la pregunta.",
                     ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(),
                     "Ocurrió un error al guardar la pregunta.");
         }
-        return false;
+
     }
 
-    private void guardarRespuestas() {
-        try
-        {
+    /*private void guardarRespuestas() {
+        try {
             cargarRespuestasDtoList();
             RespuestaService respuestaService = new RespuestaService();
             RespuestaUtil respuesta = respuestaService.guardarRespuestasPregunta(respuestasDto);
-            if (respuesta.getEstado())
-            {
+            if (respuesta.getEstado()) {
                 unbindRespuestas();
                 this.respuestasDto = (ArrayList<RespuestaDto>) respuesta.getResultado("GRespuestas");
                 bindRespuestas();
                 nuevaPregunta();
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Respuestas", getStage(),
                         "Respuestas guardadas correctamente.");
-            } else
-            {
+            } else {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(),
                         respuesta.getMensaje());
             }
 
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE,
                     "Error al guardar las respuestas.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(),
                     "Ocurrió un error al guardar las respuestas.");
         }
-    }
+    }*/
 
     private void cargarRespuestasDtoList() {
 
-        if (preguntaNueva)
-        {
-            this.respuestasDto.clear();
-            respuesta1.setPreguntaId(preguntaDto.getId());
-            respuesta2.setPreguntaId(preguntaDto.getId());
-            respuesta3.setPreguntaId(preguntaDto.getId());
-            respuesta4.setPreguntaId(preguntaDto.getId());
-            System.out.println("ID PREGUNTA DTO: " + preguntaDto.getId());
-            respuestasDto.add(respuesta1);
-            respuestasDto.add(respuesta2);
-            respuestasDto.add(respuesta3);
-            respuestasDto.add(respuesta4);
-        }
+        respuestasDto.clear();
+        respuestasDto.add(respuesta1);
+        respuestasDto.add(respuesta2);
+        respuestasDto.add(respuesta3);
+        respuestasDto.add(respuesta4);
     }
 
     private void cargarRespuestasDtoSingular() {
@@ -303,13 +277,13 @@ public class MantenimientoController extends Controller implements Initializable
     private void IndicarRequeridos() {
         requeridos.clear();
         requeridos.addAll(
-                Arrays.asList(txaPreguntaEnunciado, cmbCategorias, txfPreguntaRespuesta1, txfPreguntaRespuesta2, txfPreguntaRespuesta3,
+                Arrays.asList(txaPreguntaEnunciado, cmbCategorias, txfPreguntaRespuesta1, txfPreguntaRespuesta2,
+                        txfPreguntaRespuesta3,
                         txfPreguntaRespuesta4));
     }
 
     private void bindPregunta(Boolean nuevo) {
-        if (!nuevo)
-        {
+        if (!nuevo) {
             txfPreguntaId.textProperty().bind(preguntaDto.id);
         }
         cmbCategorias.valueProperty().bindBidirectional(preguntaDto.nombreCat());
@@ -355,10 +329,8 @@ public class MantenimientoController extends Controller implements Initializable
 
     private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
 
-        for (CheckBox checkbox : checkboxes)
-        {
-            if (checkbox != selectedCheckbox)
-            {
+        for (CheckBox checkbox : checkboxes) {
+            if (checkbox != selectedCheckbox) {
                 checkbox.setSelected(false);
             }
         }
@@ -366,10 +338,8 @@ public class MantenimientoController extends Controller implements Initializable
 
     private boolean validarComboBoxes() {
 
-        for (CheckBox checkbox : checkboxes)
-        {
-            if (checkbox.isSelected())
-            {
+        for (CheckBox checkbox : checkboxes) {
+            if (checkbox.isSelected()) {
                 return true;
             }
         }
@@ -381,85 +351,65 @@ public class MantenimientoController extends Controller implements Initializable
     public String validarRequeridos() {
         Boolean validos = true;
         String invalidos = "";
-        for (Node node : requeridos)
-        {
+        for (Node node : requeridos) {
             if (node instanceof MFXTextField
-                    && (((MFXTextField) node).getText() == null || ((MFXTextField) node).getText().isBlank()))
-            {
-                if (validos)
-                {
+                    && (((MFXTextField) node).getText() == null || ((MFXTextField) node).getText().isBlank())) {
+                if (validos) {
                     invalidos += ((MFXTextField) node).getFloatingText();
-                } else
-                {
+                } else {
                     invalidos += "," + ((MFXTextField) node).getFloatingText();
                 }
                 validos = false;
             } else if (node instanceof MFXPasswordField
-                    && (((MFXPasswordField) node).getText() == null || ((MFXPasswordField) node).getText().isBlank()))
-            {
-                if (validos)
-                {
+                    && (((MFXPasswordField) node).getText() == null || ((MFXPasswordField) node).getText().isBlank())) {
+                if (validos) {
                     invalidos += ((MFXPasswordField) node).getFloatingText();
-                } else
-                {
+                } else {
                     invalidos += "," + ((MFXPasswordField) node).getFloatingText();
                 }
                 validos = false;
-            } else if (node instanceof MFXDatePicker && ((MFXDatePicker) node).getValue() == null)
-            {
-                if (validos)
-                {
+            } else if (node instanceof MFXDatePicker && ((MFXDatePicker) node).getValue() == null) {
+                if (validos) {
                     invalidos += ((MFXDatePicker) node).getFloatingText();
-                } else
-                {
+                } else {
                     invalidos += "," + ((MFXDatePicker) node).getFloatingText();
                 }
                 validos = false;
-            } else if (node instanceof MFXComboBox && ((MFXComboBox) node).getSelectionModel().getSelectedIndex() < 0)
-            {
-                if (validos)
-                {
+            } else if (node instanceof MFXComboBox && ((MFXComboBox) node).getSelectionModel().getSelectedIndex() < 0) {
+                if (validos) {
                     invalidos += ((MFXComboBox) node).getFloatingText();
-                } else
-                {
+                } else {
                     invalidos += "," + ((MFXComboBox) node).getFloatingText();
                 }
                 validos = false;
             }
         }
-        if (validos)
-        {
+        if (validos) {
             return "";
-        } else
-        {
+        } else {
             return "Campos requeridos o con problemas de formato [" + invalidos + "].";
         }
     }
 
     public void cargarCategorias() {
-        try
-        {
+        try {
             CategoriaService categoriaService = new CategoriaService();
             RespuestaUtil respuesta = categoriaService.getAll();
 
-            if (respuesta.getEstado())
-            {
+            if (respuesta.getEstado()) {
                 cmbCategorias.getItems().clear();
                 List<CategoriaDto> categorias = (List<CategoriaDto>) respuesta.getResultado("Categorias");
-                for (CategoriaDto categoria : categorias)
-                {
+                for (CategoriaDto categoria : categorias) {
 
                     cmbCategorias.getItems().add(categoria.getNombre());
 
                 }
 
-            } else
-            {
+            } else {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Categorias", getStage(),
                         respuesta.getMensaje());
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE,
                     "Error al cargar las categorias.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Categorias", getStage(),
@@ -469,26 +419,22 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     private void cargarPregunta(Long preId) {
-        try
-        {
+        try {
             PreguntaService preguntaService = new PreguntaService();
             RespuestaUtil respuesta = preguntaService.getPregunta(preId);
 
-            if (respuesta.getEstado())
-            {
+            if (respuesta.getEstado()) {
                 unbindPregunta();
                 this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
                 bindPregunta(false);
-                //validarRequeridos();
+                // validarRequeridos();
                 cargarRespuestas(preId);
 
-            } else
-            {
+            } else {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(), respuesta.getMensaje());
 
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class
                     .getName()).log(Level.SEVERE, "Error consultando la pregunta.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Cargar Pregunta", getStage(),
@@ -498,24 +444,20 @@ public class MantenimientoController extends Controller implements Initializable
 
     private void cargarRespuestas(Long preguntaId) {
         respuestasDto.clear();
-        try
-        {
+        try {
             RespuestaService respuestaService = new RespuestaService();
             RespuestaUtil respuesta = respuestaService.getRespuestasPreguntas(preguntaId);
 
-            if (respuesta.getEstado())
-            {
+            if (respuesta.getEstado()) {
                 unbindRespuestas();
                 this.respuestasDto.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
                 cargarRespuestasDtoSingular();
                 bindRespuestas();
-            } else
-            {
+            } else {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), respuesta.getMensaje());
 
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class
                     .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(),
@@ -525,31 +467,25 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     private void eliminarPregunta() {
-        try
-        {
+        try {
             System.out.println("EstadoPregunta: " + preguntaDto.getId());
-            if (this.preguntaDto.getId() == null)
-            {
+            if (this.preguntaDto.getId() == null) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta ", getStage(),
                         "Favor consultar la pregunta a eliminar.");
-            } else
-            {
+            } else {
 
                 PreguntaService preService = new PreguntaService();
                 RespuestaUtil respuesta = preService.eliminarPregunta(this.preguntaDto.getId());
-                if (respuesta.getEstado())
-                {
+                if (respuesta.getEstado()) {
                     nuevaPregunta();
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Eliminar Pregunta", getStage(),
                             "La Pregunta se elimino correctamente");
-                } else
-                {
+                } else {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta", getStage(),
                             respuesta.getMensaje());
                 }
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al la pregunta.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta", getStage(),
                     "Ocurrió un error al eliminar la pregunta.");
@@ -557,31 +493,25 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     private void eliminarRespuestas() {
-        try
-        {
+        try {
 
-            if (this.preguntaDto.getId() == null)
-            {
+            if (this.preguntaDto.getId() == null) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Respuestas ", getStage(),
                         "Favor consultar las Respuestas a eliminar.");
-            } else
-            {
+            } else {
 
                 RespuestaService resService = new RespuestaService();
                 RespuestaUtil respuesta = resService.eliminarRespuestas(respuestasDto);
-                if (respuesta.getEstado())
-                {
+                if (respuesta.getEstado()) {
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Eliminar Respuestas", getStage(),
                             "Las Respuestas se eliminaron correctamente");
                     eliminarPregunta();
-                } else
-                {
+                } else {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Respuestas", getStage(),
                             respuesta.getMensaje());
                 }
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE,
                     "Error al eliminar las respuestas.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Respuestas", getStage(),
