@@ -167,4 +167,16 @@ public class Sector {
         return jugador.getNombre() + "," + posActual + "," + direccion + "," + rutaImagenJugador;
     }
 
+    public void removerAyuda(String ayudaNombre) {
+        int indice = 0;
+        for (Ayuda ayuda : ayudas)
+        {
+            if (ayudaNombre.equals(ayuda.getNombre()))
+            {
+                ayudas.remove(ayudas.get(indice));
+            }
+            indice++;
+        }
+    }
+
 }

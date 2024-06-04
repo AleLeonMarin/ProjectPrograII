@@ -9,7 +9,6 @@ import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
-import cr.ac.una.proyecto.util.Formato;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import java.net.URL;
@@ -52,8 +51,8 @@ public class PreguntaController extends Controller implements Initializable {
     private Boolean resultadoValorRespuesta;
     private String dificultad;
     private int intentos;
-
     private ArrayList<MFXButton> botones;
+
     @FXML
     private MFXButton btnRespuesta1;
     @FXML
@@ -87,7 +86,7 @@ public class PreguntaController extends Controller implements Initializable {
         respuetaDtoAux = new RespuestaDto();
         preguntaDto = new PreguntaDto();
         this.intentos = 1;
-
+        cargarBotones();
         cargarDatosDesdeAppContext();
         obtenerPreguntasCategoria();
         cargarEnunciadoPregunta();
@@ -277,24 +276,43 @@ public class PreguntaController extends Controller implements Initializable {
 
     @FXML
     private void onMouseClickedBomba(MouseEvent event) {
-        System.out.println("PreguntaController.onMouseClickedBomba()");
+        String ayuda = "Bomba";
+        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+                "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
+        bombaAction();//sounds or animation
+        sectorDto.removerAyuda(ayuda);
     }
 
     @FXML
     private void onMouseClickedNext(MouseEvent event) {
-        System.out.println("PreguntaController.onMouseClickedNext()");
+        String ayuda = "Pasar";
+        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+                "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
+
+        cargarEnunciadoPregunta();
+
+        sectorDto.removerAyuda(ayuda);
     }
 
     @FXML
     private void onMouseOportunidadDoble(MouseEvent event) {
+        String ayuda = "DobleOportunidad";
+        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+                "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
         this.intentos += 1;
         this.imvSecondOportunity.setDisable(true);
         this.imvSecondOportunity.setVisible(false);
+
     }
 
     @FXML
     private void onMouseTirarRuleta(MouseEvent event) {
-        System.out.println("PreguntaController.onMouseTirarRuleta()");
+        String ayuda = "TirarRuleta";
+        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+                "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
+        sectorDto.removerAyuda(ayuda);
+        ((Stage) acpRootPane.getScene().getWindow()).close();
+
     }
 
     private void cargarDificultadFromAppContext() {
@@ -350,6 +368,37 @@ public class PreguntaController extends Controller implements Initializable {
         {
             habilitarPorAyuda(ayuda);
         }
+    }
+
+    private void bombaAction() {
+
+        int cantidadRes = 2;
+        int index = 0;
+        int contadorBtonoes = 0;
+
+        while (contadorBtonoes >= cantidadRes)
+        {
+            RespuestaDto respuestaDto = new RespuestaDto();
+            respuestaDto = respuestasDto.get(index);
+            if (respuestaDto.getIsCorrect().equals("X"))
+            {
+                botones.get(index).setDisable(true);
+                contadorBtonoes++;
+            }
+            index++;
+        }
+
+        habilitarAyudaImagen(false, imvBomba);
+    }
+
+    private void cargarBotones() {
+        this.botones = new ArrayList<>();
+        this.botones.clear();
+        this.botones.add(btnRespuesta1);
+        this.botones.add(btnRespuesta2);
+        this.botones.add(btnRespuesta3);
+        this.botones.add(btnRespuesta4);
+
     }
 
 }
