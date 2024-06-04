@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class PreguntaDto implements Serializable {
+public class    PreguntaDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

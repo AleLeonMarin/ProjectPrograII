@@ -96,7 +96,7 @@
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </MFXButton>
-                        <MFXButton fx:id="btnNuevo" layoutX="257.0" layoutY="23.0" onAction="#onActionBtnNuevo" styleClass="jfx-mfx-btn-new" text="Nuevo">
+                        <MFXButton fx:id="btnNuevo" layoutX="257.0" layoutY="23.0" onAction="#onActionBtnNuevo" styleClass="jfx-mfx-btn-new" text="Limpiar">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -106,12 +106,10 @@
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </MFXButton>
-                        <MFXButton fx:id="btnLimpiar" layoutX="450.0" layoutY="23.0" onAction="#onActionBtnLimpiar" styleClass="jfx-mfx-btn-clean" text="Limpiar">
+                        <MFXButton fx:id="btnBuscar" layoutX="598.0" layoutY="31.0" onAction="#onActionBtnBuscar" styleClass="jfx-mfx-btn-search" text="Buscar">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </MFXButton>
-                        <MFXButton fx:id="btnBuscar" layoutX="598.0" layoutY="31.0" onAction="#onActionBtnBuscar" styleClass="jfx-mfx-btn-clean" text="Buscar" />
+                           </graphic></MFXButton>
                      </children>
                   </HBox>
                </children>

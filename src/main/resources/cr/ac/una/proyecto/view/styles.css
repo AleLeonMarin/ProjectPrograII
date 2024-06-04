@@ -73,6 +73,7 @@
 .mfx-button:hover{
     -fx-background-color: -fx-celeste-hielo;
     -fx-text-fill: black;
+    -mfx-depth-level : LEVEL5;
 }
 
 .mfx-button:pressed{
@@ -442,11 +443,11 @@
     -fx-label-padding: 2px;
 }
 
-.jfx-mfx-btn-clean > ImageView {
-    -fx-image: url("../resources/clean.png");
+.jfx-mfx-btn-search > ImageView {
+    -fx-image: url("../resources/search.png");
 }
 
-.jfx-mfx-btn-clean,.jfx-mfx-btn-clean:armed,.jfx-mfx-btn-clean:focused , .jfx-mfx-btn-clean:hover{
+.jfx-mfx-btn-search,.jfx-mfx-btn-search:armed,.jfx-mfx-btn-search:focused , .jfx-mfx-btn-search:hover{
     -fx-background-color: #C65BCF;
     -fx-text-fill: black;
     -fx-font-size: 18px;
@@ -456,7 +457,7 @@
 }
 
 .jfx-mfx-btn-new > ImageView {
-    -fx-image: url("../resources/new.png");
+    -fx-image: url("../resources/clean.png");
 }
 
 .jfx-mfx-btn-new,.jfx-mfx-btn-new:armed,.jfx-mfx-btn-new:focused , .jfx-mfx-btn-new:hover{

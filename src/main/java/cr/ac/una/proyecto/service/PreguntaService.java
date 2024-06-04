@@ -11,6 +11,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.Query;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,7 +51,13 @@ public class PreguntaService {
         try {
             Query qryPregunta = em.createNamedQuery("Pregunta.findByPreId", Pregunta.class);
             qryPregunta.setParameter("preId", id);
-            PreguntaDto preguntaDto = new PreguntaDto((Pregunta) qryPregunta.getSingleResult());
+
+            Pregunta pregunta = (Pregunta) qryPregunta.getSingleResult();
+            PreguntaDto preguntaDto = new PreguntaDto(pregunta);
+
+            for (Respuesta res : pregunta.getRespuestas()) {
+                preguntaDto.getRespuestas().add(new RespuestaDto(res));
+            }
             return new RespuestaUtil(true, "", "", "Pregunta", preguntaDto);
         } catch (NoResultException ex) {
             return new RespuestaUtil(false, "No existe una pregunta con el código ingresado.",
@@ -128,10 +136,10 @@ public class PreguntaService {
                     return new RespuestaUtil(false, "No se encontro en la pregunta a guardar",
                             "guardarPregunta noResultExeption");
                 }
-                pregunta.actualizar(preguntaDto);
+             
 
                 for (RespuestaDto respuestaDto : preguntaDto.getRespuestas()) {
-                    if(respuestaDto.getId() != null && respuestaDto.getId() > 0){
+                    if (respuestaDto.getId() != null && respuestaDto.getId() > 0) {
                         for (Respuesta respuesta : pregunta.getRespuestas()) {
                             if (respuesta.getId() == respuestaDto.getId()) {
                                 respuesta.actualizar(respuestaDto);
@@ -143,6 +151,7 @@ public class PreguntaService {
                         pregunta.getRespuestas().add(respuesta);
                     }
                 }
+                pregunta.actualizar(preguntaDto);
                 pregunta = em.merge(pregunta);
             } else {
                 pregunta = new Pregunta(preguntaDto);
@@ -174,20 +183,23 @@ public class PreguntaService {
             if (id != null && id > 0) {
                 pregunta = em.find(Pregunta.class, id);
                 if (pregunta == null) {
+                    et.rollback();
                     return new RespuestaUtil(false, "No se encontro una pregunta a eliminar",
                             "eliminarPregunta noResultExeption");
                 }
-
                 em.remove(pregunta);
             } else {
+                et.rollback();
                 return new RespuestaUtil(false, "Favor consultar la pregunta a eliminar", "");
-
             }
             et.commit();
             return new RespuestaUtil(true, "", "");
 
         } catch (Exception ex) {
             et.rollback();
+            if(ex.getCause() != null && ex.getCause().getClass() == SQLIntegrityConstraintViolationException.class){
+                return new RespuestaUtil(false , "No se pudo eliminar la pregunta ya que tiene respuestas asociados" , "Eliminar Pregunta" + ex.getMessage());
+            }
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error eliminando la Pregunta.", ex);
             return new RespuestaUtil(false, "Error elimnando la Pregunta.", "eliminarPregunta" + ex.getMessage());
         }

@@ -17,6 +17,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,18 +26,28 @@ import java.util.List;
  */
 @Entity
 @Table(name = "PREGUNTA")
-@NamedQueries(
-        {
-            @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
-            @NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.id = :preId"),
-            @NamedQuery(name = "Pregunta.findByPreCat", query = "SELECT p FROM Pregunta p WHERE p.nombreCategoria.nombre = :nombreCategoria AND p.estado = :estadoPregunta"),
-            @NamedQuery(name = "Pregunta.findByFilters", query = "SELECT p FROM Pregunta p WHERE p.id like :preId and UPPER(p.nombreCategoria.nombre) like :preCat and UPPER(p.enunciado) like :preEnun")
-        /* @NamedQuery(name = "Pregunta.findByPreEnunciado", query = "SELECT p FROM Pregunta p WHERE p.enunciado = :preEnunciado"),
-            @NamedQuery(name = "Pregunta.findByPreEstado", query = "SELECT p FROM Pregunta p WHERE p.estado = :preEstado"),
-            @NamedQuery(name = "Pregunta.findByPreAparicion", query = "SELECT p FROM Pregunta p WHERE p.aparicion = :preAparicion"),
-            @NamedQuery(name = "Pregunta.findByPreAciertos", query = "SELECT p FROM Pregunta p WHERE p.aciertos = :preAciertos"),
-            @NamedQuery(name = "Pregunta.findByPreVersion", query = "SELECT p FROM Pregunta p WHERE p.version = :preVersion")*/
-        })
+@NamedQueries({
+        @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p"),
+        @NamedQuery(name = "Pregunta.findByPreId", query = "SELECT p FROM Pregunta p WHERE p.id = :preId"),
+        @NamedQuery(name = "Pregunta.findByPreCat", query = "SELECT p FROM Pregunta p WHERE p.nombreCategoria.nombre = :nombreCategoria AND p.estado = :estadoPregunta"),
+        @NamedQuery(name = "Pregunta.findByFilters", query = "SELECT p FROM Pregunta p WHERE p.id like :preId and UPPER(p.nombreCategoria.nombre) like :preCat and UPPER(p.enunciado) like :preEnun")
+/*
+ * @NamedQuery(name = "Pregunta.findByPreEnunciado", query =
+ * "SELECT p FROM Pregunta p WHERE p.enunciado = :preEnunciado"),
+ * 
+ * @NamedQuery(name = "Pregunta.findByPreEstado", query =
+ * "SELECT p FROM Pregunta p WHERE p.estado = :preEstado"),
+ * 
+ * @NamedQuery(name = "Pregunta.findByPreAparicion", query =
+ * "SELECT p FROM Pregunta p WHERE p.aparicion = :preAparicion"),
+ * 
+ * @NamedQuery(name = "Pregunta.findByPreAciertos", query =
+ * "SELECT p FROM Pregunta p WHERE p.aciertos = :preAciertos"),
+ * 
+ * @NamedQuery(name = "Pregunta.findByPreVersion", query =
+ * "SELECT p FROM Pregunta p WHERE p.version = :preVersion")
+ */
+})
 public class Pregunta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,6 +79,7 @@ public class Pregunta implements Serializable {
     private List<Respuesta> respuestas;
 
     public Pregunta() {
+        this.respuestas = new ArrayList<>();
     }
 
     public Pregunta(Long id) {
@@ -161,13 +173,11 @@ public class Pregunta implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Pregunta))
-        {
+        if (!(object instanceof Pregunta)) {
             return false;
         }
         Pregunta other = (Pregunta) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
