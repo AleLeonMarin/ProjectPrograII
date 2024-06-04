@@ -129,7 +129,7 @@ public class TablerosController extends Controller implements Initializable {
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience", ((Stage) imvRuleta.getScene().getWindow()), true);
         } else if (categoria == categoriasRuleta.get(4))
         {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardCrownView", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("CrownDuelSelector", ((Stage) imvRuleta.getScene().getWindow()), true);
             SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController.getInstance().getController("SelectCrownDecisionView");
             FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView", ((Stage) imvRuleta.getScene().getWindow()), true);
             categoria = controladorCoronaSelection.getResultado();

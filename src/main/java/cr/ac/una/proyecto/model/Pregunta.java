@@ -76,10 +76,9 @@ public class Pregunta implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Categoria nombreCategoria;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "preguntaId", fetch = FetchType.LAZY)
-    private List<Respuesta> respuestas;
+    private List<Respuesta> respuestas = new ArrayList<>();
 
     public Pregunta() {
-        this.respuestas = new ArrayList<>();
     }
 
     public Pregunta(Long id) {

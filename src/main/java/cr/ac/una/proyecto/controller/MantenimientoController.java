@@ -76,6 +76,7 @@ public class MantenimientoController extends Controller implements Initializable
     private RespuestaDto respuesta2;
     private RespuestaDto respuesta3;
     private RespuestaDto respuesta4;
+    private boolean preguntaNueva;
 
     private List<RespuestaDto> respuestasDto = new ArrayList<>();
 
@@ -123,6 +124,7 @@ public class MantenimientoController extends Controller implements Initializable
 
         if (preguntaDto != null) {
             cargarPregunta(preguntaDto.getId());
+            cargarRespuestasDtoSingular();
         }
 
     }
@@ -160,6 +162,7 @@ public class MantenimientoController extends Controller implements Initializable
         cmbCategorias.clear();
         cargarCategorias();
         cmbCategorias.getSelectionModel().clearSelection();
+        this.preguntaNueva = true;
         nuevasRespuestas();
     }
 
