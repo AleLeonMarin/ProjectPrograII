@@ -134,9 +134,6 @@ public class PreguntaService {
                 em.persist(pregunta);
             }
 
-            em.flush();
-            em.clear();
-
             et.commit();
             return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
 

@@ -19,7 +19,7 @@ public class RespuestaService {
     private EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public RespuestaUtil getPreguntaRespuestas(Long preguntaId) {
+    public RespuestaUtil getRespuestasPreguntas(Long preguntaId) {
         try
         {
             Query qryRespuesta = em.createNamedQuery("Respuesta.findByPreguntaId", Respuesta.class);
@@ -47,7 +47,7 @@ public class RespuestaService {
         }
     }
 
-    public RespuestaUtil guardarRespuestasPregunta(ArrayList<RespuestaDto> respuestasDto) {
+    public RespuestaUtil guardarRespuestasPregunta(List<RespuestaDto> respuestasDto) {
         try
         {
 
@@ -85,7 +85,7 @@ public class RespuestaService {
         }
     }
 
-    public RespuestaUtil eliminarRespuestas(ArrayList<RespuestaDto> respuestasDto) {
+    public RespuestaUtil eliminarRespuestas(List<RespuestaDto> respuestasDto) {
         try
         {
             et = em.getTransaction();

@@ -143,7 +143,7 @@ public class PreguntaController extends Controller implements Initializable {
         respuestasDto.clear();
         try {
             RespuestaService respuestaService = new RespuestaService();
-            RespuestaUtil respuesta = respuestaService.getPreguntaRespuestas(preguntaId);
+            RespuestaUtil respuesta = respuestaService.getRespuestasPreguntas(preguntaId);
 
             if (respuesta.getEstado()) {
                 unbindRespuestas();
