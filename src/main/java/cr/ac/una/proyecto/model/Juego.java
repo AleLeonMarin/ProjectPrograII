@@ -2,8 +2,10 @@ package cr.ac.una.proyecto.model;
 
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
@@ -34,8 +36,7 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
-        for (Sector sectorActual : sectores)
-        {
+        for (Sector sectorActual : sectores) {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
@@ -61,17 +62,20 @@ public class Juego {
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
         cargarPreguntaViewValorRespuesta();
+        sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
+        sectores.set(turnoActual, sectorActual);
 
-        if (valorRespuesta)
-        {
+        if (valorRespuesta) {
             //jugadorActual sumarCorona
             System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
-        } else
-        {
+
+
+        } else {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
             cambiarTurno();
         }
+
 
     }
 

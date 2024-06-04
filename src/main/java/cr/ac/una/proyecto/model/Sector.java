@@ -1,6 +1,7 @@
 package cr.ac.una.proyecto.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javafx.geometry.HPos;
 import javafx.scene.image.ImageView;
@@ -168,14 +169,14 @@ public class Sector {
     }
 
     public void removerAyuda(String ayudaNombre) {
-        int indice = 0;
-        for (Ayuda ayuda : ayudas)
+        Iterator<Ayuda> iterator = ayudas.iterator();
+        while (iterator.hasNext())
         {
+            Ayuda ayuda = iterator.next();
             if (ayudaNombre.equals(ayuda.getNombre()))
             {
-                ayudas.remove(ayudas.get(indice));
+                iterator.remove();
             }
-            indice++;
         }
     }
 
