@@ -69,6 +69,7 @@ public class BuscarPreguntaController extends Controller implements Initializabl
 
     @FXML
     private void onActionBtnFiltrar(ActionEvent event) {
+        tbvTablaPreguntas.getItems().clear();
         filtrarDatos();
     }
 
@@ -116,7 +117,7 @@ public class BuscarPreguntaController extends Controller implements Initializabl
 
     @Override
     public void initialize() {
-        // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        tbvTablaPreguntas.getItems().clear();
     }
 
     @FXML

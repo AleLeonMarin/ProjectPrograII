@@ -9,6 +9,7 @@ import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
+import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 
@@ -118,7 +119,8 @@ public class PreguntaController extends Controller implements Initializable {
         System.out.println("Info Sector: " + sectorDto.getRutaImagenJugador());
         jugadorDto = sectorDto.getJugador();
 
-        if (jugadorDto == null) {
+        if (jugadorDto == null)
+        {
             System.out.println("Jugador nulo");
         }
     }
@@ -126,14 +128,17 @@ public class PreguntaController extends Controller implements Initializable {
     private void obtenerPreguntasCategoria() {
         PreguntaService preService = new PreguntaService();
         RespuestaUtil respuesta = preService.getPreguntasActivasPorCategoria(preguntaCategoria);
-        if (respuesta.getEstado()) {
+        if (respuesta.getEstado())
+        {
             preguntasDto.clear();
             preguntasDto.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
-            for (PreguntaDto pre : preguntasDto) {
+            for (PreguntaDto pre : preguntasDto)
+            {
 
                 System.out.println("Enunciado: " + pre.getEnunciado());
             }
-        } else {
+        } else
+        {
             System.err.println("Error al obtener las preguntas: " + respuesta.getMensajeInterno());
         }
 
@@ -141,20 +146,24 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarRespuestas(Long preguntaId) {
         respuestasDto.clear();
-        try {
+        try
+        {
             RespuestaService respuestaService = new RespuestaService();
             RespuestaUtil respuesta = respuestaService.getRespuestasPreguntas(preguntaId);
 
-            if (respuesta.getEstado()) {
+            if (respuesta.getEstado())
+            {
                 unbindRespuestas();
                 respuestasDto.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
                 Collections.shuffle(respuestasDto);
                 bindRespuestas();
-            } else {
+            } else
+            {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), respuesta.getMensaje());
 
             }
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             Logger.getLogger(MantenimientoController.class
                     .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), "Ocurrio un error consultando las repuestas.");
@@ -163,12 +172,14 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void bindRespuestas() {
-        if (respuestasDto.size() > 0) {
+        if (respuestasDto.size() > 0)
+        {
             this.btnRespuesta1.textProperty().bindBidirectional(respuestasDto.get(0).enunciado);
             this.btnRespuesta2.textProperty().bindBidirectional(respuestasDto.get(1).enunciado);
             this.btnRespuesta3.textProperty().bindBidirectional(respuestasDto.get(2).enunciado);
             this.btnRespuesta4.textProperty().bindBidirectional(respuestasDto.get(3).enunciado);
-        } else {
+        } else
+        {
             this.btnRespuesta1.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta2.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta3.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
@@ -178,12 +189,14 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void unbindRespuestas() {
 
-        if (respuestasDto.size() > 0) {
+        if (respuestasDto.size() > 0)
+        {
             this.btnRespuesta1.textProperty().unbindBidirectional(respuestasDto.get(0).enunciado);
             this.btnRespuesta2.textProperty().unbindBidirectional(respuestasDto.get(1).enunciado);
             this.btnRespuesta3.textProperty().unbindBidirectional(respuestasDto.get(2).enunciado);
             this.btnRespuesta4.textProperty().unbindBidirectional(respuestasDto.get(3).enunciado);
-        } else {
+        } else
+        {
             this.btnRespuesta1.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta2.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta3.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
@@ -234,12 +247,14 @@ public class PreguntaController extends Controller implements Initializable {
         respuestaDto = respuestasDto.get(btnIndice - 1);
         jugadorDto.setPreguntasRespondidas(jugadorDto.getPreguntasRespondidas() + 1);
 
-        if (respuestaDto.getIsCorrect().equals("C")) {
+        if (respuestaDto.getIsCorrect().equals("C"))
+        {
             intentos--;
             this.resultadoValorRespuesta = true;
             validarIntentos(true);
 
-        } else {
+        } else
+        {
             intentos--;
             this.resultadoValorRespuesta = false;
             validarIntentos(false);
@@ -249,14 +264,17 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void validarIntentos(boolean value) {
 
-        if (value == true) {
+        if (value == true)
+        {
             new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Correcta", "Has respondido Correctamente");
             ((Stage) acpRootPane.getScene().getWindow()).close();
 
-        } else if (intentos <= 0) {
+        } else if (intentos <= 0)
+        {
             new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", "Has respondido Incorrectamente");
             ((Stage) acpRootPane.getScene().getWindow()).close();
-        } else {
+        } else
+        {
             new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
         }
 
@@ -279,8 +297,7 @@ public class PreguntaController extends Controller implements Initializable {
         new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
                 "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
         cargarEnunciadoPregunta();
-        this.imvNext.setDisable(true);
-        this.imvNext.setVisible(false);
+        habilitarAyudaImagen(false, imvNext);
         sectorDto.removerAyuda(ayuda);
 
     }
@@ -291,8 +308,7 @@ public class PreguntaController extends Controller implements Initializable {
         new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
                 "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
         this.intentos += 1;
-        this.imvSecondOportunity.setDisable(true);
-        this.imvSecondOportunity.setVisible(false);
+        habilitarAyudaImagen(false, imvSecondOportunity);
         sectorDto.removerAyuda(ayuda);
 
     }
@@ -302,17 +318,25 @@ public class PreguntaController extends Controller implements Initializable {
         String ayuda = "TirarRuleta";
         new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
-        sectorDto.removerAyuda(ayuda);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
 
+        TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance().getController("TirarRuletaView");
+        FlowController.getInstance().goViewInWindowModal("TirarRuletaView", ((Stage) txaEnunciado.getScene().getWindow()), true);
+        preguntaCategoria = (String) tirarRuletaBusquedaController.getResultado();
+        obtenerPreguntasCategoria();
+        cargarEnunciadoPregunta();
+        habilitarAyudaImagen(false, imvTirarRuleta);
+        animacion.simpleFadeIn(acpRootPane);
+        sectorDto.removerAyuda(ayuda);
     }
 
     private void cargarDificultadFromAppContext() {
         dificultad = ((String) AppContext.getInstance().get("dificultad"));
 
-        if (dificultad.equals("Dificil")) {
+        if (dificultad.equals("Dificil"))
+        {
             disableAll();
-        } else {
+        } else
+        {
             cargarAyudasDisponibles(sectorDto);
         }
     }
@@ -330,13 +354,17 @@ public class PreguntaController extends Controller implements Initializable {
 
         System.out.println("Ayuda nombre: " + ayuda.getNombre());
 
-        if (ayuda.getNombre().equals("Bomba")) {
+        if (ayuda.getNombre().equals("Bomba"))
+        {
             habilitarAyudaImagen(true, imvBomba);
-        } else if (ayuda.getNombre().equals("Pasar")) {
+        } else if (ayuda.getNombre().equals("Pasar"))
+        {
             habilitarAyudaImagen(true, imvNext);
-        } else if (ayuda.getNombre().equals("DobleOportunidad")) {
+        } else if (ayuda.getNombre().equals("DobleOportunidad"))
+        {
             habilitarAyudaImagen(true, imvSecondOportunity);
-        } else if (ayuda.getNombre().equals("TirarRuleta")) {
+        } else if (ayuda.getNombre().equals("TirarRuleta"))
+        {
             habilitarAyudaImagen(true, imvTirarRuleta);
         }
 
@@ -350,7 +378,8 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarAyudasDisponibles(Sector sector) {
 
-        for (Ayuda ayuda : sector.getAyudas()) {
+        for (Ayuda ayuda : sector.getAyudas())
+        {
             habilitarPorAyuda(ayuda);
         }
     }
@@ -361,11 +390,13 @@ public class PreguntaController extends Controller implements Initializable {
         int index = 0;
         int contadorBtonoes = 0;
 
-        while (contadorBtonoes < cantidadRes) {
+        while (contadorBtonoes < cantidadRes)
+        {
             RespuestaDto respuestaDto = new RespuestaDto();
             respuestaDto = respuestasDto.get(index);
             System.out.println("PreguntaEnun: " + respuestaDto.getEnunciado());
-            if (respuestaDto.getIsCorrect().equals("X")) {
+            if (respuestaDto.getIsCorrect().equals("X"))
+            {
                 botones.get(index).setDisable(true);
                 contadorBtonoes++;
             }
@@ -383,7 +414,8 @@ public class PreguntaController extends Controller implements Initializable {
         this.botones.add(btnRespuesta3);
         this.botones.add(btnRespuesta4);
 
-        for (MFXButton boton : botones) {
+        for (MFXButton boton : botones)
+        {
             boton.setDisable(false);
         }
     }
