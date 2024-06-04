@@ -210,7 +210,7 @@ public class MantenimientoController extends Controller implements Initializable
                 PreguntaService preService = new PreguntaService();
                 RespuestaUtil respuesta = preService.guardarPregunta(this.preguntaDto);
                 if (respuesta.getEstado()) {
-                    cargarRespuestasDtoList();
+                    preguntaDto.getRespuestas().addAll(Arrays.asList(respuesta1, respuesta2, respuesta3, respuesta4));
                     unbindPregunta();
                     this.preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
                     bindPregunta(false);
@@ -231,30 +231,37 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    /*private void guardarRespuestas() {
-        try {
-            cargarRespuestasDtoList();
-            RespuestaService respuestaService = new RespuestaService();
-            RespuestaUtil respuesta = respuestaService.guardarRespuestasPregunta(respuestasDto);
-            if (respuesta.getEstado()) {
-                unbindRespuestas();
-                this.respuestasDto = (ArrayList<RespuestaDto>) respuesta.getResultado("GRespuestas");
-                bindRespuestas();
-                nuevaPregunta();
-                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Respuestas", getStage(),
-                        "Respuestas guardadas correctamente.");
-            } else {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(),
-                        respuesta.getMensaje());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE,
-                    "Error al guardar las respuestas.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas", getStage(),
-                    "Ocurrió un error al guardar las respuestas.");
-        }
-    }*/
+    /*
+     * private void guardarRespuestas() {
+     * try {
+     * cargarRespuestasDtoList();
+     * RespuestaService respuestaService = new RespuestaService();
+     * RespuestaUtil respuesta =
+     * respuestaService.guardarRespuestasPregunta(respuestasDto);
+     * if (respuesta.getEstado()) {
+     * unbindRespuestas();
+     * this.respuestasDto = (ArrayList<RespuestaDto>)
+     * respuesta.getResultado("GRespuestas");
+     * bindRespuestas();
+     * nuevaPregunta();
+     * new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Respuestas",
+     * getStage(),
+     * "Respuestas guardadas correctamente.");
+     * } else {
+     * new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas",
+     * getStage(),
+     * respuesta.getMensaje());
+     * }
+     * 
+     * } catch (Exception ex) {
+     * Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE,
+     * "Error al guardar las respuestas.", ex);
+     * new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Respuestas",
+     * getStage(),
+     * "Ocurrió un error al guardar las respuestas.");
+     * }
+     * }
+     */
 
     private void cargarRespuestasDtoList() {
 
