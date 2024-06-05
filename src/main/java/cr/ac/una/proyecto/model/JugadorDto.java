@@ -15,6 +15,18 @@ public class JugadorDto implements Serializable {
     public SimpleIntegerProperty partidasGanadas;
     public SimpleIntegerProperty preguntasRespondidas;
     public SimpleIntegerProperty preRespondidasCorrectamente;
+    public SimpleIntegerProperty contHis;
+    public SimpleIntegerProperty contGeo;
+    public SimpleIntegerProperty contDep;
+    public SimpleIntegerProperty contCie;
+    public SimpleIntegerProperty contEntre;
+    public SimpleIntegerProperty contArte;
+    public SimpleIntegerProperty corHis;
+    public SimpleIntegerProperty corCie;
+    public SimpleIntegerProperty corGeo;
+    public SimpleIntegerProperty corDep;
+    public SimpleIntegerProperty corEntre;
+    public SimpleIntegerProperty corArte;
     private Long version;
     private boolean modificado;
     private List<Partida> partidas;
@@ -26,6 +38,18 @@ public class JugadorDto implements Serializable {
         this.partidasGanadas = new SimpleIntegerProperty(0);
         this.preguntasRespondidas = new SimpleIntegerProperty(0);
         this.preRespondidasCorrectamente = new SimpleIntegerProperty(0);
+        this.contHis = new SimpleIntegerProperty(0);
+        this.contGeo = new SimpleIntegerProperty(0);
+        this.contDep = new SimpleIntegerProperty(0);
+        this.contCie = new SimpleIntegerProperty(0);
+        this.contEntre = new SimpleIntegerProperty(0);
+        this.contArte = new SimpleIntegerProperty(0);
+        this.corHis = new SimpleIntegerProperty(0);
+        this.corGeo = new SimpleIntegerProperty(0);
+        this.corEntre = new SimpleIntegerProperty(0);
+        this.corDep = new SimpleIntegerProperty(0);
+        this.corCie = new SimpleIntegerProperty(0);
+        this.corArte = new SimpleIntegerProperty(0);
         this.modificado = false;
     }
 
@@ -36,6 +60,18 @@ public class JugadorDto implements Serializable {
         this.partidasGanadas.set(jugador.getPartidasGanadas());
         this.preguntasRespondidas.set(jugador.getPreguntasRespondidas());
         this.preRespondidasCorrectamente.set(jugador.getPreRespondidasCorrectamente());
+        this.contHis.set(jugador.getContHis());
+        this.contGeo.set(jugador.getContGeo()); 
+        this.contDep.set(jugador.getContDep()); 
+        this.contCie.set(jugador.getContCien()); 
+        this.contEntre.set(jugador.getContEntre()); 
+        this.contArte.set(jugador.getContArte()); 
+        this.corHis.set(jugador.getCorHis()); 
+        this.corGeo.set(jugador.getCorGeo()); 
+        this.corEntre .set(jugador.getCorEntre());
+        this.corDep.set(jugador.getCorDep()); 
+        this.corCie.set(jugador.getCorCien()); 
+        this.corArte.set(jugador.getCorArte()); 
         this.version = jugador.getVersion();
     }
 
@@ -88,6 +124,102 @@ public class JugadorDto implements Serializable {
         this.preguntasRespondidas.set(preguntasRespondidas);
     }
 
+    public Integer getContadorHistoria() {
+        return contHis.get();
+    }
+    
+    public void setContadorHistoria(Integer contHis) {
+        this.contHis.set(contHis);
+    }
+
+    public Integer getContadorGeografia() {
+        return contGeo.get();
+    }
+
+    public void setContadorGeografia(Integer contGeo) {
+        this.contGeo.set(contGeo);
+    }
+
+    public Integer getContadorDeportes() {
+        return contDep.get();
+    }
+
+    public void setContadorDeportes(Integer contDep) {
+        this.contDep.set(contDep);
+    }
+
+    public Integer getContadorCiencia() {
+        return contCie.get();
+    }
+
+    public void setContadorCiencia(Integer contCie) {
+        this.contCie.set(contCie);
+    }
+
+    public Integer getContadorEntretenimiento() {
+        return contEntre.get();
+    }
+
+    public void setContadorEntretenimiento(Integer contEntre) {
+        this.contEntre.set(contEntre);
+    }
+
+    public Integer getContadorArte() {
+        return contArte.get();
+    }
+
+    public void setContadorArte(Integer contArte) {
+        this.contArte.set(contArte);
+    }
+
+    public Integer getContadorCorrectasHistoria() {
+        return corHis.get();
+    }
+
+    public void setContadorCorrectaHistoria(Integer corHis) {
+        this.corHis.set(corHis);
+    }
+
+    public Integer getContadorCorrectasCiencia() {
+        return corCie.get();
+    }
+
+    public void setContadorCorrectasCiencia(Integer corCie) {
+        this.corCie.set(corCie);
+    }
+
+    public Integer getContadorCorrectasGeografia() {
+        return corGeo.get();
+    }
+
+    public void setContadorCorrectasGeografia(Integer corGeo) {
+        this.corGeo.set(corGeo);
+    }
+
+    public Integer getContadorCorrectasDeportes() {
+        return corDep.get();
+    }
+
+    public void setContadorCorrectasDeportes(Integer corDep) {
+        this.corDep.set(corDep);
+    }
+
+    public Integer getContadorCorrectasEntretenimiento() {
+        return corEntre.get();
+    }
+
+    public void setContadorCorrectasEntretenimiento(Integer corEntre) {
+        this.corEntre.set(corEntre);
+    }
+
+    public Integer getContadorCorrectasArte() {
+        return corArte.get();
+    }
+
+    public void setContadorCorrectasArte(Integer corArte) {
+        this.corArte.set(corArte);
+    }
+
     public Long getVersion() {
         return version;
     }
@@ -104,29 +236,30 @@ public class JugadorDto implements Serializable {
         this.modificado = modificado;
     }
 
+    
+    public List<Partida> getPartidas() {
+        return partidas;
+    }
+    
+    public void setPartidas(List<Partida> partidas) {
+        this.partidas = partidas;
+    }
+    
+    public List<JugadorDto> getJugadorDtos() {
+        return jugadorDtos;
+    }
+    
+    public void setJugadorDtos(List<JugadorDto> jugadorDtos) {
+        this.jugadorDtos = jugadorDtos;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
-    public List<Partida> getPartidas() {
-        return partidas;
-    }
-
-    public void setPartidas(List<Partida> partidas) {
-        this.partidas = partidas;
-    }
-
-    public List<JugadorDto> getJugadorDtos() {
-        return jugadorDtos;
-    }
-
-    public void setJugadorDtos(List<JugadorDto> jugadorDtos) {
-        this.jugadorDtos = jugadorDtos;
-    }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

@@ -5,6 +5,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +20,12 @@
                   <Label styleClass="label-Titulo-Principal" text="Estadiscticas por Pregunta" />
                   <HBox prefHeight="586.0" prefWidth="830.0" spacing="20.0" styleClass="jfx-principal-pane">
                      <children>
-                        <TableView fx:id="tbvPreguntas" prefHeight="546.0" prefWidth="353.0" />
+                        <TableView fx:id="tbvPreguntas" prefHeight="546.0" prefWidth="353.0">
+                           <columns>
+                              <TableColumn fx:id="tbcID" prefWidth="75.0" text="ID" />
+                              <TableColumn fx:id="tbcEnun" prefWidth="145.0" text="Enunciado" />
+                              <TableColumn fx:id="tbcLook" prefWidth="75.0" text="Ver" />
+                           </columns></TableView>
                         <Separator orientation="VERTICAL" prefHeight="546.0" prefWidth="42.0" />
                         <BarChart fx:id="bchartStatistics" prefHeight="546.0" prefWidth="512.0">
                           <xAxis>

@@ -58,7 +58,19 @@ CREATE TABLE Jugador(
   jug_partidasGanadas Number NOT NULL,
   jug_preguntasRespondidas Number NOT NULL,
   pre_res_correctamente Number NOT NULL,
-  jug_version Number DEFAULT 1 NOT NULL
+  jug_version Number DEFAULT 1 NOT NULL,
+  jug_cont_his Number NOT NULL,
+  jug_cont_geo Number NOT NULL,
+  jug_cont_dep Number NOT NULL,
+  jug_cont_cien Number NOT NULL,
+  jug_cont_entre Number NOT NULL,
+  jug_cont_arte Number NOT NULL,
+  jug_cor_his Number NOT NULL,
+  jug_cor_geo Number NOT NULL,
+  jug_cor_dep Number NOT NULL,
+  jug_cor_cien Number NOT NULL,
+  jug_cor_entre Number NOT NULL,
+  jug_cor_arte Number NOT NULL
 )
 ;
 
@@ -231,18 +243,6 @@ COMMENT ON COLUMN Respuesta.res_version IS 'Version de la respusta'
 COMMENT ON COLUMN Respuesta.res_correcta IS 'Estado de si una respuesta es correcta o incorrecta (C:Correcta,X:Incorrecta)'
 ;
 
--- Table partidajugador
-
-CREATE TABLE partidajugador(
-  exp_idjug Number NOT NULL,
-  exp_idpar Number NOT NULL
-)
-;
-
--- Add keys for table partidajugador
-
-ALTER TABLE partidajugador ADD CONSTRAINT PK_partidajugador PRIMARY KEY (exp_idjug,exp_idpar)
-;
 
 -- Trigger for sequence PREG_JUGADOR_SEQ01 for column jug_id in table Jugador ---------
 CREATE OR REPLACE TRIGGER jugador_tgr01 BEFORE INSERT
