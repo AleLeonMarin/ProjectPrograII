@@ -5,6 +5,7 @@ import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
+import cr.ac.una.proyecto.util.Mensaje;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,6 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -36,6 +39,9 @@ public class TablerosController extends Controller implements Initializable {
     private ArrayList<String> categoriasRuleta;
     private String categoria;
     private String dificultad;
+    private boolean turnoDecidido;
+    @FXML
+    private Label lblJugadorActual;
 
     @Override
     public void initialize() {
@@ -43,6 +49,8 @@ public class TablerosController extends Controller implements Initializable {
         cargarSectores();
         juego.cargarDatosImagenes(grdpTablero);
         cargarAyudasFacil();
+        this.turnoDecidido = false;
+        cargarLblJugadorActual();
     }
 
     @Override
@@ -53,7 +61,24 @@ public class TablerosController extends Controller implements Initializable {
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
         this.imvPicker.setDisable(true);
-        moverRuleta();
+        if (!turnoDecidido)
+        {
+            calcularTurnos();
+        } else
+        {
+            moverRuleta();
+        }
+        cargarLblJugadorActual();
+    }
+
+    private void cargarLblJugadorActual() {
+        String nombreJugador = sectores.get(juego.getTurnoActual()).getJugador().getNombre();
+
+        if (nombreJugador != null)
+        {
+            lblJugadorActual.setText(nombreJugador);
+        }
+
     }
 
     private void cargarSectores() {
@@ -91,6 +116,38 @@ public class TablerosController extends Controller implements Initializable {
         cargarCategoriasRuleta();
     }
 
+    private void calcularTurnos() {
+
+        this.categoria = juego.obtenerPosicionRuleta();
+        double anguloDetenido = juego.getRuletaAngulo();
+
+        Runnable onFinish = () ->
+        {
+            this.imvPicker.setDisable(false);
+
+            if (categoria == categoriasRuleta.get(4))
+            {
+                turnoDecidido = true;
+            } else
+            {
+                juego.cambiarTurno();
+            }
+
+            System.out.println("TurnoDecididoOFF");
+            if (turnoDecidido)
+            {
+                Platform.runLater(() ->
+                {
+                    System.out.println("TurnoDecididoON");
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Escoger turno", getStage(), "Cayo corona, el jugador: "
+                            + sectores.get(juego.getTurnoActual()).getJugador().getNombre() + ", inicia la partida");
+                });
+            }
+        };
+
+        animacion.animacionRuleta(imvRuleta, juego.getRuletaAngulo(), onFinish);
+    }
+
     private void moverRuleta() {
 
         this.categoria = juego.obtenerPosicionRuleta();
@@ -98,7 +155,6 @@ public class TablerosController extends Controller implements Initializable {
 
         Runnable onFinish = () ->
         {
-            System.out.println("La animación de la ruleta ha terminado en esta categoria: " + categoria + ", Angulo: " + anguloDetenido);
             Platform.runLater(() -> mostrarTarjetas());
             this.imvPicker.setDisable(false);
 

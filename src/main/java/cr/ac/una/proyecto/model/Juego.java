@@ -36,7 +36,8 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
-        for (Sector sectorActual : sectores) {
+        for (Sector sectorActual : sectores)
+        {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
@@ -65,17 +66,20 @@ public class Juego {
         sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
         sectores.set(turnoActual, sectorActual);
 
-        if (valorRespuesta) {
+        if (valorRespuesta)
+        {
             //jugadorActual sumarCorona
             System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
-
-        } else {
+        } else
+        {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
             cambiarTurno();
         }
+    }
 
+    private void iniciarTurnos() {
 
     }
 
@@ -108,7 +112,7 @@ public class Juego {
         AppContext.getInstance().set("preguntaSector", sector);
     }
 
-    private void cambiarTurno() {
+    public void cambiarTurno() {
         turnoActual = (turnoActual + 1) % sectores.size();
     }
 
