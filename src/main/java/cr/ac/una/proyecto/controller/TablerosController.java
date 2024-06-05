@@ -95,7 +95,6 @@ public class TablerosController extends Controller implements Initializable {
         dificultad = (String) AppContext.getInstance().get("dificultad");
         if (dificultad.equals("Facil"))
         {
-
             for (Sector sector : sectores)
             {
                 System.out.println("SeteandoAyudasFacil");
@@ -185,12 +184,7 @@ public class TablerosController extends Controller implements Initializable {
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience", ((Stage) imvRuleta.getScene().getWindow()), true);
         } else if (categoria == categoriasRuleta.get(4))
         {
-            FlowController.getInstance().goViewInWindowModal("CrownDuelSelector", ((Stage) imvRuleta.getScene().getWindow()), true);
-            SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController.getInstance().getController("SelectCrownDecisionView");
-            FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView", ((Stage) imvRuleta.getScene().getWindow()), true);
-            categoria = controladorCoronaSelection.getResultado();
-            AppContext.getInstance().set("preguntaCategoria", categoria);
-            mostrarTarjetas();
+            goCoronaDuelView();
             return;
 
         } else if (categoria == categoriasRuleta.get(5))
@@ -203,6 +197,35 @@ public class TablerosController extends Controller implements Initializable {
         juego.cargarSectorActualAppContext();
         llamarPreguntaView();
         juego.jugar(grdpTablero);
+        isJugadorInCoronaPos();
+    }
+
+    private void goCoronaDuelView() {
+        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector", ((Stage) imvRuleta.getScene().getWindow()), true);
+        SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController.getInstance().getController("SelectCrownDecisionView");
+        FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView", ((Stage) imvRuleta.getScene().getWindow()), true);
+        categoria = controladorCoronaSelection.getResultado();
+        AppContext.getInstance().set("preguntaCategoria", categoria);
+        mostrarTarjetas();
+    }
+
+    private void isJugadorInCoronaPos() {
+
+        System.out.println("Entrada Funcion");
+
+        Sector sectorActual = juego.getSectorActual();
+
+        if (sectorActual != null)
+        {
+            System.out.println("Valido Si fue nulo");
+            if (sectorActual.getIsOnCoronaPos())
+            {
+                System.out.println("Valido esta en posicion de corona");
+                goCoronaDuelView();
+                juego.getSectorActual().setIsOnCoronaPos(false);
+                juego.getSectorActual().setActualPosInFirst();
+            }
+        }
     }
 
     public Juego getJuego() {

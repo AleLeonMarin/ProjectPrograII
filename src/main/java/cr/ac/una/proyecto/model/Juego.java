@@ -4,7 +4,6 @@ import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -19,6 +18,7 @@ public class Juego {
     private int turnoActual;
     private Ruleta ruleta;
     private Boolean valorRespuesta;
+    private Boolean valorCoronaRuleta;
     private String dificultad;
 
     public Juego() {
@@ -36,8 +36,7 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
-        for (Sector sectorActual : sectores)
-        {
+        for (Sector sectorActual : sectores) {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
@@ -55,7 +54,6 @@ public class Juego {
     public void cargarSectorActualAppContext() {
         Sector sectorActual = sectores.get(turnoActual);
         setSectorJugadorDtoAppContext(sectorActual);
-        System.out.println("Info Sector: " + sectorActual.getRutaImagenJugador());
     }
 
     public void jugar(GridPane grdpTablero) {
@@ -66,21 +64,27 @@ public class Juego {
         sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
         sectores.set(turnoActual, sectorActual);
 
-        if (valorRespuesta)
-        {
-            //jugadorActual sumarCorona
+        if (valorRespuesta) {
             System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
-        } else
-        {
+        } else {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
             cambiarTurno();
         }
     }
 
-    private void iniciarTurnos() {
+    public Sector getSectorActual() {
 
+        if (sectores.get(turnoActual) != null) {
+            return sectores.get(turnoActual);
+        } else {
+            return null;
+        }
+    }
+
+    private void cargarRuletaCoronaPos() {
+        valorCoronaRuleta = (Boolean) AppContext.getInstance().get("valorCoronaRuleta");
     }
 
     private void cargarPreguntaViewValorRespuesta() {
