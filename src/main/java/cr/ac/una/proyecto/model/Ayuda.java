@@ -6,7 +6,7 @@ package cr.ac.una.proyecto.model;
  */
 public class Ayuda {
 
-    private boolean ayudaActiva;
+    private boolean estado;
     private String nombre;
 
     public Ayuda() {
@@ -14,16 +14,16 @@ public class Ayuda {
     }
 
     public Ayuda(String nombre, boolean ayuda) {
-        this.ayudaActiva = ayuda;
+        this.estado = ayuda;
         this.nombre = nombre;
     }
 
-    public boolean isAyudaActiva() {
-        return ayudaActiva;
+    public boolean getEstado() {
+        return estado;
     }
 
-    public void setAyudaActiva(boolean ayudaActiva) {
-        this.ayudaActiva = ayudaActiva;
+    public void setEstado(boolean ayudaActiva) {
+        this.estado = ayudaActiva;
     }
 
     public String getNombre() {

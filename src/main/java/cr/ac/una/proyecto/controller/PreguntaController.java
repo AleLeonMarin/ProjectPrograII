@@ -362,16 +362,16 @@ public class PreguntaController extends Controller implements Initializable {
 
         System.out.println("Ayuda nombre: " + ayuda.getNombre());
 
-        if (ayuda.getNombre().equals("Bomba"))
+        if (ayuda.getNombre().equals("Bomba") && ayuda.getEstado())
         {
             habilitarAyudaImagen(true, imvBomba);
-        } else if (ayuda.getNombre().equals("Pasar"))
+        } else if (ayuda.getNombre().equals("Pasar") && ayuda.getEstado())
         {
             habilitarAyudaImagen(true, imvNext);
-        } else if (ayuda.getNombre().equals("DobleOportunidad"))
+        } else if (ayuda.getNombre().equals("DobleOportunidad") && ayuda.getEstado())
         {
             habilitarAyudaImagen(true, imvSecondOportunity);
-        } else if (ayuda.getNombre().equals("TirarRuleta"))
+        } else if (ayuda.getNombre().equals("TirarRuleta") && ayuda.getEstado())
         {
             habilitarAyudaImagen(true, imvTirarRuleta);
         }

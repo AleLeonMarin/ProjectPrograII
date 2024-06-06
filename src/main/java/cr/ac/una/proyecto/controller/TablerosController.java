@@ -6,6 +6,7 @@ import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+import io.github.palexdev.materialfx.controls.MFXButton;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -48,16 +50,18 @@ public class TablerosController extends Controller implements Initializable {
     private Boolean valorPreguntaRespuesta;
     @FXML
     private Label lblRonda;
+    @FXML
+    private MFXButton btnCederTurno;
 
     @Override
     public void initialize() {
         iniciarClases();
         cargarSectores();
         juego.cargarDatosImagenes(grdpTablero);
-        cargarAyudasFacil();
         this.turnoDecidido = false;
         this.valorPreguntaRespuesta = false;
         cargarLabelsPartidaInfo();
+        dificultad = juego.getDificultad();
     }
 
     @Override
@@ -100,19 +104,6 @@ public class TablerosController extends Controller implements Initializable {
         {
             juego.agregarSector(sector);
         }
-    }
-
-    private void cargarAyudasFacil() {
-        dificultad = (String) AppContext.getInstance().get("dificultad");
-        if (dificultad.equals("Facil"))
-        {
-            for (Sector sector : sectores)
-            {
-                System.out.println("SeteandoAyudasFacil");
-                sector.setAyudas(juego.getAllAyudas());
-            }
-        }
-
     }
 
     public boolean pickerStatus() {
@@ -214,8 +205,8 @@ public class TablerosController extends Controller implements Initializable {
         }
         llamarPreguntaView();
         juego.jugar(grdpTablero);
-        isJugadorInCoronaPos();
         validarJugadorGanador();
+        isJugadorInCoronaPos();
         cargarLabelsPartidaInfo();
     }
 
@@ -237,6 +228,7 @@ public class TablerosController extends Controller implements Initializable {
             juego.getSectorActual().setEstadoCorona(this.categoria, true);
             juego.setSectorActualAppContext();
             validarCoronasPrimerTurno();
+            this.valorPreguntaRespuesta = false;
         }
     }
 
@@ -278,6 +270,26 @@ public class TablerosController extends Controller implements Initializable {
 
     private void validarJugadorGanador() {
         juego.valdidarCoronasGanador();
+    }
+
+    @FXML
+    private void OnActionBtnCederTurno(ActionEvent event) {
+        if (dificultad.equals("Facil"))
+        {
+            System.out.println("Dificultad Seleccionada: "+dificultad);
+            juego.getSectorActual().setAyudaRandom(2);
+            juego.getSectorActual().printAyudasInfo();
+            juego.cambiarTurno();
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ojo por ojo", getStage(),
+                    "Has cedido el turno, si no tenias ayudas has ganado algunas, ya las veras luego");
+        } else
+        {
+            juego.cambiarTurno();
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Has decidido cambiar el turno", getStage(),
+                    "Has decicido cambiar el turno");
+        }
+        cargarLabelsPartidaInfo();
+
     }
 
 }

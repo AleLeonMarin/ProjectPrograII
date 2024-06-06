@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -29,7 +30,7 @@ public class Juego {
         turnoActual = 0;
         rondas = 1;
         dificultad = "";
-        cargarDificultadFromAppContext();
+        cargarAyudasFacil();
     }
 
     public void agregarSector(Sector sector) {
@@ -112,21 +113,24 @@ public class Juego {
         AppContext.getInstance().set("preguntaSector", sector);
     }
 
+    private void cargarAyudasFacil() {
+        cargarDificultadFromAppContext();
+        if (dificultad.equals("Facil"))
+        {
+            for (Sector sector : sectores)
+            {
+                sector.setAyudas(getAllAyudas());
+            }
+        }
+    }
+
     public ArrayList<Ayuda> getAllAyudas() {
         ArrayList<Ayuda> ayudas = new ArrayList<>();
-        ArrayList<String> nombresAyudas = new ArrayList<>();
-
-        nombresAyudas.add("Bomba");
-        nombresAyudas.add("Pasar");
-        nombresAyudas.add("DobleOportunidad");
-        nombresAyudas.add("TirarRuleta");
-
-        ayudas.add(new Ayuda(nombresAyudas.get(0), true));
-        ayudas.add(new Ayuda(nombresAyudas.get(1), true));
-        ayudas.add(new Ayuda(nombresAyudas.get(2), true));
-        ayudas.add(new Ayuda(nombresAyudas.get(3), true));
+        ayudas.add(new Ayuda("Bomba", true));
+        ayudas.add(new Ayuda("Pasar", true));
+        ayudas.add(new Ayuda("DobleOportunidad", true));
+        ayudas.add(new Ayuda("TirarRuleta", true));
         return ayudas;
-
     }
 
     public void cambiarTurno() {
@@ -159,11 +163,13 @@ public class Juego {
             {
                 if (!(c.getEstado()))
                 {
-                   coronasActivas =false;
+                    coronasActivas = false;
                 }
             }
-            if(coronasActivas){
-                mostrarGanador(sectorActual);}
+            if (coronasActivas)
+            {
+                mostrarGanador(sectorActual);
+            }
         }
     }
 
@@ -254,6 +260,10 @@ public class Juego {
 
     public Integer getRondas() {
         return this.rondas;
+    }
+
+    public String getDificultad() {
+        return this.dificultad;
     }
 
 }
