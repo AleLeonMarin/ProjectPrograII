@@ -14,8 +14,8 @@ public class Ruleta {
         categorias = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
         anguloInicial = 0;
         anguloDetenido = 0;
-        
-         AppContext.getInstance().set("categoriasRuleta", categorias);
+
+        AppContext.getInstance().set("categoriasRuleta", categorias);
     }
 
     private int generarAnguloAleatorio() {
@@ -69,7 +69,6 @@ public class Ruleta {
         {
             categoria = categorias.get(6);
         }
-
         return categoria;
     }
 }

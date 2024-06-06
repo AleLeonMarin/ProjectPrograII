@@ -78,13 +78,11 @@ public class TableroController extends Controller implements Initializable {
     private ArrayList<ImageView> imgvJug5List = new ArrayList<>();
     private ArrayList<ImageView> imgvJug6List = new ArrayList<>();
 
-
     TablerosController busquedaController;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sectores = new ArrayList<>();
-        System.out.println("Inicializador con resources");
         lblTiempo.setVisible(false);
         nombresJugadores = FXCollections.observableArrayList();
         jugadores = new ArrayList<>();
@@ -97,57 +95,57 @@ public class TableroController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        System.out.println("Inicializador normal");
+
     }
 
     private void timer() {
         Timer timer = new Timer();
-
-        // Crear una tarea que será ejecutada después de 5 segundos
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                // Este es el código que se ejecutará después de 5 segundos
                 validarCantidadJugadores();
-                // Cancelar el timer después de la ejecución de la tarea
                 timer.cancel();
             }
         };
-
-        // Programar la tarea para que se ejecute después de 5 segundos (5000
-        // milisegundos)
         timer.schedule(task, 5000);
     }
 
     private void validarCantidadJugadores() {
 
-        try {
+        try
+        {
             int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
             System.out.println("AppContextInfoSlider: " + contextSlider);
 
-            if (contextSlider == 6) {
+            if (contextSlider == 6)
+            {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero6jugadores");
                 FlowController.getInstance().goView("Tablero6jugadores");
-            } else if (contextSlider == 5) {
+            } else if (contextSlider == 5)
+            {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero5jugadores");
                 FlowController.getInstance().goView("Tablero5jugadores");
-            } else if (contextSlider == 4) {
+            } else if (contextSlider == 4)
+            {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero4jugadores");
                 FlowController.getInstance().goView("Tablero4jugadores");
-            } else if (contextSlider == 3) {
+            } else if (contextSlider == 3)
+            {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero3jugadores");
                 FlowController.getInstance().goView("Tablero3jugadores");
-            } else {
+            } else
+            {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero2jugadores");
                 FlowController.getInstance().goView("Tablero2jugadores");
 
             }
 
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
 
             Logger.getLogger(TableroController.class
                     .getName()).log(Level.SEVERE, "Error loading tablerosController", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Subtablero", getStage(), "Esta mamando papito");
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Subtablero", getStage(), "Error al cargar el subtablero");
 
         }
 
@@ -155,16 +153,15 @@ public class TableroController extends Controller implements Initializable {
 
     @FXML
     private void onMouseMoved(MouseEvent event) {
-
-        if (busquedaController != null && (busquedaController.pickerStatus())) {
+        if (busquedaController != null && (busquedaController.pickerStatus()))
+        {
             cargarSectoresCoronas();
-            if (sectores != null) {
-                System.out.println("Dentro del metodo");
+            if (sectores != null)
+            {
                 actualizarOpacidadSegunCorona();
             }
 
         }
-        System.out.println("Fuera del metodo");
     }
 
     @FXML
@@ -201,7 +198,8 @@ public class TableroController extends Controller implements Initializable {
         int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
         System.out.println("AppContextInfoSlider: " + contextSlider);
 
-        if (contextSlider == 2) {
+        if (contextSlider == 2)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             disablePlayerThree();
@@ -210,7 +208,8 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerSix();
 
         }
-        if (contextSlider == 3) {
+        if (contextSlider == 3)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -218,7 +217,8 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 4) {
+        if (contextSlider == 4)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -227,7 +227,8 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerSix();
 
         }
-        if (contextSlider == 5) {
+        if (contextSlider == 5)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -235,7 +236,8 @@ public class TableroController extends Controller implements Initializable {
             enablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 6) {
+        if (contextSlider == 6)
+        {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -436,11 +438,10 @@ public class TableroController extends Controller implements Initializable {
     }
 
     private void getJugadoresFromAppContext() {
-        // TODO Auto-generated method stub
-        jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (JugadorDto jugador : jugadores) {
-            System.out.println("Jugador:" + jugador.getNombre());
+        jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
+        for (JugadorDto jugador : jugadores)
+        {
             nombresJugadores.add(jugador.getNombre());
         }
 
@@ -473,11 +474,13 @@ public class TableroController extends Controller implements Initializable {
         System.out.println(loadToJson.toString());
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
-        try {
+        try
+        {
             FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
             file.write(json);
             file.close();
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }
@@ -486,25 +489,28 @@ public class TableroController extends Controller implements Initializable {
 
         juego = busquedaController.getJuego();
 
-        if (juego != null) {
+        if (juego != null)
+        {
             createJson();
         }
     }
 
     private void cargarSectoresCoronas() {
         this.sectores = new ArrayList<>();
-        this.sectores = (ArrayList<Sector>) AppContext.getInstance().get("JuegoSectores");
-        System.out.println("Sectores CARGAR TABLERO CONTROLLER");
+        this.sectores = (ArrayList<Sector>) AppContext.getInstance().get("JuegoSectores");;
     }
 
     private void actualizarOpacidadSegunCorona() {
         int index = 0;
-        for (Sector sector : sectores) {
+        for (Sector sector : sectores)
+        {
             ArrayList<Corona> coronas = sector.getCoronas();
-            for (Corona corona : coronas) {
+            for (Corona corona : coronas)
+            {
                 String nombreCorona = corona.getNombre();
                 boolean coronaActiva = corona.getEstado();
-                switch (nombreCorona) {
+                switch (nombreCorona)
+                {
                     case "Arte":
                         actualizarOpacidadImagenes(jugadoresListas.get(index).get(0), coronaActiva);
                         break;
@@ -529,19 +535,17 @@ public class TableroController extends Controller implements Initializable {
         }
     }
 
-
     private void actualizarOpacidadImagenes(ImageView imageView, boolean coronaActiva) {
-        // Determinar la opacidad según el estado de la corona
         double opacidad = coronaActiva ? 1.0 : 0.5;
         imageView.setOpacity(opacidad);
 
     }
 
     private void agregarImageViews(ArrayList<ImageView> list, ImageView... imageViews) {
-        for (ImageView imageView : imageViews) {
+        for (ImageView imageView : imageViews)
+        {
             list.add(imageView);
         }
     }
-
 
 }
