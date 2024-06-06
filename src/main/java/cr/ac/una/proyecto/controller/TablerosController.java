@@ -109,6 +109,13 @@ public class TablerosController extends Controller implements Initializable {
 
     }
 
+    public boolean pickerStatus(){
+        if(imvPicker.isDisable()){
+            return true;
+        }
+        return false;
+    }
+
     private void cargarCategoriasRuleta() {
         categoriasRuleta = (ArrayList<String>) AppContext.getInstance().get("categoriasRuleta");
     }
@@ -159,9 +166,10 @@ public class TablerosController extends Controller implements Initializable {
 
         Runnable onFinish = () ->
         {
-            juego.cargarSectorActualAppContext();
+            juego.setSectorActualAppContext();
             Platform.runLater(() -> mostrarTarjetas());
             this.imvPicker.setDisable(false);
+            juego.setSectoresAppContext();
 
         };
 
@@ -213,6 +221,7 @@ public class TablerosController extends Controller implements Initializable {
         AppContext.getInstance().set("preguntaCategoria", categoria);
         mostrarTarjetas();
         setCorona();
+
     }
 
     private void setCorona() {
@@ -221,7 +230,7 @@ public class TablerosController extends Controller implements Initializable {
         if (valorPreguntaRespuesta)
         {
             juego.getSectorActual().setEstadoCorona(this.categoria, true);
-            juego.cargarSectorActualAppContext();
+            juego.setSectorActualAppContext();
         }
     }
 

@@ -2,11 +2,14 @@ package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.JugadorDto;
+import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.model.Corona;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,154 +46,44 @@ import javafx.stage.Stage;
 public class TableroController extends Controller implements Initializable {
 
     @FXML
-    private MFXButton btnIniciar;
-
+    private MFXButton btnIniciar, btnSalir, btnGuardar;
     @FXML
-    private MFXButton btnSalir;
-
+    private ImageView imgvArteJug1, imgvJug1Ciencia, imgvJug1Deporte, imgvJug1Entretenimiento, imgvJug1Geografia, imgvJug1Historia;
     @FXML
-    private MFXButton btnGuardar;
-
+    private ImageView imgvJug2Arte, imgvJug2Ciencia, imgvJug2Deporte, imgvJug2Entretenimiento, imgvJug2Geografia, imgvJug2Historia;
     @FXML
-    private ImageView imgvArteJug1;
-
+    private ImageView imgvJug3Arte, imgvJug3Ciencia, imgvJug3Deporte, imgvJug3Entretenimiento, imgvJug3Geografia, imgvJug3Historia;
     @FXML
-    private ImageView imgvJug1Ciencia;
-
+    private ImageView imgvJug4Arte, imgvJug4Ciencia, imgvJug4Deporte, imgvJug4Entretenimiento, imgvJug4Geografia, imgvJug4Historia;
     @FXML
-    private ImageView imgvJug1Deporte;
-
+    private ImageView imgvJug5Arte, imgvJug5Ciencia, imgvJug5Deporte, imgvJug5Entretenimiento, imgvJug5Geografia, imgvJug5Historia;
     @FXML
-    private ImageView imgvJug1Entretenimiento;
-
+    private ImageView imgvJug6Arte, imgvJug6Ciencia, imgvJug6Deporte, imgvJug6Entretenimiento, imgvJug6Geografia, imgvJug6Historia;
     @FXML
-    private ImageView imgvJug1Geografia;
+    private Label lblJugador1, lblJugador2, lblJugador3, lblJugador4, lblJugador5, lblJugador6, lblTiempo;
 
-    @FXML
-    private ImageView imgvJug1Historia;
-
-    @FXML
-    private ImageView imgvJug2Arte;
-
-    @FXML
-    private ImageView imgvJug2Ciencia;
-
-    @FXML
-    private ImageView imgvJug2Deporte;
-
-    @FXML
-    private ImageView imgvJug2Entretenimiento;
-
-    @FXML
-    private ImageView imgvJug2Geografia;
-
-    @FXML
-    private ImageView imgvJug2Historia;
-
-    @FXML
-    private ImageView imgvJug3Arte;
-
-    @FXML
-    private ImageView imgvJug3Ciencia;
-
-    @FXML
-    private ImageView imgvJug3Deporte;
-
-    @FXML
-    private ImageView imgvJug3Entretenimiento;
-
-    @FXML
-    private ImageView imgvJug3Geografia;
-
-    @FXML
-    private ImageView imgvJug3Historia;
-
-    @FXML
-    private ImageView imgvJug4Arte;
-
-    @FXML
-    private ImageView imgvJug4Ciencia;
-
-    @FXML
-    private ImageView imgvJug4Deporte;
-
-    @FXML
-    private ImageView imgvJug4Entretenimiento;
-
-    @FXML
-    private ImageView imgvJug4Geografia;
-
-    @FXML
-    private ImageView imgvJug4Historia;
-
-    @FXML
-    private ImageView imgvJug5Arte;
-
-    @FXML
-    private ImageView imgvJug5Ciencia;
-
-    @FXML
-    private ImageView imgvJug5Deporte;
-
-    @FXML
-    private ImageView imgvJug5Entretenimiento;
-
-    @FXML
-    private ImageView imgvJug5Geografia;
-
-    @FXML
-    private ImageView imgvJug5Historia;
-
-    @FXML
-    private ImageView imgvJug6Arte;
-
-    @FXML
-    private ImageView imgvJug6Ciencia;
-
-    @FXML
-    private ImageView imgvJug6Deporte;
-
-    @FXML
-    private ImageView imgvJug6Entretenimiento;
-
-    @FXML
-    private ImageView imgvJug6Geografia;
-
-    @FXML
-    private ImageView imgvJug6Historia;
-
-    @FXML
-    private Label lblJugador1;
-
-    @FXML
-    private Label lblJugador2;
-
-    @FXML
-    private Label lblJugador3;
-
-    @FXML
-    private Label lblJugador4;
-
-    @FXML
-    private Label lblJugador5;
-
-    @FXML
-    private Label lblJugador6;
-
-    Sound sound = new Sound();
-
-    @FXML
-    private Label lblTiempo;
+    private Sound sound = new Sound();
     private int segundos = 0;
     private ObservableList<String> nombresJugadores;
     private List<JugadorDto> jugadores;
     private Juego juego;
     private ArrayList<String> loadToJson;
+    private ArrayList<Sector> sectores;
+
+    private ArrayList<ArrayList<ImageView>> jugadoresListas = new ArrayList<>();
+    private ArrayList<ImageView> imgvJug1List = new ArrayList<>();
+    private ArrayList<ImageView> imgvJug2List = new ArrayList<>();
+    private ArrayList<ImageView> imgvJug3List = new ArrayList<>();
+    private ArrayList<ImageView> imgvJug4List = new ArrayList<>();
+    private ArrayList<ImageView> imgvJug5List = new ArrayList<>();
+    private ArrayList<ImageView> imgvJug6List = new ArrayList<>();
+
 
     TablerosController busquedaController;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        sectores = new ArrayList<>();
         System.out.println("Inicializador con resources");
         lblTiempo.setVisible(false);
         nombresJugadores = FXCollections.observableArrayList();
@@ -227,39 +121,32 @@ public class TableroController extends Controller implements Initializable {
 
     private void validarCantidadJugadores() {
 
-        try
-        {
+        try {
             int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
             System.out.println("AppContextInfoSlider: " + contextSlider);
 
-            if (contextSlider == 6)
-            {
+            if (contextSlider == 6) {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero6jugadores");
                 FlowController.getInstance().goView("Tablero6jugadores");
-            } else if (contextSlider == 5)
-            {
+            } else if (contextSlider == 5) {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero5jugadores");
                 FlowController.getInstance().goView("Tablero5jugadores");
-            } else if (contextSlider == 4)
-            {
+            } else if (contextSlider == 4) {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero4jugadores");
                 FlowController.getInstance().goView("Tablero4jugadores");
-            } else if (contextSlider == 3)
-            {
+            } else if (contextSlider == 3) {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero3jugadores");
                 FlowController.getInstance().goView("Tablero3jugadores");
-            } else
-            {
+            } else {
                 busquedaController = (TablerosController) FlowController.getInstance().getController("Tablero2jugadores");
                 FlowController.getInstance().goView("Tablero2jugadores");
 
             }
 
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
             Logger.getLogger(TableroController.class
-                    .getName()).log(Level.SEVERE, "Esta mamando papito", ex);
+                    .getName()).log(Level.SEVERE, "Error loading tablerosController", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Subtablero", getStage(), "Esta mamando papito");
 
         }
@@ -268,8 +155,16 @@ public class TableroController extends Controller implements Initializable {
 
     @FXML
     private void onMouseMoved(MouseEvent event) {
-        //
 
+        if (busquedaController != null && (busquedaController.pickerStatus())) {
+            cargarSectoresCoronas();
+            if (sectores != null) {
+                System.out.println("Dentro del metodo");
+                actualizarOpacidadSegunCorona();
+            }
+
+        }
+        System.out.println("Fuera del metodo");
     }
 
     @FXML
@@ -306,17 +201,16 @@ public class TableroController extends Controller implements Initializable {
         int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
         System.out.println("AppContextInfoSlider: " + contextSlider);
 
-        if (contextSlider == 2)
-        {
+        if (contextSlider == 2) {
             enablePlayerOne();
             enablePlayerTwo();
             disablePlayerThree();
             disablePlayerFour();
             disablePlayerFive();
             disablePlayerSix();
+
         }
-        if (contextSlider == 3)
-        {
+        if (contextSlider == 3) {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -324,8 +218,7 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 4)
-        {
+        if (contextSlider == 4) {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -334,8 +227,7 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerSix();
 
         }
-        if (contextSlider == 5)
-        {
+        if (contextSlider == 5) {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -343,8 +235,7 @@ public class TableroController extends Controller implements Initializable {
             enablePlayerFive();
             disablePlayerSix();
         }
-        if (contextSlider == 6)
-        {
+        if (contextSlider == 6) {
             enablePlayerOne();
             enablePlayerTwo();
             enablePlayerThree();
@@ -371,6 +262,8 @@ public class TableroController extends Controller implements Initializable {
         imgvJug1Entretenimiento.setOpacity(0.5);
         imgvJug1Geografia.setOpacity(0.5);
         imgvJug1Historia.setOpacity(0.5);
+        agregarImageViews(imgvJug1List, imgvArteJug1, imgvJug1Ciencia, imgvJug1Deporte, imgvJug1Entretenimiento, imgvJug1Geografia, imgvJug1Historia);
+        jugadoresListas.add(imgvJug1List);
     }
 
     public void enablePlayerTwo() {
@@ -381,7 +274,8 @@ public class TableroController extends Controller implements Initializable {
         imgvJug2Entretenimiento.setOpacity(0.5);
         imgvJug2Geografia.setOpacity(0.5);
         imgvJug2Historia.setOpacity(0.5);
-
+        agregarImageViews(imgvJug2List, imgvJug2Arte, imgvJug2Ciencia, imgvJug2Deporte, imgvJug2Entretenimiento, imgvJug2Geografia, imgvJug2Historia);
+        jugadoresListas.add(imgvJug2List);
     }
 
     public void enablePlayerThree() {
@@ -403,7 +297,8 @@ public class TableroController extends Controller implements Initializable {
         imgvJug3Entretenimiento.setOpacity(0.5);
         imgvJug3Geografia.setOpacity(0.5);
         imgvJug3Historia.setOpacity(0.5);
-
+        agregarImageViews(imgvJug3List, imgvJug3Arte, imgvJug3Ciencia, imgvJug3Deporte, imgvJug3Entretenimiento, imgvJug3Geografia, imgvJug3Historia);
+        jugadoresListas.add(imgvJug3List);
     }
 
     public void enablePlayerFour() {
@@ -424,7 +319,8 @@ public class TableroController extends Controller implements Initializable {
         imgvJug4Entretenimiento.setOpacity(0.5);
         imgvJug4Geografia.setOpacity(0.5);
         imgvJug4Historia.setOpacity(0.5);
-
+        agregarImageViews(imgvJug4List, imgvJug4Arte, imgvJug4Ciencia, imgvJug4Deporte, imgvJug4Entretenimiento, imgvJug4Geografia, imgvJug4Historia);
+        jugadoresListas.add(imgvJug4List);
     }
 
     public void enablePlayerFive() {
@@ -444,7 +340,8 @@ public class TableroController extends Controller implements Initializable {
         imgvJug5Entretenimiento.setOpacity(0.5);
         imgvJug5Geografia.setOpacity(0.5);
         imgvJug5Historia.setOpacity(0.5);
-
+        agregarImageViews(imgvJug5List, imgvJug5Arte, imgvJug5Ciencia, imgvJug5Deporte, imgvJug5Entretenimiento, imgvJug5Geografia, imgvJug5Historia);
+        jugadoresListas.add(imgvJug5List);
     }
 
     public void enablePlayerSix() {
@@ -465,6 +362,8 @@ public class TableroController extends Controller implements Initializable {
         imgvJug6Entretenimiento.setOpacity(0.5);
         imgvJug6Geografia.setOpacity(0.5);
         imgvJug6Historia.setOpacity(0.5);
+        agregarImageViews(imgvJug6List, imgvJug6Arte, imgvJug6Ciencia, imgvJug6Deporte, imgvJug6Entretenimiento, imgvJug6Geografia, imgvJug6Historia);
+        jugadoresListas.add(imgvJug6List);
     }
 
     public void disablePlayerThree() {
@@ -540,8 +439,7 @@ public class TableroController extends Controller implements Initializable {
         // TODO Auto-generated method stub
         jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (JugadorDto jugador : jugadores)
-        {
+        for (JugadorDto jugador : jugadores) {
             System.out.println("Jugador:" + jugador.getNombre());
             nombresJugadores.add(jugador.getNombre());
         }
@@ -575,13 +473,11 @@ public class TableroController extends Controller implements Initializable {
         System.out.println(loadToJson.toString());
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
-        try
-        {
+        try {
             FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
             file.write(json);
             file.close();
-        } catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -590,10 +486,69 @@ public class TableroController extends Controller implements Initializable {
 
         juego = busquedaController.getJuego();
 
-        if (juego != null)
-        {
+        if (juego != null) {
             createJson();
         }
     }
+
+    private void cargarSectoresCoronas() {
+        this.sectores = new ArrayList<>();
+        this.sectores = (ArrayList<Sector>) AppContext.getInstance().get("JuegoSectores");
+        System.out.println("Sectores CARGAR TABLERO CONTROLLER");
+    }
+
+    private void actualizarOpacidadSegunCorona() {
+        int index = 0;
+        for (Sector sector : sectores) {
+            System.out.println("actualizarOpacidadSegunCoronainiciio");
+            sector.printCoronasInfo();
+            System.out.println("actualizarOpacidadSegunCoronaFINISHED");
+            // Obtener la corona actual del sector
+            ArrayList<Corona> coronas = sector.getCoronas();
+
+            // Iterar sobre las coronas y actualizar la opacidad de las imágenes correspondientes
+            for (Corona corona : coronas) {
+                String nombreCorona = corona.getNombre();
+                boolean coronaActiva = corona.getEstado();
+
+                // Según el nombre de la corona, determinar qué imágenes actualizar
+                switch (nombreCorona) {
+                    case "Arte":
+                        actualizarOpacidadImagenes(jugadoresListas.get(index).get(0), coronaActiva);
+                        break;
+                    case "Ciencia":
+                        actualizarOpacidadImagenes(jugadoresListas.get(index).get(1), coronaActiva);
+                        break;
+                    case "Deporte":
+                        actualizarOpacidadImagenes(jugadoresListas.get(index).get(2), coronaActiva);
+                        break;
+                    case "Entretenimiento":
+                        actualizarOpacidadImagenes(jugadoresListas.get(index).get(3), coronaActiva);
+                        break;
+                    case "Geografia":
+                        actualizarOpacidadImagenes(jugadoresListas.get(index).get(4), coronaActiva);
+                        break;
+                    case "Historia":
+                        actualizarOpacidadImagenes(jugadoresListas.get(index).get(5), coronaActiva);
+                        break;
+                }
+            }
+            index++;
+        }
+    }
+
+    private void actualizarOpacidadImagenes(ImageView imageView, boolean coronaActiva) {
+        // Determinar la opacidad según el estado de la corona
+        double opacidad = coronaActiva ? 1.0 : 0.5;
+        imageView.setOpacity(opacidad);
+
+    }
+
+    private void agregarImageViews(ArrayList<ImageView> list, ImageView... imageViews) {
+        for (ImageView imageView : imageViews) {
+            list.add(imageView);
+        }
+    }
+
 
 }
