@@ -16,17 +16,17 @@
                <children>
                   <VBox alignment="CENTER" styleClass="contenedores">
                      <children>
-                        <MFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnHistoria" styleClass="jfx-mfx-btn-Historia" text="Historia">
+                        <MFXButton fx:id="btnHistoria" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnHistoria" styleClass="jfx-mfx-btn-Historia" text="Historia">
                            <graphic>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </MFXButton>
-                        <MFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnArte" styleClass="jfx-mfx-btn-Arte" text="Arte">
+                        <MFXButton fx:id="btnArte" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnArte" styleClass="jfx-mfx-btn-Arte" text="Arte">
                            <graphic>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </MFXButton>
-                        <MFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnGeografia" styleClass="jfx-mfx-btn-Geografia" text="Geografia">
+                        <MFXButton fx:id="btnGeografia" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnGeografia" styleClass="jfx-mfx-btn-Geografia" text="Geografia">
                            <graphic>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
@@ -35,17 +35,17 @@
                   </VBox>
                   <VBox alignment="CENTER" layoutX="240.0" layoutY="15.0" styleClass="contenedores">
                      <children>
-                        <MFXButton contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnDeporte" styleClass="jfx-mfx-btn-Deporte" text="Deporte">
+                        <MFXButton fx:id="btnDeporte" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnDeporte" styleClass="jfx-mfx-btn-Deporte" text="Deporte">
                            <graphic>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </MFXButton>
-                        <MFXButton contentDisplay="RIGHT" onAction="#OnActionBtnEntretenimiento" styleClass="jfx-mfx-btn-Entretenimiento" text="Entretenimiento">
+                        <MFXButton fx:id="btnEntretenimiento" contentDisplay="RIGHT" onAction="#OnActionBtnEntretenimiento" styleClass="jfx-mfx-btn-Entretenimiento" text="Entretenimiento">
                            <graphic>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </MFXButton>
-                        <MFXButton contentDisplay="RIGHT" layoutX="15.0" layoutY="136.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnCiencia" styleClass="jfx-mfx-btn-Ciencia" text="Ciencia">
+                        <MFXButton fx:id="btnCiencia" contentDisplay="RIGHT" layoutX="15.0" layoutY="136.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnCiencia" styleClass="jfx-mfx-btn-Ciencia" text="Ciencia">
                            <graphic>
                               <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>

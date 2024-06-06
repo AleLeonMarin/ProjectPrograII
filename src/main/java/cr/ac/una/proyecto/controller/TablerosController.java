@@ -6,9 +6,11 @@ import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -29,19 +31,21 @@ public class TablerosController extends Controller implements Initializable {
     private GridPane grdpTablero;
     @FXML
     private ImageView imvPicker;
+    @FXML
+    private AnchorPane acpRootPane;
+    @FXML
+    private Label lblJugadorActual;
 
     private Animacion animacion;
     private Juego juego;
     ArrayList<Sector> sectores;
     private TextField txfRuletaPrueba;
-    @FXML
-    private AnchorPane acpRootPane;
+
     private ArrayList<String> categoriasRuleta;
     private String categoria;
     private String dificultad;
-    private boolean turnoDecidido;
-    @FXML
-    private Label lblJugadorActual;
+    private Boolean turnoDecidido;
+    private Boolean valorPreguntaRespuesta;
 
     @Override
     public void initialize() {
@@ -50,6 +54,7 @@ public class TablerosController extends Controller implements Initializable {
         juego.cargarDatosImagenes(grdpTablero);
         cargarAyudasFacil();
         this.turnoDecidido = false;
+        this.valorPreguntaRespuesta = false;
         cargarLblJugadorActual();
     }
 
@@ -154,6 +159,7 @@ public class TablerosController extends Controller implements Initializable {
 
         Runnable onFinish = () ->
         {
+            juego.cargarSectorActualAppContext();
             Platform.runLater(() -> mostrarTarjetas());
             this.imvPicker.setDisable(false);
 
@@ -194,7 +200,6 @@ public class TablerosController extends Controller implements Initializable {
         {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory", ((Stage) imvRuleta.getScene().getWindow()), true);
         }
-        juego.cargarSectorActualAppContext();
         llamarPreguntaView();
         juego.jugar(grdpTablero);
         isJugadorInCoronaPos();
@@ -207,6 +212,17 @@ public class TablerosController extends Controller implements Initializable {
         categoria = controladorCoronaSelection.getResultado();
         AppContext.getInstance().set("preguntaCategoria", categoria);
         mostrarTarjetas();
+        setCorona();
+    }
+
+    private void setCorona() {
+        cargarValorRespuestaPregunta();
+
+        if (valorPreguntaRespuesta)
+        {
+            juego.getSectorActual().setEstadoCorona(this.categoria, true);
+            juego.cargarSectorActualAppContext();
+        }
     }
 
     private void isJugadorInCoronaPos() {
@@ -224,8 +240,17 @@ public class TablerosController extends Controller implements Initializable {
                 goCoronaDuelView();
                 juego.getSectorActual().setIsOnCoronaPos(false);
                 juego.getSectorActual().setActualPosInFirst();
+
+                if (!valorPreguntaRespuesta)
+                {
+                    juego.cambiarTurno();
+                }
             }
         }
+    }
+
+    private void cargarValorRespuestaPregunta() {
+        this.valorPreguntaRespuesta = (Boolean) AppContext.getInstance().get("valorRespuesta");
     }
 
     public Juego getJuego() {

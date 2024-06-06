@@ -36,7 +36,8 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
-        for (Sector sectorActual : sectores) {
+        for (Sector sectorActual : sectores)
+        {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
@@ -64,11 +65,16 @@ public class Juego {
         sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
         sectores.set(turnoActual, sectorActual);
 
-        if (valorRespuesta) {
+        sectorActual.printCoronasInfo();
+        sectorActual.printAyudasInfo();
+
+        if (valorRespuesta)
+        {
             System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
-        } else {
+        } else
+        {
             System.out.println("Respuesta incorrecta. Siguiente jugador.");
             cambiarTurno();
         }
@@ -76,9 +82,11 @@ public class Juego {
 
     public Sector getSectorActual() {
 
-        if (sectores.get(turnoActual) != null) {
+        if (sectores.get(turnoActual) != null)
+        {
             return sectores.get(turnoActual);
-        } else {
+        } else
+        {
             return null;
         }
     }
@@ -93,6 +101,10 @@ public class Juego {
 
     private void cargarDificultadFromAppContext() {
         dificultad = (String) AppContext.getInstance().get("dificultad");
+    }
+
+    private void setSectorJugadorDtoAppContext(Sector sector) {
+        AppContext.getInstance().set("preguntaSector", sector);
     }
 
     public ArrayList<Ayuda> getAllAyudas() {
@@ -110,10 +122,6 @@ public class Juego {
         ayudas.add(new Ayuda(nombresAyudas.get(3), true));
         return ayudas;
 
-    }
-
-    private void setSectorJugadorDtoAppContext(Sector sector) {
-        AppContext.getInstance().set("preguntaSector", sector);
     }
 
     public void cambiarTurno() {
