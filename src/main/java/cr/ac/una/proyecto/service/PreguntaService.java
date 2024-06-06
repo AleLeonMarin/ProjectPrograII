@@ -46,6 +46,7 @@ public class PreguntaService {
             return new RespuestaUtil(false, "Error obteniendo la tipoPlanilla.", "getTipoPlanilla " + ex.getMessage());
         }
     }
+    
 
     public RespuestaUtil getPregunta(Long id) {
         try {

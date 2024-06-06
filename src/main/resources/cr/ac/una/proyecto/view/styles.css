@@ -633,3 +633,12 @@
 .jfx-mfx-btn-Ciencia>ImageView {
     -fx-image: url("../resources/Ciencia.jpg");
 }
+
+.jfx-btnimg-tbvSearch {
+    -fx-opacity: 0.8;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: contain;
+    -fx-background-color: #41B06E;
+    -fx-background-image: url("../resources/search.png");
+}

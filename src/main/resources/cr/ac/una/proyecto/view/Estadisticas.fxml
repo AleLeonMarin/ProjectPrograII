@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="jfx-background-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.EstadisticasController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="jfx-background-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.EstadisticasController">
    <children>
       <AnchorPane layoutX="300.0" layoutY="194.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -20,7 +20,7 @@
                   <Label styleClass="label-Titulo-Principal" text="Estadiscticas por Pregunta" />
                   <HBox prefHeight="586.0" prefWidth="830.0" spacing="20.0" styleClass="jfx-principal-pane">
                      <children>
-                        <TableView fx:id="tbvPreguntas" prefHeight="546.0" prefWidth="353.0">
+                        <TableView fx:id="tbvPreguntas" prefHeight="546.0" prefWidth="353.0" HBox.hgrow="ALWAYS">
                            <columns>
                               <TableColumn fx:id="tbcID" prefWidth="75.0" text="ID" />
                               <TableColumn fx:id="tbcEnun" prefWidth="145.0" text="Enunciado" />
@@ -32,7 +32,7 @@
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis forceZeroInRange="false" minorTickCount="1" side="LEFT" tickLength="10.0" />
                           </yAxis>
                         </BarChart>
                      </children>
