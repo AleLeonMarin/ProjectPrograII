@@ -116,13 +116,7 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarSectorJugadorDtoAppContext() {
         sectorDto = ((Sector) AppContext.getInstance().get("preguntaSector"));
-        System.out.println("Info Sector: " + sectorDto.getRutaImagenJugador());
         jugadorDto = sectorDto.getJugador();
-
-        if (jugadorDto == null)
-        {
-            System.out.println("Jugador nulo");
-        }
     }
 
     private void obtenerPreguntasCategoria() {
@@ -224,27 +218,27 @@ public class PreguntaController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
-        validarRespuestaCorrecta(1);
+        validarRespuestaCorrecta(0);
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
-        validarRespuestaCorrecta(2);
+        validarRespuestaCorrecta(1);
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
-        validarRespuestaCorrecta(3);
+        validarRespuestaCorrecta(2);
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
-        validarRespuestaCorrecta(4);
+        validarRespuestaCorrecta(3);
     }
 
     private void validarRespuestaCorrecta(int btnIndice) {
         RespuestaDto respuestaDto = new RespuestaDto();
-        respuestaDto = respuestasDto.get(btnIndice - 1);
+        respuestaDto = respuestasDto.get(btnIndice);
         jugadorDto.setPreguntasRespondidas(jugadorDto.getPreguntasRespondidas() + 1);
 
         if (respuestaDto.getIsCorrect().equals("C"))
@@ -257,25 +251,39 @@ public class PreguntaController extends Controller implements Initializable {
         {
             intentos--;
             this.resultadoValorRespuesta = false;
+            botones.get(btnIndice).setDisable(true);
             validarIntentos(false);
         }
 
+    }
+
+    private Runnable getRunnableOnFinishOut() {
+
+        Runnable onFinishOut = () ->
+        {
+            ((Stage) acpRootPane.getScene().getWindow()).close();
+        };
+
+        return onFinishOut;
     }
 
     private void validarIntentos(boolean value) {
 
         if (value == true)
         {
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Correcta", "Has respondido Correctamente");
-            ((Stage) acpRootPane.getScene().getWindow()).close();
+            //sonido de correcta
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta", acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
+            animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
 
         } else if (intentos <= 0)
         {
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", "Has respondido Incorrectamente");
-            ((Stage) acpRootPane.getScene().getWindow()).close();
+            //sonido de error
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
+            animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
         } else
         {
-            new Mensaje().show(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
+            //sonido de error
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
         }
 
         AppContext.getInstance().set("valorRespuesta", resultadoValorRespuesta);

@@ -3,6 +3,7 @@ package cr.ac.una.proyecto.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+
 import javafx.geometry.HPos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -37,11 +38,9 @@ public class Sector {
     }
 
     public void setActualPosInFirst() {
-        if (direccion == 1 || direccion == 2)
-        {
+        if (direccion == 1 || direccion == 2) {
             this.posActual = this.posicionY;
-        } else
-        {
+        } else {
             this.posActual = this.posicionX;
         }
     }
@@ -118,24 +117,18 @@ public class Sector {
 
     private void checkCoronaPos(int posCorona) {
 
-        System.out.println("POSICION CORONA ES: " + posCorona);
-        System.out.println("POSICION ACTUAL: ES: " + posActual);
-        if (posActual == posCorona)
-        {
+        if (posActual == posCorona) {
             isOnCoronaPos = true;
-        } else
-        {
+        } else {
             isOnCoronaPos = false;
         }
     }
 
     public int moverDerecha(ImageView imageView, GridPane grdPane) {
         System.out.println("POSACTUAL: " + posActual);
-        if (posActual >= posicionY + 3)
-        {
+        if (posActual >= posicionY + 3) {
             posActual = posicionY;
-        } else
-        {
+        } else {
             posActual++;
         }
         moverNodoA(imageView, posActual, posicionX);
@@ -147,11 +140,9 @@ public class Sector {
     public int moverIzquierda(ImageView imageView, GridPane grdPane) {
         System.out.println("POSDESPUESACTUAL: " + posActual);
 
-        if (posActual <= posicionY - 3)
-        {
+        if (posActual <= posicionY - 3) {
             posActual = posicionY;
-        } else
-        {
+        } else {
             posActual--;
 
         }
@@ -163,11 +154,9 @@ public class Sector {
     }
 
     public int moverAbajo(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionX + 3)
-        {
+        if (posActual >= posicionX + 3) {
             posActual = posicionX;
-        } else
-        {
+        } else {
             posActual++;
 
         }
@@ -177,11 +166,9 @@ public class Sector {
     }
 
     public int moverArriba(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionX - 3)
-        {
+        if (posActual <= posicionX - 3) {
             posActual = posicionX;
-        } else
-        {
+        } else {
             posActual--;
 
         }
@@ -191,8 +178,7 @@ public class Sector {
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-        switch (direccion)
-        {
+        switch (direccion) {
             case 1:
                 return moverDerecha(imageView, grdPane);
             case 2:
@@ -213,11 +199,9 @@ public class Sector {
 
     public void removerAyuda(String ayudaNombre) {
         Iterator<Ayuda> iterator = ayudas.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             Ayuda ayuda = iterator.next();
-            if (ayudaNombre.equals(ayuda.getNombre()))
-            {
+            if (ayudaNombre.equals(ayuda.getNombre())) {
                 iterator.remove();
             }
         }
@@ -227,36 +211,30 @@ public class Sector {
         this.coronas = new ArrayList<>();
         ArrayList<String> categorias = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Entretenimiento", "Historia"));
 
-        for (String categoria : categorias)
-        {
+        for (String categoria : categorias) {
             coronas.add(new Corona(categoria));
         }
 
     }
 
     public void setEstadoCorona(String coronaNombre, boolean estado) {
-        for (Corona corona : coronas)
-        {
-            if (corona.getNombre().equals(coronaNombre))
-            {
+        for (Corona corona : coronas) {
+            if (corona.getNombre().equals(coronaNombre)) {
                 corona.setEstado(estado);
             }
         }
     }
 
     public void printCoronasInfo() {
-        for (Corona corona : coronas)
-        {
-            if (corona.getEstado())
-            {
+        for (Corona corona : coronas) {
+            if (corona.getEstado()) {
                 System.out.println("Corona Activa: " + corona.getNombre());
             }
         }
     }
 
     public void printAyudasInfo() {
-        for (Ayuda ayuda : ayudas)
-        {
+        for (Ayuda ayuda : ayudas) {
             System.out.println("Ayuda Activa: " + ayuda.getNombre());
 
         }

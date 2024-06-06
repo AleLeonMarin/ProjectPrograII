@@ -4,8 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="500.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.CrownSelectionController">
+<AnchorPane fx:id="acpRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="500.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.CrownSelectionController">
    <children>
       <ImageView fitHeight="233.0" fitWidth="226.0" layoutX="36.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-corona" />
       <ImageView fitHeight="344.0" fitWidth="192.0" layoutX="302.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-duelo" />

@@ -500,18 +500,10 @@ public class TableroController extends Controller implements Initializable {
     private void actualizarOpacidadSegunCorona() {
         int index = 0;
         for (Sector sector : sectores) {
-            System.out.println("actualizarOpacidadSegunCoronainiciio");
-            sector.printCoronasInfo();
-            System.out.println("actualizarOpacidadSegunCoronaFINISHED");
-            // Obtener la corona actual del sector
             ArrayList<Corona> coronas = sector.getCoronas();
-
-            // Iterar sobre las coronas y actualizar la opacidad de las imágenes correspondientes
             for (Corona corona : coronas) {
                 String nombreCorona = corona.getNombre();
                 boolean coronaActiva = corona.getEstado();
-
-                // Según el nombre de la corona, determinar qué imágenes actualizar
                 switch (nombreCorona) {
                     case "Arte":
                         actualizarOpacidadImagenes(jugadoresListas.get(index).get(0), coronaActiva);
@@ -536,6 +528,7 @@ public class TableroController extends Controller implements Initializable {
             index++;
         }
     }
+
 
     private void actualizarOpacidadImagenes(ImageView imageView, boolean coronaActiva) {
         // Determinar la opacidad según el estado de la corona

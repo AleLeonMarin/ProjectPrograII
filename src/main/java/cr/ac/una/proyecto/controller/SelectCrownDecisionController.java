@@ -66,49 +66,42 @@ public class SelectCrownDecisionController extends Controller implements Initial
 
     private void cargarCategoriasRuleta() {
         categoriasRuleta = (ArrayList<String>) AppContext.getInstance().get("categoriasRuleta");
-        int index = 0;
-        for (String cat : categoriasRuleta)
-        {
-            System.out.println("CategoriaSelectCrown: " + cat + " Indice: " + index);
-            index++;
-        }
-    }
-
-    @FXML
-    private void OnActionBtnHistoria(ActionEvent event) {
-        categoriaRuleta = categoriasRuleta.get(6);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
-    }
-
-    @FXML
-    private void OnActionBtnArte(ActionEvent event) {
-        categoriaRuleta = categoriasRuleta.get(1);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
-    }
-
-    @FXML
-    private void OnActionBtnGeografia(ActionEvent event) {
-        categoriaRuleta = categoriasRuleta.get(2);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
     }
 
     @FXML
     private void OnActionBtnDeporte(ActionEvent event) {
         categoriaRuleta = categoriasRuleta.get(0);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
+        animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
     }
 
     @FXML
-    private void OnActionBtnEntretenimiento(ActionEvent event) {
-        categoriaRuleta = categoriasRuleta.get(5);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
+    private void OnActionBtnArte(ActionEvent event) {
+        categoriaRuleta = categoriasRuleta.get(1);
+        animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
+    }
+
+    @FXML
+    private void OnActionBtnGeografia(ActionEvent event) {
+        categoriaRuleta = categoriasRuleta.get(2);
+        animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
     }
 
     @FXML
     private void OnActionBtnCiencia(ActionEvent event) {
         categoriaRuleta = categoriasRuleta.get(3);
-        System.out.println("HOLA" + categoriaRuleta);
-        ((Stage) acpRootPane.getScene().getWindow()).close();
+        animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
+    }
+
+    @FXML
+    private void OnActionBtnEntretenimiento(ActionEvent event) {
+        categoriaRuleta = categoriasRuleta.get(5);
+        animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
+    }
+
+    @FXML
+    private void OnActionBtnHistoria(ActionEvent event) {
+        categoriaRuleta = categoriasRuleta.get(6);
+        animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
     }
 
     private void cargarSectorActual() {
@@ -132,7 +125,7 @@ public class SelectCrownDecisionController extends Controller implements Initial
             for (Corona corona : coronas)
             {
                 if (corona.getEstado())
-                { // Si el sector ya tiene esta corona, deshabilita el botón correspondiente
+                {
                     deshabilitarBoton(corona.getNombre());
                 }
             }
@@ -161,6 +154,16 @@ public class SelectCrownDecisionController extends Controller implements Initial
                 btnCiencia.setDisable(true);
                 break;
         }
+    }
+
+    private Runnable getRunnableOnFinishOut() {
+
+        Runnable onFinishOut = () ->
+        {
+            ((Stage) acpRootPane.getScene().getWindow()).close();
+        };
+
+        return onFinishOut;
     }
 
 }

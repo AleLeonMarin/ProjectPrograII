@@ -66,11 +66,9 @@ public class TablerosController extends Controller implements Initializable {
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
         this.imvPicker.setDisable(true);
-        if (!turnoDecidido)
-        {
+        if (!turnoDecidido) {
             calcularTurnos();
-        } else
-        {
+        } else {
             moverRuleta();
         }
         cargarLblJugadorActual();
@@ -79,8 +77,7 @@ public class TablerosController extends Controller implements Initializable {
     private void cargarLblJugadorActual() {
         String nombreJugador = sectores.get(juego.getTurnoActual()).getJugador().getNombre();
 
-        if (nombreJugador != null)
-        {
+        if (nombreJugador != null) {
             lblJugadorActual.setText(nombreJugador);
         }
 
@@ -90,18 +87,15 @@ public class TablerosController extends Controller implements Initializable {
         sectores = new ArrayList<>();
         sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
 
-        for (Sector sector : sectores)
-        {
+        for (Sector sector : sectores) {
             juego.agregarSector(sector);
         }
     }
 
     private void cargarAyudasFacil() {
         dificultad = (String) AppContext.getInstance().get("dificultad");
-        if (dificultad.equals("Facil"))
-        {
-            for (Sector sector : sectores)
-            {
+        if (dificultad.equals("Facil")) {
+            for (Sector sector : sectores) {
                 System.out.println("SeteandoAyudasFacil");
                 sector.setAyudas(juego.getAllAyudas());
             }
@@ -109,8 +103,8 @@ public class TablerosController extends Controller implements Initializable {
 
     }
 
-    public boolean pickerStatus(){
-        if(imvPicker.isDisable()){
+    public boolean pickerStatus() {
+        if (imvPicker.isDisable()) {
             return true;
         }
         return false;
@@ -136,17 +130,14 @@ public class TablerosController extends Controller implements Initializable {
         {
             this.imvPicker.setDisable(false);
 
-            if (categoria == categoriasRuleta.get(4))
-            {
+            if (categoria == categoriasRuleta.get(4)) {
                 turnoDecidido = true;
-            } else
-            {
+            } else {
                 juego.cambiarTurno();
             }
 
             System.out.println("TurnoDecididoOFF");
-            if (turnoDecidido)
-            {
+            if (turnoDecidido) {
                 Platform.runLater(() ->
                 {
                     System.out.println("TurnoDecididoON");
@@ -167,7 +158,7 @@ public class TablerosController extends Controller implements Initializable {
         Runnable onFinish = () ->
         {
             juego.setSectorActualAppContext();
-            Platform.runLater(() -> mostrarTarjetas());
+            Platform.runLater(() ->   mostrarTarjetas());
             this.imvPicker.setDisable(false);
             juego.setSectoresAppContext();
 
@@ -184,28 +175,21 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void mostrarTarjetas() {
-        if (categoria == categoriasRuleta.get(0))
-        {
+        if (categoria == categoriasRuleta.get(0)) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports", ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(1))
-        {
+        } else if (categoria == categoriasRuleta.get(1)) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardArt", ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(2))
-        {
+        } else if (categoria == categoriasRuleta.get(2)) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy", ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(3))
-        {
+        } else if (categoria == categoriasRuleta.get(3)) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience", ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(4))
-        {
+        } else if (categoria == categoriasRuleta.get(4)) {
             goCoronaDuelView();
             return;
 
-        } else if (categoria == categoriasRuleta.get(5))
-        {
+        } else if (categoria == categoriasRuleta.get(5)) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient", ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else
-        {
+        } else {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory", ((Stage) imvRuleta.getScene().getWindow()), true);
         }
         llamarPreguntaView();
@@ -221,37 +205,27 @@ public class TablerosController extends Controller implements Initializable {
         AppContext.getInstance().set("preguntaCategoria", categoria);
         mostrarTarjetas();
         setCorona();
-
     }
 
     private void setCorona() {
         cargarValorRespuestaPregunta();
 
-        if (valorPreguntaRespuesta)
-        {
+        if (valorPreguntaRespuesta) {
             juego.getSectorActual().setEstadoCorona(this.categoria, true);
             juego.setSectorActualAppContext();
         }
     }
 
     private void isJugadorInCoronaPos() {
-
-        System.out.println("Entrada Funcion");
-
         Sector sectorActual = juego.getSectorActual();
 
-        if (sectorActual != null)
-        {
-            System.out.println("Valido Si fue nulo");
-            if (sectorActual.getIsOnCoronaPos())
-            {
-                System.out.println("Valido esta en posicion de corona");
+        if (sectorActual != null) {
+            if (sectorActual.getIsOnCoronaPos()) {
                 goCoronaDuelView();
                 juego.getSectorActual().setIsOnCoronaPos(false);
                 juego.getSectorActual().setActualPosInFirst();
 
-                if (!valorPreguntaRespuesta)
-                {
+                if (!valorPreguntaRespuesta) {
                     juego.cambiarTurno();
                 }
             }
