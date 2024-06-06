@@ -3,6 +3,7 @@ package cr.ac.una.proyecto.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import javafx.geometry.HPos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,6 +18,8 @@ public class Sector {
     private String rutaImagenJugador;
     private ArrayList<Ayuda> ayudas;
 
+    boolean isOnCoronaPos;
+
     public Sector() {
     }
 
@@ -27,16 +30,15 @@ public class Sector {
         this.direccion = direccion;
         this.rutaImagenJugador = rutaImagenJugador;
         this.ayudas = new ArrayList<>();
-        setActualPosition();
+        setActualPosInFirst();
+        this.isOnCoronaPos = false;
 
     }
 
-    private void setActualPosition() {
-        if (direccion == 1 || direccion == 2)
-        {
+    public void setActualPosInFirst() {
+        if (direccion == 1 || direccion == 2) {
             this.posActual = this.posicionY;
-        } else
-        {
+        } else {
             this.posActual = this.posicionX;
         }
     }
@@ -93,63 +95,86 @@ public class Sector {
         this.ayudas = ayudas;
     }
 
+    public boolean getIsOnCoronaPos() {
+        return isOnCoronaPos;
+    }
+
+    public void setIsOnCoronaPos(boolean isOnCoronaPos) {
+        this.isOnCoronaPos = isOnCoronaPos;
+    }
+
     private void moverNodoA(ImageView imageView, int columna, int fila) {
         GridPane.setColumnIndex(imageView, columna);
         GridPane.setRowIndex(imageView, fila);
         GridPane.setHalignment(imageView, HPos.CENTER);
     }
 
+    private void checkCoronaPos(int posCorona) {
+
+        System.out.println("POSICION CORONA ES: " + posCorona);
+        System.out.println("POSICION ACTUAL: ES: " + posActual);
+        if (posActual == posCorona) {
+            isOnCoronaPos = true;
+        } else {
+            isOnCoronaPos = false;
+        }
+    }
+
     public int moverDerecha(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionY + 3)
-        {
+        System.out.println("POSACTUAL: " + posActual);
+        if (posActual >= posicionY + 3) {
             posActual = posicionY;
-        } else
-        {
+        } else {
             posActual++;
         }
         moverNodoA(imageView, posActual, posicionX);
+        System.out.println("POSACTUAL: " + posActual);
+        checkCoronaPos(posicionY + 3);
         return posActual;
     }
 
     public int moverIzquierda(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionY - 3)
-        {
+        System.out.println("POSDESPUESACTUAL: " + posActual);
+
+        if (posActual <= posicionY - 3) {
             posActual = posicionY;
-        } else
-        {
+        } else {
             posActual--;
+
         }
         moverNodoA(imageView, posActual, posicionX);
+        System.out.println("POSDESPUESACTUAL: " + posActual);
+
+        checkCoronaPos(posicionY - 3);
         return posActual;
     }
 
     public int moverAbajo(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionX + 3)
-        {
+        if (posActual >= posicionX + 3) {
             posActual = posicionX;
-        } else
-        {
+        } else {
             posActual++;
+
         }
         moverNodoA(imageView, posicionY, posActual);
+        checkCoronaPos(posicionX + 3);
         return posActual;
     }
 
     public int moverArriba(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionX - 3)
-        {
+        if (posActual <= posicionX - 3) {
             posActual = posicionX;
-        } else
-        {
+        } else {
             posActual--;
+
         }
         moverNodoA(imageView, posicionY, posActual);
+        checkCoronaPos(posicionX - 3);
         return posActual;
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-        switch (direccion)
-        {
+        switch (direccion) {
             case 1:
                 return moverDerecha(imageView, grdPane);
             case 2:
@@ -170,11 +195,9 @@ public class Sector {
 
     public void removerAyuda(String ayudaNombre) {
         Iterator<Ayuda> iterator = ayudas.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             Ayuda ayuda = iterator.next();
-            if (ayudaNombre.equals(ayuda.getNombre()))
-            {
+            if (ayudaNombre.equals(ayuda.getNombre())) {
                 iterator.remove();
             }
         }

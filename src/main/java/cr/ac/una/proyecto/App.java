@@ -19,7 +19,6 @@ public class App extends Application {
         stage.setTitle("Preguntados Jr");
         stage.getIcons().add(new Image(getClass().getResource("/cr/ac/una/proyecto/resources/logo.jpg").toExternalForm()));
         FlowController.getInstance().goViewInWindow("DevLogIn");
-
     }
 
     public static void main(String[] args) {
