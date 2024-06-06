@@ -46,6 +46,8 @@ public class TablerosController extends Controller implements Initializable {
     private String dificultad;
     private Boolean turnoDecidido;
     private Boolean valorPreguntaRespuesta;
+    @FXML
+    private Label lblRonda;
 
     @Override
     public void initialize() {
@@ -55,7 +57,7 @@ public class TablerosController extends Controller implements Initializable {
         cargarAyudasFacil();
         this.turnoDecidido = false;
         this.valorPreguntaRespuesta = false;
-        cargarLblJugadorActual();
+        cargarLabelsPartidaInfo();
     }
 
     @Override
@@ -65,6 +67,7 @@ public class TablerosController extends Controller implements Initializable {
 
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
+        cargarLabelsPartidaInfo();
         this.imvPicker.setDisable(true);
         if (!turnoDecidido)
         {
@@ -73,15 +76,18 @@ public class TablerosController extends Controller implements Initializable {
         {
             moverRuleta();
         }
-        cargarLblJugadorActual();
     }
 
-    private void cargarLblJugadorActual() {
+    private void cargarLabelsPartidaInfo() {
         String nombreJugador = sectores.get(juego.getTurnoActual()).getJugador().getNombre();
-
+        Integer rondasJuego = juego.getRondas();
         if (nombreJugador != null)
         {
             lblJugadorActual.setText(nombreJugador);
+        }
+        if (rondasJuego > 0 && rondasJuego != null)
+        {
+            this.lblRonda.setText(rondasJuego.toString());
         }
 
     }
@@ -142,15 +148,12 @@ public class TablerosController extends Controller implements Initializable {
                 turnoDecidido = true;
             } else
             {
-                juego.cambiarTurno();
+                juego.cambiarPrimerTurno();
             }
-
-            System.out.println("TurnoDecididoOFF");
             if (turnoDecidido)
             {
                 Platform.runLater(() ->
                 {
-                    System.out.println("TurnoDecididoON");
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Escoger turno", getStage(), "Cayo corona, el jugador: "
                             + sectores.get(juego.getTurnoActual()).getJugador().getNombre() + ", inicia la partida");
                 });
@@ -211,8 +214,9 @@ public class TablerosController extends Controller implements Initializable {
         }
         llamarPreguntaView();
         juego.jugar(grdpTablero);
-        setCorona();
         isJugadorInCoronaPos();
+        validarJugadorGanador();
+        cargarLabelsPartidaInfo();
     }
 
     private void goCoronaDuelView() {
@@ -222,6 +226,7 @@ public class TablerosController extends Controller implements Initializable {
         categoria = controladorCoronaSelection.getResultado();
         AppContext.getInstance().set("preguntaCategoria", categoria);
         mostrarTarjetas();
+        setCorona();
     }
 
     private void setCorona() {
@@ -231,6 +236,7 @@ public class TablerosController extends Controller implements Initializable {
         {
             juego.getSectorActual().setEstadoCorona(this.categoria, true);
             juego.setSectorActualAppContext();
+            validarCoronasPrimerTurno();
         }
     }
 
@@ -253,12 +259,25 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
+    private void validarCoronasPrimerTurno() {
+        Sector sectorActual = juego.getSectorActual();
+        if ((juego.validarPrimerTurnoObtencionDeCoronas(sectorActual)))
+        {
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Max Coronas alcanzadas", getStage(),
+                    "Has ganado 3 coronas en tu primer turno, es momento de pasar el turno.");
+        }
+    }
+
     private void cargarValorRespuestaPregunta() {
         this.valorPreguntaRespuesta = (Boolean) AppContext.getInstance().get("valorRespuesta");
     }
 
     public Juego getJuego() {
         return this.juego;
+    }
+
+    private void validarJugadorGanador() {
+        juego.valdidarCoronasGanador();
     }
 
 }

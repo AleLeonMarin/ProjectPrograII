@@ -32,10 +32,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" styleClass="contenedorBotones" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" styleClass="contenedorBotones" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <children>
                   <Label text="Jugador Actual : " />
                   <Label fx:id="lblJugadorActual" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" styleClass="contenedorBotones" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Ronda: " />
+                  <Label fx:id="lblRonda" />
                </children>
             </VBox>
          </children>

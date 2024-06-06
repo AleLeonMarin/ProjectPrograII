@@ -36,6 +36,12 @@
                   <Label fx:id="lblJugadorActual" />
                </children>
             </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contenedorBotones" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Ronda: " />
+                  <Label fx:id="lblRonda" />
+               </children>
+            </VBox>
          </children>
       </GridPane>
       <ImageView fx:id="imvPicker" fitHeight="84.0" fitWidth="81.0" layoutX="360.0" layoutY="258.0" onMouseClicked="#OnMouseClickedPicker" pickOnBounds="true">
