@@ -97,7 +97,7 @@ public class PreguntaController extends Controller implements Initializable {
         cargarEnunciadoPregunta();
         unbindRespuestas();
         cargarDificultadFromAppContext();
-        disableAll();
+        habilitarBotonesRespuesta(false);
         cargarAyudasDisponibles(sectorDto);
 
         animacion.simpleFadeIn(acpRootPane);
@@ -122,17 +122,14 @@ public class PreguntaController extends Controller implements Initializable {
     private void obtenerPreguntasCategoria() {
         PreguntaService preService = new PreguntaService();
         RespuestaUtil respuesta = preService.getPreguntasActivasPorCategoria(preguntaCategoria);
-        if (respuesta.getEstado())
-        {
+        if (respuesta.getEstado()) {
             preguntasDto.clear();
             preguntasDto.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
-            for (PreguntaDto pre : preguntasDto)
-            {
+            for (PreguntaDto pre : preguntasDto) {
 
                 System.out.println("Enunciado: " + pre.getEnunciado());
             }
-        } else
-        {
+        } else {
             System.err.println("Error al obtener las preguntas: " + respuesta.getMensajeInterno());
         }
 
@@ -140,24 +137,20 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarRespuestas(Long preguntaId) {
         respuestasDto.clear();
-        try
-        {
+        try {
             RespuestaService respuestaService = new RespuestaService();
             RespuestaUtil respuesta = respuestaService.getRespuestasPreguntas(preguntaId);
 
-            if (respuesta.getEstado())
-            {
+            if (respuesta.getEstado()) {
                 unbindRespuestas();
                 respuestasDto.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
                 Collections.shuffle(respuestasDto);
                 bindRespuestas();
-            } else
-            {
+            } else {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), respuesta.getMensaje());
 
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class
                     .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), "Ocurrio un error consultando las repuestas.");
@@ -166,14 +159,12 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void bindRespuestas() {
-        if (respuestasDto.size() > 0)
-        {
+        if (respuestasDto.size() > 0) {
             this.btnRespuesta1.textProperty().bindBidirectional(respuestasDto.get(0).enunciado);
             this.btnRespuesta2.textProperty().bindBidirectional(respuestasDto.get(1).enunciado);
             this.btnRespuesta3.textProperty().bindBidirectional(respuestasDto.get(2).enunciado);
             this.btnRespuesta4.textProperty().bindBidirectional(respuestasDto.get(3).enunciado);
-        } else
-        {
+        } else {
             this.btnRespuesta1.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta2.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta3.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
@@ -183,14 +174,12 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void unbindRespuestas() {
 
-        if (respuestasDto.size() > 0)
-        {
+        if (respuestasDto.size() > 0) {
             this.btnRespuesta1.textProperty().unbindBidirectional(respuestasDto.get(0).enunciado);
             this.btnRespuesta2.textProperty().unbindBidirectional(respuestasDto.get(1).enunciado);
             this.btnRespuesta3.textProperty().unbindBidirectional(respuestasDto.get(2).enunciado);
             this.btnRespuesta4.textProperty().unbindBidirectional(respuestasDto.get(3).enunciado);
-        } else
-        {
+        } else {
             this.btnRespuesta1.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta2.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
             this.btnRespuesta3.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
@@ -241,14 +230,12 @@ public class PreguntaController extends Controller implements Initializable {
         respuestaDto = respuestasDto.get(btnIndice);
         jugadorDto.setPreguntasRespondidas(jugadorDto.getPreguntasRespondidas() + 1);
 
-        if (respuestaDto.getIsCorrect().equals("C"))
-        {
+        if (respuestaDto.getIsCorrect().equals("C")) {
             intentos--;
             this.resultadoValorRespuesta = true;
             validarIntentos(true);
 
-        } else
-        {
+        } else {
             intentos--;
             this.resultadoValorRespuesta = false;
             botones.get(btnIndice).setDisable(true);
@@ -269,19 +256,16 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void validarIntentos(boolean value) {
 
-        if (value == true)
-        {
+        if (value == true) {
             //sonido de correcta
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta", acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
 
-        } else if (intentos <= 0)
-        {
+        } else if (intentos <= 0) {
             //sonido de error
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
-        } else
-        {
+        } else {
             //sonido de error
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
         }
@@ -292,8 +276,9 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onMouseClickedBomba(MouseEvent event) {
         String ayuda = "Bomba";
-        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
+
         bombaAction();//sounds or animation
         sectorDto.removerAyuda(ayuda);
 
@@ -302,18 +287,20 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onMouseClickedNext(MouseEvent event) {
         String ayuda = "Pasar";
-        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
+
         cargarEnunciadoPregunta();
         habilitarAyudaImagen(false, imvNext);
         sectorDto.removerAyuda(ayuda);
+        habilitarBotonesRespuesta(true);
 
     }
 
     @FXML
     private void onMouseOportunidadDoble(MouseEvent event) {
         String ayuda = "DobleOportunidad";
-        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
         this.intentos += 1;
         habilitarAyudaImagen(false, imvSecondOportunity);
@@ -324,7 +311,7 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onMouseTirarRuleta(MouseEvent event) {
         String ayuda = "TirarRuleta";
-        new Mensaje().show(Alert.AlertType.INFORMATION, "Ayuda Activada",
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
 
         TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance().getController("TirarRuletaView");
@@ -335,26 +322,25 @@ public class PreguntaController extends Controller implements Initializable {
         habilitarAyudaImagen(false, imvTirarRuleta);
         animacion.simpleFadeIn(acpRootPane);
         sectorDto.removerAyuda(ayuda);
+        habilitarBotonesRespuesta(true);
     }
 
     private void cargarDificultadFromAppContext() {
         dificultad = ((String) AppContext.getInstance().get("dificultad"));
 
-        if (dificultad.equals("Dificil"))
-        {
-            disableAll();
-        } else
-        {
+        if (dificultad.equals("Dificil")) {
+            habilitarBotonesRespuesta(false);
+        } else {
             cargarAyudasDisponibles(sectorDto);
         }
     }
 
-    private void disableAll() {
+    private void habilitarBotonesRespuesta(boolean valor) {
 
-        habilitarAyudaImagen(false, imvNext);
-        habilitarAyudaImagen(false, imvBomba);
-        habilitarAyudaImagen(false, imvSecondOportunity);
-        habilitarAyudaImagen(false, imvTirarRuleta);
+        habilitarAyudaImagen(valor, imvNext);
+        habilitarAyudaImagen(valor, imvBomba);
+        habilitarAyudaImagen(valor, imvSecondOportunity);
+        habilitarAyudaImagen(valor, imvTirarRuleta);
 
     }
 
@@ -362,17 +348,13 @@ public class PreguntaController extends Controller implements Initializable {
 
         System.out.println("Ayuda nombre: " + ayuda.getNombre());
 
-        if (ayuda.getNombre().equals("Bomba") && ayuda.getEstado())
-        {
+        if (ayuda.getNombre().equals("Bomba") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvBomba);
-        } else if (ayuda.getNombre().equals("Pasar") && ayuda.getEstado())
-        {
+        } else if (ayuda.getNombre().equals("Pasar") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvNext);
-        } else if (ayuda.getNombre().equals("DobleOportunidad") && ayuda.getEstado())
-        {
+        } else if (ayuda.getNombre().equals("DobleOportunidad") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvSecondOportunity);
-        } else if (ayuda.getNombre().equals("TirarRuleta") && ayuda.getEstado())
-        {
+        } else if (ayuda.getNombre().equals("TirarRuleta") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvTirarRuleta);
         }
 
@@ -386,8 +368,7 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarAyudasDisponibles(Sector sector) {
 
-        for (Ayuda ayuda : sector.getAyudas())
-        {
+        for (Ayuda ayuda : sector.getAyudas()) {
             habilitarPorAyuda(ayuda);
         }
     }
@@ -398,13 +379,11 @@ public class PreguntaController extends Controller implements Initializable {
         int index = 0;
         int contadorBtonoes = 0;
 
-        while (contadorBtonoes < cantidadRes)
-        {
+        while (contadorBtonoes < cantidadRes) {
             RespuestaDto respuestaDto = new RespuestaDto();
             respuestaDto = respuestasDto.get(index);
             System.out.println("PreguntaEnun: " + respuestaDto.getEnunciado());
-            if (respuestaDto.getIsCorrect().equals("X"))
-            {
+            if (respuestaDto.getIsCorrect().equals("X")) {
                 botones.get(index).setDisable(true);
                 contadorBtonoes++;
             }
@@ -422,8 +401,7 @@ public class PreguntaController extends Controller implements Initializable {
         this.botones.add(btnRespuesta3);
         this.botones.add(btnRespuesta4);
 
-        for (MFXButton boton : botones)
-        {
+        for (MFXButton boton : botones) {
             boton.setDisable(false);
         }
     }
