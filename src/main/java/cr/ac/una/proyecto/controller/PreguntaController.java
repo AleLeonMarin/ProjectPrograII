@@ -5,6 +5,7 @@ import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.Animacion;
@@ -30,6 +31,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -38,14 +40,40 @@ import javafx.stage.Stage;
 
 public class PreguntaController extends Controller implements Initializable {
 
-    private Animacion animacion;
-
     @FXML
     private VBox VboxRespuestas;
 
     @FXML
     private TextArea txaEnunciado;
 
+    @FXML
+    private MFXButton btnRespuesta1;
+
+    @FXML
+    private MFXButton btnRespuesta2;
+
+    @FXML
+    private MFXButton btnRespuesta3;
+
+    @FXML
+    private MFXButton btnRespuesta4;
+
+    @FXML
+    private AnchorPane acpRootPane;
+
+    @FXML
+    private ImageView imvBomba;
+
+    @FXML
+    private ImageView imvNext;
+
+    @FXML
+    private ImageView imvSecondOportunity;
+
+    @FXML
+    private ImageView imvTirarRuleta;
+
+    private Animacion animacion;
     private String preguntaCategoria;
     private JugadorDto jugadorDto;
     private Sector sectorDto;
@@ -57,25 +85,20 @@ public class PreguntaController extends Controller implements Initializable {
     private String dificultad;
     private int intentos;
     private ArrayList<MFXButton> botones;
-
-    @FXML
-    private MFXButton btnRespuesta1;
-    @FXML
-    private MFXButton btnRespuesta2;
-    @FXML
-    private MFXButton btnRespuesta3;
-    @FXML
-    private MFXButton btnRespuesta4;
-    @FXML
-    private AnchorPane acpRootPane;
-    @FXML
-    private ImageView imvBomba;
-    @FXML
-    private ImageView imvNext;
-    @FXML
-    private ImageView imvSecondOportunity;
-    @FXML
-    private ImageView imvTirarRuleta;
+    private Integer contadorHistoria = 0;
+    private Integer contadorCiencia = 0;
+    private Integer contadorDeportes = 0;
+    private Integer contadorGeografia = 0;
+    private Integer contadorEntretenimiento = 0;
+    private Integer contadorArte = 0;
+    private Integer correctaHistoria = 0;
+    private Integer correctaCiencia = 0;
+    private Integer correctaDeportes = 0;
+    private Integer correctaGeografia = 0;
+    private Integer correctaEntretenimiento = 0;
+    private Integer correctaArte = 0;
+    private Integer generalPregunta = 0;
+    private Integer generalCorrecta = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,6 +113,7 @@ public class PreguntaController extends Controller implements Initializable {
         respuestasDto = new ArrayList<>();
         respuetaDtoAux = new RespuestaDto();
         preguntaDto = new PreguntaDto();
+        jugadorDto = new JugadorDto();
         this.intentos = 1;
         cargarBotones();
         cargarDatosDesdeAppContext();
@@ -99,7 +123,7 @@ public class PreguntaController extends Controller implements Initializable {
         cargarDificultadFromAppContext();
         habilitarBotonesRespuesta(false);
         cargarAyudasDisponibles(sectorDto);
-
+        consultarJugadores();
         animacion.simpleFadeIn(acpRootPane);
 
     }
@@ -153,7 +177,8 @@ public class PreguntaController extends Controller implements Initializable {
         } catch (Exception ex) {
             Logger.getLogger(MantenimientoController.class
                     .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), "Ocurrio un error consultando las repuestas.");
+            new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(),
+                    "Ocurrio un error consultando las repuestas.");
         }
 
     }
@@ -208,46 +233,84 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
         validarRespuestaCorrecta(0);
+        actualizarJugador(this.jugadorDto.getId());
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
         validarRespuestaCorrecta(1);
+        actualizarJugador(this.jugadorDto.getId());
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
         validarRespuestaCorrecta(2);
+        actualizarJugador(this.jugadorDto.getId());
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
         validarRespuestaCorrecta(3);
+        actualizarJugador(this.jugadorDto.getId());
     }
 
     private void validarRespuestaCorrecta(int btnIndice) {
         RespuestaDto respuestaDto = new RespuestaDto();
         respuestaDto = respuestasDto.get(btnIndice);
-        jugadorDto.setPreguntasRespondidas(jugadorDto.getPreguntasRespondidas() + 1);
 
         if (respuestaDto.getIsCorrect().equals("C")) {
             intentos--;
             this.resultadoValorRespuesta = true;
             validarIntentos(true);
 
+            if (preguntaCategoria.equals("Historia")) {
+                contadorHistoria++;
+                correctaHistoria++;
+            } else if (preguntaCategoria.equals("Ciencia")) {
+                contadorCiencia++;
+                correctaCiencia++;
+            } else if (preguntaCategoria.equals("Deportes")) {
+                contadorDeportes++;
+                correctaDeportes++;
+            } else if (preguntaCategoria.equals("Geografia")) {
+                contadorGeografia++;
+                correctaGeografia++;
+            } else if (preguntaCategoria.equals("Entretenimiento")) {
+                contadorEntretenimiento++;
+                correctaEntretenimiento++;
+            } else if (preguntaCategoria.equals("Arte")) {
+                contadorArte++;
+                correctaArte++;
+            }
+            generalCorrecta++;
+
         } else {
             intentos--;
             this.resultadoValorRespuesta = false;
             botones.get(btnIndice).setDisable(true);
             validarIntentos(false);
+            if (preguntaCategoria.equals("Historia")) {
+                contadorHistoria++;
+            } else if (preguntaCategoria.equals("Ciencia")) {
+                contadorCiencia++;
+            } else if (preguntaCategoria.equals("Deportes")) {
+                contadorDeportes++;
+            } else if (preguntaCategoria.equals("Geografia")) {
+                contadorGeografia++;
+            } else if (preguntaCategoria.equals("Entretenimiento")) {
+                contadorEntretenimiento++;
+            } else if (preguntaCategoria.equals("Arte")) {
+                contadorArte++;
+            }
+
+            generalPregunta++;
         }
 
     }
 
     private Runnable getRunnableOnFinishOut() {
 
-        Runnable onFinishOut = () ->
-        {
+        Runnable onFinishOut = () -> {
             ((Stage) acpRootPane.getScene().getWindow()).close();
         };
 
@@ -257,17 +320,21 @@ public class PreguntaController extends Controller implements Initializable {
     private void validarIntentos(boolean value) {
 
         if (value == true) {
-            //sonido de correcta
-            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta", acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
+            // sonido de correcta
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta",
+                    acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
 
         } else if (intentos <= 0) {
-            //sonido de error
-            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
+            // sonido de error
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
+                    acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
         } else {
-            //sonido de error
-            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
+            // sonido de error
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
+                    acpRootPane.getScene().getWindow(),
+                    "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
         }
 
         AppContext.getInstance().set("valorRespuesta", resultadoValorRespuesta);
@@ -279,7 +346,7 @@ public class PreguntaController extends Controller implements Initializable {
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
 
-        bombaAction();//sounds or animation
+        bombaAction();// sounds or animation
         sectorDto.removerAyuda(ayuda);
 
     }
@@ -314,8 +381,10 @@ public class PreguntaController extends Controller implements Initializable {
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
 
-        TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance().getController("TirarRuletaView");
-        FlowController.getInstance().goViewInWindowModal("TirarRuletaView", ((Stage) txaEnunciado.getScene().getWindow()), true);
+        TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance()
+                .getController("TirarRuletaView");
+        FlowController.getInstance().goViewInWindowModal("TirarRuletaView",
+                ((Stage) txaEnunciado.getScene().getWindow()), true);
         preguntaCategoria = (String) tirarRuletaBusquedaController.getResultado();
         obtenerPreguntasCategoria();
         cargarEnunciadoPregunta();
@@ -403,6 +472,52 @@ public class PreguntaController extends Controller implements Initializable {
 
         for (MFXButton boton : botones) {
             boton.setDisable(false);
+        }
+    }
+
+    private void actualizarJugador(Long id) {
+        try {
+            JugadorService jugadorService = new JugadorService();
+            RespuestaUtil respuestaUtil = jugadorService.actualizarJugador(this.jugadorDto);
+            if (respuestaUtil.getEstado()) {
+                this.jugadorDto = (JugadorDto) respuestaUtil.getResultado("Jugador");
+    
+                jugadorDto.setContadorArte(contadorArte);
+                jugadorDto.setContadorCiencia(contadorCiencia);
+                jugadorDto.setContadorDeportes(contadorDeportes);
+                jugadorDto.setContadorEntretenimiento(contadorEntretenimiento);
+                jugadorDto.setContadorGeografia(contadorGeografia);
+                jugadorDto.setContadorHistoria(contadorHistoria);
+                jugadorDto.setContadorCorrectasArte(contadorArte);
+                jugadorDto.setContadorCorrectasCiencia(contadorCiencia);
+                jugadorDto.setContadorCorrectasDeportes(contadorDeportes);
+                jugadorDto.setContadorCorrectasEntretenimiento(contadorEntretenimiento);
+                jugadorDto.setContadorCorrectasGeografia(contadorGeografia);
+                jugadorDto.setContadorCorrectaHistoria(contadorHistoria);
+                jugadorDto.setPRespondidasCorrectamente(correctaArte);
+                jugadorDto.setPreguntasRespondidas(generalPregunta);
+    
+                new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Jugador", getStage(), "Jugador Actualizado");
+            } else {
+                new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(), "Error al actualizar el jugador");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PreguntaController.class.getName()).log(Level.SEVERE, "Error actualizando el jugador.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Actualizar jugador", getStage(), "Ocurrio un error actualizando el jugador.");
+        }
+    }
+    
+
+    private void consultarJugadores() {
+        JugadorService jugadorService = new JugadorService();
+        RespuestaUtil respuesta = jugadorService.getAll();
+        if (respuesta.getEstado()) {
+            List<JugadorDto> jugadores = (List<JugadorDto>) respuesta.getResultado("Jugadores");
+            for (JugadorDto jugador : jugadores) {
+                System.out.println("Jugador: " + jugador.getId());
+            }
+        } else {
+            System.err.println("Error al obtener los jugadores: " + respuesta.getMensajeInterno());
         }
     }
 

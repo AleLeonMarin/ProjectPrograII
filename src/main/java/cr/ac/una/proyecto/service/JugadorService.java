@@ -7,15 +7,10 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.Query;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.JugadorDto;
-import cr.ac.una.proyecto.model.Pregunta;
-import cr.ac.una.proyecto.model.PreguntaDto;
-import cr.ac.una.proyecto.model.Respuesta;
-import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.util.EntityManagerHelper;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 
@@ -25,25 +20,20 @@ public class JugadorService {
     private EntityTransaction et;
 
     public RespuestaUtil guardarJugadores(List<JugadorDto> jugadoresDto) {
-        try
-        {
+        try {
             et = em.getTransaction();
             et.begin();
-            for (JugadorDto jugadorDto : jugadoresDto)
-            {
+            for (JugadorDto jugadorDto : jugadoresDto) {
                 Jugador jugador;
-                if (jugadorDto.getId() != null && jugadorDto.getId() > 0)
-                {
+                if (jugadorDto.getId() != null && jugadorDto.getId() > 0) {
                     jugador = em.find(Jugador.class, jugadorDto.getId());
-                    if (jugador == null)
-                    {
+                    if (jugador == null) {
                         return new RespuestaUtil(false, "No se encontró el jugador a modificar.",
                                 "guardarJugador NoResultException");
                     }
                     jugador.actualizar(jugadorDto);
                     jugador = em.merge(jugador);
-                } else
-                {
+                } else {
                     jugador = new Jugador(jugadorDto);
                     em.persist(jugador);
                 }
@@ -55,10 +45,8 @@ public class JugadorService {
             et.commit();
             return new RespuestaUtil(true, "", "", "Jugadores", jugadoresDto);
 
-        } catch (Exception ex)
-        {
-            if (et != null && et.isActive())
-            {
+        } catch (Exception ex) {
+            if (et != null && et.isActive()) {
                 et.rollback();
             }
             Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error guardando los jugadores.", ex);
@@ -75,7 +63,7 @@ public class JugadorService {
                 jugadorDto.add(new JugadorDto(jugador));
             }
             return new RespuestaUtil(true, "", "", "Jugadores", jugadorDto);
-        }  catch (NonUniqueResultException ex) {
+        } catch (NonUniqueResultException ex) {
             Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE,
                     "Ocurrio un error al consultar el jugador.", ex);
             return new RespuestaUtil(false, "Ocurrio un error al consultar los jugadores.",
@@ -108,6 +96,37 @@ public class JugadorService {
             Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE,
                     "Error obteniendo la pregunta [" + id + "]", ex);
             return new RespuestaUtil(false, "Error obteniendo el jugador.", "getJugador " + ex.getMessage());
+        }
+    }
+
+    public RespuestaUtil actualizarJugador(JugadorDto jugadorDto) {
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Jugador jugador;
+
+            if (jugadorDto.getId() != null || jugadorDto.getId() > 0) {
+                jugador = em.find(Jugador.class, jugadorDto.getId());
+                if (jugador == null) {
+                    return new RespuestaUtil(false, "No se encontró el jugador a modificar.",
+                            "actualizarJugador NoResultException");
+                }
+
+                jugador.actualizar(jugadorDto);
+                jugador = em.merge(jugador);
+            }
+
+            jugador = new Jugador(jugadorDto);
+
+            et.commit();
+
+            return new RespuestaUtil(true, "", "", "Jugador", new JugadorDto(jugador));
+        } catch (Exception ex) {
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error actualizando el jugador.", ex);
+            return new RespuestaUtil(false, "Error actualizando el jugador.", "actualizarJugador " + ex.getMessage());
         }
     }
 
