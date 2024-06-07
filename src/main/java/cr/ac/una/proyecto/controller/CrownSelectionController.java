@@ -1,8 +1,10 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.util.Animacion;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import cr.ac.una.proyecto.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
@@ -23,8 +25,11 @@ public class CrownSelectionController extends Controller implements Initializabl
     @FXML
     private AnchorPane acpRootPane;
 
+    private Boolean resultado;
+
     @FXML
     void onActionBtnCorona(ActionEvent event) {
+        this.resultado = true;
         Runnable onFinishOut = () ->
         {
             ((Stage) acpRootPane.getScene().getWindow()).close();
@@ -37,6 +42,7 @@ public class CrownSelectionController extends Controller implements Initializabl
 
     @FXML
     void onActionBtnDuelo(ActionEvent event) {
+        resultado = false;
         Runnable onFinishOut = () ->
         {
             ((Stage) acpRootPane.getScene().getWindow()).close();
@@ -59,6 +65,11 @@ public class CrownSelectionController extends Controller implements Initializabl
     private void initValues() {
         animacion = new Animacion();
         animacion.simpleFadeIn(acpRootPane);
+        this.resultado = true;
+    }
+
+    public boolean getResultado() {
+return this.resultado;
     }
 
 }

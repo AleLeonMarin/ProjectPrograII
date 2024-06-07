@@ -101,7 +101,6 @@ public class PreguntaController extends Controller implements Initializable {
         cargarAyudasDisponibles(sectorDto);
 
         animacion.simpleFadeIn(acpRootPane);
-
     }
 
     private void cargarDatosDesdeAppContext() {
@@ -112,6 +111,11 @@ public class PreguntaController extends Controller implements Initializable {
     private void cargarCategoriaAppContext() {
 
         this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
+    }
+
+    private void setSectorDtoAppContext() {
+
+        AppContext.getInstance().set("preguntaSector", sectorDto);
     }
 
     private void cargarSectorJugadorDtoAppContext() {
@@ -235,7 +239,9 @@ public class PreguntaController extends Controller implements Initializable {
             this.resultadoValorRespuesta = true;
             validarIntentos(true);
 
+
         } else {
+
             intentos--;
             this.resultadoValorRespuesta = false;
             botones.get(btnIndice).setDisable(true);
@@ -255,7 +261,7 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void validarIntentos(boolean value) {
-
+        sectorDto.printAyudasInfo();
         if (value == true) {
             //sonido de correcta
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta", acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
@@ -269,48 +275,49 @@ public class PreguntaController extends Controller implements Initializable {
             //sonido de error
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta", acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
         }
-
-        AppContext.getInstance().set("valorRespuesta", resultadoValorRespuesta);
     }
 
     @FXML
     private void onMouseClickedBomba(MouseEvent event) {
+        habilitarAyudaImagen(false, imvBomba);
         String ayuda = "Bomba";
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
 
         bombaAction();//sounds or animation
         sectorDto.removerAyuda(ayuda);
-
     }
 
     @FXML
     private void onMouseClickedNext(MouseEvent event) {
+        habilitarAyudaImagen(false, imvNext);
+        habilitarBotonesRespuesta(true);
         String ayuda = "Pasar";
+        sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
 
         cargarEnunciadoPregunta();
-        habilitarAyudaImagen(false, imvNext);
-        sectorDto.removerAyuda(ayuda);
-        habilitarBotonesRespuesta(true);
 
     }
 
     @FXML
     private void onMouseOportunidadDoble(MouseEvent event) {
+        habilitarAyudaImagen(false, imvSecondOportunity);
         String ayuda = "DobleOportunidad";
+        sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
         this.intentos += 1;
-        habilitarAyudaImagen(false, imvSecondOportunity);
-        sectorDto.removerAyuda(ayuda);
 
     }
 
     @FXML
     private void onMouseTirarRuleta(MouseEvent event) {
+        habilitarAyudaImagen(false, imvTirarRuleta);
+        habilitarBotonesRespuesta(true);
         String ayuda = "TirarRuleta";
+        sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
 
@@ -319,10 +326,8 @@ public class PreguntaController extends Controller implements Initializable {
         preguntaCategoria = (String) tirarRuletaBusquedaController.getResultado();
         obtenerPreguntasCategoria();
         cargarEnunciadoPregunta();
-        habilitarAyudaImagen(false, imvTirarRuleta);
         animacion.simpleFadeIn(acpRootPane);
-        sectorDto.removerAyuda(ayuda);
-        habilitarBotonesRespuesta(true);
+
     }
 
     private void cargarDificultadFromAppContext() {
@@ -345,9 +350,6 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void habilitarPorAyuda(Ayuda ayuda) {
-
-        System.out.println("Ayuda nombre: " + ayuda.getNombre());
-
         if (ayuda.getNombre().equals("Bomba") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvBomba);
         } else if (ayuda.getNombre().equals("Pasar") && ayuda.getEstado()) {
@@ -390,7 +392,6 @@ public class PreguntaController extends Controller implements Initializable {
             index++;
         }
 
-        habilitarAyudaImagen(false, imvBomba);
     }
 
     private void cargarBotones() {
@@ -406,4 +407,15 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
+    public boolean getResultadoRespuestaPregunta() {
+        return resultadoValorRespuesta;
+    }
+
+    public Sector getSectorDto(){
+        return sectorDto;
+    }
+
+
 }
+
+

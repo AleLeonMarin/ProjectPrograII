@@ -22,8 +22,8 @@ public class Ayuda {
         return estado;
     }
 
-    public void setEstado(boolean ayudaActiva) {
-        this.estado = ayudaActiva;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public String getNombre() {
