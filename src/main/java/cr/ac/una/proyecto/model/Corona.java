@@ -1,20 +1,24 @@
 package cr.ac.una.proyecto.model;
 
 /**
- *
  * @author justi
  */
-public class Ayuda {
+public class Corona {
 
     private boolean estado;
     private String nombre;
 
-    public Ayuda() {
+    public Corona() {
 
     }
 
-    public Ayuda(String nombre, boolean ayuda) {
-        this.estado = ayuda;
+    public Corona(String nombre) {
+        this.nombre = nombre;
+        this.estado = false;
+    }
+
+    public Corona(String nombre, boolean estado) {
+        this.estado = estado;
         this.nombre = nombre;
     }
 
@@ -22,8 +26,8 @@ public class Ayuda {
         return estado;
     }
 
-    public void setEstado(boolean ayudaActiva) {
-        this.estado = ayudaActiva;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public String getNombre() {

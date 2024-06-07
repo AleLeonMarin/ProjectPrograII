@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -34,6 +36,26 @@
                <children>
                   <Label text="Jugador Actual : " />
                   <Label fx:id="lblJugadorActual" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="contenedorBotones" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Ronda: " />
+                  <Label fx:id="lblRonda" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <children>
+                  <MFXButton fx:id="btnCederTurno" contentDisplay="RIGHT" onAction="#OnActionBtnCederTurno" text="Pasar">
+                     <styleClass>
+                        <String fx:value="mfx-btn-next" />
+                        <String fx:value="jfx-mfx-btn-next" />
+                        <String fx:value="btn" />
+                     </styleClass>
+                     <graphic>
+                        <ImageView fitHeight="80.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                  </MFXButton>
                </children>
             </VBox>
          </children>

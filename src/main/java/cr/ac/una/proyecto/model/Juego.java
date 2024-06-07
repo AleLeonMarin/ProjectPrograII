@@ -4,6 +4,7 @@ import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -16,6 +17,7 @@ public class Juego {
     private ArrayList<Sector> sectores;
     private ArrayList<ImageView> imagenesPeones;
     private int turnoActual;
+    private int rondas;
     private Ruleta ruleta;
     private Boolean valorRespuesta;
     private Boolean valorCoronaRuleta;
@@ -26,8 +28,9 @@ public class Juego {
         sectores = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
         turnoActual = 0;
+        rondas = 1;
         dificultad = "";
-        cargarDificultadFromAppContext();
+        cargarAyudasFacil();
     }
 
     public void agregarSector(Sector sector) {
@@ -36,7 +39,8 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
-        for (Sector sectorActual : sectores) {
+        for (Sector sectorActual : sectores)
+        {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
@@ -51,9 +55,14 @@ public class Juego {
         }
     }
 
-    public void cargarSectorActualAppContext() {
+    public void setSectorActualAppContext() {
         Sector sectorActual = sectores.get(turnoActual);
         setSectorJugadorDtoAppContext(sectorActual);
+    }
+
+    public void setSectoresAppContext() {
+        AppContext.getInstance().set("JuegoSectores", sectores);
+        System.out.println("Set sectores juego");
     }
 
     public void jugar(GridPane grdpTablero) {
@@ -64,21 +73,26 @@ public class Juego {
         sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
         sectores.set(turnoActual, sectorActual);
 
-        if (valorRespuesta) {
-            System.out.println("Respuesta correcta. ¡Has ganado un punto!, puedes girar de nuevo" + sectorActual.getJugador().getNombre());
+        sectorActual.printCoronasInfo();
+        sectorActual.printAyudasInfo();
+
+        if (valorRespuesta)
+        {
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
-        } else {
-            System.out.println("Respuesta incorrecta. Siguiente jugador.");
+        } else
+        {
             cambiarTurno();
         }
     }
 
     public Sector getSectorActual() {
 
-        if (sectores.get(turnoActual) != null) {
+        if (sectores.get(turnoActual) != null)
+        {
             return sectores.get(turnoActual);
-        } else {
+        } else
+        {
             return null;
         }
     }
@@ -95,33 +109,129 @@ public class Juego {
         dificultad = (String) AppContext.getInstance().get("dificultad");
     }
 
-    public ArrayList<Ayuda> getAllAyudas() {
-        ArrayList<Ayuda> ayudas = new ArrayList<>();
-        ArrayList<String> nombresAyudas = new ArrayList<>();
-
-        nombresAyudas.add("Bomba");
-        nombresAyudas.add("Pasar");
-        nombresAyudas.add("DobleOportunidad");
-        nombresAyudas.add("TirarRuleta");
-
-        ayudas.add(new Ayuda(nombresAyudas.get(0), true));
-        ayudas.add(new Ayuda(nombresAyudas.get(1), true));
-        ayudas.add(new Ayuda(nombresAyudas.get(2), true));
-        ayudas.add(new Ayuda(nombresAyudas.get(3), true));
-        return ayudas;
-
-    }
-
     private void setSectorJugadorDtoAppContext(Sector sector) {
         AppContext.getInstance().set("preguntaSector", sector);
     }
 
+    private void cargarAyudasFacil() {
+        cargarDificultadFromAppContext();
+        if (dificultad.equals("Facil"))
+        {
+            for (Sector sector : sectores)
+            {
+                sector.setAyudas(getAllAyudas());
+            }
+        }
+    }
+
+    public ArrayList<Ayuda> getAllAyudas() {
+        ArrayList<Ayuda> ayudas = new ArrayList<>();
+        ayudas.add(new Ayuda("Bomba", true));
+        ayudas.add(new Ayuda("Pasar", true));
+        ayudas.add(new Ayuda("DobleOportunidad", true));
+        ayudas.add(new Ayuda("TirarRuleta", true));
+        return ayudas;
+    }
+
     public void cambiarTurno() {
+        turnoActual = (turnoActual + 1) % sectores.size();
+        if (turnoActual == 0)
+        {
+            rondas++;
+        }
+    }
+
+    public void cambiarPrimerTurno() {
         turnoActual = (turnoActual + 1) % sectores.size();
     }
 
-    private void mostrarGanador() {
+    private void mostrarGanador(Sector sector) {
+        System.out.println("Jugador: " + sector.getJugador().getNombre() + ", ha ganado la partida");
+        System.out.println("Cantidad de rondas jugadas: " + rondas);
+    }
 
+    public void valdidarCoronasGanador() {
+        int limiteRondasGanador = 25;
+        boolean coronasActivas = true;
+        if (rondas > limiteRondasGanador)
+        {
+            validarGanadorPorRondas();
+        } else
+        {
+            Sector sectorActual = sectores.get(turnoActual);
+            for (Corona c : sectorActual.getCoronas())
+            {
+                if (!(c.getEstado()))
+                {
+                    coronasActivas = false;
+                }
+            }
+            if (coronasActivas)
+            {
+                mostrarGanador(sectorActual);
+            }
+        }
+    }
+
+    public void validarGanadorPorRondas() {
+        Sector ganador = null;
+        int maxCoronasActivas = 0;
+        ArrayList<Sector> sectoresEmpatados = new ArrayList<>();
+
+        for (Sector sector : sectores)
+        {
+            int coronasActivas = contarCoronasActivas(sector);
+            if (coronasActivas > maxCoronasActivas)
+            {
+                ganador = sector;
+                maxCoronasActivas = coronasActivas;
+                sectoresEmpatados.clear();
+                sectoresEmpatados.add(sector);
+            } else if (coronasActivas == maxCoronasActivas)
+            {
+                sectoresEmpatados.add(sector);
+            }
+        }
+
+        if (sectoresEmpatados.size() == 1)
+        {
+            mostrarGanador(sectoresEmpatados.get(0));
+        } else
+        {
+            manejarEmpate(sectoresEmpatados);
+        }
+    }
+
+    private int contarCoronasActivas(Sector sector) {
+        int contador = 0;
+        for (Corona corona : sector.getCoronas())
+        {
+            if (corona.getEstado())
+            {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    public boolean validarPrimerTurnoObtencionDeCoronas(Sector sector) {
+        if (rondas == 1)
+        {
+            int contador = contarCoronasActivas(sector);
+            int limiteCoronas = 3;
+            if (contador >= limiteCoronas)
+            {
+                cambiarTurno();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void manejarEmpate(ArrayList<Sector> sectoresEmpatados) {
+        // Función vacía que recibiría los sectores empatados
+        // Implementación pendiente
+        // comparar la cantidad preguntas respondidas y respondidas correctamente para determinar un ganador
     }
 
     public double getRuletaAngulo() {
@@ -146,6 +256,14 @@ public class Juego {
 
     public void setTurnoActual(int turnoActual) {
         this.turnoActual = turnoActual;
+    }
+
+    public Integer getRondas() {
+        return this.rondas;
+    }
+
+    public String getDificultad() {
+        return this.dificultad;
     }
 
 }

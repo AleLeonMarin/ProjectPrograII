@@ -1,8 +1,9 @@
 package cr.ac.una.proyecto.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Random;
 
 import javafx.geometry.HPos;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ public class Sector {
     private int direccion;
     private String rutaImagenJugador;
     private ArrayList<Ayuda> ayudas;
+    private ArrayList<Corona> coronas;
 
     boolean isOnCoronaPos;
 
@@ -32,13 +34,16 @@ public class Sector {
         this.ayudas = new ArrayList<>();
         setActualPosInFirst();
         this.isOnCoronaPos = false;
+        establecerCoronas();
 
     }
 
     public void setActualPosInFirst() {
-        if (direccion == 1 || direccion == 2) {
+        if (direccion == 1 || direccion == 2)
+        {
             this.posActual = this.posicionY;
-        } else {
+        } else
+        {
             this.posActual = this.posicionX;
         }
     }
@@ -103,6 +108,10 @@ public class Sector {
         this.isOnCoronaPos = isOnCoronaPos;
     }
 
+    public ArrayList<Corona> getCoronas() {
+        return coronas;
+    }
+
     private void moverNodoA(ImageView imageView, int columna, int fila) {
         GridPane.setColumnIndex(imageView, columna);
         GridPane.setRowIndex(imageView, fila);
@@ -111,48 +120,48 @@ public class Sector {
 
     private void checkCoronaPos(int posCorona) {
 
-        System.out.println("POSICION CORONA ES: " + posCorona);
-        System.out.println("POSICION ACTUAL: ES: " + posActual);
-        if (posActual == posCorona) {
+        if (posActual == posCorona)
+        {
             isOnCoronaPos = true;
-        } else {
+        } else
+        {
             isOnCoronaPos = false;
         }
     }
 
     public int moverDerecha(ImageView imageView, GridPane grdPane) {
-        System.out.println("POSACTUAL: " + posActual);
-        if (posActual >= posicionY + 3) {
+        if (posActual >= posicionY + 3)
+        {
             posActual = posicionY;
-        } else {
+        } else
+        {
             posActual++;
         }
         moverNodoA(imageView, posActual, posicionX);
-        System.out.println("POSACTUAL: " + posActual);
         checkCoronaPos(posicionY + 3);
         return posActual;
     }
 
     public int moverIzquierda(ImageView imageView, GridPane grdPane) {
-        System.out.println("POSDESPUESACTUAL: " + posActual);
-
-        if (posActual <= posicionY - 3) {
+        if (posActual <= posicionY - 3)
+        {
             posActual = posicionY;
-        } else {
+        } else
+        {
             posActual--;
 
         }
         moverNodoA(imageView, posActual, posicionX);
-        System.out.println("POSDESPUESACTUAL: " + posActual);
-
         checkCoronaPos(posicionY - 3);
         return posActual;
     }
 
     public int moverAbajo(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionX + 3) {
+        if (posActual >= posicionX + 3)
+        {
             posActual = posicionX;
-        } else {
+        } else
+        {
             posActual++;
 
         }
@@ -162,9 +171,11 @@ public class Sector {
     }
 
     public int moverArriba(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionX - 3) {
+        if (posActual <= posicionX - 3)
+        {
             posActual = posicionX;
-        } else {
+        } else
+        {
             posActual--;
 
         }
@@ -174,7 +185,8 @@ public class Sector {
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-        switch (direccion) {
+        switch (direccion)
+        {
             case 1:
                 return moverDerecha(imageView, grdPane);
             case 2:
@@ -194,13 +206,83 @@ public class Sector {
     }
 
     public void removerAyuda(String ayudaNombre) {
-        Iterator<Ayuda> iterator = ayudas.iterator();
-        while (iterator.hasNext()) {
-            Ayuda ayuda = iterator.next();
-            if (ayudaNombre.equals(ayuda.getNombre())) {
-                iterator.remove();
+        for (Ayuda ayuda : ayudas)
+        {
+            if (ayuda.equals(ayudaNombre))
+            {
+                ayuda.setEstado(false);
             }
         }
+    }
+
+    public void establecerCoronas() {
+        this.coronas = new ArrayList<>();
+        ArrayList<String> categorias = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Entretenimiento", "Historia"));
+
+        for (String categoria : categorias)
+        {
+            coronas.add(new Corona(categoria));
+        }
+
+    }
+
+    public void setEstadoCorona(String coronaNombre, boolean estado) {
+        for (Corona corona : coronas)
+        {
+            if (corona.getNombre().equals(coronaNombre))
+            {
+                corona.setEstado(estado);
+            }
+        }
+    }
+
+    public void printCoronasInfo() {
+        for (Corona corona : coronas)
+        {
+            if (corona.getEstado())
+            {
+                System.out.println("Corona Activa: " + corona.getNombre());
+            }
+        }
+    }
+
+    public void printAyudasInfo() {
+        for (Ayuda ayuda : ayudas)
+        {
+            if (ayuda.getEstado())
+            {
+                System.out.println("Ayuda Activa: " + ayuda.getNombre());
+            }
+        }
+
+    }
+
+    public void setAyudaRandom(int cantidadAyudasRandom) {
+        int index = 0;
+        Random random = new Random();
+        while (index < cantidadAyudasRandom && !hasAllHints())
+        {
+            int numeroAleatorioInt = random.nextInt(ayudas.size());
+
+            if (!(ayudas.get(numeroAleatorioInt).getEstado()))
+            {
+                ayudas.get(numeroAleatorioInt).setEstado(true);
+                index++;
+            }
+
+        }
+
+    }
+
+    private boolean hasAllHints() {
+        for (Ayuda ayuda : ayudas)
+        {
+            if (!ayuda.getEstado())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
