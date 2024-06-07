@@ -30,7 +30,7 @@ public class Juego {
         turnoActual = 0;
         rondas = 1;
         dificultad = "";
-        cargarAyudasFacil();
+        cargarDificultadFromAppContext();
     }
 
     public void agregarSector(Sector sector) {
@@ -39,8 +39,7 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
-        for (Sector sectorActual : sectores)
-        {
+        for (Sector sectorActual : sectores) {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
@@ -76,23 +75,19 @@ public class Juego {
         sectorActual.printCoronasInfo();
         sectorActual.printAyudasInfo();
 
-        if (valorRespuesta)
-        {
+        if (valorRespuesta) {
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
-        } else
-        {
+        } else {
             cambiarTurno();
         }
     }
 
     public Sector getSectorActual() {
 
-        if (sectores.get(turnoActual) != null)
-        {
+        if (sectores.get(turnoActual) != null) {
             return sectores.get(turnoActual);
-        } else
-        {
+        } else {
             return null;
         }
     }
@@ -113,13 +108,14 @@ public class Juego {
         AppContext.getInstance().set("preguntaSector", sector);
     }
 
-    private void cargarAyudasFacil() {
-        cargarDificultadFromAppContext();
-        if (dificultad.equals("Facil"))
-        {
-            for (Sector sector : sectores)
-            {
-                sector.setAyudas(getAllAyudas());
+    public void cargarAyudasFacil() {
+        if (dificultad.equals("Facil")) {
+            System.out.println("Entra a cargar las ayudas en facil");
+            ArrayList<Ayuda> ayudasAux = new ArrayList<>();
+            ayudasAux = getAllAyudas();
+            for (Sector sector : sectores) {
+                sector.setAyudas(ayudasAux);
+                sector.printAyudasInfo();
             }
         }
     }
@@ -135,8 +131,7 @@ public class Juego {
 
     public void cambiarTurno() {
         turnoActual = (turnoActual + 1) % sectores.size();
-        if (turnoActual == 0)
-        {
+        if (turnoActual == 0) {
             rondas++;
         }
     }
@@ -153,21 +148,16 @@ public class Juego {
     public void valdidarCoronasGanador() {
         int limiteRondasGanador = 25;
         boolean coronasActivas = true;
-        if (rondas > limiteRondasGanador)
-        {
+        if (rondas > limiteRondasGanador) {
             validarGanadorPorRondas();
-        } else
-        {
+        } else {
             Sector sectorActual = sectores.get(turnoActual);
-            for (Corona c : sectorActual.getCoronas())
-            {
-                if (!(c.getEstado()))
-                {
+            for (Corona c : sectorActual.getCoronas()) {
+                if (!(c.getEstado())) {
                     coronasActivas = false;
                 }
             }
-            if (coronasActivas)
-            {
+            if (coronasActivas) {
                 mostrarGanador(sectorActual);
             }
         }
@@ -178,36 +168,29 @@ public class Juego {
         int maxCoronasActivas = 0;
         ArrayList<Sector> sectoresEmpatados = new ArrayList<>();
 
-        for (Sector sector : sectores)
-        {
+        for (Sector sector : sectores) {
             int coronasActivas = contarCoronasActivas(sector);
-            if (coronasActivas > maxCoronasActivas)
-            {
+            if (coronasActivas > maxCoronasActivas) {
                 ganador = sector;
                 maxCoronasActivas = coronasActivas;
                 sectoresEmpatados.clear();
                 sectoresEmpatados.add(sector);
-            } else if (coronasActivas == maxCoronasActivas)
-            {
+            } else if (coronasActivas == maxCoronasActivas) {
                 sectoresEmpatados.add(sector);
             }
         }
 
-        if (sectoresEmpatados.size() == 1)
-        {
+        if (sectoresEmpatados.size() == 1) {
             mostrarGanador(sectoresEmpatados.get(0));
-        } else
-        {
+        } else {
             manejarEmpate(sectoresEmpatados);
         }
     }
 
     private int contarCoronasActivas(Sector sector) {
         int contador = 0;
-        for (Corona corona : sector.getCoronas())
-        {
-            if (corona.getEstado())
-            {
+        for (Corona corona : sector.getCoronas()) {
+            if (corona.getEstado()) {
                 contador++;
             }
         }
@@ -215,12 +198,10 @@ public class Juego {
     }
 
     public boolean validarPrimerTurnoObtencionDeCoronas(Sector sector) {
-        if (rondas == 1)
-        {
+        if (rondas == 1) {
             int contador = contarCoronasActivas(sector);
             int limiteCoronas = 3;
-            if (contador >= limiteCoronas)
-            {
+            if (contador >= limiteCoronas) {
                 cambiarTurno();
                 return true;
             }

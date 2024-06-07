@@ -69,6 +69,6 @@ public class Ruleta {
         {
             categoria = categorias.get(6);
         }
-        return categorias.get(4);
+        return categoria;
     }
 }
