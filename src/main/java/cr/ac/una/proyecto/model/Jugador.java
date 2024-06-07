@@ -21,7 +21,7 @@ import java.util.List;
 @Entity
 @Table(name = "JUGADOR", schema = "PREGUNTADOS")
 @NamedQueries({
-        @NamedQuery(name = "Jugador.findByJugNombre", query = "SELECT j FROM Jugador j WHERE j.nombre = :nombre"),
+        @NamedQuery(name = "Jugador.findByJugNombre", query = "SELECT j FROM Jugador j WHERE UPPER(j.nombre) = :nombre"),
         @NamedQuery(name = "Jugador.findAll", query = "SELECT j FROM Jugador j"),
         @NamedQuery(name = "Jugador.findByJugId", query = "SELECT j FROM Jugador j WHERE j.id = :jugId"),
         /*

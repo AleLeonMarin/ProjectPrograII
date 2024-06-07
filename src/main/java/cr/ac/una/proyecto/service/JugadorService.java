@@ -61,20 +61,22 @@ public class JugadorService {
         try {
             et = em.getTransaction();
             et.begin();
-            Jugador jugador;
-            if (jugadorDto.getId() != null && jugadorDto.getId() > 0) {
-                jugador = em.find(Jugador.class, jugadorDto.getId());
-                if (jugador == null) {
-                    return new RespuestaUtil(false, "No se encontro en el jugador a guardar", "guardarJugador noResultExeption");
-                }
-                jugador.actualizar(jugadorDto);
-                jugador = em.merge(jugador);
-            } else {
-                jugador = new Jugador(jugadorDto);
-                em.persist(jugador);
+
+            Query qryPregunta = em.createNamedQuery("Jugador.findByJugNombre", Jugador.class);
+            qryPregunta.setParameter("nombre", jugadorDto.getNombre().toUpperCase());
+
+            try {
+                Jugador jugadorDB = (Jugador) qryPregunta.getSingleResult();
+                // Si se encuentra el jugador, puedes realizar alguna acción aquí
+                et.commit();
+                return new RespuestaUtil(true, "", "", "Jugador", new JugadorDto(jugadorDB));
+            } catch (NoResultException ex) {
+                // Si no se encuentra el jugador, puedes crear uno nuevo
+                Jugador nuevoJugador = new Jugador(jugadorDto);
+                em.persist(nuevoJugador);
+                et.commit();
+                return new RespuestaUtil(true, "", "", "Jugador", new JugadorDto(nuevoJugador));
             }
-            et.commit();
-            return new RespuestaUtil(true, "", "", "Jugador", new JugadorDto(jugador));
 
         } catch (Exception ex) {
             et.rollback();
@@ -144,7 +146,7 @@ public class JugadorService {
                 jugador = em.merge(jugador);
             }
             et.commit();
-            System.out.println("ENTIDAD DESPUES DEL MERGE: "+jugador.getVersion());
+            System.out.println("ENTIDAD DESPUES DEL MERGE: " + jugador.getVersion());
             return new RespuestaUtil(true, "", "", "AJugador", new JugadorDto(jugador));
 
         } catch (Exception ex) {

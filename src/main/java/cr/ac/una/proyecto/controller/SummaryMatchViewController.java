@@ -100,7 +100,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
     @FXML
     void onActionBtnEdit(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement2.mp3");
-        guardarJugadores();
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnEdit.getScene().getWindow()).close();
 
