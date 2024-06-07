@@ -13,6 +13,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
@@ -23,26 +24,26 @@ import java.util.List;
         @NamedQuery(name = "Jugador.findByJugNombre", query = "SELECT j FROM Jugador j WHERE j.nombre = :nombre"),
         @NamedQuery(name = "Jugador.findAll", query = "SELECT j FROM Jugador j"),
         @NamedQuery(name = "Jugador.findByJugId", query = "SELECT j FROM Jugador j WHERE j.id = :jugId"),
-/*
- * @NamedQuery(name = "Jugador.findByJugId", query =
- * "SELECT j FROM Jugador j WHERE j.jugId = :id"),
- * 
- *
- * 
- * @NamedQuery(name = "Jugador.findByJugPartidasganadas", query =
- * "SELECT j FROM Jugador j WHERE j.jugPartidasganadas = :jugPartidasganadas"),
- * 
- * @NamedQuery(name = "Jugador.findByJugPreguntasrespondidas", query =
- * "SELECT j FROM Jugador j WHERE j.jugPreguntasrespondidas = :jugPreguntasrespondidas"
- * ),
- * 
- * @NamedQuery(name = "Jugador.findByPreResCorrectamente", query =
- * "SELECT j FROM Jugador j WHERE j.preResCorrectamente = :preResCorrectamente"
- * ),
- * 
- * @NamedQuery(name = "Jugador.findByJugVersion", query =
- * "SELECT j FROM Jugador j WHERE j.jugVersion = :jugVersion")
- */
+        /*
+         * @NamedQuery(name = "Jugador.findByJugId", query =
+         * "SELECT j FROM Jugador j WHERE j.jugId = :id"),
+         *
+         *
+         *
+         * @NamedQuery(name = "Jugador.findByJugPartidasganadas", query =
+         * "SELECT j FROM Jugador j WHERE j.jugPartidasganadas = :jugPartidasganadas"),
+         *
+         * @NamedQuery(name = "Jugador.findByJugPreguntasrespondidas", query =
+         * "SELECT j FROM Jugador j WHERE j.jugPreguntasrespondidas = :jugPreguntasrespondidas"
+         * ),
+         *
+         * @NamedQuery(name = "Jugador.findByPreResCorrectamente", query =
+         * "SELECT j FROM Jugador j WHERE j.preResCorrectamente = :preResCorrectamente"
+         * ),
+         *
+         * @NamedQuery(name = "Jugador.findByJugVersion", query =
+         * "SELECT j FROM Jugador j WHERE j.jugVersion = :jugVersion")
+         */
 })
 public class Jugador implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -314,9 +315,14 @@ public class Jugador implements Serializable {
         return true;
     }
 
+
     @Override
     public String toString() {
         return "cr.ac.una.proyecto.model.Jugador[ jugId=" + id + " ]";
+    }
+
+    public String getInfoPotencial() {
+        return "JugadorID: " + getId() + ", Jugador Nombre: " + getNombre() + ", Version del jugador: " + getVersion();
     }
 
 }

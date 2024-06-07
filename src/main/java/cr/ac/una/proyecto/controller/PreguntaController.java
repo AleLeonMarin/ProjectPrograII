@@ -1,10 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.model.Ayuda;
-import cr.ac.una.proyecto.model.JugadorDto;
-import cr.ac.una.proyecto.model.PreguntaDto;
-import cr.ac.una.proyecto.model.RespuestaDto;
-import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.model.*;
 import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.service.RespuestaService;
@@ -107,6 +103,7 @@ public class PreguntaController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
+        System.out.println("Iniciliardor preguntaController");
         this.sectorDto = new Sector();
         animacion = new Animacion();
         preguntasDto = new ArrayList<>();
@@ -120,14 +117,14 @@ public class PreguntaController extends Controller implements Initializable {
         obtenerPreguntasCategoria();
         cargarEnunciadoPregunta();
         unbindRespuestas();
-        cargarDificultadFromAppContext();
-        habilitarBotonesRespuesta(false);
+        habilitarAyudas(false);
         cargarAyudasDisponibles(sectorDto);
         animacion.simpleFadeIn(acpRootPane);
     }
 
     private void cargarDatosDesdeAppContext() {
         cargarCategoriaAppContext();
+        cargarDificultadFromAppContext();
         cargarSectorJugadorDtoAppContext();
     }
 
@@ -136,14 +133,18 @@ public class PreguntaController extends Controller implements Initializable {
         this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
     }
 
-    private void setSectorDtoAppContext() {
-
-        AppContext.getInstance().set("preguntaSector", sectorDto);
-    }
-
     private void cargarSectorJugadorDtoAppContext() {
         sectorDto = ((Sector) AppContext.getInstance().get("preguntaSector"));
         jugadorDto = sectorDto.getJugador();
+        System.out.println("CargarDesdeAppContextSectorJugadorVersionDto: " + jugadorDto.getVersion());
+        System.out.println("JugadorDtoNombre: " + jugadorDto.getNombre());
+    }
+
+    private void setSectorDtoToAppContext() {
+        sectorDto.setJugador(jugadorDto);
+        AppContext.getInstance().set("preguntaSector", sectorDto);
+        System.out.println("SetearAlAppContextJugadorVersionDto: " + jugadorDto.getVersion());
+
     }
 
     private void obtenerPreguntasCategoria() {
@@ -226,7 +227,7 @@ public class PreguntaController extends Controller implements Initializable {
     private PreguntaDto cargarPreguntasPorCategoria() {
 
         Random random = new Random();
-        int numeroAleatorioInt = random.nextInt(preguntasDto.size() + 1);
+        int numeroAleatorioInt = random.nextInt(preguntasDto.size());
 
         PreguntaDto preguntaDto = preguntasDto.get(numeroAleatorioInt);
         preguntasDto.remove(numeroAleatorioInt);
@@ -322,7 +323,8 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void validarIntentos(boolean value) {
-        sectorDto.printAyudasInfo();
+
+        setSectorDtoToAppContext();
         if (value == true) {
             // sonido de correcta
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta",
@@ -346,24 +348,21 @@ public class PreguntaController extends Controller implements Initializable {
     private void onMouseClickedBomba(MouseEvent event) {
         habilitarAyudaImagen(false, imvBomba);
         String ayuda = "Bomba";
+        sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
-
         bombaAction();// sounds or animation
-        sectorDto.removerAyuda(ayuda);
     }
 
     @FXML
     private void onMouseClickedNext(MouseEvent event) {
         habilitarAyudaImagen(false, imvNext);
-        habilitarBotonesRespuesta(true);
         String ayuda = "Pasar";
         sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
 
         cargarEnunciadoPregunta();
-
     }
 
     @FXML
@@ -380,7 +379,6 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onMouseTirarRuleta(MouseEvent event) {
         habilitarAyudaImagen(false, imvTirarRuleta);
-        habilitarBotonesRespuesta(true);
         String ayuda = "TirarRuleta";
         sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
@@ -401,13 +399,13 @@ public class PreguntaController extends Controller implements Initializable {
         dificultad = ((String) AppContext.getInstance().get("dificultad"));
 
         if (dificultad.equals("Dificil")) {
-            habilitarBotonesRespuesta(false);
+            habilitarAyudas(false);
         } else {
             cargarAyudasDisponibles(sectorDto);
         }
     }
 
-    private void habilitarBotonesRespuesta(boolean valor) {
+    private void habilitarAyudas(boolean valor) {
 
         habilitarAyudaImagen(valor, imvNext);
         habilitarAyudaImagen(valor, imvBomba);
@@ -436,7 +434,7 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void cargarAyudasDisponibles(Sector sector) {
-
+        sectorDto.printAyudasInfo();
         for (Ayuda ayuda : sector.getAyudas()) {
             habilitarPorAyuda(ayuda);
         }
@@ -476,6 +474,7 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void actualizarJugador() {
         try {
+            System.out.println(jugadorDto.getInfoPotencial());
             jugadorDto.setContadorArte(contadorArte);
             jugadorDto.setContadorCiencia(contadorCiencia);
             jugadorDto.setContadorDeportes(contadorDeportes);
@@ -493,10 +492,12 @@ public class PreguntaController extends Controller implements Initializable {
 
             JugadorService jugadorService = new JugadorService();
             RespuestaUtil respuestaUtil = jugadorService.actualizarJugador(this.jugadorDto);
-            System.out.println("JUGADOR DTO NOMBRE: " + jugadorDto.getNombre() + ", ID:" + jugadorDto.getId());
             if (respuestaUtil.getEstado()) {
-                this.jugadorDto = (JugadorDto) respuestaUtil.getResultado("Jugador");
+                this.jugadorDto = (JugadorDto) respuestaUtil.getResultado("AJugador");
+                System.out.println("JUGADOR DTODESPUESDELSERVICE ID:" + jugadorDto.getVersion());
+                setSectorDtoToAppContext();
                 new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Jugador", getStage(), "Jugador Actualizado");
+
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(), "Error al actualizar el jugador");
             }
@@ -509,11 +510,6 @@ public class PreguntaController extends Controller implements Initializable {
     public boolean getResultadoRespuestaPregunta() {
         return resultadoValorRespuesta;
     }
-
-    public Sector getSectorDto() {
-        return sectorDto;
-    }
-
 
 }
 

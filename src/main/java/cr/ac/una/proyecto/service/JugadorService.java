@@ -132,21 +132,20 @@ public class JugadorService {
     public RespuestaUtil actualizarJugador(JugadorDto jugadorDto) {
         try {
             et = em.getTransaction();
-            em.clear();
             et.begin();
             Jugador jugador = new Jugador();
             if (jugadorDto.getId() != null && jugadorDto.getId() > 0) {
                 jugador = em.find(Jugador.class, jugadorDto.getId());
+                System.out.println(jugador.getInfoPotencial());
                 if (jugador == null) {
                     return new RespuestaUtil(false, "No se encontro en el jugador a guardar", "guardarJugador noResultExeption");
                 }
                 jugador.actualizar(jugadorDto);
                 jugador = em.merge(jugador);
             }
-
             et.commit();
-            em.clear();
-            return new RespuestaUtil(true, "", "", "Jugador", new JugadorDto(jugador));
+            System.out.println("ENTIDAD DESPUES DEL MERGE: "+jugador.getVersion());
+            return new RespuestaUtil(true, "", "", "AJugador", new JugadorDto(jugador));
 
         } catch (Exception ex) {
             et.rollback();
@@ -154,5 +153,6 @@ public class JugadorService {
             return new RespuestaUtil(false, "Error guardando el jugador.", "guardarJugador" + ex.getMessage());
         }
     }
+
 
 }

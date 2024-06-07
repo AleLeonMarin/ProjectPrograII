@@ -55,24 +55,26 @@ public class JugadorDto implements Serializable {
 
     public JugadorDto(Jugador jugador) {
         this();
-        this.id.set(jugador.getId() != null ? jugador.getId().toString() : "");
+        this.id.set(jugador.getId().toString());
         this.nombre.set(jugador.getNombre());
         this.partidasGanadas.set(jugador.getPartidasGanadas());
         this.preguntasRespondidas.set(jugador.getPreguntasRespondidas());
         this.preRespondidasCorrectamente.set(jugador.getPreRespondidasCorrectamente());
         this.contHis.set(jugador.getContHis());
-        this.contGeo.set(jugador.getContGeo()); 
-        this.contDep.set(jugador.getContDep()); 
-        this.contCie.set(jugador.getContCien()); 
-        this.contEntre.set(jugador.getContEntre()); 
-        this.contArte.set(jugador.getContArte()); 
-        this.corHis.set(jugador.getCorHis()); 
-        this.corGeo.set(jugador.getCorGeo()); 
-        this.corEntre .set(jugador.getCorEntre());
-        this.corDep.set(jugador.getCorDep()); 
-        this.corCie.set(jugador.getCorCien()); 
-        this.corArte.set(jugador.getCorArte()); 
+        this.contGeo.set(jugador.getContGeo());
+        this.contDep.set(jugador.getContDep());
+        this.contCie.set(jugador.getContCien());
+        this.contEntre.set(jugador.getContEntre());
+        this.contArte.set(jugador.getContArte());
+        this.corHis.set(jugador.getCorHis());
+        this.corGeo.set(jugador.getCorGeo());
+        this.corEntre.set(jugador.getCorEntre());
+        this.corDep.set(jugador.getCorDep());
+        this.corCie.set(jugador.getCorCien());
+        this.corArte.set(jugador.getCorArte());
+        System.out.println("JugadorVersion: "+jugador.getVersion());
         this.version = jugador.getVersion();
+        System.out.println("JugadorDTOVersion: "+this.getVersion());
     }
 
     public JugadorDto(String nombre) {
@@ -81,8 +83,7 @@ public class JugadorDto implements Serializable {
     }
 
     public Long getId() {
-        if (this.id.get() != null && !this.id.get().isBlank())
-        {
+        if (this.id.get() != null && !this.id.get().isBlank()) {
             return Long.valueOf(this.id.get());
         }
         return null;
@@ -127,7 +128,7 @@ public class JugadorDto implements Serializable {
     public Integer getContadorHistoria() {
         return contHis.get();
     }
-    
+
     public void setContadorHistoria(Integer contHis) {
         this.contHis.set(contHis);
     }
@@ -236,40 +237,38 @@ public class JugadorDto implements Serializable {
         this.modificado = modificado;
     }
 
-    
+
     public List<Partida> getPartidas() {
         return partidas;
     }
-    
+
     public void setPartidas(List<Partida> partidas) {
         this.partidas = partidas;
     }
-    
+
     public List<JugadorDto> getJugadorDtos() {
         return jugadorDtos;
     }
-    
+
     public void setJugadorDtos(List<JugadorDto> jugadorDtos) {
         this.jugadorDtos = jugadorDtos;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof JugadorDto))
-        {
+        if (!(object instanceof JugadorDto)) {
             return false;
         }
         JugadorDto other = (JugadorDto) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -277,6 +276,10 @@ public class JugadorDto implements Serializable {
 
     public String getInfoJugador() {
         return "Jugador: " + this.getNombre() + " ID: " + getId() + ", Partidas Ganadas: " + this.partidasGanadas + ", Preguntas Respondidas: " + this.preguntasRespondidas + ", preCorrectas: " + this.preRespondidasCorrectamente;
+    }
+
+    public String getInfoPotencial() {
+        return "JugadorDTOID: " + getId() + ", DTO Nombre: " + getNombre()+", Version del jugador: " + getVersion();
     }
 
     @Override

@@ -517,7 +517,7 @@ public class TableroController extends Controller implements Initializable {
                     case "Ciencia":
                         actualizarOpacidadImagenes(jugadoresListas.get(index).get(1), coronaActiva);
                         break;
-                    case "Deporte":
+                    case "Deportes":
                         actualizarOpacidadImagenes(jugadoresListas.get(index).get(2), coronaActiva);
                         break;
                     case "Entretenimiento":

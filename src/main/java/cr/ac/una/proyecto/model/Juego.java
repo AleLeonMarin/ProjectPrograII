@@ -61,23 +61,26 @@ public class Juego {
 
     public void setSectoresAppContext() {
         AppContext.getInstance().set("JuegoSectores", sectores);
-        System.out.println("Set sectores juego");
+        System.out.println("Juego setSectorActualtoAppContextJugadorVersion: "+sectores.get(turnoActual).getJugador().getVersion());
+    }
+
+    public void cargarSectorActualFromAppContext() {
+        sectores.set(turnoActual, (Sector) AppContext.getInstance().get("preguntaSector"));
+        System.out.println("Juego cargarSectorActualFromAppContextJugadorVersion: "+sectores.get(turnoActual).getJugador().getVersion());
     }
 
     public void jugar(GridPane grdpTablero, boolean valorRespuesta) {
-        Sector sectorActual  = (Sector) AppContext.getInstance().get("preguntaSector");
-        sectores.set(turnoActual, sectorActual);
-        sectorActual = sectores.get(turnoActual);
-        sectorActual.printAyudasInfo();
+        cargarSectorActualFromAppContext();
+        Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
-
         if (valorRespuesta) {
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
         } else {
             cambiarTurno();
         }
+
     }
 
     public Sector getSectorActual() {
@@ -103,21 +106,10 @@ public class Juego {
 
     public void cargarAyudasFacil() {
         if (dificultad.equals("Facil")) {
-            ArrayList<Ayuda> ayudasAux = new ArrayList<>();
-            ayudasAux = getAllAyudas();
             for (Sector sector : sectores) {
-                sector.setAyudas(ayudasAux);
+                sector.setAyudasFacil();
             }
         }
-    }
-
-    public ArrayList<Ayuda> getAllAyudas() {
-        ArrayList<Ayuda> ayudas = new ArrayList<>();
-        ayudas.add(new Ayuda("Bomba", true));
-        ayudas.add(new Ayuda("Pasar", true));
-        ayudas.add(new Ayuda("DobleOportunidad", true));
-        ayudas.add(new Ayuda("TirarRuleta", true));
-        return ayudas;
     }
 
     public void cambiarTurno() {

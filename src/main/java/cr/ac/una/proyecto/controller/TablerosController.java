@@ -166,15 +166,13 @@ public class TablerosController extends Controller implements Initializable {
 
         animacion.animacionRuleta(imvRuleta, anguloDetenido, onFinish);
         AppContext.getInstance().set("preguntaCategoria", categoria);
-        AppContext.getInstance().set("preguntaJugador", juego.getJugadorPregunta());
     }
 
     private void llamarPreguntaView() {
-        juego.setSectorActualAppContext();
         FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) imvRuleta.getScene().getWindow()), true);
         PreguntaController controladorPreguntaView = (PreguntaController) FlowController.getInstance().getController("preguntaView");
         valorPreguntaRespuesta = controladorPreguntaView.getResultadoRespuestaPregunta();
-
+        juego.cargarSectorActualFromAppContext();
     }
 
     private void mostrarTarjetas() {
@@ -202,6 +200,7 @@ public class TablerosController extends Controller implements Initializable {
         isJugadorInCoronaPos();
         cargarLabelsPartidaInfo();
         this.btnCederTurno.setDisable(false);
+
     }
 
     private void goCoronaDuelView() {
@@ -225,13 +224,10 @@ public class TablerosController extends Controller implements Initializable {
                 juego.getSectorActual().setActualPosInFirst();
                 juego.setSectorActualAppContext();
                 validarCoronasPrimerTurno();
-                this.valorPreguntaRespuesta = false;
-
             }
             isOnCrown = false;
         }
     }
-
 
     private boolean getCrowDuelResult() {
 
