@@ -3,6 +3,7 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cr.ac.una.proyecto.model.PartidaDto;
 import cr.ac.una.proyecto.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
@@ -20,7 +21,7 @@ public class LoadGameViewController extends Controller implements Initializable{
     private MFXButton btnSalir;
 
     @FXML
-    private TableView<?> tbvMatches;
+    private TableView<PartidaDto> tbvMatches;
 
     @FXML
     void onActionBtnChargeMatch(ActionEvent event) {

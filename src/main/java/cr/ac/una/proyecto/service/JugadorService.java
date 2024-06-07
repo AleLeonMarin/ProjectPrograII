@@ -1,12 +1,21 @@
 package cr.ac.una.proyecto.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
+import jakarta.persistence.Query;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import cr.ac.una.proyecto.model.Jugador;
 import cr.ac.una.proyecto.model.JugadorDto;
+import cr.ac.una.proyecto.model.Pregunta;
+import cr.ac.una.proyecto.model.PreguntaDto;
+import cr.ac.una.proyecto.model.Respuesta;
+import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.util.EntityManagerHelper;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 
@@ -54,6 +63,51 @@ public class JugadorService {
             }
             Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error guardando los jugadores.", ex);
             return new RespuestaUtil(false, "Error guardando los jugadores.", "guardarJugadores " + ex.getMessage());
+        }
+    }
+
+    public RespuestaUtil getAll() {
+        try {
+            Query qryPregunta = em.createNamedQuery("Jugador.findAll", Jugador.class);
+            List<Jugador> jugadorDB = (List<Jugador>) qryPregunta.getResultList();
+            List<JugadorDto> jugadorDto = new ArrayList<>();
+            for (Jugador jugador : jugadorDB) {
+                jugadorDto.add(new JugadorDto(jugador));
+            }
+            return new RespuestaUtil(true, "", "", "Jugadores", jugadorDto);
+        }  catch (NonUniqueResultException ex) {
+            Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE,
+                    "Ocurrio un error al consultar el jugador.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar los jugadores.",
+                    "getJugador NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error obteniendo los jugadores ",
+                    ex);
+            return new RespuestaUtil(false, "Error obteniendo los jugadores.", "getJugadores " + ex.getMessage());
+        }
+    }
+
+    public RespuestaUtil getJugador(Long id) {
+        try {
+            Query qryPregunta = em.createNamedQuery("Jugador.findByJugId", Jugador.class);
+            qryPregunta.setParameter("jugId", id);
+
+            Jugador jugador = (Jugador) qryPregunta.getSingleResult();
+            JugadorDto jugadorDto = new JugadorDto(jugador);
+
+            return new RespuestaUtil(true, "", "", "Jugador", jugadorDto);
+        } catch (NoResultException ex) {
+            return new RespuestaUtil(false, "No existe un jugador con el código ingresado.",
+                    "getJugador NoResultException");
+        } catch (NonUniqueResultException ex) {
+            Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE,
+                    "Ocurrio un error al consultar el jugador.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultarel jugador.",
+                    "getJugador NonUniqueResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE,
+                    "Error obteniendo la pregunta [" + id + "]", ex);
+            return new RespuestaUtil(false, "Error obteniendo el jugador.", "getJugador " + ex.getMessage());
         }
     }
 

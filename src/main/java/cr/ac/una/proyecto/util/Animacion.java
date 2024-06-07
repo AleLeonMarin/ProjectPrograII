@@ -93,4 +93,18 @@ public class Animacion {
         fadeTransition.play();
     }
 
+    public void zoomInOut(Node node) {
+        ScaleTransition scaleTransition = new ScaleTransition();
+        scaleTransition.setNode(node);
+        scaleTransition.setDuration(Duration.millis(1000));
+        scaleTransition.setCycleCount(TranslateTransition.INDEFINITE);
+        scaleTransition.setInterpolator(Interpolator.LINEAR);
+        scaleTransition.setFromX(1.0);
+        scaleTransition.setFromY(1.0);
+        scaleTransition.setToX(1.5);  // Define a scaling target to notice the zoom effect
+        scaleTransition.setToY(1.5);  // Define a scaling target to notice the zoom effect
+        scaleTransition.setAutoReverse(true);
+        scaleTransition.play();
+    }
+
 }

@@ -2,14 +2,12 @@ package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import cr.ac.una.proyecto.model.Pregunta;
 import cr.ac.una.proyecto.model.PreguntaDto;
-import cr.ac.una.proyecto.model.Respuesta;
 import cr.ac.una.proyecto.model.RespuestaDto;
 import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.util.FlowController;
@@ -22,7 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -30,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 public class EstadisticasController extends Controller implements Initializable {
 
@@ -61,7 +59,7 @@ public class EstadisticasController extends Controller implements Initializable 
         preguntaService = new PreguntaService();
         populateTableView();
         bchartStatistics.setTitle("Estadísticas de Preguntas y Respuestas");
-        
+
         tbvPreguntas.getSelectionModel().selectedItemProperty()
                 .addListener((ObservableValue<? extends PreguntaDto> observable,
                         PreguntaDto oldValue, PreguntaDto newValue) -> {
@@ -76,6 +74,7 @@ public class EstadisticasController extends Controller implements Initializable 
         // Ajusta la leyenda del gráfico
         bchartStatistics.setLegendVisible(true);
         bchartStatistics.setLegendSide(javafx.geometry.Side.BOTTOM);
+        preguntaList.sort(new PreguntaIdComparator());
 
     }
 
@@ -156,7 +155,10 @@ public class EstadisticasController extends Controller implements Initializable 
             cellButton.getStyleClass().add("jfx-btnimg-tbvSearch");
 
             cellButton.setOnAction(t -> {
-                FlowController.getInstance().goViewInWindow("PreguntaStatistics");
+
+                FlowController.getInstance().goViewInWindowModal("PreguntaStatistics",
+                        ((Stage) cellButton.getScene().getWindow()), true);
+                        
             });
         }
 
@@ -170,6 +172,15 @@ public class EstadisticasController extends Controller implements Initializable 
 
     }
 
+
+    public PreguntaDto getPregunta() {
+        return preguntaDto;
+    }
+
+    public void setPreguntaValue() {
+        preguntaDto = tbvPreguntas.getSelectionModel().getSelectedItem();
+    }
+
     private void chargePregunta() {
 
         PreguntaService preguntaService = new PreguntaService();
@@ -181,6 +192,14 @@ public class EstadisticasController extends Controller implements Initializable 
 
         } else {
             new Mensaje().showModal(AlertType.ERROR, "Cargar Pregunta", getStage(), respuesta.getMensaje());
+        }
+    }
+
+    private class PreguntaIdComparator implements Comparator<PreguntaDto> {
+
+        @Override
+        public int compare(PreguntaDto pregunta1, PreguntaDto pregunta2) {
+            return Long.compare(pregunta1.getId(), pregunta2.getId());
         }
     }
 

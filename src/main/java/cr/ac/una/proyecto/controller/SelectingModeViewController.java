@@ -10,6 +10,8 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 public class SelectingModeViewController extends Controller implements Initializable {
 
@@ -18,6 +20,9 @@ public class SelectingModeViewController extends Controller implements Initializ
 
     @FXML
     private MFXButton btnNewMatch;
+
+    @FXML
+    private Label lblPosiciones;
 
    Sound sound = new Sound();
 
@@ -38,6 +43,17 @@ public class SelectingModeViewController extends Controller implements Initializ
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnNewMatch.getScene().getWindow()).close();
+
+    }
+
+    @FXML
+    void onMousePressedPosiciones(MouseEvent event) {
+
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        FlowController.getInstance().goViewInWindow("TablaPosiciones");
+        ((Stage) lblPosiciones.getScene().getWindow()).close();
+
+    
 
     }
 

@@ -22,9 +22,9 @@
                      <children>
                         <TableView fx:id="tbvPreguntas" prefHeight="546.0" prefWidth="353.0" HBox.hgrow="ALWAYS">
                            <columns>
-                              <TableColumn fx:id="tbcID" prefWidth="75.0" text="ID" />
-                              <TableColumn fx:id="tbcEnun" prefWidth="145.0" text="Enunciado" />
-                              <TableColumn fx:id="tbcLook" prefWidth="75.0" text="Ver" />
+                              <TableColumn fx:id="tbcID" prefWidth="36.0" text="ID" />
+                              <TableColumn fx:id="tbcEnun" prefWidth="94.0" text="Enunciado" />
+                              <TableColumn fx:id="tbcLook" minWidth="5.0" prefWidth="57.0" text="Ver" />
                            </columns></TableView>
                         <Separator orientation="VERTICAL" prefHeight="546.0" prefWidth="42.0" />
                         <BarChart fx:id="bchartStatistics" prefHeight="546.0" prefWidth="512.0">

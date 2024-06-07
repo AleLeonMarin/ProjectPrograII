@@ -9,6 +9,8 @@ import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class GameLogInViewController extends Controller implements Initializable {
@@ -22,8 +24,10 @@ public class GameLogInViewController extends Controller implements Initializable
     @FXML
     private MFXButton btnCargarPartida;
 
-    Sound sound = new Sound();
+    @FXML
+    private Label lblAcerca;
 
+    Sound sound = new Sound();
 
     PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(600));
 
@@ -58,9 +62,9 @@ public class GameLogInViewController extends Controller implements Initializable
     }
 
     @FXML
-    private void onActionBtnCargarPartida(ActionEvent event) {
+    void onMousePressed(MouseEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+        FlowController.getInstance().goViewInWindow("acercadeView");
     }
-
-   
 
 }

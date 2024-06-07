@@ -42,12 +42,11 @@
                               </VBox>
                               <VBox alignment="CENTER" layoutX="305.0" layoutY="10.0" prefHeight="269.0" prefWidth="191.0">
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="173.0">
+                                    <AnchorPane prefHeight="198.0" prefWidth="191.0">
                                        <styleClass>
-                                          <String fx:value="dev1-Image" />
+                                          <String fx:value="dev2-Image" />
                                           <String fx:value="imagen" />
-                                       </styleClass>
-                                    </AnchorPane>
+                                       </styleClass></AnchorPane>
                                     <Label styleClass="label-Titulos" text="Alejandro León" />
                                  </children>
                               </VBox>

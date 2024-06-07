@@ -171,7 +171,7 @@
 }
 
 .dev2-Image {
-    -fx-background-image: url("../resources/dev1.jpg");
+    -fx-background-image: url("../resources/Dev2.JPG");
 }
 
 .Icon {
@@ -641,4 +641,18 @@
     -fx-background-size: contain;
     -fx-background-color: #41B06E;
     -fx-background-image: url("../resources/search.png");
+}
+
+.jfx-pane{
+    -fx-background-color: #FF6500
+}
+
+.jfx-pane > AnchorPane {
+    -fx-background-color: #FC4100
+}
+
+.Image-final{
+    -fx-image: url("../resources/Preguntados1.png");
+    -fx-witdh: 500px;
+    -fx-height: 500px;
 }

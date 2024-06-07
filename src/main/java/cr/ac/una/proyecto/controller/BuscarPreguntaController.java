@@ -7,6 +7,7 @@ import cr.ac.una.proyecto.util.RespuestaUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -65,51 +66,50 @@ public class BuscarPreguntaController extends Controller implements Initializabl
         clmPreguntaCategoria.setCellValueFactory(cd -> cd.getValue().nombreCategoria);
 
         obtenerTodasLasPreguntas();
-    }
 
+    }
+    
     @FXML
     private void onActionBtnFiltrar(ActionEvent event) {
         tbvTablaPreguntas.getItems().clear();
+        preguntas.sort(new PreguntaIdComparator());
         filtrarDatos();
     }
-
+    
     @FXML
     private void onActionBtnAceptar(ActionEvent event) {
         resultado = tbvTablaPreguntas.getSelectionModel().getSelectedItem();
         ((Stage) tbvTablaPreguntas.getScene().getWindow()).close();
         System.out.println("Hola");
     }
-
+    
     private void filtrarDatos() {
         String idPregunta = txfPreguntaId.getText();
         String categoria = txfCategoria.getText().toUpperCase();
         String enunciado = txfEnunciadoPregunta.getText().toUpperCase();
-
+        
         RespuestaUtil pregunta = preService.getPreguntasByFiltros(idPregunta, categoria, enunciado);
-        if (pregunta.getEstado())
-        {
+        if (pregunta.getEstado()) {
             preguntas.clear();
             preguntas.addAll((List<PreguntaDto>) pregunta.getResultado("Preguntas"));
+            preguntas.sort(new PreguntaIdComparator());
             tbvTablaPreguntas.setItems(preguntas);
             tbvTablaPreguntas.refresh();
 
-        } else
-        {
+        } else {
             System.err.println("Error al obtener las tipoPlanillas: " + pregunta.getMensajeInterno());
         }
     }
-
+    
     private void obtenerTodasLasPreguntas() {
         RespuestaUtil respuesta = preService.getAll();
-        if (respuesta.getEstado())
-        {
+        if (respuesta.getEstado()) {
             preguntas.clear();
             preguntas.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
             tbvTablaPreguntas.setItems(preguntas);
             tbvTablaPreguntas.refresh();
-
-        } else
-        {
+            
+        } else {
             System.err.println("Error al obtener las preguntas: " + respuesta.getMensajeInterno());
         }
 
@@ -123,14 +123,21 @@ public class BuscarPreguntaController extends Controller implements Initializabl
     @FXML
     private void OnMousePressedTbvTablaPreguntas(MouseEvent event) {
 
-        if (event.isPrimaryButtonDown() && event.getClickCount() == 2)
-        {
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             onActionBtnAceptar(null);
         }
     }
 
     public PreguntaDto getResultado() {
         return resultado;
+    }
+
+    private class PreguntaIdComparator implements Comparator<PreguntaDto> {
+
+        @Override
+        public int compare(PreguntaDto pregunta1, PreguntaDto pregunta2) {
+            return Long.compare(pregunta1.getId(), pregunta2.getId());
+        }
     }
 
 }

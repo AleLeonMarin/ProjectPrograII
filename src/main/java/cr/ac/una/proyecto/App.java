@@ -18,7 +18,7 @@ public class App extends Application {
         FlowController.getInstance().InitializeFlow(stage, null);
         stage.setTitle("Preguntados Jr");
         stage.getIcons().add(new Image(getClass().getResource("/cr/ac/una/proyecto/resources/logo.jpg").toExternalForm()));
-        FlowController.getInstance().goViewInWindow("DevLogIn");
+        FlowController.getInstance().goViewInWindow("WinnerView");
     }
 
     public static void main(String[] args) {

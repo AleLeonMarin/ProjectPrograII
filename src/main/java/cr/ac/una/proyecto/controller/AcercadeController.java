@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
-public class AcercadeController implements Initializable {
+public class AcercadeController extends Controller implements Initializable {
 
 
     /**
@@ -17,6 +17,12 @@ public class AcercadeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    @Override
+    public void initialize() {
+        // TODO Auto-generated method stub
+        
     }
 
 }
