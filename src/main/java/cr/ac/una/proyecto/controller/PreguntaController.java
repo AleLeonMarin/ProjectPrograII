@@ -209,7 +209,7 @@ public class PreguntaController extends Controller implements Initializable {
     private PreguntaDto cargarPreguntasPorCategoria() {
 
         Random random = new Random();
-        int numeroAleatorioInt = random.nextInt(preguntasDto.size());
+        int numeroAleatorioInt = random.nextInt(preguntasDto.size() + 1);
 
         PreguntaDto preguntaDto = preguntasDto.get(numeroAleatorioInt);
         preguntasDto.remove(numeroAleatorioInt);

@@ -11,7 +11,7 @@ public class Ruleta {
     private double anguloDetenido;
     
     public Ruleta() {
-        categorias = new ArrayList<>(Arrays.asList("Deporte", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
+        categorias = new ArrayList<>(Arrays.asList("Deportes", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
         anguloInicial = 0;
         anguloDetenido = 0;
         

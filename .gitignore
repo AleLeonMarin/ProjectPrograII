@@ -6,3 +6,9 @@ target/
 #Binaries files
 
 *.json
+*.txt
+
+#Ignore files
+
+dependencies-reduce-pom.xml
+nbactions.xml

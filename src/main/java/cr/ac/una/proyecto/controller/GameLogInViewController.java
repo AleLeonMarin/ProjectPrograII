@@ -33,7 +33,7 @@ public class GameLogInViewController extends Controller implements Initializable
 
     @FXML
     void onActionBtnExit(ActionEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/quitExited.mp3");
+        sound.playSound(("../cr/ac/una/proyecto/resources/audio/quitExited.mp3"));
         pause.setOnFinished(events -> {
             ((Stage) btnExit.getScene().getWindow()).close();
         });
@@ -43,7 +43,7 @@ public class GameLogInViewController extends Controller implements Initializable
     @FXML
     void onActionBtnLog(ActionEvent event) {
 
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
+        sound.playSound("../cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
         pause.setOnFinished(events -> {
             FlowController.getInstance().goViewInWindow("SelectingMode");
             ((Stage) btnLog.getScene().getWindow()).close();
