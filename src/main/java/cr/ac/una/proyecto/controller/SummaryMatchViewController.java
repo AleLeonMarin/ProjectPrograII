@@ -100,6 +100,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
     @FXML
     void onActionBtnEdit(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement2.mp3");
+        guardarJugadores();
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnEdit.getScene().getWindow()).close();
 
@@ -108,33 +109,42 @@ public class SummaryMatchViewController extends Controller implements Initializa
     @FXML
     void onActionBtnPlay(ActionEvent event) {
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
-        try
-        {
-            getJugadoresFromAppContext();
-            JugadorService jugadorService = new JugadorService();
-            RespuestaUtil respuesta = jugadorService.guardarJugadores(jugadores);
+        guardarJugadores();
+        FlowController.getInstance().goMain("tableroView");
+        ((Stage) btnPlay.getScene().getWindow()).close();
+    }
 
-            if (respuesta.getEstado())
-            {
-                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugadores", getStage(),
-                        "Jugadores guardados correctamente.");
+    private void guardarJugadores() {
+        getSectoresFromAppContext();
+        for (Sector sector : sectores) {
+            JugadorDto jugadorDtoAux = new JugadorDto();
+            try {
+                JugadorService jugadorService = new JugadorService();
+                RespuestaUtil respuesta = jugadorService.guardarJugador(sector.getJugador());
 
-                FlowController.getInstance().goMain("tableroView");
-                ((Stage) btnPlay.getScene().getWindow()).close();
-            } else
-            {
+                if (respuesta.getEstado()) {
+                    jugadorDtoAux = (JugadorDto) respuesta.getResultado("Jugador");
+                    sector.setJugador(jugadorDtoAux);
+                    System.out.println(sector.getJugador().getNombre() + " ID: " + sector.getJugador().getId());
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugador", getStage(),
+                            "Jugador guardado correctamente.");
+
+                } else {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar jugador", getStage(),
+                            respuesta.getMensaje());
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(RegistryNewGameViewController.class.getName()).log(Level.SEVERE,
+                        "Error guardando los jugadores.", ex);
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
-                        respuesta.getMensaje());
+                        "Ocurrió un error guardando los Jugadores.");
             }
-        } catch (Exception ex)
-        {
-            Logger.getLogger(RegistryNewGameViewController.class.getName()).log(Level.SEVERE,
-                    "Error guardando los jugadores.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Jugadores", getStage(),
-                    "Ocurrió un error guardando los Jugadores.");
+
         }
 
+
     }
+
 
     private void initPrincipalValues() {
         desactivarJugadores();
@@ -156,14 +166,14 @@ public class SummaryMatchViewController extends Controller implements Initializa
     private void getJugadoresFromAppContext() {
         jugadores = (List<JugadorDto>) AppContext.getInstance().get("jugadores");
 
-        for (JugadorDto jugador : jugadores)
-        {
+        for (JugadorDto jugador : jugadores) {
             nombresJugadores.add(jugador.getNombre());
         }
 
         jugadoresEnAppContext = nombresJugadores;
 
     }
+
 
     private void validarJugadores() {// mejorar funcion
 
@@ -175,8 +185,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
         lblJugador2.setText(jugadores.get(1).getNombre());
         imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
 
-        if (cantJugadores >= 3)
-        {
+        if (cantJugadores >= 3) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
@@ -187,8 +196,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
         }
-        if (cantJugadores >= 4)
-        {
+        if (cantJugadores >= 4) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -204,8 +212,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador4.setText(jugadores.get(3).getNombre());
             imgFicha4.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug4)));
         }
-        if (cantJugadores >= 5)
-        {
+        if (cantJugadores >= 5) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -226,8 +233,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador5.setText(jugadores.get(4).getNombre());
             imgFicha5.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug5)));
         }
-        if (cantJugadores == 6)
-        {
+        if (cantJugadores == 6) {
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             lblJugador4.setVisible(true);
@@ -280,7 +286,10 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     private void getSectoresFromAppContext() {
         sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
+    }
 
+    private void setSectoresToAppContext() {
+        AppContext.getInstance().set("sectores", sectores);
     }
 
 }

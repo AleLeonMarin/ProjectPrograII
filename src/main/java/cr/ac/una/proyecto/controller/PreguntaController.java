@@ -123,7 +123,6 @@ public class PreguntaController extends Controller implements Initializable {
         cargarDificultadFromAppContext();
         habilitarBotonesRespuesta(false);
         cargarAyudasDisponibles(sectorDto);
-        consultarJugadores();
         animacion.simpleFadeIn(acpRootPane);
     }
 
@@ -237,25 +236,25 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
         validarRespuestaCorrecta(0);
-        actualizarJugador(this.jugadorDto.getId());
+        actualizarJugador();
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
         validarRespuestaCorrecta(1);
-        actualizarJugador(this.jugadorDto.getId());
+        actualizarJugador();
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
         validarRespuestaCorrecta(2);
-        actualizarJugador(this.jugadorDto.getId());
+        actualizarJugador();
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
         validarRespuestaCorrecta(3);
-        actualizarJugador(this.jugadorDto.getId());
+        actualizarJugador();
     }
 
     private void validarRespuestaCorrecta(int btnIndice) {
@@ -475,28 +474,28 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    private void actualizarJugador(Long id) {
+    private void actualizarJugador() {
         try {
+            jugadorDto.setContadorArte(contadorArte);
+            jugadorDto.setContadorCiencia(contadorCiencia);
+            jugadorDto.setContadorDeportes(contadorDeportes);
+            jugadorDto.setContadorEntretenimiento(contadorEntretenimiento);
+            jugadorDto.setContadorGeografia(contadorGeografia);
+            jugadorDto.setContadorHistoria(contadorHistoria);
+            jugadorDto.setContadorCorrectasArte(contadorArte);
+            jugadorDto.setContadorCorrectasCiencia(contadorCiencia);
+            jugadorDto.setContadorCorrectasDeportes(contadorDeportes);
+            jugadorDto.setContadorCorrectasEntretenimiento(contadorEntretenimiento);
+            jugadorDto.setContadorCorrectasGeografia(contadorGeografia);
+            jugadorDto.setContadorCorrectaHistoria(contadorHistoria);
+            jugadorDto.setPRespondidasCorrectamente(correctaArte);
+            jugadorDto.setPreguntasRespondidas(generalPregunta);
+
             JugadorService jugadorService = new JugadorService();
             RespuestaUtil respuestaUtil = jugadorService.actualizarJugador(this.jugadorDto);
+            System.out.println("JUGADOR DTO NOMBRE: " + jugadorDto.getNombre() + ", ID:" + jugadorDto.getId());
             if (respuestaUtil.getEstado()) {
                 this.jugadorDto = (JugadorDto) respuestaUtil.getResultado("Jugador");
-    
-                jugadorDto.setContadorArte(contadorArte);
-                jugadorDto.setContadorCiencia(contadorCiencia);
-                jugadorDto.setContadorDeportes(contadorDeportes);
-                jugadorDto.setContadorEntretenimiento(contadorEntretenimiento);
-                jugadorDto.setContadorGeografia(contadorGeografia);
-                jugadorDto.setContadorHistoria(contadorHistoria);
-                jugadorDto.setContadorCorrectasArte(contadorArte);
-                jugadorDto.setContadorCorrectasCiencia(contadorCiencia);
-                jugadorDto.setContadorCorrectasDeportes(contadorDeportes);
-                jugadorDto.setContadorCorrectasEntretenimiento(contadorEntretenimiento);
-                jugadorDto.setContadorCorrectasGeografia(contadorGeografia);
-                jugadorDto.setContadorCorrectaHistoria(contadorHistoria);
-                jugadorDto.setPRespondidasCorrectamente(correctaArte);
-                jugadorDto.setPreguntasRespondidas(generalPregunta);
-    
                 new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Jugador", getStage(), "Jugador Actualizado");
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(), "Error al actualizar el jugador");
@@ -506,26 +505,12 @@ public class PreguntaController extends Controller implements Initializable {
             new Mensaje().showModal(Alert.AlertType.ERROR, "Actualizar jugador", getStage(), "Ocurrio un error actualizando el jugador.");
         }
     }
-    
-
-    private void consultarJugadores() {
-        JugadorService jugadorService = new JugadorService();
-        RespuestaUtil respuesta = jugadorService.getAll();
-        if (respuesta.getEstado()) {
-            List<JugadorDto> jugadores = (List<JugadorDto>) respuesta.getResultado("Jugadores");
-            for (JugadorDto jugador : jugadores) {
-                System.out.println("Jugador: " + jugador.getId());
-            }
-        } else {
-            System.err.println("Error al obtener los jugadores: " + respuesta.getMensajeInterno());
-        }
-    }
 
     public boolean getResultadoRespuestaPregunta() {
         return resultadoValorRespuesta;
     }
 
-    public Sector getSectorDto(){
+    public Sector getSectorDto() {
         return sectorDto;
     }
 
