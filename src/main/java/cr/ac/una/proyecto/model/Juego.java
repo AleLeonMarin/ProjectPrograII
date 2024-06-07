@@ -64,16 +64,13 @@ public class Juego {
         System.out.println("Set sectores juego");
     }
 
-    public void jugar(GridPane grdpTablero) {
-        Sector sectorActual = sectores.get(turnoActual);
+    public void jugar(GridPane grdpTablero, boolean valorRespuesta) {
+        Sector sectorActual  = (Sector) AppContext.getInstance().get("preguntaSector");
+        sectores.set(turnoActual, sectorActual);
+        sectorActual = sectores.get(turnoActual);
+        sectorActual.printAyudasInfo();
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
-        cargarPreguntaViewValorRespuesta();
-        sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
-        sectores.set(turnoActual, sectorActual);
-
-        sectorActual.printCoronasInfo();
-        sectorActual.printAyudasInfo();
 
         if (valorRespuesta) {
             sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
@@ -96,10 +93,6 @@ public class Juego {
         valorCoronaRuleta = (Boolean) AppContext.getInstance().get("valorCoronaRuleta");
     }
 
-    private void cargarPreguntaViewValorRespuesta() {
-        valorRespuesta = (Boolean) AppContext.getInstance().get("valorRespuesta");
-    }
-
     private void cargarDificultadFromAppContext() {
         dificultad = (String) AppContext.getInstance().get("dificultad");
     }
@@ -110,12 +103,10 @@ public class Juego {
 
     public void cargarAyudasFacil() {
         if (dificultad.equals("Facil")) {
-            System.out.println("Entra a cargar las ayudas en facil");
             ArrayList<Ayuda> ayudasAux = new ArrayList<>();
             ayudasAux = getAllAyudas();
             for (Sector sector : sectores) {
                 sector.setAyudas(ayudasAux);
-                sector.printAyudasInfo();
             }
         }
     }

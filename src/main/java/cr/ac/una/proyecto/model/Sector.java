@@ -208,11 +208,12 @@ public class Sector {
     public void removerAyuda(String ayudaNombre) {
         for (Ayuda ayuda : ayudas)
         {
-            if (ayuda.equals(ayudaNombre))
+            if (ayuda.getNombre().equals(ayudaNombre))
             {
                 ayuda.setEstado(false);
             }
         }
+        printAyudasInfo();
     }
 
     public void establecerCoronas() {
