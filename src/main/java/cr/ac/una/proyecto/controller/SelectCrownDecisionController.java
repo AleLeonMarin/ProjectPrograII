@@ -144,7 +144,7 @@ public class SelectCrownDecisionController extends Controller implements Initial
             case "Geografia":
                 btnGeografia.setDisable(true);
                 break;
-            case "Deporte":
+            case "Deportes":
                 btnDeporte.setDisable(true);
                 break;
             case "Entretenimiento":

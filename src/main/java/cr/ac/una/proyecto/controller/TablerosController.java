@@ -136,6 +136,7 @@ public class TablerosController extends Controller implements Initializable {
 
             if (categoria == categoriasRuleta.get(4)) {
                 turnoDecidido = true;
+                this.btnCederTurno.setDisable(false);
             } else {
                 juego.cambiarPrimerTurno();
             }
@@ -194,7 +195,7 @@ public class TablerosController extends Controller implements Initializable {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory", ((Stage) imvRuleta.getScene().getWindow()), true);
         }
         llamarPreguntaView();
-        juego.jugar(grdpTablero, valorPreguntaRespuesta);
+        juego.jugar(grdpTablero, valorPreguntaRespuesta, isOnCrown);
         setCorona();
         validarJugadorGanador();
         isJugadorInCoronaPos();
@@ -221,11 +222,17 @@ public class TablerosController extends Controller implements Initializable {
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
-                juego.getSectorActual().setActualPosInFirst();
-                juego.setSectorActualAppContext();
                 validarCoronasPrimerTurno();
+                dificultadMediaDarAyuda();
             }
+            juego.setSectorActualAppContext();
             isOnCrown = false;
+        }
+    }
+
+    private void dificultadMediaDarAyuda() {
+        if (dificultad.equals("Media")) {
+            juego.getSectorActual().setAyudaRandom(1);
         }
     }
 

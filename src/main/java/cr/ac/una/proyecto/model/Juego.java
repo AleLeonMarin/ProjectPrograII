@@ -4,7 +4,6 @@ import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -61,24 +60,32 @@ public class Juego {
 
     public void setSectoresAppContext() {
         AppContext.getInstance().set("JuegoSectores", sectores);
-        System.out.println("Juego setSectorActualtoAppContextJugadorVersion: "+sectores.get(turnoActual).getJugador().getVersion());
+        System.out.println("Juego setSectorActualtoAppContextJugadorVersion: " + sectores.get(turnoActual).getJugador().getVersion());
     }
 
     public void cargarSectorActualFromAppContext() {
         sectores.set(turnoActual, (Sector) AppContext.getInstance().get("preguntaSector"));
-        System.out.println("Juego cargarSectorActualFromAppContextJugadorVersion: "+sectores.get(turnoActual).getJugador().getVersion());
+        System.out.println("Juego cargarSectorActualFromAppContextJugadorVersion: " + sectores.get(turnoActual).getJugador().getVersion());
     }
 
-    public void jugar(GridPane grdpTablero, boolean valorRespuesta) {
+    public void jugar(GridPane grdpTablero, boolean valorRespuesta, boolean isJugadorOnCrow) {
         cargarSectorActualFromAppContext();
         Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
-        if (valorRespuesta) {
-            sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
 
+        if (isJugadorOnCrow) {
+            sectores.get(turnoActual).setActualPosInFirst();
+            sectores.get(turnoActual).mostrarPeonTablero(imagenActual);
+            if (!valorRespuesta) {
+                cambiarTurno();
+            }
         } else {
-            cambiarTurno();
+            if (valorRespuesta) {
+                sectorActual.setPosActual(sectorActual.mover(imagenActual, grdpTablero));
+            } else {
+                cambiarTurno();
+            }
         }
 
     }

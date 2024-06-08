@@ -2,7 +2,6 @@ package cr.ac.una.proyecto.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Random;
 
 import javafx.geometry.HPos;
@@ -47,6 +46,7 @@ public class Sector {
             this.posActual = this.posicionX;
         }
     }
+
 
     public int getDireccion() {
         return direccion;
@@ -117,6 +117,15 @@ public class Sector {
         GridPane.setRowIndex(imageView, fila);
         GridPane.setHalignment(imageView, HPos.CENTER);
     }
+
+    public void mostrarPeonTablero(ImageView imageView) {
+        if (direccion == 1 || direccion == 2) {
+            moverNodoA(imageView, posActual, posicionX);
+        } else {
+            moverNodoA(imageView, posicionY, posActual);
+        }
+    }
+
 
     private void checkCoronaPos(int posCorona) {
 
