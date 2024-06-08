@@ -22,9 +22,6 @@ public class GameLogInViewController extends Controller implements Initializable
     private MFXButton btnLog;
 
     @FXML
-    private MFXButton btnCargarPartida;
-
-    @FXML
     private Label lblAcerca;
 
     Sound sound = new Sound();
@@ -54,11 +51,23 @@ public class GameLogInViewController extends Controller implements Initializable
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void initialize() {
+
+        btnExit.setDisable(true);
+        btnLog.setDisable(true);
+        lblAcerca.setDisable(true);
+        btnExit.setVisible(true);
+        btnLog.setVisible(true);
+        lblAcerca.setVisible(true);
+        btnExit.setOpacity(1);
+        btnLog.setOpacity(1);
+        lblAcerca.setOpacity(1);
+
+        sound.disableForButtons(btnLog, btnExit, lblAcerca, "src/main/resources/cr/ac/una/proyecto/resources/audio/MainSound.mp3");
+
     }
 
     @FXML
@@ -66,5 +75,7 @@ public class GameLogInViewController extends Controller implements Initializable
         sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
         FlowController.getInstance().goViewInWindow("acercadeView");
     }
+
+    
 
 }

@@ -11,7 +11,9 @@ import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -66,6 +68,7 @@ public class TablaPosicionesController extends Controller implements Initializab
                     }
 
                 });
+        jugadorList.sort(new JugadorIdComparator());
 
     }
 
@@ -84,8 +87,15 @@ public class TablaPosicionesController extends Controller implements Initializab
     @FXML
     void onActionBtnVolver(ActionEvent event) {
 
-        FlowController.getInstance().goViewInWindow("SelectingMode");
-        ((Stage) btnVolver.getScene().getWindow()).close();
+        PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(600));
+        Sound sound = new Sound();
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/quitExited.mp3");
+
+        pause.setOnFinished(events -> {
+            FlowController.getInstance().goViewInWindow("SelectingMode");
+            ((Stage) btnVolver.getScene().getWindow()).close();
+        });
+        pause.play();
 
     }
 
@@ -110,21 +120,31 @@ public class TablaPosicionesController extends Controller implements Initializab
     }
 
     public void initialize() {
-        // TODO Auto-generated method stub
+        tbvPosiciones.getSelectionModel().clearSelection();
 
     }
 
     private class ButtonCell extends TableCell<JugadorDto, Boolean> {
 
         final Button cellButton = new Button();
+        Sound sound = new Sound();
 
         ButtonCell() {
             cellButton.setPrefWidth(500);
             cellButton.getStyleClass().add("jfx-btnimg-tbvSearch");
 
             cellButton.setOnAction(t -> {
-                FlowController.getInstance().goViewInWindowModal("EstadisticasJugador",
-                        ((Stage) cellButton.getScene().getWindow()), true);
+                JugadorDto jugadorDto = tbvPosiciones.getSelectionModel().getSelectedItem();
+                if (jugadorDto != null) {
+                    sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+                    FlowController.getInstance().goViewInWindowModal("EstadisticasJugador",
+                            ((Stage) cellButton.getScene().getWindow()), true);
+                    tbvPosiciones.getSelectionModel().clearSelection();
+                } else {
+                    new Mensaje().showModal(AlertType.ERROR, "Cargar Jugador", getStage(),
+                            "Debe seleccionar un jugador");
+                }
+
             });
         }
 
@@ -138,11 +158,11 @@ public class TablaPosicionesController extends Controller implements Initializab
 
     }
 
-    private class PreguntaIdComparator implements Comparator<PreguntaDto> {
+    private class JugadorIdComparator implements Comparator<JugadorDto> {
 
         @Override
-        public int compare(PreguntaDto pregunta1, PreguntaDto pregunta2) {
-            return Long.compare(pregunta1.getId(), pregunta2.getId());
+        public int compare(JugadorDto jugador1, JugadorDto jugador2) {
+            return Long.compare(jugador1.getId(), jugador2.getId());
         }
     }
 

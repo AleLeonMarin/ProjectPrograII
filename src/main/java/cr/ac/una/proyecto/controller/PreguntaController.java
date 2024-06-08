@@ -9,6 +9,7 @@ import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
+import cr.ac.una.proyecto.util.Sound;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -323,21 +324,24 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void validarIntentos(boolean value) {
-
+        Sound sound = new Sound();
         setSectorDtoToAppContext();
         if (value == true) {
             // sonido de correcta
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Correcta.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta",
                     acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
 
         } else if (intentos <= 0) {
             // sonido de error
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Failed.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
         } else {
             // sonido de error
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Chance_audio.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(),
                     "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");
@@ -499,11 +503,14 @@ public class PreguntaController extends Controller implements Initializable {
                 new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Jugador", getStage(), "Jugador Actualizado");
 
             } else {
-                new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(), "Error al actualizar el jugador");
+                new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(),
+                        "Error al actualizar el jugador");
             }
         } catch (Exception ex) {
-            Logger.getLogger(PreguntaController.class.getName()).log(Level.SEVERE, "Error actualizando el jugador.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Actualizar jugador", getStage(), "Ocurrio un error actualizando el jugador.");
+            Logger.getLogger(PreguntaController.class.getName()).log(Level.SEVERE, "Error actualizando el jugador.",
+                    ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Actualizar jugador", getStage(),
+                    "Ocurrio un error actualizando el jugador.");
         }
     }
 
@@ -512,5 +519,3 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
 }
-
-

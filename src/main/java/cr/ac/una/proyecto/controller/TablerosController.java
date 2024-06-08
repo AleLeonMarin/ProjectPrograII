@@ -6,6 +6,7 @@ import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 
 import java.net.URL;
@@ -42,6 +43,7 @@ public class TablerosController extends Controller implements Initializable {
     private Juego juego;
     ArrayList<Sector> sectores;
     private TextField txfRuletaPrueba;
+    Sound sound = new Sound();
 
     private ArrayList<String> categoriasRuleta;
     private String categoria;
@@ -75,6 +77,7 @@ public class TablerosController extends Controller implements Initializable {
 
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
+        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Roulette.mp3");
         cargarLabelsPartidaInfo();
         this.imvPicker.setDisable(true);
         if (!turnoDecidido) {
@@ -130,8 +133,7 @@ public class TablerosController extends Controller implements Initializable {
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
 
-        Runnable onFinish = () ->
-        {
+        Runnable onFinish = () -> {
             this.imvPicker.setDisable(false);
 
             if (categoria == categoriasRuleta.get(4)) {
@@ -140,10 +142,11 @@ public class TablerosController extends Controller implements Initializable {
                 juego.cambiarPrimerTurno();
             }
             if (turnoDecidido) {
-                Platform.runLater(() ->
-                {
-                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Escoger turno", getStage(), "Cayo corona, el jugador: "
-                            + sectores.get(juego.getTurnoActual()).getJugador().getNombre() + ", inicia la partida");
+                Platform.runLater(() -> {
+                    new Mensaje().showModal(Alert.AlertType.INFORMATION, "Escoger turno", getStage(),
+                            "Cayo corona, el jugador: "
+                                    + sectores.get(juego.getTurnoActual()).getJugador().getNombre()
+                                    + ", inicia la partida");
                 });
             }
         };
@@ -156,8 +159,7 @@ public class TablerosController extends Controller implements Initializable {
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
 
-        Runnable onFinish = () ->
-        {
+        Runnable onFinish = () -> {
             juego.setSectorActualAppContext();
             juego.setSectoresAppContext();
             Platform.runLater(() -> mostrarTarjetas());
@@ -169,29 +171,43 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void llamarPreguntaView() {
-        FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) imvRuleta.getScene().getWindow()), true);
-        PreguntaController controladorPreguntaView = (PreguntaController) FlowController.getInstance().getController("preguntaView");
+        FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) imvRuleta.getScene().getWindow()),
+                true);
+        PreguntaController controladorPreguntaView = (PreguntaController) FlowController.getInstance()
+                .getController("preguntaView");
         valorPreguntaRespuesta = controladorPreguntaView.getResultadoRespuestaPregunta();
         juego.cargarSectorActualFromAppContext();
     }
 
     private void mostrarTarjetas() {
         if (categoria == categoriasRuleta.get(0)) {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardSports", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("FrontalCardSports",
+                    ((Stage) imvRuleta.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
         } else if (categoria == categoriasRuleta.get(1)) {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardArt", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("FrontalCardArt",
+                    ((Stage) imvRuleta.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
         } else if (categoria == categoriasRuleta.get(2)) {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy",
+                    ((Stage) imvRuleta.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
         } else if (categoria == categoriasRuleta.get(3)) {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardScience", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("FrontalCardScience",
+                    ((Stage) imvRuleta.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
         } else if (categoria == categoriasRuleta.get(4)) {
             goCoronaDuelView();
             return;
 
         } else if (categoria == categoriasRuleta.get(5)) {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient",
+                    ((Stage) imvRuleta.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
         } else {
-            FlowController.getInstance().goViewInWindowModal("FrontalCardHistory", ((Stage) imvRuleta.getScene().getWindow()), true);
+            FlowController.getInstance().goViewInWindowModal("FrontalCardHistory",
+                    ((Stage) imvRuleta.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
         }
         llamarPreguntaView();
         juego.jugar(grdpTablero, valorPreguntaRespuesta);
@@ -207,8 +223,11 @@ public class TablerosController extends Controller implements Initializable {
 
         if (getCrowDuelResult()) {
             isOnCrown = true;
-            SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController.getInstance().getController("SelectCrownDecisionView");
-            FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView", ((Stage) acpRootPane.getScene().getWindow()), true);
+            SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController
+                    .getInstance().getController("SelectCrownDecisionView");
+            FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView",
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
+            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
             categoria = controladorCoronaSelection.getResultado();
             AppContext.getInstance().set("preguntaCategoria", categoria);
             mostrarTarjetas();
@@ -231,8 +250,10 @@ public class TablerosController extends Controller implements Initializable {
 
     private boolean getCrowDuelResult() {
 
-        CrownSelectionController controladorDueloCorona = (CrownSelectionController) FlowController.getInstance().getController("CrownDuelSelector");
-        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector", ((Stage) acpRootPane.getScene().getWindow()), true);
+        CrownSelectionController controladorDueloCorona = (CrownSelectionController) FlowController.getInstance()
+                .getController("CrownDuelSelector");
+        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector",
+                ((Stage) acpRootPane.getScene().getWindow()), true);
         boolean resultado = controladorDueloCorona.getResultado();
         return resultado;
     }

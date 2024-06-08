@@ -38,6 +38,8 @@ public class EstadisticasJugadorController extends Controller implements Initial
     public void initialize() {
         jugadorDto = new JugadorDto();
         jugadorService = new JugadorService();
+        bchartStadistics.setLegendVisible(true);
+        bchartStadistics.setLegendSide(javafx.geometry.Side.BOTTOM);
         populateBarChart();
 
     }
@@ -56,6 +58,7 @@ public class EstadisticasJugadorController extends Controller implements Initial
             if (respuesta != null) {
 
                 bchartStadistics.getData().clear();
+                bchartStadistics.setTitle("Estadisticas de " + jugadorDto.getNombre());
 
                 XYChart.Series<String, Number> series1 = new XYChart.Series();
                 XYChart.Series<String, Number> series2 = new XYChart.Series();
@@ -91,7 +94,7 @@ public class EstadisticasJugadorController extends Controller implements Initial
 
                 series1.getData().add(new XYChart.Data("Partidas Ganadas", jugadorDto.getPartidasGanadas()));
                 series2.getData().add(new XYChart.Data("Preguntas Respondidas", jugadorDto.getPreguntasRespondidas()));
-                series3.getData().add(new XYChart.Data("Preguntas Acertadas", jugadorDto.getPartidasGanadas()));
+                series3.getData().add(new XYChart.Data("Preguntas Acertadas", jugadorDto.getPRespondidasCorrectamente()));
                 series4.getData().add(new XYChart.Data("Respondidas Historia", jugadorDto.getContadorHistoria()));
                 series5.getData().add(new XYChart.Data("Respondidas Geografia", jugadorDto.getContadorGeografia()));
                 series6.getData().add(new XYChart.Data("Respondidas Ciencia", jugadorDto.getContadorCiencia()));

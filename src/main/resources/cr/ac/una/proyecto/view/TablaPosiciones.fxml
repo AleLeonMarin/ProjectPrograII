@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="750.0" styleClass="jfx-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.TablaPosicionesController">
    <children>
       <AnchorPane layoutX="-27.0" layoutY="-100.0" prefHeight="750.0" prefWidth="750.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -31,7 +30,7 @@
                   </TableView>
                   <HBox alignment="CENTER" prefHeight="122.0" prefWidth="600.0" spacing="40.0">
                      <children>
-                        <MFXButton fx:id="btnVolver" onAction="#onActionBtnVolver" text="Volver a Principal">
+                        <MFXButton fx:id="btnVolver" onAction="#onActionBtnVolver" styleClass="jfx-mfx-btn-salir" text="Volver a Principal">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>

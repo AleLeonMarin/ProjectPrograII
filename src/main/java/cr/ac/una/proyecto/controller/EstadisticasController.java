@@ -142,8 +142,7 @@ public class EstadisticasController extends Controller implements Initializable 
 
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
-        // FlowController.getInstance().goViewInWindow("PreguntaStatistics");
+        tbvPreguntas.getSelectionModel().clearSelection();
     }
 
     private class ButtonCell extends TableCell<PreguntaDto, Boolean> {
@@ -155,10 +154,15 @@ public class EstadisticasController extends Controller implements Initializable 
             cellButton.getStyleClass().add("jfx-btnimg-tbvSearch");
 
             cellButton.setOnAction(t -> {
+                PreguntaDto preguntaDto = tbvPreguntas.getSelectionModel().getSelectedItem();
+                if (preguntaDto != null) {
+                    FlowController.getInstance().goViewInWindowModal("PreguntaStatistics",
+                            ((Stage) cellButton.getScene().getWindow()), true);
+                            tbvPreguntas.getSelectionModel().clearSelection();
+                }else{
+                    new Mensaje().showModal(AlertType.ERROR, "Cargar Pregunta", getStage(), "Debe seleccionar una pregunta");
+                }
 
-                FlowController.getInstance().goViewInWindowModal("PreguntaStatistics",
-                        ((Stage) cellButton.getScene().getWindow()), true);
-                        
             });
         }
 
@@ -171,7 +175,6 @@ public class EstadisticasController extends Controller implements Initializable 
         }
 
     }
-
 
     public PreguntaDto getPregunta() {
         return preguntaDto;
