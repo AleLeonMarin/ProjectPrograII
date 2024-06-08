@@ -15,6 +15,7 @@ import jakarta.persistence.Query;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -234,7 +235,7 @@ public class PreguntaService {
                 for (RespuestaDto respuestaDto : preguntaDto.getRespuestas()) {
                     if (respuestaDto.getId() != null && respuestaDto.getId() > 0) {
                         for (Respuesta respuesta : pregunta.getRespuestas()) {
-                            if (respuesta.getId() == respuestaDto.getId()) {
+                            if (Objects.equals(respuesta.getId(), respuestaDto.getId())) {
                                 respuesta.actualizar(respuestaDto);
                             }
                         }

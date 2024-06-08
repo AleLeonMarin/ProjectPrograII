@@ -126,29 +126,22 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
         validarRespuestaCorrecta(0);
-        // actualizarJugador();
-        actualizarPregunta();
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
         validarRespuestaCorrecta(1);
-        // actualizarJugador();
-        actualizarPregunta();
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
         validarRespuestaCorrecta(2);
-        // actualizarJugador();
-        actualizarPregunta();
+
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
         validarRespuestaCorrecta(3);
-        // actualizarJugador();
-        actualizarPregunta();
     }
 
     @FXML
@@ -244,52 +237,52 @@ public class PreguntaController extends Controller implements Initializable {
         preguntaDto.getRespuestas().get(btnIndice).incrementarContador();
         System.out.println(preguntaDto.getRespuestas().get(btnIndice).getEnunciado());
         generalPregunta++;
+
         if (respuestaDto.getIsCorrect().equals("C")) {
             preguntaDto.sumarAcierto();
             intentos--;
             this.resultadoValorRespuesta = true;
             validarIntentos(true);
 
-            if (preguntaCategoria.equals("Historia")) {
-                contadorHistoria++;
-                correctaHistoria++;
-            } else if (preguntaCategoria.equals("Ciencia")) {
-                contadorCiencia++;
-                correctaCiencia++;
-            } else if (preguntaCategoria.equals("Deportes")) {
-                contadorDeportes++;
-                correctaDeportes++;
-            } else if (preguntaCategoria.equals("Geografia")) {
-                contadorGeografia++;
-                correctaGeografia++;
-            } else if (preguntaCategoria.equals("Entretenimiento")) {
-                contadorEntretenimiento++;
-                correctaEntretenimiento++;
-            } else if (preguntaCategoria.equals("Arte")) {
-                contadorArte++;
-                correctaArte++;
-            }
-            generalCorrecta++;
+//            if (preguntaCategoria.equals("Historia")) {
+//                contadorHistoria++;
+//                correctaHistoria++;
+//            } else if (preguntaCategoria.equals("Ciencia")) {
+//                contadorCiencia++;
+//                correctaCiencia++;
+//            } else if (preguntaCategoria.equals("Deportes")) {
+//                contadorDeportes++;
+//                correctaDeportes++;
+//            } else if (preguntaCategoria.equals("Geografia")) {
+//                contadorGeografia++;
+//                correctaGeografia++;
+//            } else if (preguntaCategoria.equals("Entretenimiento")) {
+//                contadorEntretenimiento++;
+//                correctaEntretenimiento++;
+//            } else if (preguntaCategoria.equals("Arte")) {
+//                contadorArte++;
+//                correctaArte++;
+//            }
+//            generalCorrecta++;
 
         } else {
-
             intentos--;
             this.resultadoValorRespuesta = false;
             botones.get(btnIndice).setDisable(true);
             validarIntentos(false);
-            if (preguntaCategoria.equals("Historia")) {
-                contadorHistoria++;
-            } else if (preguntaCategoria.equals("Ciencia")) {
-                contadorCiencia++;
-            } else if (preguntaCategoria.equals("Deportes")) {
-                contadorDeportes++;
-            } else if (preguntaCategoria.equals("Geografia")) {
-                contadorGeografia++;
-            } else if (preguntaCategoria.equals("Entretenimiento")) {
-                contadorEntretenimiento++;
-            } else if (preguntaCategoria.equals("Arte")) {
-                contadorArte++;
-            }
+//            if (preguntaCategoria.equals("Historia")) {
+//                contadorHistoria++;
+//            } else if (preguntaCategoria.equals("Ciencia")) {
+//                contadorCiencia++;
+//            } else if (preguntaCategoria.equals("Deportes")) {
+//                contadorDeportes++;
+//            } else if (preguntaCategoria.equals("Geografia")) {
+//                contadorGeografia++;
+//            } else if (preguntaCategoria.equals("Entretenimiento")) {
+//                contadorEntretenimiento++;
+//            } else if (preguntaCategoria.equals("Arte")) {
+//                contadorArte++;
+//            }
 
 
         }
@@ -300,20 +293,21 @@ public class PreguntaController extends Controller implements Initializable {
         Sound sound = new Sound();
         setSectorDtoToAppContext();
         if (value == true) {
-            // sonido de correcta
+            actualizarPregunta();
+            //actualizarJugador();
             sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Correcta.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta",
                     acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
 
         } else if (intentos <= 0) {
-            // sonido de error
+            actualizarPregunta();
+            //actualizarJugador();
             sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Failed.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
         } else {
-            // sonido de error
             sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Chance_audio.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(),
