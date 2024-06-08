@@ -34,16 +34,12 @@ public class PreguntaService {
             }
             return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
         } catch (NoResultException ex) {
-            return new RespuestaUtil(false, "No existe una tipoPlanilla con el código ingresado.",
-                    "getTipoPlanilla NoResultException");
+            return new RespuestaUtil(false, "No existe una tipoPlanilla con el código ingresado.", "getTipoPlanilla NoResultException");
         } catch (NonUniqueResultException ex) {
-            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE,
-                    "Ocurrio un error al consultar la tipoPlanilla.", ex);
-            return new RespuestaUtil(false, "Ocurrio un error al consultar la tipoPlanilla.",
-                    "getTipoPlanilla NonUniqueResultException");
+            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la tipoPlanilla.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar la tipoPlanilla.", "getTipoPlanilla NonUniqueResultException");
         } catch (Exception ex) {
-            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Error obteniendo la tipoPlanilla ",
-                    ex);
+            Logger.getLogger(CategoriaService.class.getName()).log(Level.SEVERE, "Error obteniendo la tipoPlanilla ", ex);
             return new RespuestaUtil(false, "Error obteniendo la tipoPlanilla.", "getTipoPlanilla " + ex.getMessage());
         }
     }
@@ -62,16 +58,12 @@ public class PreguntaService {
             }
             return new RespuestaUtil(true, "", "", "Pregunta", preguntaDto);
         } catch (NoResultException ex) {
-            return new RespuestaUtil(false, "No existe una pregunta con el código ingresado.",
-                    "getPregunta NoResultException");
+            return new RespuestaUtil(false, "No existe una pregunta con el código ingresado.", "getPregunta NoResultException");
         } catch (NonUniqueResultException ex) {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
-                    "Ocurrio un error al consultar la pregunta.", ex);
-            return new RespuestaUtil(false, "Ocurrio un error al consultar la pregunta.",
-                    "getPregunta NonUniqueResultException");
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar la pregunta.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar la pregunta.", "getPregunta NonUniqueResultException");
         } catch (Exception ex) {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
-                    "Error obteniendo la pregunta [" + id + "]", ex);
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo la pregunta [" + id + "]", ex);
             return new RespuestaUtil(false, "Error obteniendo la pregunta.", "getPregunta " + ex.getMessage());
         }
     }
@@ -90,18 +82,13 @@ public class PreguntaService {
 
             return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
         } catch (NoResultException ex) {
-            return new RespuestaUtil(false, "No existen preguntas con el nombre de categoria ingresado.",
-                    "getPreguntasPorCategoria NoResultException");
+            return new RespuestaUtil(false, "No existen preguntas con el nombre de categoria ingresado.", "getPreguntasPorCategoria NoResultException");
         } catch (NonUniqueResultException ex) {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
-                    "Ocurrio un error al consultar las preguntas.", ex);
-            return new RespuestaUtil(false, "Ocurrio un error al consultar las preguntas.",
-                    "getPreguntasPorCategoria NonUniqueResultException");
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Ocurrio un error al consultar las preguntas.", ex);
+            return new RespuestaUtil(false, "Ocurrio un error al consultar las preguntas.", "getPreguntasPorCategoria NonUniqueResultException");
         } catch (Exception ex) {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
-                    "Error obteniendo las preguntas de la categoria [" + nombreCat + "]", ex);
-            return new RespuestaUtil(false, "Error obteniendo las preguntas.",
-                    "getPreguntasPorCategoria " + ex.getMessage());
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo las preguntas de la categoria [" + nombreCat + "]", ex);
+            return new RespuestaUtil(false, "Error obteniendo las preguntas.", "getPreguntasPorCategoria " + ex.getMessage());
         }
     }
 
@@ -118,8 +105,7 @@ public class PreguntaService {
             }
             return new RespuestaUtil(true, "", "", "Preguntas", preguntasDto);
         } catch (NoResultException ex) {
-            return new RespuestaUtil(false, "No existen preguntas con esos detalles.",
-                    "getPreguntasByFiltros NoResultException");
+            return new RespuestaUtil(false, "No existen preguntas con esos detalles.", "getPreguntasByFiltros NoResultException");
         } catch (Exception ex) {
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo las preguntas.", ex);
             return new RespuestaUtil(false, "Error obteniendo Preguntas.", "getPreguntasByFiltros " + ex.getMessage());
@@ -135,8 +121,7 @@ public class PreguntaService {
             if (preguntaDto.getId() != null && preguntaDto.getId() > 0) {
                 pregunta = em.find(Pregunta.class, preguntaDto.getId());
                 if (pregunta == null) {
-                    return new RespuestaUtil(false, "No se encontro en la pregunta a guardar",
-                            "guardarPregunta noResultExeption");
+                    return new RespuestaUtil(false, "No se encontro en la pregunta a guardar", "guardarPregunta noResultExeption");
                 }
 
 
@@ -186,8 +171,7 @@ public class PreguntaService {
                 pregunta = em.find(Pregunta.class, id);
                 if (pregunta == null) {
                     et.rollback();
-                    return new RespuestaUtil(false, "No se encontro una pregunta a eliminar",
-                            "eliminarPregunta noResultExeption");
+                    return new RespuestaUtil(false, "No se encontro una pregunta a eliminar", "eliminarPregunta noResultExeption");
                 }
                 em.remove(pregunta);
             } else {
@@ -227,13 +211,53 @@ public class PreguntaService {
 
             return new RespuestaUtil(true, "", "", "Pregunta", preguntaDto);
         } catch (NoResultException ex) {
-            return new RespuestaUtil(false, "No existen preguntas activas con el nombre de categoría ingresado.",
-                    "getPreguntaAleatoriaPorCategoria NoResultException");
+            return new RespuestaUtil(false, "No existen preguntas activas con el nombre de categoría ingresado.", "getPreguntaAleatoriaPorCategoria NoResultException");
         } catch (Exception ex) {
-            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
-                    "Error obteniendo la pregunta aleatoria de la categoría [" + nombreCat + "]", ex);
-            return new RespuestaUtil(false, "Error obteniendo la pregunta aleatoria.",
-                    "getPreguntaAleatoriaPorCategoria " + ex.getMessage());
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error obteniendo la pregunta aleatoria de la categoría [" + nombreCat + "]", ex);
+            return new RespuestaUtil(false, "Error obteniendo la pregunta aleatoria.", "getPreguntaAleatoriaPorCategoria " + ex.getMessage());
         }
     }
+
+
+    public RespuestaUtil actualizarPregunta(PreguntaDto preguntaDto) {
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Pregunta pregunta = new Pregunta();
+
+            if (preguntaDto.getId() != null && preguntaDto.getId() > 0) {
+                pregunta = em.find(Pregunta.class, preguntaDto.getId());
+                if (pregunta == null) {
+                    return new RespuestaUtil(false, "No se encontro en la pregunta a guardar", "guardarPregunta noResultExeption");
+                }
+
+                for (RespuestaDto respuestaDto : preguntaDto.getRespuestas()) {
+                    if (respuestaDto.getId() != null && respuestaDto.getId() > 0) {
+                        for (Respuesta respuesta : pregunta.getRespuestas()) {
+                            if (respuesta.getId() == respuestaDto.getId()) {
+                                respuesta.actualizar(respuestaDto);
+                            }
+                        }
+                    } else {
+                        Respuesta respuesta = new Respuesta(respuestaDto);
+                        respuesta.setPreguntaId(pregunta);
+                        pregunta.getRespuestas().add(respuesta);
+                    }
+                }
+                pregunta.actualizar(preguntaDto);
+                pregunta = em.merge(pregunta);
+            }
+            et.commit();
+            return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
+
+        } catch (Exception ex) {
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error guardando las preguntas.", ex);
+            return new RespuestaUtil(false, "Error guardando las preguntas.", "guardarPregunta " + ex.getMessage());
+        }
+    }
+
+
 }

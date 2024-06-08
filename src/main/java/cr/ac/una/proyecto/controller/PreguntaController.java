@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oracle.jdbc.proxy.annotation.Pre;
 
 public class PreguntaController extends Controller implements Initializable {
 
@@ -126,25 +126,29 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onActionBtnRespuesta1(ActionEvent event) {
         validarRespuestaCorrecta(0);
-        actualizarJugador();
+        // actualizarJugador();
+        actualizarPregunta();
     }
 
     @FXML
     private void onActionBtnRespuesta2(ActionEvent event) {
         validarRespuestaCorrecta(1);
-        actualizarJugador();
+        // actualizarJugador();
+        actualizarPregunta();
     }
 
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
         validarRespuestaCorrecta(2);
-        actualizarJugador();
+        // actualizarJugador();
+        actualizarPregunta();
     }
 
     @FXML
     private void onActionBtnRespuesta4(ActionEvent event) {
         validarRespuestaCorrecta(3);
-        actualizarJugador();
+        // actualizarJugador();
+        actualizarPregunta();
     }
 
     @FXML
@@ -198,7 +202,9 @@ public class PreguntaController extends Controller implements Initializable {
         RespuestaUtil respuesta = preService.getPreguntaAleatoriaPorCategoria(preguntaCategoria);
         if (respuesta.getEstado()) {
             unbindRespuestas();
+            preguntaDto = new PreguntaDto();
             preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
+            preguntaDto.sumarAparicion();
             this.respuestasDto.clear();
             this.respuestasDto.addAll(preguntaDto.getRespuestas());
             bindRespuestas();
@@ -235,8 +241,11 @@ public class PreguntaController extends Controller implements Initializable {
     private void validarRespuestaCorrecta(int btnIndice) {
         RespuestaDto respuestaDto = new RespuestaDto();
         respuestaDto = respuestasDto.get(btnIndice);
-
+        preguntaDto.getRespuestas().get(btnIndice).incrementarContador();
+        System.out.println(preguntaDto.getRespuestas().get(btnIndice).getEnunciado());
+        generalPregunta++;
         if (respuestaDto.getIsCorrect().equals("C")) {
+            preguntaDto.sumarAcierto();
             intentos--;
             this.resultadoValorRespuesta = true;
             validarIntentos(true);
@@ -282,7 +291,7 @@ public class PreguntaController extends Controller implements Initializable {
                 contadorArte++;
             }
 
-            generalPregunta++;
+
         }
 
     }
@@ -444,6 +453,26 @@ public class PreguntaController extends Controller implements Initializable {
 
     public boolean getResultadoRespuestaPregunta() {
         return resultadoValorRespuesta;
+    }
+
+    public void actualizarPregunta() {
+        try {
+            PreguntaService preguntaService = new PreguntaService();
+            RespuestaUtil respuestaUtil = preguntaService.actualizarPregunta(this.preguntaDto);
+            if (respuestaUtil.getEstado()) {
+                this.preguntaDto = (PreguntaDto) respuestaUtil.getResultado("Pregunta");
+                new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Pregunta", getStage(), "Pregunta Actualizada");
+
+            } else {
+                new Mensaje().showModal(AlertType.ERROR, "Actualizar Pregunta", getStage(),
+                        "Error al actualizar la pregunta");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PreguntaController.class.getName()).log(Level.SEVERE, "Error actualizando la pregunta.",
+                    ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Actualizar pregunta", getStage(),
+                    "Ocurrio un error actualizando la pregunta.");
+        }
     }
 
 }

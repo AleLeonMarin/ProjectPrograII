@@ -36,8 +36,7 @@ public class RespuestaDto {
     }
 
     public Long getId() {
-        if (this.id.get() != null && !this.id.get().isBlank())
-        {
+        if (this.id.get() != null && !this.id.get().isBlank()) {
             return Long.valueOf(this.id.get());
         }
         return null;
@@ -105,13 +104,11 @@ public class RespuestaDto {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RespuestaDto))
-        {
+        if (!(object instanceof RespuestaDto)) {
             return false;
         }
         RespuestaDto other = (RespuestaDto) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -121,5 +118,13 @@ public class RespuestaDto {
     public String toString() {
         return "cr.ac.una.proyecto.model.RespuestaDto[ resId=" + id + " ]";
     }
+
+    public void incrementarContador() {
+        System.out.println("RespuestaContadorID:  " + id + ", enunciado: " + enunciado);
+        System.out.println("RespuestaContador: " + contador);
+        this.contador.set(this.contador.get() + 1);
+        System.out.println("RespuestaContador++: " + contador);
+    }
+
 
 }

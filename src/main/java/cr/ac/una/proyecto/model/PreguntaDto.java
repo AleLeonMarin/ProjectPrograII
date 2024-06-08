@@ -152,4 +152,16 @@ public class    PreguntaDto implements Serializable {
     public String toString() {
         return "cr.ac.una.proyecto.model.PreguntaDto[ preId=" + id + " ]";
     }
+
+    public void sumarAparicion(){
+        System.out.println("PreguntaContadorAparicion: "+aparicion);
+        this.aparicion.set(this.aparicion.get() + 1);
+        System.out.println("PreguntaContadorAparicion++: "+aparicion);
+    }
+
+    public void sumarAcierto(){
+        System.out.println("PreguntaContadorACiertos: "+aciertos);
+        this.aciertos.set(this.aciertos .get() + 1);
+        System.out.println("PreguntaContadorAciertos++: "+aciertos);
+    }
 }
