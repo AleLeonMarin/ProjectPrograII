@@ -49,5 +49,10 @@ public class WinnerViewController extends Controller implements Initializable {
         // This method is unnecessary and can be removed
     }
 
+    private void cargarSectorJugadorDtoAppContext(){
+
+        //obtener el sector y jugador y meter data a la ventana
+    }
+
     
 }

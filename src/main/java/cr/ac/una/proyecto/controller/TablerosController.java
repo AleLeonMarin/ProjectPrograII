@@ -269,7 +269,7 @@ public class TablerosController extends Controller implements Initializable {
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
-                //validarCoronasPrimerTurno();
+                validarCoronasPrimerTurno();
                 dificultadMediaDarAyuda();
             }
             juego.setSectorActualAppContext();

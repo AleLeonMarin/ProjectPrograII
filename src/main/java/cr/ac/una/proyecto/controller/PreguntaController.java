@@ -3,7 +3,6 @@ package cr.ac.una.proyecto.controller;
 import cr.ac.una.proyecto.model.*;
 import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.service.PreguntaService;
-import cr.ac.una.proyecto.service.RespuestaService;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
@@ -17,9 +16,7 @@ import java.util.ResourceBundle;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,16 +69,16 @@ public class PreguntaController extends Controller implements Initializable {
 
     private Animacion animacion;
     private String preguntaCategoria;
+
     private JugadorDto jugadorDto;
     private Sector sectorDto;
     private PreguntaDto preguntaDto;
-    private RespuestaDto respuetaDtoAux;
-    private ArrayList<PreguntaDto> preguntasDto;
     private ArrayList<RespuestaDto> respuestasDto;
     private Boolean resultadoValorRespuesta;
     private String dificultad;
     private int intentos;
     private ArrayList<MFXButton> botones;
+
     private Integer contadorHistoria = 0;
     private Integer contadorCiencia = 0;
     private Integer contadorDeportes = 0;
@@ -97,6 +94,12 @@ public class PreguntaController extends Controller implements Initializable {
     private Integer generalPregunta = 0;
     private Integer generalCorrecta = 0;
 
+    private Integer contSelectRes1 = 0;
+    private Integer contSelectRes2 = 0;
+    private Integer contSelectRes3 = 0;
+    private Integer contSelectRes4 = 0;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
@@ -104,135 +107,20 @@ public class PreguntaController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        System.out.println("Iniciliardor preguntaController");
         this.sectorDto = new Sector();
         animacion = new Animacion();
-        preguntasDto = new ArrayList<>();
         respuestasDto = new ArrayList<>();
-        respuetaDtoAux = new RespuestaDto();
         preguntaDto = new PreguntaDto();
         jugadorDto = new JugadorDto();
         this.intentos = 1;
         cargarBotones();
         cargarDatosDesdeAppContext();
-        obtenerPreguntasCategoria();
-        cargarEnunciadoPregunta();
-        unbindRespuestas();
         habilitarAyudas(false);
         cargarAyudasDisponibles(sectorDto);
-        animacion.simpleFadeIn(acpRootPane);
-    }
-
-    private void cargarDatosDesdeAppContext() {
-        cargarCategoriaAppContext();
-        cargarDificultadFromAppContext();
-        cargarSectorJugadorDtoAppContext();
-    }
-
-    private void cargarCategoriaAppContext() {
-
-        this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
-    }
-
-    private void cargarSectorJugadorDtoAppContext() {
-        sectorDto = ((Sector) AppContext.getInstance().get("preguntaSector"));
-        jugadorDto = sectorDto.getJugador();
-        System.out.println("CargarDesdeAppContextSectorJugadorVersionDto: " + jugadorDto.getVersion());
-        System.out.println("JugadorDtoNombre: " + jugadorDto.getNombre());
-    }
-
-    private void setSectorDtoToAppContext() {
-        sectorDto.setJugador(jugadorDto);
-        AppContext.getInstance().set("preguntaSector", sectorDto);
-        System.out.println("SetearAlAppContextJugadorVersionDto: " + jugadorDto.getVersion());
-
-    }
-
-    private void obtenerPreguntasCategoria() {
-        PreguntaService preService = new PreguntaService();
-        RespuestaUtil respuesta = preService.getPreguntasActivasPorCategoria(preguntaCategoria);
-        if (respuesta.getEstado()) {
-            preguntasDto.clear();
-            preguntasDto.addAll((List<PreguntaDto>) respuesta.getResultado("Preguntas"));
-            for (PreguntaDto pre : preguntasDto) {
-
-                System.out.println("Enunciado: " + pre.getEnunciado());
-            }
-        } else {
-            System.err.println("Error al obtener las preguntas: " + respuesta.getMensajeInterno());
-        }
-
-    }
-
-    private void cargarRespuestas(Long preguntaId) {
-        respuestasDto.clear();
-        try {
-            RespuestaService respuestaService = new RespuestaService();
-            RespuestaUtil respuesta = respuestaService.getRespuestasPreguntas(preguntaId);
-
-            if (respuesta.getEstado()) {
-                unbindRespuestas();
-                respuestasDto.addAll((List<RespuestaDto>) respuesta.getResultado("Respuestas"));
-                Collections.shuffle(respuestasDto);
-                bindRespuestas();
-            } else {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(), respuesta.getMensaje());
-
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(MantenimientoController.class
-                    .getName()).log(Level.SEVERE, "Error consultando las respuestas.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "cargarRespuestas", getStage(),
-                    "Ocurrio un error consultando las repuestas.");
-        }
-
-    }
-
-    private void bindRespuestas() {
-        if (respuestasDto.size() > 0) {
-            this.btnRespuesta1.textProperty().bindBidirectional(respuestasDto.get(0).enunciado);
-            this.btnRespuesta2.textProperty().bindBidirectional(respuestasDto.get(1).enunciado);
-            this.btnRespuesta3.textProperty().bindBidirectional(respuestasDto.get(2).enunciado);
-            this.btnRespuesta4.textProperty().bindBidirectional(respuestasDto.get(3).enunciado);
-        } else {
-            this.btnRespuesta1.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
-            this.btnRespuesta2.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
-            this.btnRespuesta3.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
-            this.btnRespuesta4.textProperty().bindBidirectional(respuetaDtoAux.enunciado);
-        }
-    }
-
-    private void unbindRespuestas() {
-
-        if (respuestasDto.size() > 0) {
-            this.btnRespuesta1.textProperty().unbindBidirectional(respuestasDto.get(0).enunciado);
-            this.btnRespuesta2.textProperty().unbindBidirectional(respuestasDto.get(1).enunciado);
-            this.btnRespuesta3.textProperty().unbindBidirectional(respuestasDto.get(2).enunciado);
-            this.btnRespuesta4.textProperty().unbindBidirectional(respuestasDto.get(3).enunciado);
-        } else {
-            this.btnRespuesta1.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
-            this.btnRespuesta2.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
-            this.btnRespuesta3.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
-            this.btnRespuesta4.textProperty().unbindBidirectional(respuetaDtoAux.enunciado);
-        }
-    }
-
-    public void cargarEnunciadoPregunta() {
+        nuevasRespuestas();
         unbindRespuestas();
-        preguntaDto = cargarPreguntasPorCategoria();
-        cargarRespuestas(preguntaDto.getId());
-        txaEnunciado.setText(preguntaDto.getEnunciado());
-        bindRespuestas();
-    }
-
-    private PreguntaDto cargarPreguntasPorCategoria() {
-
-        Random random = new Random();
-        int numeroAleatorioInt = random.nextInt(preguntasDto.size());
-
-        PreguntaDto preguntaDto = preguntasDto.get(numeroAleatorioInt);
-        preguntasDto.remove(numeroAleatorioInt);
-        return preguntaDto;
+        obtenerPreguntaCategoria();
+        animacion.simpleFadeIn(acpRootPane);
     }
 
     @FXML
@@ -257,6 +145,91 @@ public class PreguntaController extends Controller implements Initializable {
     private void onActionBtnRespuesta4(ActionEvent event) {
         validarRespuestaCorrecta(3);
         actualizarJugador();
+    }
+
+    @FXML
+    private void onMouseClickedBomba(MouseEvent event) {
+        habilitarAyudaImagen(false, imvBomba);
+        String ayuda = "Bomba";
+        sectorDto.removerAyuda(ayuda);
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
+                "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
+        bombaAction();// sounds or animation
+    }
+
+    @FXML
+    private void onMouseClickedNext(MouseEvent event) {
+        habilitarAyudaImagen(false, imvNext);
+        String ayuda = "Pasar";
+        sectorDto.removerAyuda(ayuda);
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
+                "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
+    }
+
+    @FXML
+    private void onMouseOportunidadDoble(MouseEvent event) {
+        habilitarAyudaImagen(false, imvSecondOportunity);
+        String ayuda = "DobleOportunidad";
+        sectorDto.removerAyuda(ayuda);
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
+                "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
+        this.intentos += 1;
+    }
+
+    @FXML
+    private void onMouseTirarRuleta(MouseEvent event) {
+        habilitarAyudaImagen(false, imvTirarRuleta);
+        String ayuda = "TirarRuleta";
+        sectorDto.removerAyuda(ayuda);
+        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
+                "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
+
+        TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance()
+                .getController("TirarRuletaView");
+        FlowController.getInstance().goViewInWindowModal("TirarRuletaView",
+                ((Stage) txaEnunciado.getScene().getWindow()), true);
+        preguntaCategoria = (String) tirarRuletaBusquedaController.getResultado();
+        obtenerPreguntaCategoria();
+        animacion.simpleFadeIn(acpRootPane);
+    }
+
+    private void obtenerPreguntaCategoria() {
+        PreguntaService preService = new PreguntaService();
+        RespuestaUtil respuesta = preService.getPreguntaAleatoriaPorCategoria(preguntaCategoria);
+        if (respuesta.getEstado()) {
+            unbindRespuestas();
+            preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
+            this.respuestasDto.clear();
+            this.respuestasDto.addAll(preguntaDto.getRespuestas());
+            bindRespuestas();
+        } else {
+            System.err.println("Error al obtener las preguntas: " + respuesta.getMensajeInterno());
+        }
+
+    }
+
+    private void bindRespuestas() {
+        txaEnunciado.setText(preguntaDto.getEnunciado());
+        this.btnRespuesta1.textProperty().bindBidirectional(respuestasDto.get(0).enunciado);
+        this.btnRespuesta2.textProperty().bindBidirectional(respuestasDto.get(1).enunciado);
+        this.btnRespuesta3.textProperty().bindBidirectional(respuestasDto.get(2).enunciado);
+        this.btnRespuesta4.textProperty().bindBidirectional(respuestasDto.get(3).enunciado);
+    }
+
+    private void unbindRespuestas() {
+        this.txaEnunciado.clear();
+        this.btnRespuesta1.textProperty().unbindBidirectional(respuestasDto.get(0).enunciado);
+        this.btnRespuesta2.textProperty().unbindBidirectional(respuestasDto.get(1).enunciado);
+        this.btnRespuesta3.textProperty().unbindBidirectional(respuestasDto.get(2).enunciado);
+        this.btnRespuesta4.textProperty().unbindBidirectional(respuestasDto.get(3).enunciado);
+        nuevasRespuestas();
+    }
+
+    private void nuevasRespuestas() {
+        this.respuestasDto.clear();
+        for (int index = 0; index < 4; index++) {
+            respuestasDto.add(new RespuestaDto());
+        }
     }
 
     private void validarRespuestaCorrecta(int btnIndice) {
@@ -314,15 +287,6 @@ public class PreguntaController extends Controller implements Initializable {
 
     }
 
-    private Runnable getRunnableOnFinishOut() {
-
-        Runnable onFinishOut = () -> {
-            ((Stage) acpRootPane.getScene().getWindow()).close();
-        };
-
-        return onFinishOut;
-    }
-
     private void validarIntentos(boolean value) {
         Sound sound = new Sound();
         setSectorDtoToAppContext();
@@ -348,68 +312,18 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    @FXML
-    private void onMouseClickedBomba(MouseEvent event) {
-        habilitarAyudaImagen(false, imvBomba);
-        String ayuda = "Bomba";
-        sectorDto.removerAyuda(ayuda);
-        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
-                "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
-        bombaAction();// sounds or animation
-    }
-
-    @FXML
-    private void onMouseClickedNext(MouseEvent event) {
-        habilitarAyudaImagen(false, imvNext);
-        String ayuda = "Pasar";
-        sectorDto.removerAyuda(ayuda);
-        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
-                "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
-
-        cargarEnunciadoPregunta();
-    }
-
-    @FXML
-    private void onMouseOportunidadDoble(MouseEvent event) {
-        habilitarAyudaImagen(false, imvSecondOportunity);
-        String ayuda = "DobleOportunidad";
-        sectorDto.removerAyuda(ayuda);
-        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
-                "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
-        this.intentos += 1;
-
-    }
-
-    @FXML
-    private void onMouseTirarRuleta(MouseEvent event) {
-        habilitarAyudaImagen(false, imvTirarRuleta);
-        String ayuda = "TirarRuleta";
-        sectorDto.removerAyuda(ayuda);
-        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
-                "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
-
-        TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance()
-                .getController("TirarRuletaView");
-        FlowController.getInstance().goViewInWindowModal("TirarRuletaView",
-                ((Stage) txaEnunciado.getScene().getWindow()), true);
-        preguntaCategoria = (String) tirarRuletaBusquedaController.getResultado();
-        obtenerPreguntasCategoria();
-        cargarEnunciadoPregunta();
-        animacion.simpleFadeIn(acpRootPane);
-
-    }
-
-    private void cargarDificultadFromAppContext() {
-        dificultad = ((String) AppContext.getInstance().get("dificultad"));
+    private Runnable getRunnableOnFinishOut() {
+        Runnable onFinishOut = () -> {
+            ((Stage) acpRootPane.getScene().getWindow()).close();
+        };
+        return onFinishOut;
     }
 
     private void habilitarAyudas(boolean valor) {
-
         habilitarAyudaImagen(valor, imvNext);
         habilitarAyudaImagen(valor, imvBomba);
         habilitarAyudaImagen(valor, imvSecondOportunity);
         habilitarAyudaImagen(valor, imvTirarRuleta);
-
     }
 
     private void habilitarPorAyuda(Ayuda ayuda) {
@@ -422,24 +336,20 @@ public class PreguntaController extends Controller implements Initializable {
         } else if (ayuda.getNombre().equals("TirarRuleta") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvTirarRuleta);
         }
-
     }
 
     private void habilitarAyudaImagen(boolean valor, ImageView imagen) {
         imagen.setDisable(!valor);
         imagen.setVisible(valor);
-
     }
 
     private void cargarAyudasDisponibles(Sector sector) {
-        sectorDto.printAyudasInfo();
         for (Ayuda ayuda : sector.getAyudas()) {
             habilitarPorAyuda(ayuda);
         }
     }
 
     private void bombaAction() {
-
         int cantidadRes = 2;
         int index = 0;
         int contadorBtonoes = 0;
@@ -506,6 +416,30 @@ public class PreguntaController extends Controller implements Initializable {
             new Mensaje().showModal(Alert.AlertType.ERROR, "Actualizar jugador", getStage(),
                     "Ocurrio un error actualizando el jugador.");
         }
+    }
+
+    private void cargarDatosDesdeAppContext() {
+        cargarCategoriaAppContext();
+        cargarDificultadFromAppContext();
+        cargarSectorJugadorDtoAppContext();
+    }
+
+    private void cargarCategoriaAppContext() {
+        this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
+    }
+
+    private void cargarDificultadFromAppContext() {
+        dificultad = ((String) AppContext.getInstance().get("dificultad"));
+    }
+
+    private void cargarSectorJugadorDtoAppContext() {
+        sectorDto = ((Sector) AppContext.getInstance().get("preguntaSector"));
+        jugadorDto = sectorDto.getJugador();
+    }
+
+    private void setSectorDtoToAppContext() {
+        sectorDto.setJugador(jugadorDto);
+        AppContext.getInstance().set("preguntaSector", sectorDto);
     }
 
     public boolean getResultadoRespuestaPregunta() {

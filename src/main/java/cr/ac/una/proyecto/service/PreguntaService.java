@@ -15,6 +15,7 @@ import jakarta.persistence.Query;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +47,7 @@ public class PreguntaService {
             return new RespuestaUtil(false, "Error obteniendo la tipoPlanilla.", "getTipoPlanilla " + ex.getMessage());
         }
     }
-    
+
 
     public RespuestaUtil getPregunta(Long id) {
         try {
@@ -137,7 +138,7 @@ public class PreguntaService {
                     return new RespuestaUtil(false, "No se encontro en la pregunta a guardar",
                             "guardarPregunta noResultExeption");
                 }
-             
+
 
                 for (RespuestaDto respuestaDto : preguntaDto.getRespuestas()) {
                     if (respuestaDto.getId() != null && respuestaDto.getId() > 0) {
@@ -198,12 +199,41 @@ public class PreguntaService {
 
         } catch (Exception ex) {
             et.rollback();
-            if(ex.getCause() != null && ex.getCause().getClass() == SQLIntegrityConstraintViolationException.class){
-                return new RespuestaUtil(false , "No se pudo eliminar la pregunta ya que tiene respuestas asociados" , "Eliminar Pregunta" + ex.getMessage());
+            if (ex.getCause() != null && ex.getCause().getClass() == SQLIntegrityConstraintViolationException.class) {
+                return new RespuestaUtil(false, "No se pudo eliminar la pregunta ya que tiene respuestas asociados", "Eliminar Pregunta" + ex.getMessage());
             }
             Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error eliminando la Pregunta.", ex);
             return new RespuestaUtil(false, "Error elimnando la Pregunta.", "eliminarPregunta" + ex.getMessage());
         }
 
+    }
+
+    public RespuestaUtil getPreguntaAleatoriaPorCategoria(String nombreCat) {
+        try {
+            Query qryPregunta = em.createNamedQuery("Pregunta.findByPreCat", Pregunta.class);
+            qryPregunta.setParameter("nombreCategoria", nombreCat);
+            qryPregunta.setParameter("estadoPregunta", "A");
+            List<Pregunta> preguntas = (List<Pregunta>) qryPregunta.getResultList();
+
+            if (preguntas.isEmpty()) {
+                throw new NoResultException();
+            }
+            Random rand = new Random();
+            Pregunta pregunta = preguntas.get(rand.nextInt(preguntas.size()));
+            PreguntaDto preguntaDto = new PreguntaDto(pregunta);
+            for (Respuesta res : pregunta.getRespuestas()) {
+                preguntaDto.getRespuestas().add(new RespuestaDto(res));
+            }
+
+            return new RespuestaUtil(true, "", "", "Pregunta", preguntaDto);
+        } catch (NoResultException ex) {
+            return new RespuestaUtil(false, "No existen preguntas activas con el nombre de categoría ingresado.",
+                    "getPreguntaAleatoriaPorCategoria NoResultException");
+        } catch (Exception ex) {
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE,
+                    "Error obteniendo la pregunta aleatoria de la categoría [" + nombreCat + "]", ex);
+            return new RespuestaUtil(false, "Error obteniendo la pregunta aleatoria.",
+                    "getPreguntaAleatoriaPorCategoria " + ex.getMessage());
+        }
     }
 }
