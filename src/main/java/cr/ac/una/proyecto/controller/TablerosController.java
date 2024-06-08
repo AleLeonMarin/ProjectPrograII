@@ -60,7 +60,7 @@ public class TablerosController extends Controller implements Initializable {
     public void initialize() {
         iniciarClases();
         cargarSectores();
-        juego.cargarAyudasFacil();
+        juego.cargarAyudasSegunDificultad();
         juego.cargarDatosImagenes(grdpTablero);
         this.turnoDecidido = false;
         this.valorPreguntaRespuesta = false;
@@ -238,7 +238,7 @@ public class TablerosController extends Controller implements Initializable {
         llamarPreguntaView();
         juego.jugar(grdpTablero, valorPreguntaRespuesta, isOnCrown);
         setCorona();
-        validarJugadorGanador();
+        validarJugadorGanador(acpRootPane);
         isJugadorInCoronaPos();
         cargarLabelsPartidaInfo();
         this.btnCederTurno.setDisable(false);
@@ -269,7 +269,7 @@ public class TablerosController extends Controller implements Initializable {
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
-                validarCoronasPrimerTurno();
+                //validarCoronasPrimerTurno();
                 dificultadMediaDarAyuda();
             }
             juego.setSectorActualAppContext();
@@ -321,8 +321,8 @@ public class TablerosController extends Controller implements Initializable {
         return this.juego;
     }
 
-    private void validarJugadorGanador() {
-        juego.valdidarCoronasGanador();
+    private void validarJugadorGanador(AnchorPane anchorPane) {
+        juego.valdidarCoronasGanador(anchorPane);
     }
 
     @FXML

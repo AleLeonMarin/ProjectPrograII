@@ -221,6 +221,12 @@ public class Sector {
         printAyudasInfo();
     }
 
+    public void habilitarAyudas(boolean valor) {
+        for (Ayuda ayuda : ayudas) {
+            ayuda.setEstado(valor);
+        }
+    }
+
     public void establecerCoronas() {
         this.coronas = new ArrayList<>();
         ArrayList<String> categorias = new ArrayList<>(Arrays.asList("Deportes", "Arte", "Geografia", "Ciencia", "Entretenimiento", "Historia"));

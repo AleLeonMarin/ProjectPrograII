@@ -1,6 +1,7 @@
 package cr.ac.una.proyecto.model;
 
 import cr.ac.una.proyecto.util.AppContext;
+import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
@@ -9,7 +10,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class Juego {
 
@@ -73,7 +76,6 @@ public class Juego {
         Sector sectorActual = sectores.get(turnoActual);
         ImageView imagenActual = imagenesPeones.get(turnoActual);
         JugadorDto jugadorActual = sectorActual.getJugador();
-
         if (isJugadorOnCrow) {
             sectores.get(turnoActual).setActualPosInFirst();
             sectores.get(turnoActual).mostrarPeonTablero(imagenActual);
@@ -111,10 +113,16 @@ public class Juego {
         AppContext.getInstance().set("preguntaSector", sector);
     }
 
-    public void cargarAyudasFacil() {
+    public void cargarAyudasSegunDificultad() {
         if (dificultad.equals("Facil")) {
             for (Sector sector : sectores) {
                 sector.setAyudasFacil();
+            }
+        }
+       else if (dificultad.equals("Media")) {
+            for (Sector sector : sectores) {
+                sector.setAyudasFacil();
+                sector.habilitarAyudas(false);
             }
         }
     }
@@ -130,16 +138,15 @@ public class Juego {
         turnoActual = (turnoActual + 1) % sectores.size();
     }
 
-    private void mostrarGanador(Sector sector) {
-        System.out.println("Jugador: " + sector.getJugador().getNombre() + ", ha ganado la partida");
-        System.out.println("Cantidad de rondas jugadas: " + rondas);
+    private void mostrarGanador(Sector sector, AnchorPane anchorPane) {
+        FlowController.getInstance().goViewInWindowModal("WinnerView", ((Stage) anchorPane.getScene().getWindow()), true);
     }
 
-    public void valdidarCoronasGanador() {
+    public void valdidarCoronasGanador(AnchorPane anchorPane) {
         int limiteRondasGanador = 25;
         boolean coronasActivas = true;
         if (rondas > limiteRondasGanador) {
-            validarGanadorPorRondas();
+            validarGanadorPorRondas(anchorPane);
         } else {
             Sector sectorActual = sectores.get(turnoActual);
             for (Corona c : sectorActual.getCoronas()) {
@@ -148,12 +155,12 @@ public class Juego {
                 }
             }
             if (coronasActivas) {
-                mostrarGanador(sectorActual);
+                mostrarGanador(sectorActual, anchorPane);
             }
         }
     }
 
-    public void validarGanadorPorRondas() {
+    public void validarGanadorPorRondas(AnchorPane anchorPane) {
         Sector ganador = null;
         int maxCoronasActivas = 0;
         ArrayList<Sector> sectoresEmpatados = new ArrayList<>();
@@ -171,7 +178,7 @@ public class Juego {
         }
 
         if (sectoresEmpatados.size() == 1) {
-            mostrarGanador(sectoresEmpatados.get(0));
+            mostrarGanador(sectoresEmpatados.get(0),anchorPane);
         } else {
             manejarEmpate(sectoresEmpatados);
         }

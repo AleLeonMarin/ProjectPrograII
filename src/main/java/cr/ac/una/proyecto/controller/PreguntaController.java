@@ -401,12 +401,6 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void cargarDificultadFromAppContext() {
         dificultad = ((String) AppContext.getInstance().get("dificultad"));
-
-        if (dificultad.equals("Dificil")) {
-            habilitarAyudas(false);
-        } else {
-            cargarAyudasDisponibles(sectorDto);
-        }
     }
 
     private void habilitarAyudas(boolean valor) {
