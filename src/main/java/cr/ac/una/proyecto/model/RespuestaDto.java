@@ -120,10 +120,7 @@ public class RespuestaDto {
     }
 
     public void incrementarContador() {
-        System.out.println("RespuestaContadorID:  " + id + ", enunciado: " + enunciado);
-        System.out.println("RespuestaContador: " + contador);
         this.contador.set(this.contador.get() + 1);
-        System.out.println("RespuestaContador++: " + contador);
     }
 
 

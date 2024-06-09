@@ -79,27 +79,6 @@ public class PreguntaController extends Controller implements Initializable {
     private int intentos;
     private ArrayList<MFXButton> botones;
 
-    private Integer contadorHistoria = 0;
-    private Integer contadorCiencia = 0;
-    private Integer contadorDeportes = 0;
-    private Integer contadorGeografia = 0;
-    private Integer contadorEntretenimiento = 0;
-    private Integer contadorArte = 0;
-    private Integer correctaHistoria = 0;
-    private Integer correctaCiencia = 0;
-    private Integer correctaDeportes = 0;
-    private Integer correctaGeografia = 0;
-    private Integer correctaEntretenimiento = 0;
-    private Integer correctaArte = 0;
-    private Integer generalPregunta = 0;
-    private Integer generalCorrecta = 0;
-
-    private Integer contSelectRes1 = 0;
-    private Integer contSelectRes2 = 0;
-    private Integer contSelectRes3 = 0;
-    private Integer contSelectRes4 = 0;
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
@@ -235,56 +214,50 @@ public class PreguntaController extends Controller implements Initializable {
         RespuestaDto respuestaDto = new RespuestaDto();
         respuestaDto = respuestasDto.get(btnIndice);
         preguntaDto.getRespuestas().get(btnIndice).incrementarContador();
-        System.out.println(preguntaDto.getRespuestas().get(btnIndice).getEnunciado());
-        generalPregunta++;
 
         if (respuestaDto.getIsCorrect().equals("C")) {
             preguntaDto.sumarAcierto();
+            jugadorDto.incrementarPreRespondidasCorrectamente();
             intentos--;
             this.resultadoValorRespuesta = true;
+            if (preguntaCategoria.equals("Historia")) {
+                jugadorDto.incrementarContHis();
+                jugadorDto.incrementarCorHis();
+            } else if (preguntaCategoria.equals("Ciencia")) {
+                jugadorDto.incrementarContCie();
+                jugadorDto.incrementarCorCie();
+            } else if (preguntaCategoria.equals("Deportes")) {
+                jugadorDto.incrementarContDep();
+                jugadorDto.incrementarCorDep();
+            } else if (preguntaCategoria.equals("Geografia")) {
+                jugadorDto.incrementarContGeo();
+                jugadorDto.incrementarCorGeo();
+            } else if (preguntaCategoria.equals("Entretenemiento")) {
+                jugadorDto.incrementarContEntre();
+                jugadorDto.incrementarCorEntre();
+            } else if (preguntaCategoria.equals("Arte")) {
+                jugadorDto.incrementarContArte();
+                jugadorDto.incrementarCorArte();
+            }
             validarIntentos(true);
-
-//            if (preguntaCategoria.equals("Historia")) {
-//                contadorHistoria++;
-//                correctaHistoria++;
-//            } else if (preguntaCategoria.equals("Ciencia")) {
-//                contadorCiencia++;
-//                correctaCiencia++;
-//            } else if (preguntaCategoria.equals("Deportes")) {
-//                contadorDeportes++;
-//                correctaDeportes++;
-//            } else if (preguntaCategoria.equals("Geografia")) {
-//                contadorGeografia++;
-//                correctaGeografia++;
-//            } else if (preguntaCategoria.equals("Entretenimiento")) {
-//                contadorEntretenimiento++;
-//                correctaEntretenimiento++;
-//            } else if (preguntaCategoria.equals("Arte")) {
-//                contadorArte++;
-//                correctaArte++;
-//            }
-//            generalCorrecta++;
-
         } else {
             intentos--;
             this.resultadoValorRespuesta = false;
             botones.get(btnIndice).setDisable(true);
+            if (preguntaCategoria.equals("Historia")) {
+                jugadorDto.incrementarContHis();
+            } else if (preguntaCategoria.equals("Ciencia")) {
+                jugadorDto.incrementarContCie();
+            } else if (preguntaCategoria.equals("Deportes")) {
+                jugadorDto.incrementarContDep();
+            } else if (preguntaCategoria.equals("Geografia")) {
+                jugadorDto.incrementarContGeo();
+            } else if (preguntaCategoria.equals("Entretenimiento")) {
+                jugadorDto.incrementarContEntre();
+            } else if (preguntaCategoria.equals("Arte")) {
+                jugadorDto.incrementarContArte();
+            }
             validarIntentos(false);
-//            if (preguntaCategoria.equals("Historia")) {
-//                contadorHistoria++;
-//            } else if (preguntaCategoria.equals("Ciencia")) {
-//                contadorCiencia++;
-//            } else if (preguntaCategoria.equals("Deportes")) {
-//                contadorDeportes++;
-//            } else if (preguntaCategoria.equals("Geografia")) {
-//                contadorGeografia++;
-//            } else if (preguntaCategoria.equals("Entretenimiento")) {
-//                contadorEntretenimiento++;
-//            } else if (preguntaCategoria.equals("Arte")) {
-//                contadorArte++;
-//            }
-
-
         }
 
     }
@@ -294,7 +267,7 @@ public class PreguntaController extends Controller implements Initializable {
         setSectorDtoToAppContext();
         if (value == true) {
             actualizarPregunta();
-            //actualizarJugador();
+            actualizarJugador();
             sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Correcta.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta",
                     acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
@@ -302,7 +275,7 @@ public class PreguntaController extends Controller implements Initializable {
 
         } else if (intentos <= 0) {
             actualizarPregunta();
-            //actualizarJugador();
+            actualizarJugador();
             sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Failed.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
@@ -385,30 +358,13 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void actualizarJugador() {
         try {
-            System.out.println(jugadorDto.getInfoPotencial());
-            jugadorDto.setContadorArte(contadorArte);
-            jugadorDto.setContadorCiencia(contadorCiencia);
-            jugadorDto.setContadorDeportes(contadorDeportes);
-            jugadorDto.setContadorEntretenimiento(contadorEntretenimiento);
-            jugadorDto.setContadorGeografia(contadorGeografia);
-            jugadorDto.setContadorHistoria(contadorHistoria);
-            jugadorDto.setContadorCorrectasArte(contadorArte);
-            jugadorDto.setContadorCorrectasCiencia(contadorCiencia);
-            jugadorDto.setContadorCorrectasDeportes(contadorDeportes);
-            jugadorDto.setContadorCorrectasEntretenimiento(contadorEntretenimiento);
-            jugadorDto.setContadorCorrectasGeografia(contadorGeografia);
-            jugadorDto.setContadorCorrectaHistoria(contadorHistoria);
-            jugadorDto.setPRespondidasCorrectamente(correctaArte);
-            jugadorDto.setPreguntasRespondidas(generalPregunta);
-
+            jugadorDto.incrementarPreguntasRespondidas();
             JugadorService jugadorService = new JugadorService();
             RespuestaUtil respuestaUtil = jugadorService.actualizarJugador(this.jugadorDto);
             if (respuestaUtil.getEstado()) {
                 this.jugadorDto = (JugadorDto) respuestaUtil.getResultado("AJugador");
-                System.out.println("JUGADOR DTODESPUESDELSERVICE ID:" + jugadorDto.getVersion());
                 setSectorDtoToAppContext();
                 new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Jugador", getStage(), "Jugador Actualizado");
-
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(),
                         "Error al actualizar el jugador");
@@ -454,9 +410,9 @@ public class PreguntaController extends Controller implements Initializable {
             PreguntaService preguntaService = new PreguntaService();
             RespuestaUtil respuestaUtil = preguntaService.actualizarPregunta(this.preguntaDto);
             if (respuestaUtil.getEstado()) {
-                this.preguntaDto = (PreguntaDto) respuestaUtil.getResultado("Pregunta");
+                this.preguntaDto = (PreguntaDto) respuestaUtil.getResultado("APregunta");
+                System.out.println("Pregunta Actualizada" + preguntaDto.getEnunciado() + ", ID" + preguntaDto.getId());
                 new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Pregunta", getStage(), "Pregunta Actualizada");
-
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Pregunta", getStage(),
                         "Error al actualizar la pregunta");

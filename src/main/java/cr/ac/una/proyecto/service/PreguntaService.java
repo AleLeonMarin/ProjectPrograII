@@ -249,7 +249,7 @@ public class PreguntaService {
                 pregunta = em.merge(pregunta);
             }
             et.commit();
-            return new RespuestaUtil(true, "", "", "Pregunta", new PreguntaDto(pregunta));
+            return new RespuestaUtil(true, "", "", "APregunta", new PreguntaDto(pregunta));
 
         } catch (Exception ex) {
             if (et != null && et.isActive()) {

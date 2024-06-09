@@ -72,9 +72,9 @@ public class JugadorDto implements Serializable {
         this.corDep.set(jugador.getCorDep());
         this.corCie.set(jugador.getCorCien());
         this.corArte.set(jugador.getCorArte());
-        System.out.println("JugadorVersion: "+jugador.getVersion());
+        System.out.println("JugadorVersion: " + jugador.getVersion());
         this.version = jugador.getVersion();
-        System.out.println("JugadorDTOVersion: "+this.getVersion());
+        System.out.println("JugadorDTOVersion: " + this.getVersion());
     }
 
     public JugadorDto(String nombre) {
@@ -279,12 +279,73 @@ public class JugadorDto implements Serializable {
     }
 
     public String getInfoPotencial() {
-        return "JugadorDTOID: " + getId() + ", DTO Nombre: " + getNombre()+", Version del jugador: " + getVersion();
+        return "JugadorDTOID: " + getId() + ", DTO Nombre: " + getNombre() + ", Version del jugador: " + getVersion();
     }
 
     @Override
     public String toString() {
         return "Nombre" + id + " ]";
     }
+
+    public void incrementarPartidasGanadas() {
+        this.partidasGanadas.set(this.partidasGanadas.get() + 1);
+    }
+
+    public void incrementarPreguntasRespondidas() {
+        this.preguntasRespondidas.set(this.preguntasRespondidas.get() + 1);
+    }
+
+    public void incrementarPreRespondidasCorrectamente() {
+        this.preRespondidasCorrectamente.set(this.preRespondidasCorrectamente.get() + 1);
+    }
+
+    public void incrementarContHis() {
+        this.contHis.set(this.contHis.get() + 1);
+    }
+
+    public void incrementarContGeo() {
+        this.contGeo.set(this.contGeo.get() + 1);
+    }
+
+    public void incrementarContDep() {
+        this.contDep.set(this.contDep.get() + 1);
+    }
+
+    public void incrementarContCie() {
+        this.contCie.set(this.contCie.get() + 1);
+    }
+
+    public void incrementarContEntre() {
+        this.contEntre.set(this.contEntre.get() + 1);
+    }
+
+    public void incrementarContArte() {
+        this.contArte.set(this.contArte.get() + 1);
+    }
+
+    public void incrementarCorHis() {
+        this.corHis.set(this.corHis.get() + 1);
+    }
+
+    public void incrementarCorCie() {
+        this.corCie.set(this.corCie.get() + 1);
+    }
+
+    public void incrementarCorGeo() {
+        this.corGeo.set(this.corGeo.get() + 1);
+    }
+
+    public void incrementarCorDep() {
+        this.corDep.set(this.corDep.get() + 1);
+    }
+
+    public void incrementarCorEntre() {
+        this.corEntre.set(this.corEntre.get() + 1);
+    }
+
+    public void incrementarCorArte() {
+        this.corArte.set(this.corArte.get() + 1);
+    }
+
 
 }
