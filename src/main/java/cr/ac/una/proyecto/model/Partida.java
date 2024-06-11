@@ -3,147 +3,117 @@ package cr.ac.una.proyecto.model;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.List;
 
+import java.io.Serializable;
+
+
+/**
+ *
+ * @author aletr
+ */
 @Entity
 @Table(name = "PARTIDA")
-@NamedQueries(
-        {
-            @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p"),
-           /*  @NamedQuery(name = "Partida.findByParId", query = "SELECT p FROM Partida p WHERE p.parId = :parId"),
-            @NamedQuery(name = "Partida.findByParRondas", query = "SELECT p FROM Partida p WHERE p.parRondas = :parRondas"),
-            @NamedQuery(name = "Partida.findByParDificultad", query = "SELECT p FROM Partida p WHERE p.parDificultad = :parDificultad"),
-            @NamedQuery(name = "Partida.findByParVersion", query = "SELECT p FROM Partida p WHERE p.parVersion = :parVersion")*/
-        })
+@NamedQueries({
+    @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p"),
+    @NamedQuery(name = "Partida.findByParId", query = "SELECT p FROM Partida p WHERE p.parId = :parId"),
+    @NamedQuery(name = "Partida.findByParDuenio", query = "SELECT p FROM Partida p WHERE p.parDuenio = :parDuenio"),
+    @NamedQuery(name = "Partida.findByParVersion", query = "SELECT p FROM Partida p WHERE p.parVersion = :parVersion")})
 public class Partida implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
+    @SequenceGenerator(name = "PARTIDA_PAR_ID_GENERATOR" , sequenceName = "PREG_PARTIDA_SEQ01", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARTIDA_PAR_ID_GENERATOR")
     @Basic(optional = false)
     @Column(name = "PAR_ID")
-    private Long id;
-    @Basic(optional = false)
-    @Column(name = "PAR_RONDAS")
-    private String rondas;
-    @Basic(optional = false)
-    @Column(name = "PAR_DIFICULTAD")
-    private String dificultad;
+    private Long parId;
     @Basic(optional = false)
     @Lob
     @Column(name = "PAR_PARTIDA")
-    private String infoPartida;
+    private String parPartida;
+    @Basic(optional = false)
+    @Column(name = "PAR_DUENIO")
+    private String parDuenio;
     @Version
     @Column(name = "PAR_VERSION")
-    private Long version;
-    @JoinTable(name = "PARTIDAJUGADOR", joinColumns =
-    {
-        @JoinColumn(name = "EXP_IDPAR", referencedColumnName = "PAR_ID")
-    }, inverseJoinColumns =
-    {
-        @JoinColumn(name = "EXP_IDJUG", referencedColumnName = "JUG_ID")
-    })
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Jugador> jugadores;
+    private Long parVersion;
 
     public Partida() {
     }
 
-    public Partida(Long id) {
-        this.id = id;
+    public Partida(Long parId) {
+        this.parId = parId;
     }
 
-    public Partida(PartidaDto partidaDto) {
-        this.id = partidaDto.getId();
+    public Partida(PartidaDto partidaDto){
+        this.parId = partidaDto.getParId();
         actualizar(partidaDto);
     }
 
-    public void actualizar(PartidaDto partidaDto) {
-        this.id = partidaDto.getId();
-        this.dificultad = partidaDto.getDificultad();
-        this.infoPartida = partidaDto.getInfoPartidas();
-        this.rondas = partidaDto.getRondas();
-        this.version = partidaDto.getVersion();
+    public void actualizar(PartidaDto partidaDto){
+        this.parId = partidaDto.getParId();
+        this.parPartida = partidaDto.getParPartida();
+        this.parDuenio = partidaDto.getParDuenio();
+        this.parVersion = partidaDto.getParVersion();
     }
 
-    public Long getId() {
-        return id;
+    public Long getParId() {
+        return parId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setParId(Long parId) {
+        this.parId = parId;
     }
 
-    public String getRondas() {
-        return rondas;
+    public String getParPartida() {
+        return parPartida;
     }
 
-    public void setRondas(String rondas) {
-        this.rondas = rondas;
+    public void setParPartida(String parPartida) {
+        this.parPartida = parPartida;
     }
 
-    public String getDificultad() {
-        return dificultad;
+    public String getParDuenio() {
+        return parDuenio;
     }
 
-    public void setDificultad(String dificultad) {
-        this.dificultad = dificultad;
+    public void setParDuenio(String parDuenio) {
+        this.parDuenio = parDuenio;
     }
 
-    public String getInfoPartida() {
-        return infoPartida;
+    public Long getParVersion() {
+        return parVersion;
     }
 
-    public void setInfoPartida(String infoPartida) {
-        this.infoPartida = infoPartida;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    public List<Jugador> getJugadores() {
-        return jugadores;
-    }
-
-    public void setJugadores(List<Jugador> jugadores) {
-        this.jugadores = jugadores;
+    public void setParVersion(Long parVersion) {
+        this.parVersion = parVersion;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (parId != null ? parId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Partida))
-        {
+        if (!(object instanceof Partida)) {
             return false;
         }
         Partida other = (Partida) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
+        if ((this.parId == null && other.parId != null) || (this.parId != null && !this.parId.equals(other.parId))) {
             return false;
         }
         return true;
@@ -151,7 +121,7 @@ public class Partida implements Serializable {
 
     @Override
     public String toString() {
-        return "cr.ac.una.proyecto.model.Partida[ parId=" + id + " ]";
+        return "cr.ac.una.proyecto.model.Partida[ parId=" + parId + " ]";
     }
-
+    
 }

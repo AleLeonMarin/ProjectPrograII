@@ -1,79 +1,71 @@
 package cr.ac.una.proyecto.model;
 
-import java.util.List;
+import java.io.Serializable;
+
 import javafx.beans.property.SimpleStringProperty;
 
-public class PartidaDto {
+public class PartidaDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public SimpleStringProperty id;
-    public SimpleStringProperty rondas;
-    public SimpleStringProperty dificultad;
-    public SimpleStringProperty infoPartida;
-    private Long version;
+    public SimpleStringProperty parId;
+    public SimpleStringProperty parPartida;
+    public SimpleStringProperty parDuenio;
+    public Long parVersion;
     private boolean modificado;
-    private List<Jugador> jugadores;
 
     public PartidaDto() {
-        this.id = new SimpleStringProperty("");
-        this.rondas = new SimpleStringProperty("");
-        this.dificultad = new SimpleStringProperty("");
-        this.infoPartida = new SimpleStringProperty("");
+        this.parId = new SimpleStringProperty("");
+        this.parPartida = new SimpleStringProperty("");
+        this.parDuenio = new SimpleStringProperty("");
         this.modificado = false;
     }
 
     public PartidaDto(Partida partida) {
+
         this();
-        this.id.set(partida.getId().toString());
-        this.rondas.set(partida.getRondas());
-        this.dificultad.set(partida.getDificultad());
-        this.infoPartida.set(partida.getInfoPartida());
-        this.version = partida.getVersion();
+        this.parId.set(partida.getParId().toString());
+        this.parPartida.set(partida.getParPartida());
+        this.parDuenio.set(partida.getParDuenio());
+        this.parVersion = partida.getParVersion();
+
     }
 
-    public Long getId() {
-        if (this.id.get() != null && !this.id.get().isBlank())
-        {
-            return Long.valueOf(this.id.get());
+    public Long getParId() {
+
+        if (parId.get() != null && !parId.get().isEmpty()) {
+            return Long.valueOf(parId.get());
+        } else {
+            return null;
         }
-        return null;
     }
 
-    public void setId(Long id) {
-        this.id.set(id.toString());
+    public void setParId(Long parId) {
+        this.parId.set(parId.toString());
     }
 
-    public String getRondas() {
-        return rondas.get();
+    public String getParPartida() {
+        return parPartida.get();
     }
 
-    public void setRondas(String rondas) {
-        this.rondas.set(rondas);
+    public void setParPartida(String parPartida) {
+        this.parPartida.set(parPartida);
     }
 
-    public String getDificultad() {
-        return dificultad.get();
+    public String getParDuenio() {
+        return parDuenio.get();
     }
 
-    public void setDificultad(String dificultad) {
-        this.dificultad.set(dificultad);
+    public void setParDuenio(String parDuenio) {
+        this.parDuenio.set(parDuenio);
     }
 
-    public String getInfoPartidas() {
-        return infoPartida.get();
+    public Long getParVersion() {
+        return parVersion;
     }
 
-    public void setInfoPartidas(String infoPartida) {
-        this.infoPartida.set(infoPartida);
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
+    public void setParVersion(Long parVersion) {
+        this.parVersion = parVersion;
     }
 
     public boolean isModificado() {
@@ -82,6 +74,26 @@ public class PartidaDto {
 
     public void setModificado(boolean modificado) {
         this.modificado = modificado;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (parId != null ? parId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (!(object instanceof PartidaDto)) {
+            return false;
+        }
+        PartidaDto other = (PartidaDto) object;
+        if ((this.parId == null && other.parId != null) || (this.parId != null && !this.parId.equals(other.parId))) {
+            return false;
+        }
+        return true;
     }
 
 }

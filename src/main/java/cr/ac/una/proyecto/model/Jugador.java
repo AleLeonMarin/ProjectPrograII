@@ -107,9 +107,6 @@ public class Jugador implements Serializable {
     @Version
     @Column(name = "JUG_VERSION")
     private Long version;
-    @ManyToMany(mappedBy = "jugadores", fetch = FetchType.LAZY)
-
-    private List<Partida> partidas;
 
     public Jugador() {
     }
@@ -287,13 +284,6 @@ public class Jugador implements Serializable {
         this.version = version;
     }
 
-    public List<Partida> getPartidas() {
-        return partidas;
-    }
-
-    public void setPartidas(List<Partida> partidas) {
-        this.partidas = partidas;
-    }
 
     @Override
     public int hashCode() {

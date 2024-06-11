@@ -29,7 +29,6 @@ public class JugadorDto implements Serializable {
     public SimpleIntegerProperty corArte;
     private Long version;
     private boolean modificado;
-    private List<Partida> partidas;
     private List<JugadorDto> jugadorDtos;
 
     public JugadorDto() {
@@ -235,15 +234,6 @@ public class JugadorDto implements Serializable {
 
     public void setModificado(boolean modificado) {
         this.modificado = modificado;
-    }
-
-
-    public List<Partida> getPartidas() {
-        return partidas;
-    }
-
-    public void setPartidas(List<Partida> partidas) {
-        this.partidas = partidas;
     }
 
     public List<JugadorDto> getJugadorDtos() {

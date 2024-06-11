@@ -2,11 +2,15 @@ package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.JugadorDto;
+import cr.ac.una.proyecto.model.PartidaDto;
+import cr.ac.una.proyecto.model.Respuesta;
 import cr.ac.una.proyecto.model.Sector;
+import cr.ac.una.proyecto.service.PartidaService;
 import cr.ac.una.proyecto.model.Corona;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
 
@@ -81,6 +85,7 @@ public class TableroController extends Controller implements Initializable {
     private int contextSlider;
     private ArrayList<String> loadToJson;
     private ArrayList<Sector> sectores;
+    private PartidaDto partidaDto;
 
     private ArrayList<ArrayList<ImageView>> jugadoresListas = new ArrayList<>();
     private ArrayList<ImageView> imgvJug1List = new ArrayList<>();
@@ -192,9 +197,27 @@ public class TableroController extends Controller implements Initializable {
 
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
-        sound.playSound("Chance_audio.mp3");
         cargarJuegoClass();
-        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar", getStage(), "Partida Guardada");
+        this.partidaDto.setParDuenio(lblJugador1.getText());
+        try {
+            PartidaService partidaService = new PartidaService();
+            RespuestaUtil respuesta = partidaService.guardarPartida(partidaDto);
+
+            if (respuesta.getEstado()) {
+                partidaDto = (PartidaDto) respuesta.getResultado("Partida");
+                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Partida", getStage(),
+                        "Partida guardada con éxito.");
+                sound.playSound("Chance_audio.mp3");
+
+            } else {
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Partida", getStage(),
+                        "Error al guardar la partida.");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TableroController.class.getName()).log(Level.SEVERE, "Error guardando la partida.", ex);
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Partida", getStage(),
+                    "Error al guardar la partida.");
+        }
 
     }
 
@@ -477,15 +500,18 @@ public class TableroController extends Controller implements Initializable {
     private void createJson() {
         loadToJsonData();
         System.out.println(loadToJson.toString());
+        partidaDto = new PartidaDto();
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
         try {
             FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
             file.write(json);
             file.close();
+            partidaDto.setParPartida(json);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
     }
 
     private void cargarJuegoClass() {
