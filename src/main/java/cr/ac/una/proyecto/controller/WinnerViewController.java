@@ -3,7 +3,10 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cr.ac.una.proyecto.App;
+import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.util.Animacion;
+import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Sound;
 import javafx.animation.Interpolator;
@@ -32,27 +35,30 @@ public class WinnerViewController extends Controller implements Initializable {
     PauseTransition pause = new PauseTransition(Duration.seconds(15));
     Sound sound = new Sound();
     Animacion animacion = new Animacion();
+    Juego juego = new Juego();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         animacion.zoomInOut(imgScale);
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/AwardSoundEffect.mp3");
+        sound.playSound("AwardSoundEffect.mp3");
         pause.setOnFinished(e -> {
             FlowController.getInstance().goViewInWindow("GameLogIn");
             ((Stage) root.getScene().getWindow()).close();
         });
-        pause.play();  // Make sure the pause transition starts
+        pause.play();
     }
 
     @Override
     public void initialize() {
-        // This method is unnecessary and can be removed
+
+        setGanador();
+        
     }
 
-    private void cargarSectorJugadorDtoAppContext(){
+    public void setGanador() {
 
-        //obtener el sector y jugador y meter data a la ventana
+        //AppContext.getInstance().get("nombreGanador");
+        lblGanador.setText(AppContext.getInstance().get("nombreGanador").toString());
     }
 
-    
 }

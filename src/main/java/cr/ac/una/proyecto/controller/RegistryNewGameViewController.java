@@ -119,7 +119,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @FXML
     void onActionBtnNext(ActionEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
 
         if (validateFields() && validateUniqueNames()) {
             savePlayerNames();
@@ -129,7 +129,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     @FXML
     void onDragDetectedSldQty(MouseEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/SelectNumberOfPlayers.mp3");
+        sound.playSound("SelectNumberOfPlayers.mp3");
     }
 
     private boolean validateFields() {

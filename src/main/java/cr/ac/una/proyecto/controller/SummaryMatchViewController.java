@@ -99,7 +99,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     @FXML
     void onActionBtnEdit(ActionEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement2.mp3");
+        sound.playSound("windMovement2.mp3");
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnEdit.getScene().getWindow()).close();
 
@@ -107,7 +107,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
+        sound.playSound("clickedStart.mp3");
         guardarJugadores();
         FlowController.getInstance().goMain("tableroView");
         ((Stage) btnPlay.getScene().getWindow()).close();

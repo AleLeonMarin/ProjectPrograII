@@ -102,7 +102,7 @@ public class PawnSelectionController extends Controller implements Initializable
     private void onActionBtnSiguiente(ActionEvent event) {
 
         Sound sound = new Sound();
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
         if (validarSeleccion())
         {
             new Mensaje().showModal(Alert.AlertType.ERROR, "Error de usuario", getStage(), "Cada jugador debe seleccionar un 'Peon' distinto");

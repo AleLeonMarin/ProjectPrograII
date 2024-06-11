@@ -30,7 +30,7 @@ public class GameLogInViewController extends Controller implements Initializable
 
     @FXML
     void onActionBtnExit(ActionEvent event) {
-        sound.playSound(("src/main/resources/cr/ac/una/proyecto/resources/audio/quitExited.mp3"));
+        sound.playSound(("quitExited.mp3"));
         pause.setOnFinished(events -> {
             ((Stage) btnExit.getScene().getWindow()).close();
         });
@@ -40,7 +40,7 @@ public class GameLogInViewController extends Controller implements Initializable
     @FXML
     void onActionBtnLog(ActionEvent event) {
 
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedStart.mp3");
+        sound.playSound("clickedStart.mp3");
         pause.setOnFinished(events -> {
             FlowController.getInstance().goViewInWindow("SelectingMode");
             ((Stage) btnLog.getScene().getWindow()).close();
@@ -66,13 +66,13 @@ public class GameLogInViewController extends Controller implements Initializable
         btnLog.setOpacity(1);
         lblAcerca.setOpacity(1);
 
-        sound.disableForButtons(btnLog, btnExit, lblAcerca, "src/main/resources/cr/ac/una/proyecto/resources/audio/MainSound.mp3");
+        sound.disableForButtons(btnLog, btnExit, lblAcerca, "MainSound.mp3");
 
     }
 
     @FXML
     void onMousePressed(MouseEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+        sound.playSound("windMovement1.mp3");
         FlowController.getInstance().goViewInWindow("acercadeView");
     }
 

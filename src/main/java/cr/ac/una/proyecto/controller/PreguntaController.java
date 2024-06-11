@@ -217,7 +217,7 @@ public class PreguntaController extends Controller implements Initializable {
             } else if (preguntaCategoria.equals("Geografia")) {
                 jugadorDto.incrementarContGeo();
                 jugadorDto.incrementarCorGeo();
-            } else if (preguntaCategoria.equals("Entretenemiento")) {
+            } else if (preguntaCategoria.equals("Entretenimiento")) {
                 jugadorDto.incrementarContEntre();
                 jugadorDto.incrementarCorEntre();
             } else if (preguntaCategoria.equals("Arte")) {
@@ -253,7 +253,7 @@ public class PreguntaController extends Controller implements Initializable {
         if (value == true) {
             actualizarPregunta();
             actualizarJugador();
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Correcta.mp3");
+            sound.playSound("Correcta.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Correcta",
                     acpRootPane.getScene().getWindow(), "Has respondido Correctamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
@@ -261,12 +261,12 @@ public class PreguntaController extends Controller implements Initializable {
         } else if (intentos <= 0) {
             actualizarPregunta();
             actualizarJugador();
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Failed.mp3");
+            sound.playSound("Failed.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(), "Has respondido Incorrectamente");
             animacion.animarFadeOut(acpRootPane, getRunnableOnFinishOut());
         } else {
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Chance_audio.mp3");
+            sound.playSound("Chance_audio.mp3");
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Respuesta Incorrecta",
                     acpRootPane.getScene().getWindow(),
                     "Has respondido Incorrectamente, te quedan: " + intentos + " intentos mas;");

@@ -34,7 +34,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
         AppContext.getInstance().set("dificultad", dificultad);
         FlowController.getInstance().goViewInWindow("SumaryMatch");
         ((Stage) btnPlay.getScene().getWindow()).close();
@@ -73,19 +73,19 @@ public class DifficultySelectionViewController extends Controller implements Ini
 
     @FXML
     void onActionDificil(MouseEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+        sound.playSound("Popup_SecondPage.mp3");
         this.dificultad = "Dificil";
     }
 
     @FXML
     void onActionFacil(MouseEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+        sound.playSound("Popup_SecondPage.mp3");
         this.dificultad = "Facil";
     }
 
     @FXML
     void onActionMedio(MouseEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Popup_SecondPage.mp3");
+        sound.playSound("Popup_SecondPage.mp3");
         this.dificultad = "Media";
     }
 }

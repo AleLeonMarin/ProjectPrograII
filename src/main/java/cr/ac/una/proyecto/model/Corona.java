@@ -38,4 +38,8 @@ public class Corona {
         this.nombre = nombre;
     }
 
+    public String toString() {
+        return nombre + estado;
+    }
+
 }

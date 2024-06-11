@@ -31,7 +31,7 @@ public class SelectingModeViewController extends Controller implements Initializ
     @FXML
     void onActionBtnChargeMatch(ActionEvent event) {
         
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
         FlowController.getInstance().goViewInWindow("LoadGame");
         ((Stage) btnChargeMatch.getScene().getWindow()).close();
 
@@ -40,7 +40,7 @@ public class SelectingModeViewController extends Controller implements Initializ
     @FXML
     void onActionBtnNewMatch(ActionEvent event) {
 
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnNewMatch.getScene().getWindow()).close();
 

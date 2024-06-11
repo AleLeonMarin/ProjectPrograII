@@ -68,7 +68,7 @@ public class SectorSelectionController extends Controller implements Initializab
     @FXML
     private void onActionBtnNext(ActionEvent event) {
 
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
         if (!validarBotones())
         {
             crearSectores(cantJugadores);

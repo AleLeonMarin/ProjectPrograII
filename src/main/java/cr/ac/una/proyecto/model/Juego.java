@@ -40,7 +40,8 @@ public class Juego {
 
     }
 
-    public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de los sectores y meterlos en el gridPane
+    public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de
+                                                           // los sectores y meterlos en el gridPane
         for (Sector sectorActual : sectores) {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
@@ -63,12 +64,14 @@ public class Juego {
 
     public void setSectoresAppContext() {
         AppContext.getInstance().set("JuegoSectores", sectores);
-        System.out.println("Juego setSectorActualtoAppContextJugadorVersion: " + sectores.get(turnoActual).getJugador().getVersion());
+        System.out.println("Juego setSectorActualtoAppContextJugadorVersion: "
+                + sectores.get(turnoActual).getJugador().getVersion());
     }
 
     public void cargarSectorActualFromAppContext() {
         sectores.set(turnoActual, (Sector) AppContext.getInstance().get("preguntaSector"));
-        System.out.println("Juego cargarSectorActualFromAppContextJugadorVersion: " + sectores.get(turnoActual).getJugador().getVersion());
+        System.out.println("Juego cargarSectorActualFromAppContextJugadorVersion: "
+                + sectores.get(turnoActual).getJugador().getVersion());
     }
 
     public void jugar(GridPane grdpTablero, boolean valorRespuesta, boolean isJugadorOnCrow) {
@@ -118,8 +121,7 @@ public class Juego {
             for (Sector sector : sectores) {
                 sector.setAyudasFacil();
             }
-        }
-       else if (dificultad.equals("Media")) {
+        } else if (dificultad.equals("Media")) {
             for (Sector sector : sectores) {
                 sector.setAyudasFacil();
                 sector.habilitarAyudas(false);
@@ -138,9 +140,11 @@ public class Juego {
         turnoActual = (turnoActual + 1) % sectores.size();
     }
 
-    private void mostrarGanador(Sector sector, AnchorPane anchorPane) {
-        FlowController.getInstance().goViewInWindowModal("WinnerView", ((Stage) anchorPane.getScene().getWindow()), true);
+    public void mostrarGanador(Sector sector, AnchorPane anchorPane) {
+        FlowController.getInstance().goViewInWindow("WinnerView");
+        ((Stage) anchorPane.getScene().getWindow()).close();
     }
+
 
     public void valdidarCoronasGanador(AnchorPane anchorPane) {
         int limiteRondasGanador = 25;
@@ -155,6 +159,8 @@ public class Juego {
                 }
             }
             if (coronasActivas) {
+                String nombre = sectorActual.getJugador().getNombre();
+                AppContext.getInstance().set("nombreGanador", nombre);
                 mostrarGanador(sectorActual, anchorPane);
             }
         }
@@ -178,7 +184,7 @@ public class Juego {
         }
 
         if (sectoresEmpatados.size() == 1) {
-            mostrarGanador(sectoresEmpatados.get(0),anchorPane);
+            mostrarGanador(sectoresEmpatados.get(0), anchorPane);
         } else {
             manejarEmpate(sectoresEmpatados);
         }
@@ -209,7 +215,8 @@ public class Juego {
     private void manejarEmpate(ArrayList<Sector> sectoresEmpatados) {
         // Función vacía que recibiría los sectores empatados
         // Implementación pendiente
-        // comparar la cantidad preguntas respondidas y respondidas correctamente para determinar un ganador
+        // comparar la cantidad preguntas respondidas y respondidas correctamente para
+        // determinar un ganador
     }
 
     public double getRuletaAngulo() {

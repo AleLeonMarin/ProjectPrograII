@@ -77,7 +77,7 @@ public class TablerosController extends Controller implements Initializable {
 
     @FXML
     private void OnMouseClickedPicker(MouseEvent event) {
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Roulette.mp3");
+        sound.playSound("Roulette.mp3");
         cargarLabelsPartidaInfo();
         this.imvPicker.setDisable(true);
         if (!turnoDecidido) {
@@ -183,57 +183,57 @@ public class TablerosController extends Controller implements Initializable {
     private void mostrarTarjetas() {
         if (categoria == categoriasRuleta.get(0)) {
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(1)) {
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardArt",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(2)) {
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(3)) {
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(4)) {
             goCoronaDuelView();
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
             return;
 
         } else if (categoria == categoriasRuleta.get(5)) {
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
         } else {
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/windMovement1.mp3");
+            sound.playSound("windMovement1.mp3");
         }
         llamarPreguntaView();
         juego.jugar(grdpTablero, valorPreguntaRespuesta, isOnCrown);
@@ -252,7 +252,7 @@ public class TablerosController extends Controller implements Initializable {
             SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController
                     .getInstance().getController("SelectCrownDecisionView");
             // sound
-            sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/Card.mp3");
+            sound.playSound("Card.mp3");
             // flow
             FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView",
                     ((Stage) acpRootPane.getScene().getWindow()), true);
