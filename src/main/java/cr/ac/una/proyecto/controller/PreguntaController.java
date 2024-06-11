@@ -64,9 +64,6 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private ImageView imvSecondOportunity;
 
-    @FXML
-    private ImageView imvTirarRuleta;
-
     private Animacion animacion;
     private String preguntaCategoria;
 
@@ -140,6 +137,10 @@ public class PreguntaController extends Controller implements Initializable {
         sectorDto.removerAyuda(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
+        habilitarBotones(false);
+        actualizarPregunta();
+        actualizarJugador();
+        obtenerPreguntaCategoria();
     }
 
     @FXML
@@ -152,22 +153,6 @@ public class PreguntaController extends Controller implements Initializable {
         this.intentos += 1;
     }
 
-    @FXML
-    private void onMouseTirarRuleta(MouseEvent event) {
-        habilitarAyudaImagen(false, imvTirarRuleta);
-        String ayuda = "TirarRuleta";
-        sectorDto.removerAyuda(ayuda);
-        new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
-                "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
-
-        TirarRuletaController tirarRuletaBusquedaController = (TirarRuletaController) FlowController.getInstance()
-                .getController("TirarRuletaView");
-        FlowController.getInstance().goViewInWindowModal("TirarRuletaView",
-                ((Stage) txaEnunciado.getScene().getWindow()), true);
-        preguntaCategoria = (String) tirarRuletaBusquedaController.getResultado();
-        obtenerPreguntaCategoria();
-        animacion.simpleFadeIn(acpRootPane);
-    }
 
     private void obtenerPreguntaCategoria() {
         PreguntaService preService = new PreguntaService();
@@ -299,7 +284,6 @@ public class PreguntaController extends Controller implements Initializable {
         habilitarAyudaImagen(valor, imvNext);
         habilitarAyudaImagen(valor, imvBomba);
         habilitarAyudaImagen(valor, imvSecondOportunity);
-        habilitarAyudaImagen(valor, imvTirarRuleta);
     }
 
     private void habilitarPorAyuda(Ayuda ayuda) {
@@ -309,9 +293,7 @@ public class PreguntaController extends Controller implements Initializable {
             habilitarAyudaImagen(true, imvNext);
         } else if (ayuda.getNombre().equals("DobleOportunidad") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvSecondOportunity);
-        } else if (ayuda.getNombre().equals("TirarRuleta") && ayuda.getEstado()) {
-            habilitarAyudaImagen(true, imvTirarRuleta);
-        }
+        } 
     }
 
     private void habilitarAyudaImagen(boolean valor, ImageView imagen) {
@@ -350,9 +332,12 @@ public class PreguntaController extends Controller implements Initializable {
         this.botones.add(btnRespuesta2);
         this.botones.add(btnRespuesta3);
         this.botones.add(btnRespuesta4);
+        habilitarBotones(false);
+    }
 
+    private void habilitarBotones(boolean estado) {
         for (MFXButton boton : botones) {
-            boton.setDisable(false);
+            boton.setDisable(estado);
         }
     }
 

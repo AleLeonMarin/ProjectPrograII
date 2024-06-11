@@ -19,6 +19,11 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
+                  <ImageView fx:id="imvSecondOportunity" fitHeight="55.0" fitWidth="55.0" layoutX="240.0" layoutY="32.0" onMouseClicked="#onMouseOportunidadDoble" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/porDos.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fx:id="imvBomba" fitHeight="55.0" fitWidth="55.0" onMouseClicked="#onMouseClickedBomba" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/bomb.png" />
@@ -27,16 +32,6 @@
                   <ImageView fx:id="imvNext" fitHeight="55.0" fitWidth="55.0" layoutX="283.0" layoutY="32.0" onMouseClicked="#onMouseClickedNext" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/next.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="imvSecondOportunity" fitHeight="55.0" fitWidth="55.0" layoutX="240.0" layoutY="32.0" onMouseClicked="#onMouseOportunidadDoble" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/porDos.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="imvTirarRuleta" fitHeight="55.0" fitWidth="55.0" layoutX="325.0" layoutY="32.0" onMouseClicked="#onMouseTirarRuleta" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../resources/ruleta.png" />
                      </image>
                   </ImageView>
                </children>

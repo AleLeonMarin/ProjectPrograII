@@ -71,8 +71,7 @@ public class TirarRuletaController extends Controller implements Initializable {
         {
             System.out.println("La animación de la ruleta ha terminado en esta categoria: " + resultado + ", Angulo: " + anguloDetenido);
             this.imvPicker.setDisable(false);
-            animacion.animarFadeOut(imvRuleta, onFinishOut);
-
+            animacion.animarFadeOut(acpRootPane, onFinishOut);
         };
 
         animacion.animacionRuleta(imvRuleta, anguloDetenido, onFinish);

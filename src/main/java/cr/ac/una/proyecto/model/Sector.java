@@ -40,13 +40,14 @@ public class Sector {
     }
 
     public void setActualPosInFirst() {
-        if (direccion == 1 || direccion == 2) {
+        if (direccion == 1 || direccion == 2)
+        {
             this.posActual = this.posicionY;
-        } else {
+        } else
+        {
             this.posActual = this.posicionX;
         }
     }
-
 
     public int getDireccion() {
         return direccion;
@@ -119,27 +120,32 @@ public class Sector {
     }
 
     public void mostrarPeonTablero(ImageView imageView) {
-        if (direccion == 1 || direccion == 2) {
+        if (direccion == 1 || direccion == 2)
+        {
             moverNodoA(imageView, posActual, posicionX);
-        } else {
+        } else
+        {
             moverNodoA(imageView, posicionY, posActual);
         }
     }
 
-
     private void checkCoronaPos(int posCorona) {
 
-        if (posActual == posCorona) {
+        if (posActual == posCorona)
+        {
             isOnCoronaPos = true;
-        } else {
+        } else
+        {
             isOnCoronaPos = false;
         }
     }
 
     public int moverDerecha(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionY + 3) {
+        if (posActual >= posicionY + 3)
+        {
             posActual = posicionY;
-        } else {
+        } else
+        {
             posActual++;
         }
         moverNodoA(imageView, posActual, posicionX);
@@ -148,9 +154,11 @@ public class Sector {
     }
 
     public int moverIzquierda(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionY - 3) {
+        if (posActual <= posicionY - 3)
+        {
             posActual = posicionY;
-        } else {
+        } else
+        {
             posActual--;
 
         }
@@ -160,9 +168,11 @@ public class Sector {
     }
 
     public int moverAbajo(ImageView imageView, GridPane grdPane) {
-        if (posActual >= posicionX + 3) {
+        if (posActual >= posicionX + 3)
+        {
             posActual = posicionX;
-        } else {
+        } else
+        {
             posActual++;
 
         }
@@ -172,9 +182,11 @@ public class Sector {
     }
 
     public int moverArriba(ImageView imageView, GridPane grdPane) {
-        if (posActual <= posicionX - 3) {
+        if (posActual <= posicionX - 3)
+        {
             posActual = posicionX;
-        } else {
+        } else
+        {
             posActual--;
 
         }
@@ -184,7 +196,8 @@ public class Sector {
     }
 
     public int mover(ImageView imageView, GridPane grdPane) {
-        switch (direccion) {
+        switch (direccion)
+        {
             case 1:
                 return moverDerecha(imageView, grdPane);
             case 2:
@@ -204,8 +217,10 @@ public class Sector {
     }
 
     public void removerAyuda(String ayudaNombre) {
-        for (Ayuda ayuda : ayudas) {
-            if (ayuda.getNombre().equals(ayudaNombre)) {
+        for (Ayuda ayuda : ayudas)
+        {
+            if (ayuda.getNombre().equals(ayudaNombre))
+            {
                 ayuda.setEstado(false);
             }
         }
@@ -222,7 +237,8 @@ public class Sector {
     }
 
     public void habilitarAyudas(boolean valor) {
-        for (Ayuda ayuda : ayudas) {
+        for (Ayuda ayuda : ayudas)
+        {
             ayuda.setEstado(valor);
         }
     }
@@ -231,31 +247,38 @@ public class Sector {
         this.coronas = new ArrayList<>();
         ArrayList<String> categorias = new ArrayList<>(Arrays.asList("Deportes", "Arte", "Geografia", "Ciencia", "Entretenimiento", "Historia"));
 
-        for (String categoria : categorias) {
+        for (String categoria : categorias)
+        {
             coronas.add(new Corona(categoria));
         }
 
     }
 
     public void setEstadoCorona(String coronaNombre, boolean estado) {
-        for (Corona corona : coronas) {
-            if (corona.getNombre().equals(coronaNombre)) {
+        for (Corona corona : coronas)
+        {
+            if (corona.getNombre().equals(coronaNombre))
+            {
                 corona.setEstado(estado);
             }
         }
     }
 
     public void printCoronasInfo() {
-        for (Corona corona : coronas) {
-            if (corona.getEstado()) {
+        for (Corona corona : coronas)
+        {
+            if (corona.getEstado())
+            {
                 System.out.println("Corona Activa: " + corona.getNombre());
             }
         }
     }
 
     public void printAyudasInfo() {
-        for (Ayuda ayuda : ayudas) {
-            if (ayuda.getEstado()) {
+        for (Ayuda ayuda : ayudas)
+        {
+            if (ayuda.getEstado())
+            {
                 System.out.println("Ayuda Activa: " + ayuda.getNombre());
             }
         }
@@ -265,10 +288,12 @@ public class Sector {
     public void setAyudaRandom(int cantidadAyudasRandom) {
         int index = 0;
         Random random = new Random();
-        while (index < cantidadAyudasRandom && !hasAllHints()) {
+        while (index < cantidadAyudasRandom && !hasAllHints())
+        {
             int numeroAleatorioInt = random.nextInt(ayudas.size());
 
-            if (!(ayudas.get(numeroAleatorioInt).getEstado())) {
+            if (!(ayudas.get(numeroAleatorioInt).getEstado()))
+            {
                 ayudas.get(numeroAleatorioInt).setEstado(true);
                 index++;
             }
@@ -278,12 +303,25 @@ public class Sector {
     }
 
     private boolean hasAllHints() {
-        for (Ayuda ayuda : ayudas) {
-            if (!ayuda.getEstado()) {
+        for (Ayuda ayuda : ayudas)
+        {
+            if (!ayuda.getEstado())
+            {
                 return false;
             }
         }
         return true;
     }
 
+    public boolean findAyudaByName(String nombreAyuda) {
+        for (Ayuda ayuda : ayudas)
+        {
+            if (ayuda.getNombre().equals(nombreAyuda) && ayuda.getEstado())
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
 }

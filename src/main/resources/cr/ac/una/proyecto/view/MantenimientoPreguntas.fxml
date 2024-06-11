@@ -19,7 +19,7 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="580.0" prefWidth="780.0" styleClass="jfx-panel-container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Label styleClass="label-Titulo-Principal" text="Mantenimeinto de Preguntas" />
+                  <Label styleClass="label-Titulo-Principal" text="Mantenimiento de Preguntas" />
                   <VBox alignment="CENTER" prefHeight="537.0" prefWidth="830.0" styleClass="jfx-principal-pane">
                      <children>
                         <HBox alignment="CENTER" prefHeight="107.0" prefWidth="880.0" spacing="40.0">

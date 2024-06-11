@@ -25,6 +25,6 @@
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
          </graphic>
       </MFXButton>
-      <Label fx:id="lblAcerca" layoutX="191.0" layoutY="527.0" onMousePressed="#onMousePressed" text="Acerda de" />
+      <Label fx:id="lblAcerca" layoutX="192.0" layoutY="527.0" onMousePressed="#onMousePressed" styleClass="lblTexto" text="Acerca de" />
    </children>
 </AnchorPane>
