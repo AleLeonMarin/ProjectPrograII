@@ -89,7 +89,7 @@ public class TablaPosicionesController extends Controller implements Initializab
 
         PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(600));
         Sound sound = new Sound();
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/quitExited.mp3");
+        sound.playSound("quitExited.mp3");
 
         pause.setOnFinished(events -> {
             FlowController.getInstance().goViewInWindow("SelectingMode");
@@ -136,7 +136,7 @@ public class TablaPosicionesController extends Controller implements Initializab
             cellButton.setOnAction(t -> {
                 JugadorDto jugadorDto = tbvPosiciones.getSelectionModel().getSelectedItem();
                 if (jugadorDto != null) {
-                    sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+                    sound.playSound("clickedNext.mp3");
                     FlowController.getInstance().goViewInWindowModal("EstadisticasJugador",
                             ((Stage) cellButton.getScene().getWindow()), true);
                     tbvPosiciones.getSelectionModel().clearSelection();

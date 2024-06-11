@@ -51,11 +51,6 @@ public class GameLogInViewController extends Controller implements Initializable
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-    }
-
-    @Override
-    public void initialize() {
-
         btnExit.setDisable(true);
         btnLog.setDisable(true);
         lblAcerca.setDisable(true);
@@ -65,8 +60,13 @@ public class GameLogInViewController extends Controller implements Initializable
         btnExit.setOpacity(1);
         btnLog.setOpacity(1);
         lblAcerca.setOpacity(1);
-
+    
         sound.disableForButtons(btnLog, btnExit, lblAcerca, "MainSound.mp3");
+    }
+
+    @Override
+    public void initialize() {
+
 
     }
 

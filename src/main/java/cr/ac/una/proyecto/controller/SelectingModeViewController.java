@@ -49,7 +49,7 @@ public class SelectingModeViewController extends Controller implements Initializ
     @FXML
     void onMousePressedPosiciones(MouseEvent event) {
 
-        sound.playSound("src/main/resources/cr/ac/una/proyecto/resources/audio/clickedNext.mp3");
+        sound.playSound("clickedNext.mp3");
         FlowController.getInstance().goViewInWindow("TablaPosiciones");
         ((Stage) lblPosiciones.getScene().getWindow()).close();
 
