@@ -97,6 +97,7 @@ public class PreguntaController extends Controller implements Initializable {
         unbindRespuestas();
         obtenerPreguntaCategoria();
         animacion.simpleFadeIn(acpRootPane);
+        txaEnunciado.setEditable(false);
     }
 
     @FXML

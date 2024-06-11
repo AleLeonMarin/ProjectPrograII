@@ -163,12 +163,10 @@ public class TableroController extends Controller implements Initializable {
 
     @FXML
     private void onMouseMoved(MouseEvent event) {
-        if (busquedaController != null && (busquedaController.pickerStatus())) {
-            cargarSectoresCoronas();
-            if (sectores != null) {
-                actualizarOpacidadSegunCorona();
-            }
 
+        cargarSectoresCoronas();
+        if (sectores != null) {
+            actualizarOpacidadSegunCorona();
         }
     }
 
