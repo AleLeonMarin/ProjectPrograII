@@ -104,6 +104,7 @@ public class TableroController extends Controller implements Initializable {
         nombresJugadores = FXCollections.observableArrayList();
         jugadores = new ArrayList<>();
         juego = new Juego();
+        partidaDto = new PartidaDto();
         loadToJson = new ArrayList<>();
         getJugadoresFromAppContext();
         disablePlayer();
@@ -494,23 +495,24 @@ public class TableroController extends Controller implements Initializable {
     }
 
     public void loadToJsonData() {
+        loadToJson.clear();
         loadToJson.addAll(Arrays.asList(juego.toString() + contextSlider));
     }
 
     private void createJson() {
         loadToJsonData();
         System.out.println(loadToJson.toString());
-        partidaDto = new PartidaDto();
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
-        try {
-            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
-            file.write(json);
-            file.close();
-            partidaDto.setParPartida(json);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        partidaDto.setParPartida(json);
+//        try {
+//            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
+//            file.write(json);
+//            file.close();
+//            partidaDto.setParPartida(json);
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
 
     }
 
