@@ -9,16 +9,12 @@ import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Sound;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import io.github.palexdev.materialfx.controls.MFXButton;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -153,7 +149,6 @@ public class PreguntaController extends Controller implements Initializable {
                 "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
         this.intentos += 1;
     }
-
 
     private void obtenerPreguntaCategoria() {
         PreguntaService preService = new PreguntaService();
@@ -294,7 +289,7 @@ public class PreguntaController extends Controller implements Initializable {
             habilitarAyudaImagen(true, imvNext);
         } else if (ayuda.getNombre().equals("DobleOportunidad") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvSecondOportunity);
-        } 
+        }
     }
 
     private void habilitarAyudaImagen(boolean valor, ImageView imagen) {
@@ -398,7 +393,8 @@ public class PreguntaController extends Controller implements Initializable {
             if (respuestaUtil.getEstado()) {
                 this.preguntaDto = (PreguntaDto) respuestaUtil.getResultado("APregunta");
                 System.out.println("Pregunta Actualizada" + preguntaDto.getEnunciado() + ", ID" + preguntaDto.getId());
-                new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Pregunta", getStage(), "Pregunta Actualizada");
+                new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Pregunta", getStage(),
+                        "Pregunta Actualizada");
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Pregunta", getStage(),
                         "Error al actualizar la pregunta");

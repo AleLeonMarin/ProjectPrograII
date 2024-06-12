@@ -27,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -498,20 +500,34 @@ public class TableroController extends Controller implements Initializable {
     }
 
     private void createJson() {
+        // Asegúrate de que loadToJsonData() carga los datos correctamente en loadToJson
         loadToJsonData();
         System.out.println(loadToJson.toString());
+
+        // Crear un objeto PartidaDto
         partidaDto = new PartidaDto();
-        Gson gson = new Gson();
-        String json = gson.toJson(loadToJson.toString());
+
+        // Crear un objeto Gson
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        // Convertir loadToJson directamente a JSON
+        String json = gson.toJson(loadToJson);
+
         try {
-            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
+            // Crear un FileWriter en modo de sobrescritura
+            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json", false);
             file.write(json);
             file.close();
+
+            // Establecer el JSON en el DTO de la partida
             partidaDto.setParPartida(json);
+
+            // Informar que el archivo se guardó correctamente
+            System.out.println("Archivo JSON guardado exitosamente.");
         } catch (IOException ex) {
             ex.printStackTrace();
+            System.out.println("Error al escribir el archivo JSON.");
         }
-
     }
 
     private void cargarJuegoClass() {
