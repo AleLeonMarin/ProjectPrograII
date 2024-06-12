@@ -199,7 +199,7 @@ public class Sector {
     @Override
     public String toString() {
         return jugador.getId() + "," + jugador.getNombre() + "," + posActual + "," + direccion + "," + rutaImagenJugador
-                + "," + coronas;
+                + "," + coronas + "," + ayudas ;
     }
 
     public void removerAyuda(String ayudaNombre) {

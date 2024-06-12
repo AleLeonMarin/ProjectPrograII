@@ -496,7 +496,7 @@ public class TableroController extends Controller implements Initializable {
 
     public void loadToJsonData() {
         loadToJson.clear();
-        loadToJson.addAll(Arrays.asList(juego.toString() + contextSlider));
+        loadToJson.addAll(Arrays.asList(contextSlider + "," + juego.toString()));
     }
 
     private void createJson() {
@@ -505,14 +505,6 @@ public class TableroController extends Controller implements Initializable {
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
         partidaDto.setParPartida(json);
-//        try {
-//            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json");
-//            file.write(json);
-//            file.close();
-//            partidaDto.setParPartida(json);
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
 
     }
 
