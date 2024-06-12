@@ -12,7 +12,7 @@
    <children>
       <VBox layoutX="214.0" layoutY="145.0" prefHeight="707.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="tbvMatches" prefHeight="651.0" prefWidth="640.0">
+            <TableView fx:id="tbvMatches" onMousePressed="#onMousePressedTbvMatches" prefHeight="651.0" prefWidth="640.0">
                <columns>
                   <TableColumn fx:id="tbcId" prefWidth="150.0" text="ID de Partida" />
                   <TableColumn fx:id="tbcDuenio" minWidth="0.0" prefWidth="134.0" text="Dueño de Partida" />
