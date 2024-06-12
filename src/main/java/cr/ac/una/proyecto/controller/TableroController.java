@@ -108,9 +108,9 @@ public class TableroController extends Controller implements Initializable {
         juego = new Juego();
         partidaDto = new PartidaDto();
         loadToJson = new ArrayList<>();
-        getJugadoresFromAppContext();
+        isOnCargarPartida();
         disablePlayer();
-        showPlayer();
+        //showPlayer();
     }
 
     @Override
@@ -128,6 +128,22 @@ public class TableroController extends Controller implements Initializable {
             }
         };
         timer.schedule(task, 5000);
+    }
+
+    private void isOnCargarPartida() {
+        boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
+        if (cargarPartida) {
+            this.partidaDto = (PartidaDto) AppContext.getInstance().get("partidaCargada");
+            cargarCantidadJugadoresPartida();
+        } else {
+            getJugadoresFromAppContext();
+            contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
+        }
+    }
+
+    private void cargarCantidadJugadoresPartida() {
+        String partidaInfo = partidaDto.getParPartida();
+        this.contextSlider = Integer.parseInt(String.valueOf(partidaInfo.charAt(2)));
     }
 
     private void validarCantidadJugadores() {
@@ -225,9 +241,6 @@ public class TableroController extends Controller implements Initializable {
     }
 
     public void showPlayer() {
-
-        int contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
-        System.out.println("AppContextInfoSlider: " + contextSlider);
 
         if (contextSlider == 2) {
             enablePlayerOne();

@@ -4,8 +4,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
+
 import cr.ac.una.proyecto.model.PartidaDto;
 import cr.ac.una.proyecto.service.PartidaService;
+import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
@@ -18,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.stage.Stage;
 
@@ -42,13 +45,17 @@ public class LoadGameViewController extends Controller implements Initializable 
 
     PartidaService partidaService;
 
+    private boolean cargarPartida;
+
     private ObservableList<PartidaDto> partidas;
 
     @FXML
     void onActionBtnChargeMatch(ActionEvent event) {
+        partidaDto = tbvMatches.getSelectionModel().getSelectedItem();
+        setPartidaToAppContext();
+        System.out.println("Id partida cargada" + partidaDto.parId);
         FlowController.getInstance().goMain("tableroView");
         ((Stage) btnChargeMatch.getScene().getWindow()).close();
-
     }
 
     @FXML
@@ -59,6 +66,7 @@ public class LoadGameViewController extends Controller implements Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.cargarPartida = false;
         partidas = FXCollections.observableArrayList();
         partidaService = new PartidaService();
         partidaDto = new PartidaDto();
@@ -76,18 +84,29 @@ public class LoadGameViewController extends Controller implements Initializable 
         tbcId.setCellValueFactory(cd -> cd.getValue().parId);
         tbcDuenio.setCellValueFactory(cd -> cd.getValue().parDuenio);
         loadMatchesToTable();
-        
+
     }
 
     private void loadMatchesToTable() {
-        
+
         RespuestaUtil respuesta = partidaService.getAll();
 
-        if(respuesta.getEstado()){
+        if (respuesta.getEstado()) {
             partidas.clear();
             partidas.addAll((List<PartidaDto>) respuesta.getResultado("Partidas"));
-        }else{
+        } else {
             new Mensaje().showModal(AlertType.ERROR, "Cargar Partidas", getStage(), respuesta.getMensaje());
+        }
+    }
+
+    private void setPartidaToAppContext() {
+        AppContext.getInstance().set("partidaCargada", partidaDto);
+    }
+
+    @FXML
+    private void onMousePressedTbvMatches(MouseEvent event) {
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+            onActionBtnChargeMatch(null);
         }
     }
 

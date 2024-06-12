@@ -2,6 +2,8 @@ package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import cr.ac.una.proyecto.util.AppContext;
 import javafx.stage.Stage;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Sound;
@@ -13,7 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class SelectingModeViewController extends Controller implements Initializable {
+public class SelectingModeController extends Controller implements Initializable {
 
     @FXML
     private MFXButton btnChargeMatch;
@@ -24,14 +26,15 @@ public class SelectingModeViewController extends Controller implements Initializ
     @FXML
     private Label lblPosiciones;
 
-   Sound sound = new Sound();
+    Sound sound = new Sound();
 
     PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(600));
 
     @FXML
     void onActionBtnChargeMatch(ActionEvent event) {
-        
+
         sound.playSound("clickedNext.mp3");
+        AppContext.getInstance().set("cargarPartida", true);
         FlowController.getInstance().goViewInWindow("LoadGame");
         ((Stage) btnChargeMatch.getScene().getWindow()).close();
 
@@ -41,6 +44,7 @@ public class SelectingModeViewController extends Controller implements Initializ
     void onActionBtnNewMatch(ActionEvent event) {
 
         sound.playSound("clickedNext.mp3");
+        AppContext.getInstance().set("cargarPartida", false);
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnNewMatch.getScene().getWindow()).close();
 
@@ -53,7 +57,6 @@ public class SelectingModeViewController extends Controller implements Initializ
         FlowController.getInstance().goViewInWindow("TablaPosiciones");
         ((Stage) lblPosiciones.getScene().getWindow()).close();
 
-    
 
     }
 

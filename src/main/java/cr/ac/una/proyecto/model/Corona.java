@@ -39,7 +39,11 @@ public class Corona {
     }
 
     public String toString() {
-        return nombre + "-" + estado;
+        if (this.estado) {
+            return nombre + "-" + estado;
+        } else {
+            return "";
+        }
     }
 
 }

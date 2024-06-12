@@ -9,7 +9,6 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 /**
@@ -26,11 +25,11 @@ public class Mensaje {
         alert.show();
     }
 
-    public void showModal(AlertType tipo, String titulo, Stage stage, String mensaje) {
+    public void showModal(AlertType tipo, String titulo, Window padre, String mensaje) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
-        alert.initOwner(stage);
+        alert.initOwner(padre);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
