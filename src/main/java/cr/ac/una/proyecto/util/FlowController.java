@@ -20,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import cr.ac.una.proyecto.controller.Controller;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
@@ -148,6 +149,8 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setTitle("Preguntados JR");
         stage.getIcons()
                 .add(new Image(getClass().getResource("/cr/ac/una/proyecto/resources/logo.jpg").toExternalForm()));
         stage.setOnHidden((WindowEvent event) -> {

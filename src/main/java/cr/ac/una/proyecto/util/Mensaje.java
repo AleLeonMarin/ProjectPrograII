@@ -26,11 +26,11 @@ public class Mensaje {
         alert.show();
     }
 
-    public void showModal(AlertType tipo, String titulo, Stage stage, String mensaje) {
+    public void showModal(AlertType tipo, String titulo, Window padre, String mensaje) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
-        alert.initOwner(stage);
+        alert.initOwner(padre);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
