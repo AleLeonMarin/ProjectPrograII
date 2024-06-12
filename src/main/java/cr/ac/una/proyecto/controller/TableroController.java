@@ -106,6 +106,7 @@ public class TableroController extends Controller implements Initializable {
         nombresJugadores = FXCollections.observableArrayList();
         jugadores = new ArrayList<>();
         juego = new Juego();
+        partidaDto = new PartidaDto();
         loadToJson = new ArrayList<>();
         getJugadoresFromAppContext();
         disablePlayer();
@@ -496,38 +497,18 @@ public class TableroController extends Controller implements Initializable {
     }
 
     public void loadToJsonData() {
-        loadToJson.addAll(Arrays.asList(juego.toString() + contextSlider));
+        loadToJson.clear();
+        loadToJson.addAll(Arrays.asList(contextSlider + "," + juego.toString()));
     }
 
     private void createJson() {
         // Asegúrate de que loadToJsonData() carga los datos correctamente en loadToJson
         loadToJsonData();
         System.out.println(loadToJson.toString());
+        Gson gson = new Gson();
+        String json = gson.toJson(loadToJson.toString());
+        partidaDto.setParPartida(json);
 
-        // Crear un objeto PartidaDto
-        partidaDto = new PartidaDto();
-
-        // Crear un objeto Gson
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        // Convertir loadToJson directamente a JSON
-        String json = gson.toJson(loadToJson);
-
-        try {
-            // Crear un FileWriter en modo de sobrescritura
-            FileWriter file = new FileWriter("Partida " + lblJugador1.getText() + ".json", false);
-            file.write(json);
-            file.close();
-
-            // Establecer el JSON en el DTO de la partida
-            partidaDto.setParPartida(json);
-
-            // Informar que el archivo se guardó correctamente
-            System.out.println("Archivo JSON guardado exitosamente.");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.out.println("Error al escribir el archivo JSON.");
-        }
     }
 
     private void cargarJuegoClass() {

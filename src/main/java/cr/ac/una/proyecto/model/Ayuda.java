@@ -1,7 +1,6 @@
 package cr.ac.una.proyecto.model;
 
 /**
- *
  * @author justi
  */
 public class Ayuda {
@@ -32,6 +31,10 @@ public class Ayuda {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String toString() {
+        return nombre + "-" + estado;
     }
 
 }

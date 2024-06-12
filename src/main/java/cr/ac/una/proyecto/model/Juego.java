@@ -41,7 +41,7 @@ public class Juego {
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de
-                                                           // los sectores y meterlos en el gridPane
+        // los sectores y meterlos en el gridPane
         for (Sector sectorActual : sectores) {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
@@ -232,7 +232,7 @@ public class Juego {
     }
 
     public String toString() {
-        return sectores.toString() + turnoActual;
+        return turnoActual + ", " + dificultad + "," +sectores.toString();
     }
 
     public int getTurnoActual() {
