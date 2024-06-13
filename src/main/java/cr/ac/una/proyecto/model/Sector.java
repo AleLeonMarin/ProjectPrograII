@@ -71,7 +71,7 @@ public class Sector {
         this.jugador = jugador;
     }
 
-    public int getPosicionFija() {
+    public int getPosicionX() {
         return posicionX;
     }
 
@@ -79,7 +79,7 @@ public class Sector {
         this.posicionX = posicionFija;
     }
 
-    public int getPosicionInicial() {
+    public int getPosicionY() {
         return posicionY;
     }
 
@@ -334,10 +334,11 @@ public class Sector {
                 char currentChar = input.charAt(indexTexto);
                 if (Character.isAlphabetic(currentChar)) {
                     numberBuffer.append(currentChar);
-                } else if (currentChar == ',') {
+                } else if (currentChar == ','||currentChar==']') {
                     for (Corona corona : coronas) {
                         if (corona.habilitarPorNombre(numberBuffer.toString())) {
                             numberBuffer.setLength(0);
+                            break;
                         }
 
                     }

@@ -161,7 +161,6 @@ public class RegistryNewGameViewController extends Controller implements Initial
         for (MFXTextField textField : textFields) {
             if (textField.isVisible() && !textField.getText().isBlank()) {
                 JugadorDto jugador = new JugadorDto(textField.getText());
-                System.out.println("Jugador nombre" + jugador.getNombre());
                 jugadores.add(jugador);
             }
         }

@@ -14,25 +14,27 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 /**
- *
  * @author aletr
  */
 @Entity
 @Table(name = "PARTIDA")
 @NamedQueries({
-    @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p"),
-    @NamedQuery(name = "Partida.findByParId", query = "SELECT p FROM Partida p WHERE p.parId = :parId"),
-    @NamedQuery(name = "Partida.findByParDuenio", query = "SELECT p FROM Partida p WHERE p.parDuenio = :parDuenio"),
-    @NamedQuery(name = "Partida.findByParVersion", query = "SELECT p FROM Partida p WHERE p.parVersion = :parVersion")})
+        @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p"),
+        @NamedQuery(name = "Partida.findByParId", query = "SELECT p FROM Partida p WHERE p.parId = :parId"),
+        @NamedQuery(name = "Partida.findByParDuenio", query = "SELECT p FROM Partida p WHERE p.parDuenio = :parDuenio"),
+        @NamedQuery(name = "Partida.findByParVersion", query = "SELECT p FROM Partida p WHERE p.parVersion = :parVersion")})
 public class Partida implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @SequenceGenerator(name = "PARTIDA_PAR_ID_GENERATOR" , sequenceName = "PREG_PARTIDA_SEQ01", allocationSize = 1)
+    @SequenceGenerator(name = "PARTIDA_PAR_ID_GENERATOR", sequenceName = "PREG_PARTIDA_SEQ01", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PARTIDA_PAR_ID_GENERATOR")
     @Basic(optional = false)
     @Column(name = "PAR_ID")
@@ -48,6 +50,13 @@ public class Partida implements Serializable {
     @Column(name = "PAR_VERSION")
     private Long parVersion;
 
+    @Column(name = "PAR_RONDA")
+    private Integer parRonda;
+    @Basic(optional = false)
+    @Column(name = "PAR_FECHA")
+    //@Temporal(TemporalType.TIMESTAMP)
+    private LocalDate parFecha;
+
     public Partida() {
     }
 
@@ -55,15 +64,17 @@ public class Partida implements Serializable {
         this.parId = parId;
     }
 
-    public Partida(PartidaDto partidaDto){
+    public Partida(PartidaDto partidaDto) {
         this.parId = partidaDto.getParId();
         actualizar(partidaDto);
     }
 
-    public void actualizar(PartidaDto partidaDto){
+    public void actualizar(PartidaDto partidaDto) {
         this.parId = partidaDto.getParId();
         this.parPartida = partidaDto.getParPartida();
         this.parDuenio = partidaDto.getParDuenio();
+        this.parRonda = partidaDto.getRonda();
+        this.parFecha = partidaDto.getFecha();
         this.parVersion = partidaDto.getParVersion();
     }
 
@@ -99,6 +110,22 @@ public class Partida implements Serializable {
         this.parVersion = parVersion;
     }
 
+    public LocalDate getParFecha() {
+        return parFecha;
+    }
+
+    public void setParFecha(LocalDate parFecha) {
+        this.parFecha = parFecha;
+    }
+
+    public Integer getParRonda() {
+        return parRonda;
+    }
+
+    public void setParRonda(Integer parRonda) {
+        this.parRonda = parRonda;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,5 +150,5 @@ public class Partida implements Serializable {
     public String toString() {
         return "cr.ac.una.proyecto.model.Partida[ parId=" + parId + " ]";
     }
-    
+
 }

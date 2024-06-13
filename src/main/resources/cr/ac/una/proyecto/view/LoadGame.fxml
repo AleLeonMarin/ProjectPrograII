@@ -16,6 +16,8 @@
                <columns>
                   <TableColumn fx:id="tbcId" prefWidth="150.0" text="ID de Partida" />
                   <TableColumn fx:id="tbcDuenio" minWidth="0.0" prefWidth="134.0" text="Dueño de Partida" />
+                  <TableColumn fx:id="tbcRondas" prefWidth="150.0" text="Rondas" />
+                  <TableColumn fx:id="tbcFecha" minWidth="0.0" prefWidth="134.0" text="Fecha" />
                </columns></TableView>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                <children>

@@ -2,7 +2,6 @@ package cr.ac.una.proyecto.controller;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 import cr.ac.una.proyecto.model.PartidaDto;
@@ -12,6 +11,10 @@ import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
+
+import java.time.LocalDate;
+
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +24,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
 import javafx.stage.Stage;
 
 public class LoadGameViewController extends Controller implements Initializable {
@@ -48,14 +50,19 @@ public class LoadGameViewController extends Controller implements Initializable 
     private boolean cargarPartida;
 
     private ObservableList<PartidaDto> partidas;
+    @FXML
+    private TableColumn<PartidaDto, String> tbcRondas;
+    @FXML
+    private TableColumn<PartidaDto, LocalDate> tbcFecha;
 
     @FXML
     void onActionBtnChargeMatch(ActionEvent event) {
         partidaDto = tbvMatches.getSelectionModel().getSelectedItem();
-        setPartidaToAppContext();
-        System.out.println("Id partida cargada" + partidaDto.parId);
-        FlowController.getInstance().goMain("tableroView");
-        ((Stage) btnChargeMatch.getScene().getWindow()).close();
+        if (partidaDto != null) {
+            setPartidaToAppContext();
+            FlowController.getInstance().goMain("tableroView");
+            ((Stage) btnChargeMatch.getScene().getWindow()).close();
+        }
     }
 
     @FXML
@@ -83,6 +90,8 @@ public class LoadGameViewController extends Controller implements Initializable 
 
         tbcId.setCellValueFactory(cd -> cd.getValue().parId);
         tbcDuenio.setCellValueFactory(cd -> cd.getValue().parDuenio);
+        tbcRondas.setCellValueFactory(cd -> cd.getValue().ronda);
+        tbcFecha.setCellValueFactory(cd -> cd.getValue().fecha);
         loadMatchesToTable();
 
     }

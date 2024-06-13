@@ -73,7 +73,6 @@ public class Juego {
         }
 
         String dificultadJuego = extractDifficulty(datos);
-        int rondasJuego = extractNumberAfterDifficulty(datos);
         if (dificultadJuego != null) {
             this.dificultad = dificultadJuego;
         } else {
@@ -121,17 +120,6 @@ public class Juego {
         }
     }
 
-    public static Integer extractNumberAfterDifficulty(String input) {
-        Pattern pattern = Pattern.compile("\\[,\\s*\\w+,\\s*(\\d+),");
-        Matcher matcher = pattern.matcher(input);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
-        } else {
-            return 0;
-        }
-    }
-
-
     public static void extraerIdAndPosActual(String input, List<Long> ids, List<Integer> turnos) {
         boolean expectId = false;
         boolean expectTurno = false;
@@ -141,24 +129,24 @@ public class Juego {
             char currentChar = input.charAt(i);
 
             if (currentChar == '{') {
-                expectId = true;  // set the flag to expect an id next
-                numberBuffer.setLength(0);  // clear the buffer just in case
+                expectId = true;
+                numberBuffer.setLength(0);
             } else if (expectId && Character.isDigit(currentChar)) {
                 numberBuffer.append(currentChar);
             } else if (expectId && currentChar == ',') {
                 if (numberBuffer.length() > 0) {
                     ids.add(Long.parseLong(numberBuffer.toString()));
-                    numberBuffer.setLength(0);  // clear the buffer
+                    numberBuffer.setLength(0);
                     expectId = false;
-                    expectTurno = true;  // now expect the turno number
+                    expectTurno = true;
                 }
             } else if (expectTurno && Character.isDigit(currentChar)) {
                 numberBuffer.append(currentChar);
             } else if (expectTurno && !Character.isDigit(currentChar)) {
                 if (numberBuffer.length() > 0) {
                     turnos.add(Integer.parseInt(numberBuffer.toString()));
-                    numberBuffer.setLength(0);  // clear the buffer
-                    expectTurno = false;  // reset the flag
+                    numberBuffer.setLength(0);
+                    expectTurno = false;
                 }
             } else {
                 expectId = false;
@@ -176,18 +164,19 @@ public class Juego {
         sectores.add(sector);
     }
 
-    public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de
-        // los sectores y meterlos en el gridPane
+    public void cargarDatosImagenes(GridPane grdpTablero) {
         for (Sector sectorActual : sectores) {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
-            System.out.println("Ruta de la imagen: " + sectorActual.getRutaImagenJugador());
             imvPeon.setImage(imagenPeon);
             imvPeon.setFitWidth(100);
             imvPeon.setFitHeight(100);
             imagenesPeones.add(imvPeon);
-            grdpTablero.add(imvPeon, sectorActual.getPosicionInicial(), sectorActual.getPosicionFija());
-
+            if (sectorActual.getDireccion() == 1 || sectorActual.getDireccion() == 2) {
+                grdpTablero.add(imvPeon, sectorActual.getPosActual(), sectorActual.getPosicionY());
+            } else {
+                grdpTablero.add(imvPeon, sectorActual.getPosicionX(), sectorActual.getPosActual());
+            }
             GridPane.setHalignment(imvPeon, HPos.CENTER);
             GridPane.setValignment(imvPeon, VPos.CENTER);
         }
@@ -375,6 +364,10 @@ public class Juego {
 
     public Integer getRondas() {
         return this.rondas;
+    }
+
+    public void setRondas(int rondas) {
+        this.rondas = rondas;
     }
 
     public String getDificultad() {

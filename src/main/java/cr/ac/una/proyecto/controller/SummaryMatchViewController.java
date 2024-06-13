@@ -124,9 +124,8 @@ public class SummaryMatchViewController extends Controller implements Initializa
                 if (respuesta.getEstado()) {
                     jugadorDtoAux = (JugadorDto) respuesta.getResultado("Jugador");
                     sector.setJugador(jugadorDtoAux);
-                    System.out.println(sector.getJugador().getNombre() + " ID: " + sector.getJugador().getId());
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Jugador", getStage(),
-                            "Jugador guardado correctamente.");
+                            "El jugador: [" + sector.getJugador().getNombre() + "] se registró correctamente.");
 
                 } else {
                     new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar jugador", getStage(),

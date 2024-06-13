@@ -114,7 +114,6 @@ public class PreguntaController extends Controller implements Initializable {
     @FXML
     private void onActionBtnRespuesta3(ActionEvent event) {
         validarRespuestaCorrecta(2);
-
     }
 
     @FXML
@@ -305,8 +304,10 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     private void cargarAyudasDisponibles(Sector sector) {
-        for (Ayuda ayuda : sector.getAyudas()) {
-            habilitarPorAyuda(ayuda);
+        if (!(dificultad.equals("Dificil"))) {
+            for (Ayuda ayuda : sector.getAyudas()) {
+                habilitarPorAyuda(ayuda);
+            }
         }
     }
 
@@ -318,7 +319,6 @@ public class PreguntaController extends Controller implements Initializable {
         while (contadorBtonoes < cantidadRes) {
             RespuestaDto respuestaDto = new RespuestaDto();
             respuestaDto = respuestasDto.get(index);
-            System.out.println("PreguntaEnun: " + respuestaDto.getEnunciado());
             if (respuestaDto.getIsCorrect().equals("X")) {
                 botones.get(index).setDisable(true);
                 contadorBtonoes++;
@@ -352,7 +352,6 @@ public class PreguntaController extends Controller implements Initializable {
             if (respuestaUtil.getEstado()) {
                 this.jugadorDto = (JugadorDto) respuestaUtil.getResultado("AJugador");
                 setSectorDtoToAppContext();
-                new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Jugador", getStage(), "Jugador Actualizado");
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Jugador", getStage(),
                         "Error al actualizar el jugador");
@@ -399,9 +398,6 @@ public class PreguntaController extends Controller implements Initializable {
             RespuestaUtil respuestaUtil = preguntaService.actualizarPregunta(this.preguntaDto);
             if (respuestaUtil.getEstado()) {
                 this.preguntaDto = (PreguntaDto) respuestaUtil.getResultado("APregunta");
-                System.out.println("Pregunta Actualizada" + preguntaDto.getEnunciado() + ", ID" + preguntaDto.getId());
-                new Mensaje().showModal(AlertType.INFORMATION, "Actualizar Pregunta", getStage(),
-                        "Pregunta Actualizada");
             } else {
                 new Mensaje().showModal(AlertType.ERROR, "Actualizar Pregunta", getStage(),
                         "Error al actualizar la pregunta");

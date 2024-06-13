@@ -136,6 +136,7 @@ public class TableroController extends Controller implements Initializable {
         if (cargarPartida) {
             this.partidaDto = (PartidaDto) AppContext.getInstance().get("partidaCargada");
             cargarCantidadJugadoresPartida();
+            juego.setRondas(partidaDto.getRonda());
             AppContext.getInstance().set("juego", juego);
             for (Sector sector : juego.getSectores()) {
                 this.jugadores.add(sector.getJugador());
@@ -149,10 +150,17 @@ public class TableroController extends Controller implements Initializable {
     }
 
     private void cargarCantidadJugadoresPartida() {
-        String partidaInfo = partidaDto.getParPartida();
-        this.contextSlider = Integer.parseInt(String.valueOf(partidaInfo.charAt(2)));
-        juego = new Juego(partidaInfo, contextSlider);
-        AppContext.getInstance().set("juego", juego);
+        try {
+            String partidaInfo = partidaDto.getParPartida();
+            this.contextSlider = Integer.parseInt(String.valueOf(partidaInfo.charAt(2)));
+            juego = new Juego(partidaInfo, contextSlider);
+            this.juego.setTurnoActual(Integer.parseInt(String.valueOf(partidaInfo.charAt(4))));
+            AppContext.getInstance().set("juego", juego);
+        } catch (NumberFormatException e) {
+            this.contextSlider = 2;
+            this.juego.setTurnoActual(0);
+        }
+
     }
 
     private void validarCantidadJugadores() {
@@ -225,16 +233,17 @@ public class TableroController extends Controller implements Initializable {
     private void onActionBtnGuardar(ActionEvent event) {
         cargarJuegoClass();
         this.partidaDto.setParDuenio(lblJugador1.getText());
+        this.partidaDto.setRonda(busquedaController.getJuego().getRondas());
+
         try {
             PartidaService partidaService = new PartidaService();
             RespuestaUtil respuesta = partidaService.guardarPartida(partidaDto);
 
             if (respuesta.getEstado()) {
                 partidaDto = (PartidaDto) respuesta.getResultado("Partida");
+                sound.playSound("Chance_audio.mp3");
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Partida", getStage(),
                         "Partida guardada con éxito.");
-                sound.playSound("Chance_audio.mp3");
-
             } else {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Partida", getStage(),
                         "Error al guardar la partida.");
@@ -529,7 +538,6 @@ public class TableroController extends Controller implements Initializable {
     }
 
     private void cargarJuegoClass() {
-
         juego = busquedaController.getJuego();
         if (juego != null) {
             createJson();

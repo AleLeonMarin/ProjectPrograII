@@ -67,6 +67,7 @@ public class TablerosController extends Controller implements Initializable {
         dificultad = juego.getDificultad();
         this.btnCederTurno.setDisable(true);
         isOnCrown = false;
+        validarTurno();
     }
 
     @Override
@@ -196,60 +197,30 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void mostrarTarjetas() {
+        sound.playSound("Card.mp3");
         if (categoria == categoriasRuleta.get(0)) {
-            // sound
-            sound.playSound("Card.mp3");
-            // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
-            // sound
-            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(1)) {
-            // sound
-            sound.playSound("Card.mp3");
-            // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardArt",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
-            // sound
-            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(2)) {
-            // sound
-            sound.playSound("Card.mp3");
-            // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
-            // sound
-            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(3)) {
-            // sound
-            sound.playSound("Card.mp3");
-            // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
-            // sound
-            sound.playSound("windMovement1.mp3");
         } else if (categoria == categoriasRuleta.get(4)) {
             goCoronaDuelView();
-            sound.playSound("windMovement1.mp3");
             return;
-
         } else if (categoria == categoriasRuleta.get(5)) {
-            // sound
-            sound.playSound("Card.mp3");
-            // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
-            // sound
-            sound.playSound("windMovement1.mp3");
         } else {
-            // sound
-            sound.playSound("Card.mp3");
-            // flow
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
-            // sound
-            sound.playSound("windMovement1.mp3");
         }
+        sound.playSound("windMovement1.mp3");
         llamarPreguntaView();
         juego.jugar(grdpTablero, valorPreguntaRespuesta, isOnCrown);
         setCorona();
@@ -338,6 +309,12 @@ public class TablerosController extends Controller implements Initializable {
 
     private void validarJugadorGanador(AnchorPane anchorPane) {
         juego.valdidarCoronasGanador(anchorPane);
+    }
+
+    private void validarTurno() {
+        if (this.juego.getRondas() > 1) {
+            this.turnoDecidido = true;
+        }
     }
 
     @FXML

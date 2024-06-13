@@ -1,7 +1,11 @@
 package cr.ac.una.proyecto.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class PartidaDto implements Serializable {
@@ -13,12 +17,16 @@ public class PartidaDto implements Serializable {
     public SimpleStringProperty parDuenio;
     public Long parVersion;
     private boolean modificado;
+    public SimpleStringProperty ronda;
+    public ObjectProperty<LocalDate> fecha;
 
     public PartidaDto() {
         this.parId = new SimpleStringProperty("");
         this.parPartida = new SimpleStringProperty("");
         this.parDuenio = new SimpleStringProperty("");
         this.modificado = false;
+       this.ronda = new SimpleStringProperty("");
+        this.fecha = new SimpleObjectProperty(LocalDate.now());
     }
 
     public PartidaDto(Partida partida) {
@@ -28,6 +36,8 @@ public class PartidaDto implements Serializable {
         this.parPartida.set(partida.getParPartida());
         this.parDuenio.set(partida.getParDuenio());
         this.parVersion = partida.getParVersion();
+        this.ronda.set(partida.getParRonda().toString());
+        this.fecha.set(partida.getParFecha());
 
     }
 
@@ -74,6 +84,26 @@ public class PartidaDto implements Serializable {
 
     public void setModificado(boolean modificado) {
         this.modificado = modificado;
+    }
+
+    public int getRonda() {
+        return Integer.parseInt(ronda.get());
+    }
+
+    public void setRonda(Integer ronda) {
+        this.ronda.set(ronda.toString());
+    }
+
+    public LocalDate getFecha() {
+        return fecha.get();
+    }
+
+    public ObjectProperty<LocalDate> fechaProperty() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha.set(fecha);
     }
 
     @Override
