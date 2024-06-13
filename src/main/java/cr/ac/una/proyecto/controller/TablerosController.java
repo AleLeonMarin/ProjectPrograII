@@ -60,7 +60,6 @@ public class TablerosController extends Controller implements Initializable {
     public void initialize() {
         iniciarClases();
         isPartidaCargada();
-        juego.cargarAyudasSegunDificultad();
         juego.cargarDatosImagenes(grdpTablero);
         this.turnoDecidido = false;
         this.valorPreguntaRespuesta = false;
@@ -119,6 +118,7 @@ public class TablerosController extends Controller implements Initializable {
             this.juego = (Juego) AppContext.getInstance().get("juego");
         } else {
             cargarSectores();
+            juego.cargarAyudasSegunDificultad();
         }
     }
 

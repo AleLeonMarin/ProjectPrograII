@@ -56,7 +56,6 @@ public class Juego {
         List<Integer> turnos = new ArrayList<>();
         List<String> rutasImagenes = new ArrayList<>();
 
-
         extractNumbersFromCurlyBraces(datos, jugadoresIds, turnos);
         rutasImagenes = extractImagePaths(datos);
         jugadores = getJugadoresFromDataBase(jugadoresIds);
@@ -68,6 +67,7 @@ public class Juego {
                 sectores.get(index).setJugador(jugadores.get(index));
                 sectores.get(index).setPosActual(turnos.get(index));
                 sectores.get(index).setRutaImagenJugador(rutasImagenes.get(index));
+                sectores.get(index).cargarCoronasAyudas(datos, index);
             }
         }
 
@@ -111,17 +111,15 @@ public class Juego {
     }
 
     public static String extractDifficulty(String input) {
-        // Definimos el patrón de búsqueda usando una expresión regular
         Pattern pattern = Pattern.compile("\\[,\\s*(\\w+),\\[");
         Matcher matcher = pattern.matcher(input);
-
-        // Buscamos la coincidencia en el texto de entrada
         if (matcher.find()) {
-            return matcher.group(1); // Devuelve el primer grupo capturado (la dificultad)
+            return matcher.group(1);
         } else {
-            return null; // Retornamos null si no se encuentra ninguna coincidencia
+            return null;
         }
     }
+
 
     public static void extractNumbersFromCurlyBraces(String input, List<Long> ids, List<Integer> turnos) {
         boolean expectId = false;
@@ -162,7 +160,6 @@ public class Juego {
         }
 
     }
-
 
     public void agregarSector(Sector sector) {
         sectores.add(sector);
@@ -242,11 +239,10 @@ public class Juego {
     public void cargarAyudasSegunDificultad() {
         if (dificultad.equals("Facil")) {
             for (Sector sector : sectores) {
-                sector.setAyudasFacil();
+                sector.habilitarAyudas(true);
             }
         } else if (dificultad.equals("Media")) {
             for (Sector sector : sectores) {
-                sector.setAyudasFacil();
                 sector.habilitarAyudas(false);
             }
         }
@@ -378,22 +374,22 @@ public class Juego {
         sectores.clear();
         switch (slider) {
             case 2:
-                sectores.add(new Sector(0,0,1));
-                sectores.add(new Sector(3,3,2));
+                sectores.add(new Sector(0, 0, 1));
+                sectores.add(new Sector(3, 3, 2));
 
                 break;
             case 3:
-                sectores.add(new Sector(4,3,2));
-                sectores.add(new Sector(3,0,4));
-                sectores.add(new Sector(0,3,3));
+                sectores.add(new Sector(4, 3, 2));
+                sectores.add(new Sector(3, 0, 4));
+                sectores.add(new Sector(0, 3, 3));
 
 
                 break;
             case 4:
-                sectores.add(new Sector(0,1,1));
-                sectores.add(new Sector(4,1,3));
-                sectores.add(new Sector(4,3,2));
-                sectores.add(new Sector(0,3,4));
+                sectores.add(new Sector(0, 1, 1));
+                sectores.add(new Sector(4, 1, 3));
+                sectores.add(new Sector(4, 3, 2));
+                sectores.add(new Sector(0, 3, 4));
 
                 break;
             case 5:
@@ -405,12 +401,12 @@ public class Juego {
 
                 break;
             case 6:
-                sectores.add(new Sector(5,7,1));
-                sectores.add(new Sector(5,3,2));
-                sectores.add(new Sector(4,0,3));
-                sectores.add(new Sector(0,0,4));
-                sectores.add(new Sector(0,4,4));
-                sectores.add(new Sector(1,7,3));
+                sectores.add(new Sector(5, 7, 1));
+                sectores.add(new Sector(5, 3, 2));
+                sectores.add(new Sector(4, 0, 3));
+                sectores.add(new Sector(0, 0, 4));
+                sectores.add(new Sector(0, 4, 4));
+                sectores.add(new Sector(1, 7, 3));
                 break;
         }
     }

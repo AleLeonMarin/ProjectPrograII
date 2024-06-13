@@ -9,12 +9,17 @@ import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Sound;
+
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -152,6 +157,7 @@ public class PreguntaController extends Controller implements Initializable {
 
     private void obtenerPreguntaCategoria() {
         PreguntaService preService = new PreguntaService();
+
         RespuestaUtil respuesta = preService.getPreguntaAleatoriaPorCategoria(preguntaCategoria);
         if (respuesta.getEstado()) {
             unbindRespuestas();
@@ -159,6 +165,7 @@ public class PreguntaController extends Controller implements Initializable {
             preguntaDto = (PreguntaDto) respuesta.getResultado("Pregunta");
             preguntaDto.sumarAparicion();
             this.respuestasDto.clear();
+            Collections.shuffle(preguntaDto.getRespuestas());
             this.respuestasDto.addAll(preguntaDto.getRespuestas());
             bindRespuestas();
         } else {

@@ -35,6 +35,7 @@ public class Sector {
         this.ayudas = new ArrayList<>();
         this.isOnCoronaPos = false;
         establecerCoronas();
+        establecerAyudas();
     }
 
     public Sector(int Xpos, int Ypos, int direccion) {
@@ -47,6 +48,7 @@ public class Sector {
         setActualPosInFirst();
         this.isOnCoronaPos = false;
         establecerCoronas();
+        establecerAyudas();
     }
 
     public void setActualPosInFirst() {
@@ -206,28 +208,12 @@ public class Sector {
         }
     }
 
-    @Override
-    public String toString() {
-        return "{" + jugador.getId() + "," + posActual + "," + rutaImagenJugador
-                + "," + coronas + "," + ayudas + "}";
-    }
-
     public void removerAyuda(String ayudaNombre) {
         for (Ayuda ayuda : ayudas) {
             if (ayuda.getNombre().equals(ayudaNombre)) {
                 ayuda.setEstado(false);
             }
         }
-    }
-
-    public void setAyudasFacil() {
-        this.ayudas = new ArrayList<>();
-        this.ayudas.clear();
-        this.ayudas.add(new Ayuda("Bomba", true));
-        this.ayudas.add(new Ayuda("Pasar", true));
-        this.ayudas.add(new Ayuda("DobleOportunidad", true));
-        this.ayudas.add(new Ayuda("TirarRuleta", true));
-        printAyudasInfo();
     }
 
     public void habilitarAyudas(boolean valor) {
@@ -242,7 +228,17 @@ public class Sector {
                 Arrays.asList("Deportes", "Arte", "Geografia", "Ciencia", "Entretenimiento", "Historia"));
 
         for (String categoria : categorias) {
-            coronas.add(new Corona(categoria));
+            this.coronas.add(new Corona(categoria));
+        }
+
+    }
+
+    public void establecerAyudas() {
+        this.ayudas = new ArrayList<>();
+        ArrayList<String> ayudas = new ArrayList<>(
+                Arrays.asList("Bomba", "Pasar", "DobleOportunidad", "TirarRuleta"));
+        for (String ayuda : ayudas) {
+            this.ayudas.add((new Ayuda(ayuda)));
         }
 
     }
@@ -304,6 +300,93 @@ public class Sector {
 
         }
         return false;
+    }
+
+
+    public void cargarCoronasAyudas(String input, int sectorPos) {
+        int indexTexto = 0;
+        int contadorSectores = -1;
+        boolean expectedCrown = true;
+        boolean expectedHint = false;
+        StringBuilder numberBuffer = new StringBuilder();
+
+        while (contadorSectores < sectorPos) {
+            char currentChar = input.charAt(indexTexto);
+            if (currentChar == '{') {
+                contadorSectores++;
+            }
+            indexTexto++;
+        }
+
+        if (contadorSectores == sectorPos) {
+            boolean estado = true;
+            while (estado) {
+                char currentChar = input.charAt(indexTexto);
+                if (currentChar == '-') {
+                    estado = false;
+                    expectedCrown = true;
+                    numberBuffer.setLength(0);
+                }
+                indexTexto++;
+            }
+
+            while (expectedCrown) {
+                char currentChar = input.charAt(indexTexto);
+                if (Character.isAlphabetic(currentChar)) {
+                    numberBuffer.append(currentChar);
+                } else if (currentChar == ',') {
+                    for (Corona corona : coronas) {
+                        if (corona.habilitarPorNombre(numberBuffer.toString())) {
+                            numberBuffer.setLength(0);
+                        }
+
+                    }
+                } else if (currentChar == '-') {
+                    expectedCrown = false;
+                    expectedHint = true;
+                    estado = true;
+                    numberBuffer.setLength(0);
+                }
+                indexTexto++;
+            }
+
+            while (estado) {
+                char currentChar = input.charAt(indexTexto);
+                if (currentChar == '-') {
+                    estado = false;
+                }
+                indexTexto++;
+            }
+
+            while (expectedHint) {
+                char currentChar = input.charAt(indexTexto);
+                if (Character.isAlphabetic(currentChar)) {
+                    numberBuffer.append(currentChar);
+                } else if (currentChar == ',') {
+                    for (Ayuda ayuda : ayudas) {
+                        if (ayuda.habilitarPorNombre(numberBuffer.toString())) {
+                            numberBuffer.setLength(0);
+                        }
+                    }
+                } else if (currentChar == '-') {
+                    expectedHint = false;
+                    estado = true;
+                }
+                indexTexto++;
+            }
+
+
+        }
+
+
+    }
+
+
+    @Override
+    public String toString() {
+        return "{" + jugador.getId() + "," + posActual + "," + rutaImagenJugador
+                + "-" + coronas + "-" + "-" +ayudas + "-" + "}";
+
     }
 
 

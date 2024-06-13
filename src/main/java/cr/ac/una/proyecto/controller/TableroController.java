@@ -140,6 +140,10 @@ public class TableroController extends Controller implements Initializable {
             for (Sector sector : juego.getSectores()) {
                 this.jugadores.add(sector.getJugador());
             }
+            this.sectores = juego.getSectores();
+            AppContext.getInstance().set("JuegoSectores", sectores);
+            actualizarOpacidadSegunCorona();
+
         } else {
             getJugadoresFromAppContext();
             contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
@@ -537,7 +541,6 @@ public class TableroController extends Controller implements Initializable {
     private void cargarSectoresCoronas() {
         this.sectores = new ArrayList<>();
         this.sectores = (ArrayList<Sector>) AppContext.getInstance().get("JuegoSectores");
-        ;
     }
 
     private void actualizarOpacidadSegunCorona() {

@@ -17,6 +17,19 @@ public class Ayuda {
         this.nombre = nombre;
     }
 
+    public Ayuda(String nombre) {
+        this.nombre = nombre;
+        this.estado = false;
+    }
+
+    public boolean habilitarPorNombre(String nombre) {
+        if (nombre != null && nombre.equals(this.nombre)) {
+            this.estado = true;
+            return true;
+        }
+        return false;
+    }
+
     public boolean getEstado() {
         return estado;
     }

@@ -38,9 +38,17 @@ public class Corona {
         this.nombre = nombre;
     }
 
+    public boolean habilitarPorNombre(String nombre) {
+        if (nombre != null && nombre.equals(this.nombre)) {
+            this.estado = true;
+            return true;
+        }
+        return false;
+    }
+
     public String toString() {
         if (this.estado) {
-            return nombre + "-" + estado;
+            return nombre;
         } else {
             return "";
         }
