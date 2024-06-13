@@ -90,7 +90,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void cargarLabelsPartidaInfo() {
-        String nombreJugador = sectores.get(juego.getTurnoActual()).getJugador().getNombre();
+        String nombreJugador = juego.getSectorActual().getJugador().getNombre();
         Integer rondasJuego = juego.getRondas();
         if (nombreJugador != null) {
             lblJugadorActual.setText(nombreJugador);
@@ -158,7 +158,7 @@ public class TablerosController extends Controller implements Initializable {
                 Platform.runLater(() -> {
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Escoger turno", getStage(),
                             "Cayo corona, el jugador: "
-                                    + sectores.get(juego.getTurnoActual()).getJugador().getNombre()
+                                    + juego.getSectorActual().getJugador().getNombre()
                                     + ", inicia la partida");
                 });
             }

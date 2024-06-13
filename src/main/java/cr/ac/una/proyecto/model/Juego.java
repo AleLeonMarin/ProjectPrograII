@@ -8,6 +8,8 @@ import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -52,19 +54,28 @@ public class Juego {
         List<JugadorDto> jugadores = new ArrayList<>();
         List<Long> jugadoresIds = new ArrayList<>();
         List<Integer> turnos = new ArrayList<>();
+        List<String> rutasImagenes = new ArrayList<>();
+
+
         extractNumbersFromCurlyBraces(datos, jugadoresIds, turnos);
+        rutasImagenes = extractImagePaths(datos);
         jugadores = getJugadoresFromDataBase(jugadoresIds);
-        System.out.println("Jugadores ids: " + jugadoresIds);
-        System.out.println("Jugadores turnos: " + turnos);
-        System.out.println("Jugadores: " + jugadores);
+
         sectoresCargar(slider);
 
         if (jugadoresIds.size() == slider && turnos.size() == slider) {
             for (int index = 0; index < slider; index++) {
                 sectores.get(index).setJugador(jugadores.get(index));
                 sectores.get(index).setPosActual(turnos.get(index));
-                //sectores.get(index).setRutaImagenJugador(rutasImagenes.get(index));
+                sectores.get(index).setRutaImagenJugador(rutasImagenes.get(index));
             }
+        }
+
+        String dificultadJuego = extractDifficulty(datos);
+        if (dificultadJuego != null) {
+            this.dificultad = dificultadJuego;
+        } else {
+            this.dificultad = "Dificil";
         }
 
     }
@@ -84,6 +95,32 @@ public class Juego {
             jugadores.add(jugador);
         }
         return jugadores;
+    }
+
+    public static List<String> extractImagePaths(String input) {
+        List<String> paths = new ArrayList<>();
+        Pattern pattern = Pattern.compile("/[^\\s,]+\\.png");
+
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            String path = matcher.group();
+            paths.add(path);
+        }
+
+        return paths;
+    }
+
+    public static String extractDifficulty(String input) {
+        // Definimos el patrón de búsqueda usando una expresión regular
+        Pattern pattern = Pattern.compile("\\[,\\s*(\\w+),\\[");
+        Matcher matcher = pattern.matcher(input);
+
+        // Buscamos la coincidencia en el texto de entrada
+        if (matcher.find()) {
+            return matcher.group(1); // Devuelve el primer grupo capturado (la dificultad)
+        } else {
+            return null; // Retornamos null si no se encuentra ninguna coincidencia
+        }
     }
 
     public static void extractNumbersFromCurlyBraces(String input, List<Long> ids, List<Integer> turnos) {
@@ -341,22 +378,22 @@ public class Juego {
         sectores.clear();
         switch (slider) {
             case 2:
-                sectores.add(new Sector());
-                sectores.add(new Sector());
+                sectores.add(new Sector(0,0,1));
+                sectores.add(new Sector(3,3,2));
 
                 break;
             case 3:
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
+                sectores.add(new Sector(4,3,2));
+                sectores.add(new Sector(3,0,4));
+                sectores.add(new Sector(0,3,3));
 
 
                 break;
             case 4:
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
+                sectores.add(new Sector(0,1,1));
+                sectores.add(new Sector(4,1,3));
+                sectores.add(new Sector(4,3,2));
+                sectores.add(new Sector(0,3,4));
 
                 break;
             case 5:
@@ -368,12 +405,12 @@ public class Juego {
 
                 break;
             case 6:
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
+                sectores.add(new Sector(5,7,1));
+                sectores.add(new Sector(5,3,2));
+                sectores.add(new Sector(4,0,3));
+                sectores.add(new Sector(0,0,4));
+                sectores.add(new Sector(0,4,4));
+                sectores.add(new Sector(1,7,3));
                 break;
         }
     }

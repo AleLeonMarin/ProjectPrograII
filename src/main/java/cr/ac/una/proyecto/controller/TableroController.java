@@ -136,7 +136,7 @@ public class TableroController extends Controller implements Initializable {
         if (cargarPartida) {
             this.partidaDto = (PartidaDto) AppContext.getInstance().get("partidaCargada");
             cargarCantidadJugadoresPartida();
-
+            AppContext.getInstance().set("juego", juego);
             for (Sector sector : juego.getSectores()) {
                 this.jugadores.add(sector.getJugador());
             }

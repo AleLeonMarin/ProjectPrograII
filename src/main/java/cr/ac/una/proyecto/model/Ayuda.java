@@ -35,7 +35,7 @@ public class Ayuda {
 
     public String toString() {
         if (this.estado) {
-            return nombre + "-" + estado;
+            return nombre;
         } else {
             return "";
         }
