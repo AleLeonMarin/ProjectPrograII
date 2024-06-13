@@ -374,18 +374,14 @@ public class Sector {
                 }
                 indexTexto++;
             }
-
-
         }
-
-
     }
 
 
     @Override
     public String toString() {
         return "{" + jugador.getId() + "," + posActual + "," + rutaImagenJugador
-                + "-" + coronas + "-" + "-" +ayudas + "-" + "}";
+                + "-" + coronas + "-" + "-" + ayudas + "-" + "}";
 
     }
 

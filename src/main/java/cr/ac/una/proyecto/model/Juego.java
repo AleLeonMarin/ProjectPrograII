@@ -57,7 +57,7 @@ public class Juego {
         List<Integer> turnos = new ArrayList<>();
         List<String> rutasImagenes = new ArrayList<>();
 
-        extractNumbersFromCurlyBraces(datos, jugadoresIds, turnos);
+        extraerIdAndPosActual(datos, jugadoresIds, turnos);
         rutasImagenes = extractImagePaths(datos);
         jugadores = getJugadoresFromDataBase(jugadoresIds);
 
@@ -73,12 +73,12 @@ public class Juego {
         }
 
         String dificultadJuego = extractDifficulty(datos);
+        int rondasJuego = extractNumberAfterDifficulty(datos);
         if (dificultadJuego != null) {
             this.dificultad = dificultadJuego;
         } else {
             this.dificultad = "Dificil";
         }
-
     }
 
     private List<JugadorDto> getJugadoresFromDataBase(List<Long> jugadoresIds) {
@@ -121,8 +121,18 @@ public class Juego {
         }
     }
 
+    public static Integer extractNumberAfterDifficulty(String input) {
+        Pattern pattern = Pattern.compile("\\[,\\s*\\w+,\\s*(\\d+),");
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        } else {
+            return 0;
+        }
+    }
 
-    public static void extractNumbersFromCurlyBraces(String input, List<Long> ids, List<Integer> turnos) {
+
+    public static void extraerIdAndPosActual(String input, List<Long> ids, List<Integer> turnos) {
         boolean expectId = false;
         boolean expectTurno = false;
         StringBuilder numberBuffer = new StringBuilder();
@@ -352,7 +362,7 @@ public class Juego {
     }
 
     public String toString() {
-        return turnoActual + ", " + dificultad + "," + sectores.toString();
+        return turnoActual + ", " + dificultad + "," + rondas + "," + sectores.toString();
     }
 
     public int getTurnoActual() {

@@ -2,20 +2,20 @@ package cr.ac.una.proyecto;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+
 import cr.ac.una.proyecto.util.FlowController;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 public class App extends Application {
 
-    public static Scene scene; 
+    public static Scene scene;
     private static String parameter = "";
 
     @Override
     public void start(Stage stage) throws IOException {
-
-
         FlowController.getInstance().InitializeFlow(stage, null);
         viewByAccessParameter(parameter);
         stage.setTitle("Preguntados Jr");
@@ -30,13 +30,13 @@ public class App extends Application {
         launch();
     }
 
-    public void viewByAccessParameter(String accessParameter){
+    public void viewByAccessParameter(String accessParameter) {
         if (accessParameter.equals("A")) {
             FlowController.getInstance().goMain("AdminView");
-        } 
-        if (accessParameter.equals("C")){
+        }
+        if (accessParameter.equals("C")) {
             FlowController.getInstance().goMain("GameLogIn");
         }
-        
+
     }
 }
