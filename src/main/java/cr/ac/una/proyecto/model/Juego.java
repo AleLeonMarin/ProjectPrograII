@@ -48,6 +48,7 @@ public class Juego {
         rondas = 1;
         dificultad = "";
         cargarDemasDatos(datos, slider);
+        AppContext.getInstance().set("JuegoSectores", sectores);
     }
 
     private void cargarDemasDatos(String datos, int slider) {

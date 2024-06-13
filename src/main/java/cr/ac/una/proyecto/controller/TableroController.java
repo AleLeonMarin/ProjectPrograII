@@ -141,8 +141,6 @@ public class TableroController extends Controller implements Initializable {
                 this.jugadores.add(sector.getJugador());
             }
             this.sectores = juego.getSectores();
-            AppContext.getInstance().set("JuegoSectores", sectores);
-            actualizarOpacidadSegunCorona();
 
         } else {
             getJugadoresFromAppContext();
