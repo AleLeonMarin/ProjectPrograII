@@ -59,7 +59,7 @@ public class TablerosController extends Controller implements Initializable {
     @Override
     public void initialize() {
         iniciarClases();
-        cargarSectores();
+        isPartidaCargada();
         juego.cargarAyudasSegunDificultad();
         juego.cargarDatosImagenes(grdpTablero);
         this.turnoDecidido = false;
@@ -107,6 +107,18 @@ public class TablerosController extends Controller implements Initializable {
 
         for (Sector sector : sectores) {
             juego.agregarSector(sector);
+        }
+    }
+
+    private void
+    isPartidaCargada() {
+        boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
+
+        if (cargarPartida) {
+            this.juego = new Juego();
+            this.juego = (Juego) AppContext.getInstance().get("juego");
+        } else {
+            cargarSectores();
         }
     }
 

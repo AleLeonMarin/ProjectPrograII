@@ -1,10 +1,13 @@
 package cr.ac.una.proyecto.model;
 
+import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.FlowController;
+import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Ruleta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -35,9 +38,97 @@ public class Juego {
         cargarDificultadFromAppContext();
     }
 
+    public Juego(String datos, int slider) {
+        ruleta = new Ruleta();
+        sectores = new ArrayList<>();
+        imagenesPeones = new ArrayList<>();
+        turnoActual = 0;
+        rondas = 1;
+        dificultad = "";
+        cargarDemasDatos(datos, slider);
+    }
+
+    private void cargarDemasDatos(String datos, int slider) {
+        List<JugadorDto> jugadores = new ArrayList<>();
+        List<Long> jugadoresIds = new ArrayList<>();
+        List<Integer> turnos = new ArrayList<>();
+        extractNumbersFromCurlyBraces(datos, jugadoresIds, turnos);
+        jugadores = getJugadoresFromDataBase(jugadoresIds);
+        System.out.println("Jugadores ids: " + jugadoresIds);
+        System.out.println("Jugadores turnos: " + turnos);
+        System.out.println("Jugadores: " + jugadores);
+        sectoresCargar(slider);
+
+        if (jugadoresIds.size() == slider && turnos.size() == slider) {
+            for (int index = 0; index < slider; index++) {
+                sectores.get(index).setJugador(jugadores.get(index));
+                sectores.get(index).setPosActual(turnos.get(index));
+                //sectores.get(index).setRutaImagenJugador(rutasImagenes.get(index));
+            }
+        }
+
+    }
+
+    private List<JugadorDto> getJugadoresFromDataBase(List<Long> jugadoresIds) {
+        List<JugadorDto> jugadores = new ArrayList<>();
+        JugadorService jugadorService = new JugadorService();
+        for (Long id : jugadoresIds) {
+            JugadorDto jugador = new JugadorDto();
+            RespuestaUtil respuesta = jugadorService.getJugador(id);
+            jugador = (JugadorDto) respuesta.getResultado("Jugador");
+            if (jugador != null) {
+
+            } else {
+//crear Jugador por defecto
+            }
+            jugadores.add(jugador);
+        }
+        return jugadores;
+    }
+
+    public static void extractNumbersFromCurlyBraces(String input, List<Long> ids, List<Integer> turnos) {
+        boolean expectId = false;
+        boolean expectTurno = false;
+        StringBuilder numberBuffer = new StringBuilder();
+
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+
+            if (currentChar == '{') {
+                expectId = true;  // set the flag to expect an id next
+                numberBuffer.setLength(0);  // clear the buffer just in case
+            } else if (expectId && Character.isDigit(currentChar)) {
+                numberBuffer.append(currentChar);
+            } else if (expectId && currentChar == ',') {
+                if (numberBuffer.length() > 0) {
+                    ids.add(Long.parseLong(numberBuffer.toString()));
+                    numberBuffer.setLength(0);  // clear the buffer
+                    expectId = false;
+                    expectTurno = true;  // now expect the turno number
+                }
+            } else if (expectTurno && Character.isDigit(currentChar)) {
+                numberBuffer.append(currentChar);
+            } else if (expectTurno && !Character.isDigit(currentChar)) {
+                if (numberBuffer.length() > 0) {
+                    turnos.add(Integer.parseInt(numberBuffer.toString()));
+                    numberBuffer.setLength(0);  // clear the buffer
+                    expectTurno = false;  // reset the flag
+                }
+            } else {
+                expectId = false;
+                expectTurno = false;
+            }
+        }
+
+        if (expectTurno && numberBuffer.length() > 0) {
+            turnos.add(Integer.parseInt(numberBuffer.toString()));
+        }
+
+    }
+
+
     public void agregarSector(Sector sector) {
         sectores.add(sector);
-
     }
 
     public void cargarDatosImagenes(GridPane grdpTablero) {// cargar las imagenes del jugadorPeon que estan dentro de
@@ -64,14 +155,10 @@ public class Juego {
 
     public void setSectoresAppContext() {
         AppContext.getInstance().set("JuegoSectores", sectores);
-        System.out.println("Juego setSectorActualtoAppContextJugadorVersion: "
-                + sectores.get(turnoActual).getJugador().getVersion());
     }
 
     public void cargarSectorActualFromAppContext() {
         sectores.set(turnoActual, (Sector) AppContext.getInstance().get("preguntaSector"));
-        System.out.println("Juego cargarSectorActualFromAppContextJugadorVersion: "
-                + sectores.get(turnoActual).getJugador().getVersion());
     }
 
     public void jugar(GridPane grdpTablero, boolean valorRespuesta, boolean isJugadorOnCrow) {
@@ -92,7 +179,6 @@ public class Juego {
                 cambiarTurno();
             }
         }
-
     }
 
     public Sector getSectorActual() {
@@ -104,8 +190,8 @@ public class Juego {
         }
     }
 
-    private void cargarRuletaCoronaPos() {
-        valorCoronaRuleta = (Boolean) AppContext.getInstance().get("valorCoronaRuleta");
+    public ArrayList<Sector> getSectores() {
+        return sectores;
     }
 
     private void cargarDificultadFromAppContext() {
@@ -232,7 +318,7 @@ public class Juego {
     }
 
     public String toString() {
-        return turnoActual + ", " + dificultad + "," +sectores.toString();
+        return turnoActual + ", " + dificultad + "," + sectores.toString();
     }
 
     public int getTurnoActual() {
@@ -249,6 +335,47 @@ public class Juego {
 
     public String getDificultad() {
         return this.dificultad;
+    }
+
+    public void sectoresCargar(int slider) {
+        sectores.clear();
+        switch (slider) {
+            case 2:
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+
+                break;
+            case 3:
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+
+
+                break;
+            case 4:
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+
+                break;
+            case 5:
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+
+                break;
+            case 6:
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                sectores.add(new Sector());
+                break;
+        }
     }
 
 }

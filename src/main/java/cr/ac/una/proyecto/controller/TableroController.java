@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.App;
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.PartidaDto;
@@ -110,7 +111,7 @@ public class TableroController extends Controller implements Initializable {
         loadToJson = new ArrayList<>();
         isOnCargarPartida();
         disablePlayer();
-        //showPlayer();
+        showPlayer();
     }
 
     @Override
@@ -135,6 +136,10 @@ public class TableroController extends Controller implements Initializable {
         if (cargarPartida) {
             this.partidaDto = (PartidaDto) AppContext.getInstance().get("partidaCargada");
             cargarCantidadJugadoresPartida();
+
+            for (Sector sector : juego.getSectores()) {
+                this.jugadores.add(sector.getJugador());
+            }
         } else {
             getJugadoresFromAppContext();
             contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
@@ -144,13 +149,13 @@ public class TableroController extends Controller implements Initializable {
     private void cargarCantidadJugadoresPartida() {
         String partidaInfo = partidaDto.getParPartida();
         this.contextSlider = Integer.parseInt(String.valueOf(partidaInfo.charAt(2)));
+        juego = new Juego(partidaInfo, contextSlider);
+        AppContext.getInstance().set("juego", juego);
     }
 
     private void validarCantidadJugadores() {
 
         try {
-            contextSlider = (int) AppContext.getInstance().get("cantJugadoresSlider");
-            System.out.println("AppContextInfoSlider: " + contextSlider);
 
             if (contextSlider == 6) {
                 busquedaController = (TablerosController) FlowController.getInstance()
@@ -249,7 +254,6 @@ public class TableroController extends Controller implements Initializable {
             disablePlayerFour();
             disablePlayerFive();
             disablePlayerSix();
-
         }
         if (contextSlider == 3) {
             enablePlayerOne();
@@ -515,19 +519,16 @@ public class TableroController extends Controller implements Initializable {
     }
 
     private void createJson() {
-        // Asegúrate de que loadToJsonData() carga los datos correctamente en loadToJson
         loadToJsonData();
         System.out.println(loadToJson.toString());
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
         partidaDto.setParPartida(json);
-
     }
 
     private void cargarJuegoClass() {
 
         juego = busquedaController.getJuego();
-
         if (juego != null) {
             createJson();
         }

@@ -263,36 +263,4 @@ public class SectorSelectionController extends Controller implements Initializab
         AppContext.getInstance().set("sectores", sectores);
     }
 
-//    private int[][] obtenerPosicionesIniciales(int cantidadJugadores) {
-//        switch (cantidadJugadores) {
-//            case 2:
-//                return new int[][]{{0, 0}, {3, 3}};//sector uno y dos posiciones tablero dos jugadores
-//            case 3:
-//                return new int[][]{{4, 3}, {3, 0}, {0, 3}};//sector uno ,dos,tres posiciones tablero 3 jugadores
-//            case 4:
-//                return new int[][]{{4, 3}, {3, 0}, {0, 1}, {1, 4}};
-//            case 5:
-//                return new int[][]{{4, 6}, {4, 2}, {2, 0}, {0, 2}, {0, 6}};
-//            case 6:
-//                return new int[][]{{5, 7}, {5, 3}, {4, 0}, {0, 0}, {0, 4}, {1, 7}};//sector uno ,dos,tres,4,5,6 posiciones tablero 6 jugadores
-//            default:
-//                return new int[0][0];
-//        }
-//    }
-//         private void crearSectores(int cantidadJugadores) {//se ocupa saber la dirrecion de los sectores, reeplanter la idea de como moverse en el tablero
-//        List<Sector> sectores = new ArrayList<>();
-//        int[][] posiciones = obtenerPosicionesIniciales(cantidadJugadores);
-//
-//        for (int index = 0; index < cantidadJugadores; index++)
-//        {
-//            MFXComboBox<String> comboBox = botonesCmbBox.get(index);
-//            Jugador jugador = buscarJugador(comboBox.getValue());
-//            int x = posiciones[index][0];
-//            int y = posiciones[index][1];
-//            int posicionActual = index + 1;
-//            sectores.add(new Sector(jugador, x, y, posicionActual, posicionActual, ""));
-//        }
-//
-//        AppContext.getInstance().set("sectores", sectores);
-//    }
 }

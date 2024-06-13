@@ -33,10 +33,20 @@ public class Sector {
         this.direccion = direccion;
         this.rutaImagenJugador = rutaImagenJugador;
         this.ayudas = new ArrayList<>();
+        this.isOnCoronaPos = false;
+        establecerCoronas();
+    }
+
+    public Sector(int Xpos, int Ypos, int direccion) {
+        this.jugador = new JugadorDto();
+        this.posicionX = Xpos;
+        this.posicionY = Ypos;
+        this.direccion = direccion;
+        this.rutaImagenJugador = "";
+        this.ayudas = new ArrayList<>();
         setActualPosInFirst();
         this.isOnCoronaPos = false;
         establecerCoronas();
-
     }
 
     public void setActualPosInFirst() {
@@ -198,8 +208,8 @@ public class Sector {
 
     @Override
     public String toString() {
-        return jugador.getId() + "," + jugador.getNombre() + "," + posActual + "," + direccion + "," + rutaImagenJugador
-                + "," + coronas + "," + ayudas ;
+        return "{" + jugador.getId() + "," + posActual + "," + rutaImagenJugador
+                + "," + coronas + "," + ayudas + "}";
     }
 
     public void removerAyuda(String ayudaNombre) {
@@ -295,4 +305,6 @@ public class Sector {
         }
         return false;
     }
+
+
 }
