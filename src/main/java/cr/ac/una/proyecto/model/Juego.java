@@ -49,6 +49,7 @@ public class Juego {
         dificultad = "";
         cargarDemasDatos(datos, slider);
         AppContext.getInstance().set("JuegoSectores", sectores);
+        AppContext.getInstance().set("dificultad", dificultad);
     }
 
     private void cargarDemasDatos(String datos, int slider) {
@@ -73,7 +74,7 @@ public class Juego {
         }
 
         String dificultadJuego = extractDifficulty(datos);
-        if (dificultadJuego != null) {
+        if (dificultadJuego != null && !(dificultadJuego.isBlank())) {
             this.dificultad = dificultadJuego;
         } else {
             this.dificultad = "Dificil";
@@ -110,14 +111,36 @@ public class Juego {
         return paths;
     }
 
-    public static String extractDifficulty(String input) {
-        Pattern pattern = Pattern.compile("\\[,\\s*(\\w+),\\[");
-        Matcher matcher = pattern.matcher(input);
-        if (matcher.find()) {
-            return matcher.group(1);
-        } else {
-            return null;
+    private String extractDifficulty(String input) {
+        int indexTexto = 0;
+        int contador = 0;
+        int cantidadComas = 2;
+        StringBuilder numberBuffer = new StringBuilder();
+        String dificultad = null;
+
+        while (contador < cantidadComas) {
+            char currentChar = input.charAt(indexTexto);
+            if (currentChar == ',') {
+                contador++;
+            }
+            indexTexto++;
         }
+
+        boolean flag = false;
+        numberBuffer.setLength(0);
+        while (!flag) {
+            char currentChar = input.charAt(indexTexto);
+            if (Character.isAlphabetic(currentChar)) {
+                numberBuffer.append(currentChar);
+            } else if (currentChar == ',') {
+                dificultad = numberBuffer.toString();
+                flag = true;
+            }
+
+            indexTexto++;
+        }
+
+        return dificultad;
     }
 
     public static void extraerIdAndPosActual(String input, List<Long> ids, List<Integer> turnos) {
@@ -371,7 +394,7 @@ public class Juego {
         return this.dificultad;
     }
 
-    public void sectoresCargar(int slider) {
+    public void sectoresCargar(int slider) {//Carga los sectores con informacion que sirvira para mover la imagen dentro del gripPane del juego
         sectores.clear();
         switch (slider) {
             case 2:

@@ -117,7 +117,7 @@ public class TablerosController extends Controller implements Initializable {
         if (cargarPartida) {
             this.juego = new Juego();
             this.juego = (Juego) AppContext.getInstance().get("juego");
-            if (juego.getRondas() > 1) {
+            if (juego.getRondas() > 1 || (juego.getRondas() == 1 && juego.getTurnoActual() > 0)) {
                 this.turnoDecidido = true;
             }
         } else {
