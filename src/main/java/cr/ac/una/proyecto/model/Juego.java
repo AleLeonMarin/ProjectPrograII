@@ -169,16 +169,13 @@ public class Juego {
             ImageView imvPeon = new ImageView();
             Image imagenPeon = new Image(getClass().getResourceAsStream(sectorActual.getRutaImagenJugador()));
             imvPeon.setImage(imagenPeon);
-            imvPeon.setFitWidth(100);
-            imvPeon.setFitHeight(100);
+            imvPeon.setFitWidth(80);
+            imvPeon.setFitHeight(80);
             imagenesPeones.add(imvPeon);
-            if (sectorActual.getDireccion() == 1 || sectorActual.getDireccion() == 2) {
-                grdpTablero.add(imvPeon, sectorActual.getPosActual(), sectorActual.getPosicionY());
-            } else {
-                grdpTablero.add(imvPeon, sectorActual.getPosicionX(), sectorActual.getPosActual());
-            }
-            GridPane.setHalignment(imvPeon, HPos.CENTER);
-            GridPane.setValignment(imvPeon, VPos.CENTER);
+            grdpTablero.add(imvPeon, 1, 1);
+            sectorActual.mostrarPeonTablero(imvPeon, grdpTablero);
+            grdpTablero.setHalignment(imvPeon, HPos.CENTER);
+            grdpTablero.setValignment(imvPeon, VPos.CENTER);
         }
     }
 
@@ -202,7 +199,7 @@ public class Juego {
         JugadorDto jugadorActual = sectorActual.getJugador();
         if (isJugadorOnCrow) {
             sectores.get(turnoActual).setActualPosInFirst();
-            sectores.get(turnoActual).mostrarPeonTablero(imagenActual);
+            sectores.get(turnoActual).mostrarPeonTablero(imagenActual, grdpTablero);
             if (!valorRespuesta) {
                 cambiarTurno();
             }
@@ -383,17 +380,16 @@ public class Juego {
 
                 break;
             case 3:
+                sectores.add(new Sector(0, 3, 3));
                 sectores.add(new Sector(4, 3, 2));
                 sectores.add(new Sector(3, 0, 4));
-                sectores.add(new Sector(0, 3, 3));
-
 
                 break;
             case 4:
                 sectores.add(new Sector(0, 1, 1));
-                sectores.add(new Sector(4, 1, 3));
+                sectores.add(new Sector(1, 4, 3));
                 sectores.add(new Sector(4, 3, 2));
-                sectores.add(new Sector(0, 3, 4));
+                sectores.add(new Sector(3, 0, 4));
 
                 break;
             case 5:
@@ -405,12 +401,12 @@ public class Juego {
 
                 break;
             case 6:
-                sectores.add(new Sector(5, 7, 1));
-                sectores.add(new Sector(5, 3, 2));
-                sectores.add(new Sector(4, 0, 3));
-                sectores.add(new Sector(0, 0, 4));
-                sectores.add(new Sector(0, 4, 4));
+                sectores.add(new Sector(0, 0, 1));
+                sectores.add(new Sector(0, 4, 1));
                 sectores.add(new Sector(1, 7, 3));
+                sectores.add(new Sector(5, 7, 2));
+                sectores.add(new Sector(5, 3, 2));
+                sectores.add(new Sector(4, 0, 4));
                 break;
         }
     }

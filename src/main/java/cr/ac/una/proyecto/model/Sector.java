@@ -36,6 +36,7 @@ public class Sector {
         this.isOnCoronaPos = false;
         establecerCoronas();
         establecerAyudas();
+        setActualPosInFirst();
     }
 
     public Sector(int Xpos, int Ypos, int direccion) {
@@ -45,10 +46,10 @@ public class Sector {
         this.direccion = direccion;
         this.rutaImagenJugador = "";
         this.ayudas = new ArrayList<>();
-        setActualPosInFirst();
         this.isOnCoronaPos = false;
         establecerCoronas();
         establecerAyudas();
+        setActualPosInFirst();
     }
 
     public void setActualPosInFirst() {
@@ -123,17 +124,16 @@ public class Sector {
         return coronas;
     }
 
-    private void moverNodoA(ImageView imageView, int columna, int fila) {
-        GridPane.setColumnIndex(imageView, columna);
-        GridPane.setRowIndex(imageView, fila);
-        GridPane.setHalignment(imageView, HPos.CENTER);
+    private void moverNodoA(ImageView imageView, int columna, int fila, GridPane gridPane) {
+        gridPane.setColumnIndex(imageView, columna);
+        gridPane.setRowIndex(imageView, fila);
     }
 
-    public void mostrarPeonTablero(ImageView imageView) {
+    public void mostrarPeonTablero(ImageView imageView, GridPane gridPane) {
         if (direccion == 1 || direccion == 2) {
-            moverNodoA(imageView, posActual, posicionX);
+            moverNodoA(imageView, posActual, posicionX,gridPane);
         } else {
-            moverNodoA(imageView, posicionY, posActual);
+            moverNodoA(imageView, posicionY, posActual, gridPane);
         }
     }
 
@@ -152,7 +152,7 @@ public class Sector {
         } else {
             posActual++;
         }
-        moverNodoA(imageView, posActual, posicionX);
+        moverNodoA(imageView, posActual, posicionX, grdPane);
         checkCoronaPos(posicionY + 3);
         return posActual;
     }
@@ -164,7 +164,7 @@ public class Sector {
             posActual--;
 
         }
-        moverNodoA(imageView, posActual, posicionX);
+        moverNodoA(imageView, posActual, posicionX,grdPane);
         checkCoronaPos(posicionY - 3);
         return posActual;
     }
@@ -174,9 +174,8 @@ public class Sector {
             posActual = posicionX;
         } else {
             posActual++;
-
         }
-        moverNodoA(imageView, posicionY, posActual);
+        moverNodoA(imageView, posicionY, posActual,grdPane);
         checkCoronaPos(posicionX + 3);
         return posActual;
     }
@@ -188,7 +187,7 @@ public class Sector {
             posActual--;
 
         }
-        moverNodoA(imageView, posicionY, posActual);
+        moverNodoA(imageView, posicionY, posActual,grdPane);
         checkCoronaPos(posicionX - 3);
         return posActual;
     }
@@ -334,7 +333,7 @@ public class Sector {
                 char currentChar = input.charAt(indexTexto);
                 if (Character.isAlphabetic(currentChar)) {
                     numberBuffer.append(currentChar);
-                } else if (currentChar == ','||currentChar==']') {
+                } else if (currentChar == ',' || currentChar == ']') {
                     for (Corona corona : coronas) {
                         if (corona.habilitarPorNombre(numberBuffer.toString())) {
                             numberBuffer.setLength(0);

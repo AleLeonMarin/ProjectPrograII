@@ -222,6 +222,7 @@ public class PawnSelectionController extends Controller implements Initializable
             String rutaButton = getImagePathForImageView(botonesLista.get(index).getSelectedItem());
             sectores.get(index).setRutaImagenJugador(rutaButton);
         }
+        AppContext.getInstance().set("sectores", sectores);
     }
 
     public String getImagePathForImageView(String mfxButtonContent) {
