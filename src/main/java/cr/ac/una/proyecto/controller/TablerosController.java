@@ -59,14 +59,10 @@ public class TablerosController extends Controller implements Initializable {
     @Override
     public void initialize() {
         iniciarClases();
-        isPartidaCargada();
+        isOnCargarPartida();
         juego.cargarDatosImagenes(grdpTablero);
-        this.turnoDecidido = false;
-        this.valorPreguntaRespuesta = false;
         cargarLabelsPartidaInfo();
         dificultad = juego.getDificultad();
-        this.btnCederTurno.setDisable(true);
-        isOnCrown = false;
         validarTurno();
     }
 
@@ -111,14 +107,15 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void
-    isPartidaCargada() {
+    isOnCargarPartida() {
         boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
 
         if (cargarPartida) {
             this.juego = new Juego();
             this.juego = (Juego) AppContext.getInstance().get("juego");
-            if (juego.getRondas() > 1 || (juego.getRondas() == 1 && juego.getTurnoActual() > 0)) {
+            if (juego.getRondas() > 1 || (juego.getRondas() <= 1 && juego.getTurnoActual() > 0)) {
                 this.turnoDecidido = true;
+                this.btnCederTurno.setDisable(false);
             }
         } else {
             cargarSectores();
@@ -141,6 +138,10 @@ public class TablerosController extends Controller implements Initializable {
         categoriasRuleta = new ArrayList<>();
         juego = new Juego();
         animacion = new Animacion();
+        this.turnoDecidido = false;
+        this.valorPreguntaRespuesta = false;
+        isOnCrown = false;
+        this.btnCederTurno.setDisable(true);
         cargarCategoriasRuleta();
     }
 
