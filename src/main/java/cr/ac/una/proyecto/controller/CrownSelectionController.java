@@ -49,21 +49,21 @@ public class CrownSelectionController extends Controller implements Initializabl
     }
 
     @FXML
-    void onActionBtnCorona(ActionEvent event) {
+    void onActionBtnCorona(ActionEvent event) {//Llama la carta frontal de corona
         this.resultado = true;
         playAnimation();
         FlowController.getInstance().goViewInWindow("FrontalCardCrownView");
     }
 
     @FXML
-    private void onActionBtnDuel(ActionEvent event) {
+    private void onActionBtnDuel(ActionEvent event) {//Llama la carta frontal de duelo
         resultado = false;
         playAnimation();
         FlowController.getInstance().goViewInWindow("FrontalCardDuel");
     }
 
 
-    private void playAnimation() {
+    private void playAnimation() {//Realiza la animacion para cerrar la vista
         Runnable onFinishOut = () ->
         {
             ((Stage) acpRootPane.getScene().getWindow()).close();
@@ -77,7 +77,7 @@ public class CrownSelectionController extends Controller implements Initializabl
         return this.resultado;
     }
 
-    private void cargarJuego() {
+    private void cargarJuego() {//Carga el juego y permite seleccionar el boton de duelo si solo si el jugador en turno y otro jugador en el juego tienen minimo una corona activa
         this.juegoDatos = (Juego) AppContext.getInstance().get("juego");
         boolean sectorActualHasCrown = false;
         boolean rivalActualHasCrown = false;

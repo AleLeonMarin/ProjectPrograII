@@ -94,13 +94,13 @@ public class PreguntaController extends Controller implements Initializable {
         cargarAyudasDisponibles(sectorDto);
         nuevasRespuestas();
         unbindRespuestas();
-        obtenerPreguntaCategoria();
+        obtenerPreguntaAleatoriaPorCategoria();
         animacion.simpleFadeIn(acpRootPane);
         txaEnunciado.setEditable(false);
     }
 
     @FXML
-    private void onActionBtnRespuesta1(ActionEvent event) {
+    private void onActionBtnRespuesta1(ActionEvent event) {//Llama a la funcion de validarRespuestaCorrecta(), segun el indice del boton.
         validarRespuestaCorrecta(0);
     }
 
@@ -120,7 +120,7 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     @FXML
-    private void onMouseClickedBomba(MouseEvent event) {
+    private void onMouseClickedBomba(MouseEvent event) {//Deshabilita dos respuestas incorrectas de la seleccion de respuesta
         habilitarAyudaImagen(false, imvBomba);
         String ayuda = "Bomba";
         sectorDto.removerAyudaPorNombre(ayuda);
@@ -130,7 +130,7 @@ public class PreguntaController extends Controller implements Initializable {
     }
 
     @FXML
-    private void onMouseClickedNext(MouseEvent event) {
+    private void onMouseClickedNext(MouseEvent event) {//Trae una pregunta aletoria de la misma categoria para ser respondida
         habilitarAyudaImagen(false, imvNext);
         String ayuda = "Pasar";
         sectorDto.removerAyudaPorNombre(ayuda);
@@ -139,11 +139,11 @@ public class PreguntaController extends Controller implements Initializable {
         habilitarBotones(false);
         actualizarPregunta();
         actualizarJugador();
-        obtenerPreguntaCategoria();
+        obtenerPreguntaAleatoriaPorCategoria();
     }
 
     @FXML
-    private void onMouseOportunidadDoble(MouseEvent event) {
+    private void onMouseOportunidadDoble(MouseEvent event) {//Incrementa la cantidad de intentos a +1
         habilitarAyudaImagen(false, imvSecondOportunity);
         String ayuda = "DobleOportunidad";
         sectorDto.removerAyudaPorNombre(ayuda);
@@ -152,7 +152,7 @@ public class PreguntaController extends Controller implements Initializable {
         this.intentos += 1;
     }
 
-    private void obtenerPreguntaCategoria() {
+    private void obtenerPreguntaAleatoriaPorCategoria() {// Obtiene una pregunta de una categoria en especifico aleatoriamente en la base de datos
         PreguntaService preService = new PreguntaService();
 
         RespuestaUtil respuesta = preService.getPreguntaAleatoriaPorCategoria(preguntaCategoria);
@@ -195,7 +195,7 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    private void validarRespuestaCorrecta(int btnIndice) {
+    private void validarRespuestaCorrecta(int btnIndice) {// Valida si la respuesta de un boton segun indice e incrementa los contadores correspondientes segun si la respuesta era correcta o incorrecta
         RespuestaDto respuestaDto = new RespuestaDto();
         respuestaDto = respuestasDto.get(btnIndice);
         preguntaDto.getRespuestas().get(btnIndice).incrementarContador();
@@ -247,10 +247,10 @@ public class PreguntaController extends Controller implements Initializable {
 
     }
 
-    private void validarIntentos(boolean value) {
+    private void validarIntentos(boolean value) {//Valida si se respondio correcta o incorrectamente una pregunta.
         Sound sound = new Sound();
         setSectorDtoToAppContext();
-        if (value == true) {
+        if (value) {
             actualizarPregunta();
             actualizarJugador();
             sound.playSound("Correcta.mp3");
@@ -273,20 +273,20 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    private Runnable getRunnableOnFinishOut() {
+    private Runnable getRunnableOnFinishOut() {//Devuelve un atributto de tipo Runnable para que lo que este dentro de el se ejecute luego de usarlo en las animaciones
         Runnable onFinishOut = () -> {
             ((Stage) acpRootPane.getScene().getWindow()).close();
         };
         return onFinishOut;
     }
 
-    private void habilitarAyudas(boolean valor) {
+    private void habilitarAyudas(boolean valor) {//habilita todas las ayudas en el controlador
         habilitarAyudaImagen(valor, imvNext);
         habilitarAyudaImagen(valor, imvBomba);
         habilitarAyudaImagen(valor, imvSecondOportunity);
     }
 
-    private void habilitarPorAyuda(Ayuda ayuda) {
+    private void habilitarPorAyuda(Ayuda ayuda) {//Habilita las ayudas a usar en el controlador segun nombre
         if (ayuda.getNombre().equals("Bomba") && ayuda.getEstado()) {
             habilitarAyudaImagen(true, imvBomba);
         } else if (ayuda.getNombre().equals("Pasar") && ayuda.getEstado()) {
@@ -296,12 +296,12 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    private void habilitarAyudaImagen(boolean valor, ImageView imagen) {
+    private void habilitarAyudaImagen(boolean valor, ImageView imagen) {//Hablita o deshabilita una ayuda para mostarse en la vista
         imagen.setDisable(!valor);
         imagen.setVisible(valor);
     }
 
-    private void cargarAyudasDisponibles(Sector sector) {
+    private void cargarAyudasDisponibles(Sector sector) {// Muestra las ayudas disponibles que tiene cada jugador en la vista
         if (!(dificultad.equals("Dificil"))) {
             for (Ayuda ayuda : sector.getAyudas()) {
                 habilitarPorAyuda(ayuda);
@@ -309,7 +309,7 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    private void bombaAction() {
+    private void bombaAction() {// Deshabilita dos respuestas incorrectas de la seleccion de respuesta
         int cantidadRes = 2;
         int index = 0;
         int contadorBtonoes = 0;
@@ -342,7 +342,7 @@ public class PreguntaController extends Controller implements Initializable {
         }
     }
 
-    private void actualizarJugador() {
+    private void actualizarJugador() {//Actualiza al jugador en la base de datos
         try {
             jugadorDto.incrementarPreguntasRespondidas();
             JugadorService jugadorService = new JugadorService();
@@ -390,7 +390,7 @@ public class PreguntaController extends Controller implements Initializable {
         return resultadoValorRespuesta;
     }
 
-    public void actualizarPregunta() {
+    public void actualizarPregunta() {// Actualiza la pregunta en la base de datos
         try {
             PreguntaService preguntaService = new PreguntaService();
             RespuestaUtil respuestaUtil = preguntaService.actualizarPregunta(this.preguntaDto);

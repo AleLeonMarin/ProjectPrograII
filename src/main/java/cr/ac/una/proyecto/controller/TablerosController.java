@@ -73,7 +73,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     @FXML
-    private void OnMouseClickedPicker(MouseEvent event) {
+    private void OnMouseClickedPicker(MouseEvent event) {//Gira la ruleta en la vista
         sound.playSound("Roulette.mp3");
         cargarLabelsPartidaInfo();
         this.imvPicker.setDisable(true);
@@ -86,7 +86,7 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void cargarLabelsPartidaInfo() {
+    private void cargarLabelsPartidaInfo() {//Carga y setea la informacion de ronda y jugador actual en los label de la vista
         String nombreJugador = juego.getSectorActual().getJugador().getNombre();
         Integer rondasJuego = juego.getRondas();
         if (nombreJugador != null) {
@@ -108,7 +108,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void
-    isOnCargarPartida() {
+    isOnCargarPartida() {//Identifica si se quiere cargar una partida o si se creo una nueva
         boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
 
         if (cargarPartida) {
@@ -147,7 +147,7 @@ public class TablerosController extends Controller implements Initializable {
         cargarCategoriasRuleta();
     }
 
-    private void calcularTurnos() {
+    private void calcularTurnos() {//Calcula el primer jugador en responder la primera pregunta
 
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
@@ -155,27 +155,25 @@ public class TablerosController extends Controller implements Initializable {
         Runnable onFinish = () -> {
             this.imvPicker.setDisable(false);
 
-            if (categoria == categoriasRuleta.get(4)) {
+            if (categoria.equals(categoriasRuleta.get(4))) {
                 turnoDecidido = true;
                 this.btnCederTurno.setDisable(false);
                 this.juego.setRondas(1);
-            } else {
-                juego.cambiarPrimerTurno();
-            }
-            if (turnoDecidido) {
                 Platform.runLater(() -> {
                     new Mensaje().showModal(Alert.AlertType.INFORMATION, "Escoger turno", getStage(),
                             "Cayo corona, el jugador: "
                                     + juego.getSectorActual().getJugador().getNombre()
                                     + ", inicia la partida");
                 });
+            } else {
+                juego.cambiarPrimerTurno();
             }
         };
 
         animacion.animacionRuleta(imvRuleta, juego.getRuletaAngulo(), onFinish);
     }
 
-    private void moverRuleta() {
+    private void moverRuleta() {//Gira la ruleta en la vista durante el juego
 
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
@@ -191,7 +189,7 @@ public class TablerosController extends Controller implements Initializable {
         AppContext.getInstance().set("preguntaCategoria", categoria);
     }
 
-    private void llamarPreguntaView() {
+    private void llamarPreguntaView() {//Llama a la vista de responder pregunta
         FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) acpRootPane.getScene().getWindow()),
                 true);
         PreguntaController controladorPreguntaView = (PreguntaController) FlowController.getInstance()
@@ -200,7 +198,7 @@ public class TablerosController extends Controller implements Initializable {
         juego.cargarSectorActualFromAppContext();
     }
 
-    private void mostrarTarjetas() {//muestra las tarjetas frontales dependiendo de la categoria categoria
+    private void mostrarTarjetas() {//muestra las tarjetas frontales dependiendo de la categoria
         sound.playSound("Card.mp3");
         if (categoria.equals(categoriasRuleta.get(0))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports",
@@ -227,7 +225,7 @@ public class TablerosController extends Controller implements Initializable {
         isOnDuel();
     }
 
-    private void isOnDuel() {
+    private void isOnDuel() {//Identifica si escogimos duelo en la vista de CrowSelectionController
         if (isOnDuel) {
             //accion
         } else {
@@ -242,7 +240,7 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void goCoronaDuelView() {
+    private void goCoronaDuelView() {//Llama a la vistade SelectCrownDecisionView
 
         if (getCrowDuelResult()) {
             isOnCrown = true;
@@ -262,7 +260,7 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void setCorona() {
+    private void setCorona() {//Setea una corona de una categoria  en especifico si el jugador en corona respondio correctamente
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
@@ -289,7 +287,7 @@ public class TablerosController extends Controller implements Initializable {
         return resultado;
     }
 
-    private void isJugadorInCoronaPos() {
+    private void isJugadorInCoronaPos() {//Identifica si un jugador esta en la posicion de corona
         Sector sectorActual = juego.getSectorActual();
 
         if (sectorActual != null) {
@@ -301,7 +299,7 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void validarCoronasPrimerTurno() {
+    private void validarCoronasPrimerTurno() {//Valida si un jugador cumple con la regla de ganar 3 coronas en el primer turno
         Sector sectorActual = juego.getSectorActual();
         if ((juego.validarPrimerTurnoObtencionDeCoronas(sectorActual))) {
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Max Coronas alcanzadas", getStage(),
@@ -317,7 +315,7 @@ public class TablerosController extends Controller implements Initializable {
         return this.juego;
     }
 
-    private void validarJugadorGanador(AnchorPane anchorPane) {
+    private void validarJugadorGanador(AnchorPane anchorPane) {//Valida si un jugador en el juego ha ganado
         juego.valdidarCoronasGanador(anchorPane);
     }
 
@@ -328,7 +326,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     @FXML
-    private void OnActionBtnCederTurno(ActionEvent event) {
+    private void OnActionBtnCederTurno(ActionEvent event) {//Cede el turno hacia el siguiente jugador en el juego
         if (dificultad.equals("Facil")) {
             System.out.println("Dificultad Seleccionada: " + dificultad);
             juego.getSectorActual().setAyudaRandom(2);

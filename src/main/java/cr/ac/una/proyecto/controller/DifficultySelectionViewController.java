@@ -33,7 +33,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
     private String dificultad;
 
     @FXML
-    void onActionBtnPlay(ActionEvent event) {
+    void onActionBtnPlay(ActionEvent event) {//Llama a la vista de Resumen de partida
         sound.playSound("clickedNext.mp3");
         AppContext.getInstance().set("dificultad", dificultad);
         FlowController.getInstance().goViewInWindow("SumaryMatch");
@@ -51,7 +51,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
         initPrincipalValues();
     }
 
-    private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
+    private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {//Deselleciona las demas casillas que no sean la ultima que escogimos
         CheckBox[] checkboxes =
         {
             ckbEasy, ckbMedium, ckbHard
@@ -72,7 +72,7 @@ public class DifficultySelectionViewController extends Controller implements Ini
     }
 
     @FXML
-    void onActionDificil(MouseEvent event) {
+    void onActionDificil(MouseEvent event) {//Setea la dificultad a ´Dificil´
         sound.playSound("Popup_SecondPage.mp3");
         this.dificultad = "Dificil";
     }

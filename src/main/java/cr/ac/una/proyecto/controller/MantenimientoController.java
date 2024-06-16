@@ -9,14 +9,17 @@ import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Formato;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,7 +77,6 @@ public class MantenimientoController extends Controller implements Initializable
     private RespuestaDto respuesta2;
     private RespuestaDto respuesta3;
     private RespuestaDto respuesta4;
-    private boolean preguntaNueva;
 
     private List<RespuestaDto> respuestasDto = new ArrayList<>();
 
@@ -90,6 +92,7 @@ public class MantenimientoController extends Controller implements Initializable
     public void initialize() {
         initValues();
         cargarCategorias();
+        //onActionBtnNuevo(null);
     }
 
     @FXML
@@ -122,7 +125,6 @@ public class MantenimientoController extends Controller implements Initializable
 
         if (preguntaDto != null) {
             cargarPregunta(preguntaDto.getId());
-            cargarRespuestasDtoSingular();
         }
 
     }
@@ -160,7 +162,6 @@ public class MantenimientoController extends Controller implements Initializable
         cmbCategorias.clear();
         cargarCategorias();
         cmbCategorias.getSelectionModel().clearSelection();
-        this.preguntaNueva = true;
         nuevasRespuestas();
     }
 
@@ -199,7 +200,7 @@ public class MantenimientoController extends Controller implements Initializable
             if (!invalidos.isBlank()) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar Pregunta", getStage(), invalidos);
             } else {
-                cargarRespuestasDtoList();
+                cargarRespuestasToList();
                 PreguntaService preService = new PreguntaService();
                 RespuestaUtil respuesta = preService.guardarPregunta(this.preguntaDto);
                 if (respuesta.getEstado()) {
@@ -225,8 +226,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private void cargarRespuestasDtoList() {
-
+    private void cargarRespuestasToList() {
         respuestasDto.clear();
         respuestasDto.add(respuesta1);
         respuestasDto.add(respuesta2);
