@@ -5,7 +5,6 @@ import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.service.PreguntaService;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
-import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Sound;
@@ -31,7 +30,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import oracle.jdbc.proxy.annotation.Pre;
 
 public class PreguntaController extends Controller implements Initializable {
 
@@ -125,7 +123,7 @@ public class PreguntaController extends Controller implements Initializable {
     private void onMouseClickedBomba(MouseEvent event) {
         habilitarAyudaImagen(false, imvBomba);
         String ayuda = "Bomba";
-        sectorDto.removerAyuda(ayuda);
+        sectorDto.removerAyudaPorNombre(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de bomba, esta ayuda elimina dos de las respuestas incorrectas");
         bombaAction();// sounds or animation
@@ -135,7 +133,7 @@ public class PreguntaController extends Controller implements Initializable {
     private void onMouseClickedNext(MouseEvent event) {
         habilitarAyudaImagen(false, imvNext);
         String ayuda = "Pasar";
-        sectorDto.removerAyuda(ayuda);
+        sectorDto.removerAyudaPorNombre(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de pasar preguntas, esta ayuda te permite cambiar una pregunta por otra de la misma categoria");
         habilitarBotones(false);
@@ -148,7 +146,7 @@ public class PreguntaController extends Controller implements Initializable {
     private void onMouseOportunidadDoble(MouseEvent event) {
         habilitarAyudaImagen(false, imvSecondOportunity);
         String ayuda = "DobleOportunidad";
-        sectorDto.removerAyuda(ayuda);
+        sectorDto.removerAyudaPorNombre(ayuda);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de doble oportunidad, esta ayuda te da un intento mas si te llegarasa a equivocar");
         this.intentos += 1;

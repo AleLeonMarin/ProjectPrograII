@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import javafx.geometry.HPos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -131,7 +130,7 @@ public class Sector {
 
     public void mostrarPeonTablero(ImageView imageView, GridPane gridPane) {
         if (direccion == 1 || direccion == 2) {
-            moverNodoA(imageView, posActual, posicionX,gridPane);
+            moverNodoA(imageView, posActual, posicionX, gridPane);
         } else {
             moverNodoA(imageView, posicionY, posActual, gridPane);
         }
@@ -164,7 +163,7 @@ public class Sector {
             posActual--;
 
         }
-        moverNodoA(imageView, posActual, posicionX,grdPane);
+        moverNodoA(imageView, posActual, posicionX, grdPane);
         checkCoronaPos(posicionY - 3);
         return posActual;
     }
@@ -175,7 +174,7 @@ public class Sector {
         } else {
             posActual++;
         }
-        moverNodoA(imageView, posicionY, posActual,grdPane);
+        moverNodoA(imageView, posicionY, posActual, grdPane);
         checkCoronaPos(posicionX + 3);
         return posActual;
     }
@@ -187,7 +186,7 @@ public class Sector {
             posActual--;
 
         }
-        moverNodoA(imageView, posicionY, posActual,grdPane);
+        moverNodoA(imageView, posicionY, posActual, grdPane);
         checkCoronaPos(posicionX - 3);
         return posActual;
     }
@@ -207,10 +206,18 @@ public class Sector {
         }
     }
 
-    public void removerAyuda(String ayudaNombre) {
+    public void removerAyudaPorNombre(String ayudaNombre) {
         for (Ayuda ayuda : ayudas) {
             if (ayuda.getNombre().equals(ayudaNombre)) {
                 ayuda.setEstado(false);
+            }
+        }
+    }
+
+    public void removerCoronaPorNombre(String coronaNombre) {
+        for (Corona corona : coronas) {
+            if (corona.getNombre().equals(coronaNombre)) {
+                corona.setEstado(false);
             }
         }
     }
@@ -250,23 +257,6 @@ public class Sector {
         }
     }
 
-    public void printCoronasInfo() {
-        for (Corona corona : coronas) {
-            if (corona.getEstado()) {
-                System.out.println("Corona Activa: " + corona.getNombre());
-            }
-        }
-    }
-
-    public void printAyudasInfo() {
-        for (Ayuda ayuda : ayudas) {
-            if (ayuda.getEstado()) {
-                System.out.println("Ayuda Activa: " + ayuda.getNombre());
-            }
-        }
-
-    }
-
     public void setAyudaRandom(int cantidadAyudasRandom) {
         int index = 0;
         Random random = new Random();
@@ -280,6 +270,15 @@ public class Sector {
 
         }
 
+    }
+
+    public boolean hasOneHint() {
+        for (Ayuda ayuda : ayudas) {
+            if (ayuda.getEstado()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean hasAllHints() {

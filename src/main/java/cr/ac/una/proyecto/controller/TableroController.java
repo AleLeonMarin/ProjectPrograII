@@ -131,7 +131,7 @@ public class TableroController extends Controller implements Initializable {
         timer.schedule(task, 5000);
     }
 
-    private void isOnCargarPartida() {
+    private void isOnCargarPartida() {//revisa si hay alguna variable bandera para cargar datos de una partida seleccionada.
         boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
         if (cargarPartida) {
             this.partidaDto = (PartidaDto) AppContext.getInstance().get("partidaCargada");

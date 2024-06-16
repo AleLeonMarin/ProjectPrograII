@@ -35,7 +35,7 @@ public class Juego {
         sectores = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
         turnoActual = 0;
-        rondas = 1;
+        rondas = 0;
         dificultad = "";
         cargarDificultadFromAppContext();
     }
@@ -45,7 +45,7 @@ public class Juego {
         sectores = new ArrayList<>();
         imagenesPeones = new ArrayList<>();
         turnoActual = 0;
-        rondas = 1;
+        rondas = 0;
         dificultad = "";
         cargarDemasDatos(datos, slider);
         AppContext.getInstance().set("JuegoSectores", sectores);

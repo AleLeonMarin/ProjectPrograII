@@ -51,6 +51,7 @@ public class TablerosController extends Controller implements Initializable {
     private Boolean turnoDecidido;
     private Boolean valorPreguntaRespuesta;
     private Boolean isOnCrown;
+    private Boolean isOnDuel;
     @FXML
     private Label lblRonda;
     @FXML
@@ -91,7 +92,7 @@ public class TablerosController extends Controller implements Initializable {
         if (nombreJugador != null) {
             lblJugadorActual.setText(nombreJugador);
         }
-        if (rondasJuego > 0 && rondasJuego != null) {
+        if (rondasJuego >= 0 && rondasJuego != null) {
             this.lblRonda.setText(rondasJuego.toString());
         }
 
@@ -113,7 +114,7 @@ public class TablerosController extends Controller implements Initializable {
         if (cargarPartida) {
             this.juego = new Juego();
             this.juego = (Juego) AppContext.getInstance().get("juego");
-            if (juego.getRondas() > 1 || (juego.getRondas() <= 1 && juego.getTurnoActual() > 0)) {
+            if (juego.getRondas() > 0) {
                 this.turnoDecidido = true;
                 this.btnCederTurno.setDisable(false);
             }
@@ -141,6 +142,7 @@ public class TablerosController extends Controller implements Initializable {
         this.turnoDecidido = false;
         this.valorPreguntaRespuesta = false;
         isOnCrown = false;
+        isOnDuel = false;
         this.btnCederTurno.setDisable(true);
         cargarCategoriasRuleta();
     }
@@ -156,6 +158,7 @@ public class TablerosController extends Controller implements Initializable {
             if (categoria == categoriasRuleta.get(4)) {
                 turnoDecidido = true;
                 this.btnCederTurno.setDisable(false);
+                this.juego.setRondas(1);
             } else {
                 juego.cambiarPrimerTurno();
             }
@@ -189,7 +192,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void llamarPreguntaView() {
-        FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) imvRuleta.getScene().getWindow()),
+        FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) acpRootPane.getScene().getWindow()),
                 true);
         PreguntaController controladorPreguntaView = (PreguntaController) FlowController.getInstance()
                 .getController("preguntaView");
@@ -197,39 +200,46 @@ public class TablerosController extends Controller implements Initializable {
         juego.cargarSectorActualFromAppContext();
     }
 
-    private void mostrarTarjetas() {
+    private void mostrarTarjetas() {//muestra las tarjetas frontales dependiendo de la categoria categoria
         sound.playSound("Card.mp3");
-        if (categoria == categoriasRuleta.get(0)) {
+        if (categoria.equals(categoriasRuleta.get(0))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports",
-                    ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(1)) {
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
+        } else if (categoria.equals(categoriasRuleta.get(1))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardArt",
-                    ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(2)) {
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
+        } else if (categoria.equals(categoriasRuleta.get(2))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardGeografy",
-                    ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(3)) {
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
+        } else if (categoria.equals(categoriasRuleta.get(3))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardScience",
-                    ((Stage) imvRuleta.getScene().getWindow()), true);
-        } else if (categoria == categoriasRuleta.get(4)) {
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
+        } else if (categoria.equals(categoriasRuleta.get(4))) {
             goCoronaDuelView();
             return;
-        } else if (categoria == categoriasRuleta.get(5)) {
+        } else if (categoria.equals(categoriasRuleta.get(5))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardEntertamient",
-                    ((Stage) imvRuleta.getScene().getWindow()), true);
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
         } else {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
         }
-        sound.playSound("windMovement1.mp3");
-        llamarPreguntaView();
-        juego.jugar(grdpTablero, valorPreguntaRespuesta, isOnCrown);
-        setCorona();
-        validarJugadorGanador(acpRootPane);
-        isJugadorInCoronaPos();
-        cargarLabelsPartidaInfo();
-        this.btnCederTurno.setDisable(false);
+        isOnDuel();
+    }
 
+    private void isOnDuel() {
+        if (isOnDuel) {
+            //accion
+        } else {
+            sound.playSound("windMovement1.mp3");
+            llamarPreguntaView();
+            juego.jugar(grdpTablero, valorPreguntaRespuesta, isOnCrown);
+            setCorona();
+            validarJugadorGanador(acpRootPane);
+            isJugadorInCoronaPos();
+            cargarLabelsPartidaInfo();
+            this.btnCederTurno.setDisable(false);
+        }
     }
 
     private void goCoronaDuelView() {
@@ -248,7 +258,7 @@ public class TablerosController extends Controller implements Initializable {
             AppContext.getInstance().set("preguntaCategoria", categoria);
             mostrarTarjetas();
         } else {
-            System.out.println("DUElO");
+            isOnDuel = true;
         }
     }
 
@@ -256,8 +266,8 @@ public class TablerosController extends Controller implements Initializable {
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
-                validarCoronasPrimerTurno();
                 dificultadMediaDarAyuda();
+                validarCoronasPrimerTurno();
             }
             juego.setSectorActualAppContext();
             isOnCrown = false;
@@ -271,12 +281,11 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private boolean getCrowDuelResult() {
-
-        CrownSelectionController controladorDueloCorona = (CrownSelectionController) FlowController.getInstance()
-                .getController("CrownDuelSelector");
-        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector",
-                ((Stage) acpRootPane.getScene().getWindow()), true);
-        boolean resultado = controladorDueloCorona.getResultado();
+        boolean resultado = true;
+        AppContext.getInstance().set("juego", juego);
+        CrownSelectionController controladorDueloCorona = (CrownSelectionController) FlowController.getInstance().getController("CrownDuelSelector");
+        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector", ((Stage) acpRootPane.getScene().getWindow()), false);
+        resultado = controladorDueloCorona.getResultado();
         return resultado;
     }
 
@@ -323,7 +332,6 @@ public class TablerosController extends Controller implements Initializable {
         if (dificultad.equals("Facil")) {
             System.out.println("Dificultad Seleccionada: " + dificultad);
             juego.getSectorActual().setAyudaRandom(2);
-            juego.getSectorActual().printAyudasInfo();
             juego.cambiarTurno();
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ojo por ojo", getStage(),
                     "Has cedido el turno, si no tenias ayudas has ganado algunas, ya las veras luego");

@@ -14,10 +14,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.Date;
-
 
 /**
  * @author aletr

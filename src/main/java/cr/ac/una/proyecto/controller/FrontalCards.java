@@ -55,7 +55,7 @@ public class FrontalCards extends Controller implements Initializable {
 
     @FXML
     private void onMouseTirarRuleta(MouseEvent event) {
-        sectorDto.removerAyuda(ayudaRuleta);
+        sectorDto.removerAyudaPorNombre(ayudaRuleta);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
 
