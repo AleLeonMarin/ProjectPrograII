@@ -149,7 +149,6 @@ public class FlowController {
         Controller controller = loader.getController();
         controller.initialize();
         Stage stage = new Stage();
-        stage.initStyle(StageStyle.UTILITY);
         stage.setTitle("Preguntados JR");
         stage.getIcons()
                 .add(new Image(getClass().getResource("/cr/ac/una/proyecto/resources/logo.jpg").toExternalForm()));

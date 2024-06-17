@@ -1,11 +1,14 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.model.Corona;
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.util.Animacion;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import cr.ac.una.proyecto.util.AppContext;
@@ -18,9 +21,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CrownSelectionController extends Controller implements Initializable {
-    private Animacion animacion;
-    private Juego juegoDatos;
-    private Boolean resultado;
     @FXML
     private AnchorPane acpRootPane;
     @FXML
@@ -29,6 +29,12 @@ public class CrownSelectionController extends Controller implements Initializabl
     @FXML
     private MFXButton btnDuel;
 
+    private ArrayList<Sector> sectores;
+    private Animacion animacion;
+    private Boolean resultado;
+    Juego juego;
+    Sector sector;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
@@ -36,6 +42,11 @@ public class CrownSelectionController extends Controller implements Initializabl
 
     @Override
     public void initialize() {
+
+        juego = new Juego();
+        sector = new Sector();
+        cargarSectores();
+        cargarJuego();
         initValues();
     }
 
@@ -45,66 +56,82 @@ public class CrownSelectionController extends Controller implements Initializabl
         this.resultado = true;
         this.btnDuel.setDisable(true);
         this.btnDuel.setVisible(true);
-        cargarJuego();
+        habilitarDuelo();
     }
 
     @FXML
-    void onActionBtnCorona(ActionEvent event) {//Llama la carta frontal de corona
+    void onActionBtnCorona(ActionEvent event) {// Llama la carta frontal de corona
         this.resultado = true;
         playAnimation();
         FlowController.getInstance().goViewInWindow("FrontalCardCrownView");
     }
 
     @FXML
-    private void onActionBtnDuel(ActionEvent event) {//Llama la carta frontal de duelo
+    private void onActionBtnDuel(ActionEvent event) {// Llama la carta frontal de duelo
         resultado = false;
         playAnimation();
         FlowController.getInstance().goViewInWindow("FrontalCardDuel");
     }
 
-
-    private void playAnimation() {//Realiza la animacion para cerrar la vista
-        Runnable onFinishOut = () ->
-        {
+    private void playAnimation() {// Realiza la animacion para cerrar la vista
+        Runnable onFinishOut = () -> {
             ((Stage) acpRootPane.getScene().getWindow()).close();
         };
 
         animacion.animarFadeOut(acpRootPane, onFinishOut);
     }
 
-
     public boolean getResultado() {
         return this.resultado;
     }
 
-    private void cargarJuego() {//Carga el juego y permite seleccionar el boton de duelo si solo si el jugador en turno y otro jugador en el juego tienen minimo una corona activa
-        this.juegoDatos = (Juego) AppContext.getInstance().get("juego");
-        boolean sectorActualHasCrown = false;
-        boolean rivalActualHasCrown = false;
-
-        if (juegoDatos != null && juegoDatos.getSectores().size() >= 2) {
-            ArrayList<Sector> sectoresJuego = juegoDatos.getSectores();
-            int turnoActual = juegoDatos.getTurnoActual();
-
-            for (int index = 0; index < sectoresJuego.size(); index++) {
-                Sector sector = sectoresJuego.get(index);
-
-                if (index == turnoActual) {
-                    if (sector.hasOneHint()) {
-                        sectorActualHasCrown = true;
-                    }
-                } else {
-                    if (sector.hasOneHint()) {
-                        rivalActualHasCrown = true;
-                    }
-                }
-                if (sectorActualHasCrown && rivalActualHasCrown) {
-                    this.btnDuel.setDisable(false);
-                    break;
-                }
-            }
-        }
+    private void cargarSectores() {
+        sectores = (ArrayList<Sector>) AppContext.getInstance().get("sectores");
     }
 
+    private void cargarJuego() {
+
+        juego = (Juego) AppContext.getInstance().get("juego");
+
+    }
+
+    private void habilitarDuelo() {
+        boolean crown = false;
+
+        if (juego != null && juego.getSectorActual() != null) {
+            int turno = juego.getTurnoActual();
+            Sector sector = sectores.get(turno);
+
+            // Obtener las coronas del sector actual
+            List<Corona> coronas = sector.getCoronas();
+            System.out.println("Coronas: " + coronas);
+
+            // Verificar si hay coronas activas
+            if (coronas != null && !coronas.isEmpty()) {
+                for (Corona corona : coronas) {
+                    if (corona != null && corona.getEstado() == true) { // Cambia "activada" al estado que corresponda
+                                                                        // en tu lógica
+                        crown = true;
+                        break;
+                    } else {
+                        crown = false;
+
+                    }
+                }
+            }
+
+            // Habilitar o deshabilitar el botón de duelo según la verificación de coronas
+            if (crown) {
+                btnDuel.setDisable(false);
+                btnDuel.setVisible(true);
+            } else {
+                btnDuel.setDisable(true);
+                btnDuel.setVisible(false);
+            }
+        } else {
+            btnDuel.setDisable(true);
+            btnDuel.setVisible(false);
+        }
+    }
 
 }

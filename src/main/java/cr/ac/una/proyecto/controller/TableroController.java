@@ -1,10 +1,8 @@
 package cr.ac.una.proyecto.controller;
 
-import cr.ac.una.proyecto.App;
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.JugadorDto;
 import cr.ac.una.proyecto.model.PartidaDto;
-import cr.ac.una.proyecto.model.Respuesta;
 import cr.ac.una.proyecto.model.Sector;
 import cr.ac.una.proyecto.service.PartidaService;
 import cr.ac.una.proyecto.model.Corona;
@@ -14,9 +12,6 @@ import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import cr.ac.una.proyecto.util.Sound;
 import io.github.palexdev.materialfx.controls.MFXButton;
-
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,10 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -131,7 +123,8 @@ public class TableroController extends Controller implements Initializable {
         timer.schedule(task, 5000);
     }
 
-    private void isOnCargarPartida() {//revisa si hay alguna variable bandera para cargar datos de una partida seleccionada.
+    private void isOnCargarPartida() {// revisa si hay alguna variable bandera para cargar datos de una partida
+                                      // seleccionada.
         boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
         if (cargarPartida) {
             this.partidaDto = (PartidaDto) AppContext.getInstance().get("partidaCargada");

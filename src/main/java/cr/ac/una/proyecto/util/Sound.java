@@ -24,7 +24,7 @@ public class Sound {
 
     public void disableForButtons(MFXButton btn1, MFXButton btn2,Label lbl, String path) {
 
-        PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(0.5));
+        PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(1));
         String sound = App.class.getResource("/cr/ac/una/proyecto/resources/audio/" + path).toExternalForm();
         Media h = new Media(sound);
         MediaPlayer mediaPlayer = new MediaPlayer(h);

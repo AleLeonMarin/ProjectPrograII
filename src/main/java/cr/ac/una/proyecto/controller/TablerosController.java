@@ -73,7 +73,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     @FXML
-    private void OnMouseClickedPicker(MouseEvent event) {//Gira la ruleta en la vista
+    private void OnMouseClickedPicker(MouseEvent event) {// Gira la ruleta en la vista
         sound.playSound("Roulette.mp3");
         cargarLabelsPartidaInfo();
         this.imvPicker.setDisable(true);
@@ -86,7 +86,8 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void cargarLabelsPartidaInfo() {//Carga y setea la informacion de ronda y jugador actual en los label de la vista
+    private void cargarLabelsPartidaInfo() {// Carga y setea la informacion de ronda y jugador actual en los label de la
+                                            // vista
         String nombreJugador = juego.getSectorActual().getJugador().getNombre();
         Integer rondasJuego = juego.getRondas();
         if (nombreJugador != null) {
@@ -107,8 +108,7 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void
-    isOnCargarPartida() {//Identifica si se quiere cargar una partida o si se creo una nueva
+    private void isOnCargarPartida() {// Identifica si se quiere cargar una partida o si se creo una nueva
         boolean cargarPartida = (Boolean) AppContext.getInstance().get("cargarPartida");
 
         if (cargarPartida) {
@@ -147,7 +147,7 @@ public class TablerosController extends Controller implements Initializable {
         cargarCategoriasRuleta();
     }
 
-    private void calcularTurnos() {//Calcula el primer jugador en responder la primera pregunta
+    private void calcularTurnos() {// Calcula el primer jugador en responder la primera pregunta
 
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
@@ -173,7 +173,7 @@ public class TablerosController extends Controller implements Initializable {
         animacion.animacionRuleta(imvRuleta, juego.getRuletaAngulo(), onFinish);
     }
 
-    private void moverRuleta() {//Gira la ruleta en la vista durante el juego
+    private void moverRuleta() {// Gira la ruleta en la vista durante el juego
 
         this.categoria = juego.obtenerPosicionRuleta();
         double anguloDetenido = juego.getRuletaAngulo();
@@ -189,7 +189,7 @@ public class TablerosController extends Controller implements Initializable {
         AppContext.getInstance().set("preguntaCategoria", categoria);
     }
 
-    private void llamarPreguntaView() {//Llama a la vista de responder pregunta
+    private void llamarPreguntaView() {// Llama a la vista de responder pregunta
         FlowController.getInstance().goViewInWindowModal("preguntaView", ((Stage) acpRootPane.getScene().getWindow()),
                 true);
         PreguntaController controladorPreguntaView = (PreguntaController) FlowController.getInstance()
@@ -198,7 +198,7 @@ public class TablerosController extends Controller implements Initializable {
         juego.cargarSectorActualFromAppContext();
     }
 
-    private void mostrarTarjetas() {//muestra las tarjetas frontales dependiendo de la categoria
+    private void mostrarTarjetas() {// muestra las tarjetas frontales dependiendo de la categoria
         sound.playSound("Card.mp3");
         if (categoria.equals(categoriasRuleta.get(0))) {
             FlowController.getInstance().goViewInWindowModal("FrontalCardSports",
@@ -225,9 +225,9 @@ public class TablerosController extends Controller implements Initializable {
         isOnDuel();
     }
 
-    private void isOnDuel() {//Identifica si escogimos duelo en la vista de CrowSelectionController
+    private void isOnDuel() {// Identifica si escogimos duelo en la vista de CrowSelectionController
         if (isOnDuel) {
-            //accion
+            // accion
         } else {
             sound.playSound("windMovement1.mp3");
             llamarPreguntaView();
@@ -240,7 +240,7 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void goCoronaDuelView() {//Llama a la vistade SelectCrownDecisionView
+    private void goCoronaDuelView() {// Llama a la vistade SelectCrownDecisionView
 
         if (getCrowDuelResult()) {
             isOnCrown = true;
@@ -257,10 +257,21 @@ public class TablerosController extends Controller implements Initializable {
             mostrarTarjetas();
         } else {
             isOnDuel = true;
+            PlayerSelectorController controladorDuelo = (PlayerSelectorController) FlowController.getInstance()
+                    .getController("DuelPlayerSelector");
+
+            sound.playSound("Card.mp3");
+
+            FlowController.getInstance().goViewInWindowModal("DuelPlayerSelector",
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
+            categoria = controladorDuelo.getCategoria();
+            AppContext.getInstance().set("preguntaCategoria", categoria);
+            mostrarTarjetas();
         }
     }
 
-    private void setCorona() {//Setea una corona de una categoria  en especifico si el jugador en corona respondio correctamente
+    private void setCorona() {// Setea una corona de una categoria en especifico si el jugador en corona
+                              // respondio correctamente
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
@@ -281,13 +292,15 @@ public class TablerosController extends Controller implements Initializable {
     private boolean getCrowDuelResult() {
         boolean resultado = true;
         AppContext.getInstance().set("juego", juego);
-        CrownSelectionController controladorDueloCorona = (CrownSelectionController) FlowController.getInstance().getController("CrownDuelSelector");
-        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector", ((Stage) acpRootPane.getScene().getWindow()), false);
+        CrownSelectionController controladorDueloCorona = (CrownSelectionController) FlowController.getInstance()
+                .getController("CrownDuelSelector");
+        FlowController.getInstance().goViewInWindowModal("CrownDuelSelector",
+                ((Stage) acpRootPane.getScene().getWindow()), false);
         resultado = controladorDueloCorona.getResultado();
         return resultado;
     }
 
-    private void isJugadorInCoronaPos() {//Identifica si un jugador esta en la posicion de corona
+    private void isJugadorInCoronaPos() {// Identifica si un jugador esta en la posicion de corona
         Sector sectorActual = juego.getSectorActual();
 
         if (sectorActual != null) {
@@ -299,7 +312,8 @@ public class TablerosController extends Controller implements Initializable {
         }
     }
 
-    private void validarCoronasPrimerTurno() {//Valida si un jugador cumple con la regla de ganar 3 coronas en el primer turno
+    private void validarCoronasPrimerTurno() {// Valida si un jugador cumple con la regla de ganar 3 coronas en el
+                                              // primer turno
         Sector sectorActual = juego.getSectorActual();
         if ((juego.validarPrimerTurnoObtencionDeCoronas(sectorActual))) {
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Max Coronas alcanzadas", getStage(),
@@ -315,7 +329,7 @@ public class TablerosController extends Controller implements Initializable {
         return this.juego;
     }
 
-    private void validarJugadorGanador(AnchorPane anchorPane) {//Valida si un jugador en el juego ha ganado
+    private void validarJugadorGanador(AnchorPane anchorPane) {// Valida si un jugador en el juego ha ganado
         juego.valdidarCoronasGanador(anchorPane);
     }
 
@@ -326,7 +340,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     @FXML
-    private void OnActionBtnCederTurno(ActionEvent event) {//Cede el turno hacia el siguiente jugador en el juego
+    private void OnActionBtnCederTurno(ActionEvent event) {// Cede el turno hacia el siguiente jugador en el juego
         if (dificultad.equals("Facil")) {
             System.out.println("Dificultad Seleccionada: " + dificultad);
             juego.getSectorActual().setAyudaRandom(2);

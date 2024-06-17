@@ -166,4 +166,8 @@ public class SelectCrownDecisionController extends Controller implements Initial
         return onFinishOut;
     }
 
+    private void comparteCrownsForDuel(){
+        
+    }
+
 }
