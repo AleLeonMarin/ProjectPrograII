@@ -197,7 +197,6 @@ public class TableroController extends Controller implements Initializable {
             new Mensaje().showModal(Alert.AlertType.ERROR, "Subtablero", getStage(), "Error al cargar el subtablero");
 
         }
-
     }
 
     @FXML
@@ -216,7 +215,6 @@ public class TableroController extends Controller implements Initializable {
         validarCantidadJugadores();
         btnIniciar.setVisible(false);
         btnIniciar.setDisable(true);
-
     }
 
     @FXML

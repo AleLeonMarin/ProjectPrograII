@@ -94,24 +94,26 @@ public class WinnerViewController extends Controller implements Initializable {
 
 
     private void eliminarPartida() {
-        try {
-            if (this.partidaDto.getParId() == null) {
-                new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Partida ", getStage(),
-                        "Partida Id es nulo.");
-            } else {
+        if (partidaDto != null) {
+            try {
+                if (this.partidaDto.getParId() == null) {
+                    new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Partida ", getStage(),
+                            "Partida Id es nulo.");
+                } else {
 
-                PartidaService partidaService = new PartidaService();
-                RespuestaUtil respuesta = partidaService.eliminarPartida(this.partidaDto.getParId());
-                if (!(respuesta.getEstado())) {
+                    PartidaService partidaService = new PartidaService();
+                    RespuestaUtil respuesta = partidaService.eliminarPartida(this.partidaDto.getParId());
+                    if (!(respuesta.getEstado())) {
 
-                    new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Partida", getStage(),
-                            respuesta.getMensaje());
+                        new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Partida", getStage(),
+                                respuesta.getMensaje());
+                    }
                 }
+            } catch (Exception ex) {
+                Logger.getLogger(WinnerViewController.class.getName()).log(Level.SEVERE, "Error al eliminar la partida.", ex);
+                new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Partida", getStage(),
+                        "Ocurrió un error al eliminar la partida.");
             }
-        } catch (Exception ex) {
-            Logger.getLogger(WinnerViewController.class.getName()).log(Level.SEVERE, "Error al eliminar la partida.", ex);
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Partida", getStage(),
-                    "Ocurrió un error al eliminar la partida.");
         }
     }
 }
