@@ -227,7 +227,13 @@ public class TablerosController extends Controller implements Initializable {
 
     private void isOnDuel() {// Identifica si escogimos duelo en la vista de CrowSelectionController
         if (isOnDuel) {
-            // accion
+
+            sound.playSound("windMovement1.mp3");
+            llamarPreguntaView();
+            setCorona();
+            validarJugadorGanador(acpRootPane);
+            cargarLabelsPartidaInfo();
+
         } else {
             sound.playSound("windMovement1.mp3");
             llamarPreguntaView();
@@ -265,10 +271,11 @@ public class TablerosController extends Controller implements Initializable {
             FlowController.getInstance().goViewInWindowModal("DuelPlayerSelector",
                     ((Stage) acpRootPane.getScene().getWindow()), true);
             categoria = controladorDuelo.getCategoria();
+            System.out.println("Categoria: " + categoria);
             if (categoria == null) {
                 isOnDuel = false;
-
             } else {
+                System.out.println("Categoria: " + categoria);
                 AppContext.getInstance().set("preguntaCategoria", categoria);
                 mostrarTarjetas();
             }
@@ -302,6 +309,7 @@ public class TablerosController extends Controller implements Initializable {
         FlowController.getInstance().goViewInWindowModal("CrownDuelSelector",
                 ((Stage) acpRootPane.getScene().getWindow()), false);
         resultado = controladorDueloCorona.getResultado();
+        AppContext.getInstance().set("Crown", resultado);
         return resultado;
     }
 

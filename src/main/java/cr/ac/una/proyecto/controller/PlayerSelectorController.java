@@ -351,7 +351,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
 
     }
 
-    private void getCrownType() {
+    private void getCrownTypeToDuel() {
 
         SelectCrownDecisionController controladorCoronaSelection = (SelectCrownDecisionController) FlowController
                 .getInstance().getController("SelectCrownDecisionView");
@@ -361,7 +361,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
         FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView",
                 ((Stage) root.getScene().getWindow()), true);
         categoria = controladorCoronaSelection.getResultado();
-        AppContext.getInstance().set("categoria", categoria);
+        System.out.println(categoria);
 
     }
 
@@ -373,20 +373,15 @@ public class PlayerSelectorController extends Controller implements Initializabl
     private void verifyCrowns(MFXButton btn) {
         int i = botonesJugadores.indexOf(btn);
         System.out.println(i);
+        boolean jugadorTieneCorona = false;
 
         if (btn.getText().equals(nombreJugadores.get(i))) {
             sector = sectores.get(i);
             List<Corona> coronas = sector.getCoronas();
 
             if (coronas != null && !coronas.isEmpty()) {
-                boolean jugadorTieneCorona = false;
 
-                for (Corona corona : coronas) {
-                    if (corona != null && corona.getEstado()) {
-                        jugadorTieneCorona = true;
-                        getCrownType();
-                    }
-                }
+                jugadorTieneCorona = sector.hasOneCrown();
 
                 if (!jugadorTieneCorona) {
 
@@ -395,15 +390,21 @@ public class PlayerSelectorController extends Controller implements Initializabl
 
                     // Si este es el último botón seleccionado y ningún jugador tiene coronas
                     if (botonesSeleccionados == cantJugadores - 1) {
+                        juego.cambiarTurno();
                         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Obtención de coronas", getStage(),
                                 "Pierdes el turno, ya que no hay duelo de coronas");
                         ((Stage) root.getScene().getWindow()).close();
-                        juego.cambiarTurno();
                     }
+                } else {
+    
+                    AppContext.getInstance().set("coronaJugadorDuel", coronas);
+                    System.out.println(coronas);
+    
+                    getCrownTypeToDuel();
+                    ((Stage) root.getScene().getWindow()).close();
                 }
-            }
-        } else {
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Error", getStage(), "Error inesperado");
+                }
+
         }
     }
 
@@ -418,28 +419,36 @@ public class PlayerSelectorController extends Controller implements Initializabl
         botonesJugadores.add(btnJugador6);
     }
 
+    private void habilitarJugadores() {
+        for (MFXButton btn : botonesJugadores) {
+            btn.setDisable(false);
+            btn.setVisible(true);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         juego = new Juego();
         sector = new Sector();
         sound = new Sound();
         cantJugadores = 0;
         nombreJugadores = FXCollections.observableArrayList();
         sectores = new ArrayList<>();
-        desactivarJugadores();
-        buttons();
-        getCantidadJugadores();
-        getJugadoresFromAppContext();
-        getSectores();
-        getJuego();
-        populateButtons();
 
     }
 
     @Override
     public void initialize() {
         // TODO Auto-generated method stub
-
+        buttons();
+        getCantidadJugadores();
+        getJugadoresFromAppContext();
+        getSectores();
+        habilitarJugadores();
+        desactivarJugadores();
+        getJuego();
+        populateButtons();
     }
 
 }

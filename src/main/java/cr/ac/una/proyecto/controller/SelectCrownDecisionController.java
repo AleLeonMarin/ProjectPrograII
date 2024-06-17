@@ -40,6 +40,8 @@ public class SelectCrownDecisionController extends Controller implements Initial
     @FXML
     private MFXButton btnCiencia;
 
+    private ArrayList<Corona> coronas;
+
     /**
      * Initializes the controller class.
      */
@@ -109,6 +111,12 @@ public class SelectCrownDecisionController extends Controller implements Initial
         sectorActual = (Sector) AppContext.getInstance().get("preguntaSector");
     }
 
+    private void chargeCrownFromDuel() {
+
+        coronas = (ArrayList<Corona>) AppContext.getInstance().get("coronaJugadorDuel");
+
+    }
+
     private void habilitarBotonesCoronas() {
         this.btnArte.setDisable(false);
         this.btnCiencia.setDisable(false);
@@ -119,13 +127,23 @@ public class SelectCrownDecisionController extends Controller implements Initial
     }
 
     private void desabilitarBotonesCoronas() {
-        if (sectorActual != null)
-        {
-            ArrayList<Corona> coronas = sectorActual.getCoronas();
-            for (Corona corona : coronas)
-            {
-                if (corona.getEstado())
-                {
+        boolean resultado = (boolean) AppContext.getInstance().get("Crown");
+        System.out.println("Duelo: " + resultado);
+        chargeCrownFromDuel();
+
+        if (resultado == false) {
+
+            for (Corona corona : coronas) {
+                if (corona.getEstado() == false) {
+                    deshabilitarBoton(corona.getNombre());
+                }
+            }
+
+        }
+        if (sectorActual != null) {
+            coronas = sectorActual.getCoronas();
+            for (Corona corona : coronas) {
+                if (corona.getEstado()) {
                     deshabilitarBoton(corona.getNombre());
                 }
             }
@@ -133,8 +151,7 @@ public class SelectCrownDecisionController extends Controller implements Initial
     }
 
     private void deshabilitarBoton(String categoria) {
-        switch (categoria)
-        {
+        switch (categoria) {
             case "Historia":
                 btnHistoria.setDisable(true);
                 break;
@@ -158,16 +175,15 @@ public class SelectCrownDecisionController extends Controller implements Initial
 
     private Runnable getRunnableOnFinishOut() {
 
-        Runnable onFinishOut = () ->
-        {
+        Runnable onFinishOut = () -> {
             ((Stage) acpRootPane.getScene().getWindow()).close();
         };
 
         return onFinishOut;
     }
 
-    private void comparteCrownsForDuel(){
-        
+    private void comparteCrownsForDuel() {
+
     }
 
 }
