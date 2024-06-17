@@ -123,12 +123,12 @@ public class Sector {
         return coronas;
     }
 
-    private void moverNodoA(ImageView imageView, int columna, int fila, GridPane gridPane) {
+    private void moverNodoA(ImageView imageView, int columna, int fila, GridPane gridPane) {//setea la posicion de la imagen dentro del gripPane
         gridPane.setColumnIndex(imageView, columna);
         gridPane.setRowIndex(imageView, fila);
     }
 
-    public void mostrarPeonTablero(ImageView imageView, GridPane gridPane) {
+    public void mostrarPeonTablero(ImageView imageView, GridPane gridPane) {//muestra y mueve la imagen dentro del gripPane segun dirrecion.
         if (direccion == 1 || direccion == 2) {
             moverNodoA(imageView, posActual, posicionX, gridPane);
         } else {
@@ -136,7 +136,7 @@ public class Sector {
         }
     }
 
-    private void checkCoronaPos(int posCorona) {
+    private void checkCoronaPos(int posCorona) {//revisa si ha llegado a la posicion de corona.
 
         if (posActual == posCorona) {
             isOnCoronaPos = true;
@@ -145,7 +145,7 @@ public class Sector {
         }
     }
 
-    public int moverDerecha(ImageView imageView, GridPane grdPane) {
+    public int moverDerecha(ImageView imageView, GridPane grdPane) {//mueve hacia la derecha la imagen del sector.
         if (posActual >= posicionY + 3) {
             posActual = posicionY;
         } else {
@@ -191,7 +191,7 @@ public class Sector {
         return posActual;
     }
 
-    public int mover(ImageView imageView, GridPane grdPane) {
+    public int mover(ImageView imageView, GridPane grdPane) {//mueve la imagen dentro del gripPane de tableros controller segun la dirreccion de cada sector.
         switch (direccion) {
             case 1:
                 return moverDerecha(imageView, grdPane);
@@ -257,7 +257,7 @@ public class Sector {
         }
     }
 
-    public void setAyudaRandom(int cantidadAyudasRandom) {
+    public void setAyudaRandom(int cantidadAyudasRandom) {//Añade una cantidad de ayudas aleatoriamente, si el jugador ya tenia esa ayuda o tenia
         int index = 0;
         Random random = new Random();
         while (index < cantidadAyudasRandom && !hasAllHints()) {
@@ -301,7 +301,7 @@ public class Sector {
     }
 
 
-    public void cargarCoronasAyudas(String input, int sectorPos) {
+    public void cargarCoronasAyudas(String input, int sectorPos) {//Carga  y habilita las coronas al sector  iterando sobre una hilera de caracteres.
         int indexTexto = 0;
         int contadorSectores = -1;
         boolean expectedCrown = true;

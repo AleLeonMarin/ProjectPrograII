@@ -92,18 +92,17 @@ public class MantenimientoController extends Controller implements Initializable
     public void initialize() {
         initValues();
         cargarCategorias();
-        //onActionBtnNuevo(null);
     }
 
     @FXML
-    private void onActionBtnGuardar(ActionEvent event) {
+    private void onActionBtnGuardar(ActionEvent event) {//Llama a las funciones previas para validar si es posible guardar una pregunta
         if (validarComboBoxes()) {
             guardarPregunta();
         }
     }
 
     @FXML
-    private void onActionBtnNuevo(ActionEvent event) {
+    private void onActionBtnNuevo(ActionEvent event) {//Limpia los datos ingresados en la ventana, osea la prepara para cargar o crear una pregunta
         if (new Mensaje().showConfirmation("Limpiar Pregunta", getStage(),
                 "¿Esta seguro que desea limpiar el registro?")) {
             nuevaPregunta();
@@ -111,12 +110,12 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     @FXML
-    private void onActionBtnEliminar(ActionEvent event) {
+    private void onActionBtnEliminar(ActionEvent event) {//Llama a la funcion necesaria para eliminar una pregunta previamente cargada de la base de datos
         eliminarPregunta();
     }
 
     @FXML
-    private void onActionBtnBuscar(ActionEvent event) {
+    private void onActionBtnBuscar(ActionEvent event) {//Llama a la vista de ´BuscarPreguntaView´ e instancia a su controlador para poder cargar una pregunta seleccionada.
         BuscarPreguntaController busquedaController = (BuscarPreguntaController) FlowController.getInstance()
                 .getController("BuscarPreguntaView");
         FlowController.getInstance().goViewInWindowModal("BuscarPreguntaView",
@@ -130,13 +129,13 @@ public class MantenimientoController extends Controller implements Initializable
     }
 
     @FXML
-    private void OnKeyPressedPreguntaId(KeyEvent event) {
+    private void OnKeyPressedPreguntaId(KeyEvent event) {//Llama a la funcion de cargar pregunta al ingresar un id y posteriormente presionar la tecla enter.
         if (event.getCode() == KeyCode.ENTER && !txfPreguntaId.getText().isBlank()) {
             cargarPregunta(Long.valueOf(txfPreguntaId.getText()));
         }
     }
 
-    private void initValues() {
+    private void initValues() {//Inicia valores por defecto que necesita la vista para iniciar.
 
         preguntaDto = new PreguntaDto();
         txfPreguntaId.delegateSetTextFormatter(Formato.getInstance().integerFormat());
@@ -150,10 +149,9 @@ public class MantenimientoController extends Controller implements Initializable
         nuevaPregunta();
         IndicarRequeridos();
         initCheckboxesValues();
-
     }
 
-    private void nuevaPregunta() {
+    private void nuevaPregunta() {//Prepara todo lo necesario para crear una nueva pregunta.
         preguntaDto = new PreguntaDto();
         unbindPregunta();
         bindPregunta(true);
@@ -165,7 +163,7 @@ public class MantenimientoController extends Controller implements Initializable
         nuevasRespuestas();
     }
 
-    private void nuevasRespuestas() {
+    private void nuevasRespuestas() {//Prepara lo necesario para ligar nuevas respuestas a la pregunta
         respuesta1 = new RespuestaDto();
         respuesta2 = new RespuestaDto();
         respuesta3 = new RespuestaDto();
@@ -180,7 +178,7 @@ public class MantenimientoController extends Controller implements Initializable
         respuestasDto = new ArrayList<>();
     }
 
-    private void initCheckboxesValues() {
+    private void initCheckboxesValues() {//Prepara los checkboxes de cada respuesta para indicar si es la repuesta correcta o no.
         this.checkboxes = new ArrayList<>();
         checkboxes.add(chkValidarRespuesta1);
         checkboxes.add(chkValidarRespuesta2);
@@ -194,7 +192,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private void guardarPregunta() {
+    private void guardarPregunta() {//Guarda/Actualiza una pregunta en la base de datos.
         try {
             String invalidos = validarRequeridos();
             if (!invalidos.isBlank()) {
@@ -226,7 +224,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private void cargarRespuestasToList() {
+    private void cargarRespuestasToList() {// Carga a una lista auxiliar las respuestas para luego setear esta lista a la lista de respuestas de la pregunta
         respuestasDto.clear();
         respuestasDto.add(respuesta1);
         respuestasDto.add(respuesta2);
@@ -235,7 +233,7 @@ public class MantenimientoController extends Controller implements Initializable
         this.preguntaDto.setRespuestas(respuestasDto);
     }
 
-    private void cargarRespuestasDtoSingular() {
+    private void cargarRespuestasDtoSingular() {// Carga cada una de las respuestas traidas en una lista desde la base de datos para mostrarlas en la vista y poder verlas/editarlas.
 
         respuestasDto.clear();
 
@@ -247,7 +245,7 @@ public class MantenimientoController extends Controller implements Initializable
         this.respuesta4 = respuestasDto.get(3);
     }
 
-    private void IndicarRequeridos() {
+    private void IndicarRequeridos() {//Indicamos cuales son los campos necesarios que no queden vacios, repertidos un formato incorrecto etc..
         requeridos.clear();
         requeridos.addAll(
                 Arrays.asList(txaPreguntaEnunciado, txfPreguntaRespuesta1, txfPreguntaRespuesta2,
@@ -301,7 +299,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {
+    private void deseleccionarOtrasCasillas(CheckBox selectedCheckbox) {//Deselecciona todas las casillas de respuesta correcta menos la ultima que seleccionamos
 
         for (CheckBox checkbox : checkboxes) {
             if (checkbox != selectedCheckbox) {
@@ -310,7 +308,7 @@ public class MantenimientoController extends Controller implements Initializable
         }
     }
 
-    private boolean validarComboBoxes() {
+    private boolean validarComboBoxes() {//Valida si el cmbBox de categoria y los checkBoxes tienen un formato o dato seleccionado correcto
         if (cmbCategorias.getSelectionModel().getSelectedItem() == null) {
             new Mensaje().showModal(Alert.AlertType.ERROR, "Escoger Categoria", getStage(),
                     "Debes de seleccionar una categoria para la respuesta");
@@ -328,7 +326,7 @@ public class MantenimientoController extends Controller implements Initializable
         return false;
     }
 
-    public String validarRequeridos() {
+    public String validarRequeridos() {//Valida los campos necesarios para validar si no estan vacios, con un formato deseado, etc..
         Boolean validos = true;
         String invalidos = "";
         for (Node node : requeridos) {
@@ -371,7 +369,7 @@ public class MantenimientoController extends Controller implements Initializable
         }
     }
 
-    public void cargarCategorias() {
+    public void cargarCategorias() {//Carga las categorias desde las base de datos para poder ligar una  pregunta nueva a una categoria o al editar una pregunta asignarle la nueva categoria a la cual pertenecera esa pregunta.
         try {
             CategoriaService categoriaService = new CategoriaService();
             RespuestaUtil respuesta = categoriaService.getAll();
@@ -398,7 +396,7 @@ public class MantenimientoController extends Controller implements Initializable
 
     }
 
-    private void cargarPregunta(Long preId) {
+    private void cargarPregunta(Long preId) {//Carga una pregunta desde la base de datos usando la clase PreguntaService
         try {
             PreguntaService preguntaService = new PreguntaService();
             RespuestaUtil respuesta = preguntaService.getPregunta(preId);
@@ -422,9 +420,8 @@ public class MantenimientoController extends Controller implements Initializable
         }
     }
 
-    private void eliminarPregunta() {
+    private void eliminarPregunta() {//Elimina una pregunta de la base de datos utilizando ´Pregunta Service´
         try {
-            System.out.println("EstadoPregunta: " + preguntaDto.getId());
             if (this.preguntaDto.getId() == null) {
                 new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta ", getStage(),
                         "Favor consultar la pregunta a eliminar.");

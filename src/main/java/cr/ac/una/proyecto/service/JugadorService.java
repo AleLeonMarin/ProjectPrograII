@@ -22,42 +22,7 @@ public class JugadorService {
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public RespuestaUtil guardarJugadores(List<JugadorDto> jugadoresDto) {
-        try {
-            et = em.getTransaction();
-            et.begin();
-            for (JugadorDto jugadorDto : jugadoresDto) {
-                Jugador jugador;
-                if (jugadorDto.getId() != null && jugadorDto.getId() > 0) {
-                    jugador = em.find(Jugador.class, jugadorDto.getId());
-                    if (jugador == null) {
-                        return new RespuestaUtil(false, "No se encontró el jugador a modificar.",
-                                "guardarJugador NoResultException");
-                    }
-                    jugador.actualizar(jugadorDto);
-                    jugador = em.merge(jugador);
-                } else {
-                    jugador = new Jugador(jugadorDto);
-                    em.persist(jugador);
-                }
-            }
-            // Asegura que todas las operaciones se sincronicen con la base de datos
-            em.flush();
-            em.clear();
-
-            et.commit();
-            return new RespuestaUtil(true, "", "", "Jugadores", jugadoresDto);
-
-        } catch (Exception ex) {
-            if (et != null && et.isActive()) {
-                et.rollback();
-            }
-            Logger.getLogger(JugadorService.class.getName()).log(Level.SEVERE, "Error guardando los jugadores.", ex);
-            return new RespuestaUtil(false, "Error guardando los jugadores.", "guardarJugadores " + ex.getMessage());
-        }
-    }
-
-    public RespuestaUtil guardarJugador(JugadorDto jugadorDto) {
+    public RespuestaUtil guardarJugador(JugadorDto jugadorDto) {//Persiste/Actualiza un jugador en la base de datos.
         try {
             et = em.getTransaction();
             et.begin();
@@ -67,11 +32,9 @@ public class JugadorService {
 
             try {
                 Jugador jugadorDB = (Jugador) qryPregunta.getSingleResult();
-                // Si se encuentra el jugador, puedes realizar alguna acción aquí
                 et.commit();
                 return new RespuestaUtil(true, "", "", "Jugador", new JugadorDto(jugadorDB));
             } catch (NoResultException ex) {
-                // Si no se encuentra el jugador, puedes crear uno nuevo
                 Jugador nuevoJugador = new Jugador(jugadorDto);
                 em.persist(nuevoJugador);
                 et.commit();
@@ -86,7 +49,7 @@ public class JugadorService {
     }
 
 
-    public RespuestaUtil getAll() {
+    public RespuestaUtil getAll() {//Obtiene todos los jugadores persistidos en la base de datos.
         try {
             Query qryPregunta = em.createNamedQuery("Jugador.findAll", Jugador.class);
             List<Jugador> jugadorDB = (List<Jugador>) qryPregunta.getResultList();
@@ -107,7 +70,7 @@ public class JugadorService {
         }
     }
 
-    public RespuestaUtil getJugador(Long id) {
+    public RespuestaUtil getJugador(Long id) {//Obtiene un jugador de la base de datos mediante el ID indicado.
         try {
             Query qryPregunta = em.createNamedQuery("Jugador.findByJugId", Jugador.class);
             qryPregunta.setParameter("jugId", id);
@@ -131,7 +94,7 @@ public class JugadorService {
         }
     }
 
-    public RespuestaUtil actualizarJugador(JugadorDto jugadorDto) {
+    public RespuestaUtil actualizarJugador(JugadorDto jugadorDto) {//Actualiza un jugador en la base de datos.
         try {
             et = em.getTransaction();
             et.begin();

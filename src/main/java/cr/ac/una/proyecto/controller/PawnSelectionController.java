@@ -52,7 +52,7 @@ public class PawnSelectionController extends Controller implements Initializable
 
     private ImageStorage imageViewMap;
     private ObservableList<String> nombresPeones;
-    private List<MFXComboBox<String>> botonesLista;
+    private List<MFXComboBox<String>> comboBoxList;
     private int cantJugadores;
     private List<String> personajesSeleccionados;
 
@@ -70,14 +70,14 @@ public class PawnSelectionController extends Controller implements Initializable
         nombresPeones = FXCollections.observableArrayList(NOMBRES_PEONES);
         personajesSeleccionados = new ArrayList<>();
         imageViewMap = new ImageStorage();
-        botonesLista = List.of(cmbJugadorSector1, cmbJugadorSector2, cmbJugadorSector3, cmbJugadorSector4, cmbJugadorSector5, cmbJugadorSector6);
+        comboBoxList = List.of(cmbJugadorSector1, cmbJugadorSector2, cmbJugadorSector3, cmbJugadorSector4, cmbJugadorSector5, cmbJugadorSector6);
         cargarDatosImagenesFijasPeon();
         habilitarEspacios(false);
         cargarSliderCantJug();
         mostrarCmbJugadores(cantJugadores);
     }
 
-    private void cargarDatosImagenesFijasPeon() {
+    private void cargarDatosImagenesFijasPeon() {// carga las imagenes en la vista segun la ruta
         ImageView[] imageViews =
         {
             imvRosa, imvAmarillo, imvVerde, imvAzul, imvRojo, imvMorado
@@ -99,7 +99,7 @@ public class PawnSelectionController extends Controller implements Initializable
     }
 
     @FXML
-    private void onActionBtnSiguiente(ActionEvent event) {
+    private void onActionBtnSiguiente(ActionEvent event) {//Valida primeramente que ninguna jugador tenga la misma imagen, y luego procede a ir a la vista de ´DifficultySelectionView´
 
         Sound sound = new Sound();
         sound.playSound("clickedNext.mp3");
@@ -118,10 +118,10 @@ public class PawnSelectionController extends Controller implements Initializable
         cantJugadores = (Integer) AppContext.getInstance().get("cantJugadoresSlider");
     }
 
-    private void mostrarCmbJugadores(int cantJug) {
-        for (int index = 0; index < botonesLista.size(); index++)
+    private void mostrarCmbJugadores(int cantJug) {//Muestra los comboBoxes de imagenes de cada jugador segun la cantidad de jugadores
+        for (int index = 0; index < comboBoxList.size(); index++)
         {
-            MFXComboBox<String> comboBox = botonesLista.get(index);
+            MFXComboBox<String> comboBox = comboBoxList.get(index);
             if (index < cantJug)
             {
                 comboBox.setDisable(false);
@@ -139,12 +139,12 @@ public class PawnSelectionController extends Controller implements Initializable
         personajesSeleccionados.clear();
         for (int i = 0; i < cantJug; i++)
         {
-            personajesSeleccionados.add(botonesLista.get(i).getSelectedItem());
+            personajesSeleccionados.add(comboBoxList.get(i).getSelectedItem());
         }
     }
 
     private void habilitarEspacios(boolean estado) {
-        for (MFXComboBox<String> comboBox : botonesLista)
+        for (MFXComboBox<String> comboBox : comboBoxList)
         {
             comboBox.setDisable(!estado);
             comboBox.setVisible(estado);
@@ -155,7 +155,7 @@ public class PawnSelectionController extends Controller implements Initializable
         }
     }
 
-    private void setImagenMfxButton(ActionEvent event, MFXComboBox<String> comboBox, ImageView imageView) {
+    private void setImagenMfxButton(ActionEvent event, MFXComboBox<String> comboBox, ImageView imageView) {//Añade al imageView un preview de la imagen seleccionada en el combobox
         String selectedItem = comboBox.getSelectedItem();
         if (selectedItem != null && !selectedItem.isBlank())
         {
@@ -202,7 +202,7 @@ public class PawnSelectionController extends Controller implements Initializable
         setImagenMfxButton(event, cmbJugadorSector6, imvJugadorSector6);
     }
 
-    private boolean validarSeleccion() {
+    private boolean validarSeleccion() {//Valida que cada imagen de personaje seleccionado sea diferente
         cargarSelecionados(cantJugadores);
         for (int indexPersonaje = 0; indexPersonaje < personajesSeleccionados.size(); indexPersonaje++)
         {
@@ -219,7 +219,7 @@ public class PawnSelectionController extends Controller implements Initializable
         List<Sector> sectores = (List<Sector>) AppContext.getInstance().get("sectores");
         for (int index = 0; index < cantJugadores; index++)
         {
-            String rutaButton = getImagePathForImageView(botonesLista.get(index).getSelectedItem());
+            String rutaButton = getImagePathForImageView(comboBoxList.get(index).getSelectedItem());
             sectores.get(index).setRutaImagenJugador(rutaButton);
         }
         AppContext.getInstance().set("sectores", sectores);

@@ -19,7 +19,7 @@ public class PartidaService {
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public RespuestaUtil getAll() {
+    public RespuestaUtil getAll() {//Obtiene todas las partidas en la base de datos.
         try {
             Query qryPartida = em.createNamedQuery("Partida.findAll");
             List<Partida> partidas = (List<Partida>) qryPartida.getResultList();
@@ -38,7 +38,7 @@ public class PartidaService {
         }
     }
 
-    public RespuestaUtil guardarPartida(PartidaDto partidaDto) {
+    public RespuestaUtil guardarPartida(PartidaDto partidaDto) {//Guarda/Actualiza una partida en la base de datos.
         try {
             et = em.getTransaction();
             et.begin();

@@ -50,14 +50,10 @@ public class WinnerViewController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-
         setGanador();
-        
     }
 
     public void setGanador() {
-
-        //AppContext.getInstance().get("nombreGanador");
         lblGanador.setText(AppContext.getInstance().get("nombreGanador").toString());
     }
 

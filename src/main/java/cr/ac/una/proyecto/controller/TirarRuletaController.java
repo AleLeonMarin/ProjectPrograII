@@ -3,8 +3,10 @@ package cr.ac.una.proyecto.controller;
 import cr.ac.una.proyecto.util.Animacion;
 import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,7 +59,7 @@ public class TirarRuletaController extends Controller implements Initializable {
         return this.ruleta.determinarPosicionRuleta();
     }
 
-    private void moverRuleta() {
+    private void moverRuleta() {//mueve la ruleta, si la categoria sale diferente de corona sera la nueva categoria de la pregunta a responder.
 
         this.resultado = obtenerPosicionRuleta();
         double anguloDetenido = getRuletaAngulo();
@@ -69,9 +71,10 @@ public class TirarRuletaController extends Controller implements Initializable {
 
         Runnable onFinish = () ->
         {
-            System.out.println("La animación de la ruleta ha terminado en esta categoria: " + resultado + ", Angulo: " + anguloDetenido);
-            this.imvPicker.setDisable(false);
-            animacion.animarFadeOut(acpRootPane, onFinishOut);
+            if (!(resultado.equals("Corona"))) {
+                this.imvPicker.setDisable(false);
+                animacion.animarFadeOut(acpRootPane, onFinishOut);
+            }
         };
 
         animacion.animacionRuleta(imvRuleta, anguloDetenido, onFinish);

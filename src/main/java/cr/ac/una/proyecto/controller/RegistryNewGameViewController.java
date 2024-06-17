@@ -73,7 +73,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
         txfJug6.delegateSetTextFormatter(Formato.getInstance().maxLengthFormat(30));
         jugadorDto = new JugadorDto();
         nuevoJugador();
-        validarRequeridos(); // replace with your actual list variable
+        validarRequeridos();
 
     }
 
@@ -83,7 +83,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
         setupSliderListener();
     }
 
-    private void initializeComponents() {
+    private void initializeComponents() {//Inicializa componentes iniciales
         jugadores = new ArrayList<>();
         sldQty.setMin(2);
         sldQty.setMax(6);
@@ -105,7 +105,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
 
     }
 
-    private void setupSliderListener() {
+    private void setupSliderListener() {//Actualiza el valor de cantJugadores segun la posicion del slider
         sldQty.valueProperty().addListener((obs, oldValue, newValue) ->
         {
             int value = newValue.intValue();
@@ -118,7 +118,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
     }
 
     @FXML
-    void onActionBtnNext(ActionEvent event) {
+    void onActionBtnNext(ActionEvent event) {//Llama a la funcion de validarCampos y procede a la siguiente vista.
         sound.playSound("clickedNext.mp3");
 
         if (validateFields() && validateUniqueNames()) {
@@ -132,7 +132,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
         sound.playSound("SelectNumberOfPlayers.mp3");
     }
 
-    private boolean validateFields() {
+    private boolean validateFields() {//Valida que  no existan espacios en blanco en los textfield.
         for (MFXTextField textField : textFields) {
             if (textField.isVisible() && textField.getText().isEmpty()) {
                 showAlert("Error", "Existe uno o más espacios en blanco.");
@@ -142,11 +142,11 @@ public class RegistryNewGameViewController extends Controller implements Initial
         return true;
     }
 
-    private boolean validateUniqueNames() {
+    private boolean validateUniqueNames() {//Valida que  no existan espacios repetidos en los textfield.
         Set<String> namesSet = new HashSet<>();
         for (MFXTextField textField : textFields) {
             if (textField.isVisible()) {
-                String name = textField.getText().trim().toUpperCase(); // Convertir a mayúsculas
+                String name = textField.getText().trim().toUpperCase();
                 if (!name.isEmpty() && !namesSet.add(name)) {
                     showAlert("Error", "El nombre de cada jugador debe ser único");
                     return false;
@@ -177,7 +177,7 @@ public class RegistryNewGameViewController extends Controller implements Initial
         new Mensaje().showModal(Alert.AlertType.ERROR, title, getStage(), message);
     }
 
-    public String validarRequeridos() {
+    public String validarRequeridos() {//Valida que no hayan espacios en blanco o con formato incorrecto.
         Boolean validos = true;
         String invalidos = "";
         for (Node node : requeridos) {

@@ -80,8 +80,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
     private ArrayList<Sector> sectores;
     private List<String> jugadoresEnAppContext;
 
-    private JugadorDto jugadorDto;
-
     private String dificultad;
 
     Sound sound = new Sound();
@@ -89,7 +87,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-        jugadorDto = new JugadorDto();
     }
 
     @Override
@@ -98,7 +95,7 @@ public class SummaryMatchViewController extends Controller implements Initializa
     }
 
     @FXML
-    void onActionBtnEdit(ActionEvent event) {
+    void onActionBtnEdit(ActionEvent event) {//Nos devuelve a la vista de ´registro jugadores´ para poder editar los datos de la partida que queramos.
         sound.playSound("windMovement2.mp3");
         FlowController.getInstance().goViewInWindow("RegistryNewGame");
         ((Stage) btnEdit.getScene().getWindow()).close();
@@ -106,14 +103,14 @@ public class SummaryMatchViewController extends Controller implements Initializa
     }
 
     @FXML
-    void onActionBtnPlay(ActionEvent event) {
+    void onActionBtnPlay(ActionEvent event) {//LLamamos a la funcionde ´guardarJugadores´ y procedemos a la vista de ´tableroView´
         sound.playSound("clickedStart.mp3");
         guardarJugadores();
         FlowController.getInstance().goMain("tableroView");
         ((Stage) btnPlay.getScene().getWindow()).close();
     }
 
-    private void guardarJugadores() {
+    private void guardarJugadores() {//Guarda los jugadores en la base de datos con ayuda de ´JugadorService´
         getSectoresFromAppContext();
         for (Sector sector : sectores) {
             JugadorDto jugadorDtoAux = new JugadorDto();
@@ -169,11 +166,10 @@ public class SummaryMatchViewController extends Controller implements Initializa
         }
 
         jugadoresEnAppContext = nombresJugadores;
-
     }
 
 
-    private void validarJugadores() {// mejorar funcion
+    private void validarJugadores() {// Valida la cantidad de jugadores para mostrar la informacion necesaria en la ventana
 
         String rutaImagenJug1 = sectores.get(0).getRutaImagenJugador();
         String rutaImagenJug2 = sectores.get(1).getRutaImagenJugador();
@@ -187,10 +183,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
             lblJugador3.setVisible(true);
             imgFicha3.setVisible(true);
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
-            lblJuagdor1.setText(jugadores.get(0).getNombre());
-            imgFicha1.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug1)));
-            lblJugador2.setText(jugadores.get(1).getNombre());
-            imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
         }
@@ -201,10 +193,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
             imgFicha4.setVisible(true);
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
             String rutaImagenJug4 = sectores.get(3).getRutaImagenJugador();
-            lblJuagdor1.setText(jugadores.get(0).getNombre());
-            imgFicha1.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug1)));
-            lblJugador2.setText(jugadores.get(1).getNombre());
-            imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
             lblJugador4.setText(jugadores.get(3).getNombre());
@@ -220,10 +208,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
             String rutaImagenJug3 = sectores.get(2).getRutaImagenJugador();
             String rutaImagenJug4 = sectores.get(3).getRutaImagenJugador();
             String rutaImagenJug5 = sectores.get(4).getRutaImagenJugador();
-            lblJuagdor1.setText(jugadores.get(0).getNombre());
-            imgFicha1.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug1)));
-            lblJugador2.setText(jugadores.get(1).getNombre());
-            imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
             lblJugador4.setText(jugadores.get(3).getNombre());
@@ -244,10 +228,6 @@ public class SummaryMatchViewController extends Controller implements Initializa
             String rutaImagenJug4 = sectores.get(3).getRutaImagenJugador();
             String rutaImagenJug5 = sectores.get(4).getRutaImagenJugador();
             String rutaImagenJug6 = sectores.get(5).getRutaImagenJugador();
-            lblJuagdor1.setText(jugadores.get(0).getNombre());
-            imgFicha1.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug1)));
-            lblJugador2.setText(jugadores.get(1).getNombre());
-            imgFicha2.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug2)));
             lblJugador3.setText(jugadores.get(2).getNombre());
             imgFicha3.setImage(new Image(getClass().getResourceAsStream(rutaImagenJug3)));
             lblJugador4.setText(jugadores.get(3).getNombre());
@@ -261,22 +241,22 @@ public class SummaryMatchViewController extends Controller implements Initializa
     }
 
     private void desactivarJugadores() {
-        // Jugador 1
+
         lblJuagdor1.setVisible(true);
         imgFicha1.setVisible(true);
-        // Jugador 2
+
         lblJugador2.setVisible(true);
         imgFicha2.setVisible(true);
-        // Jugador 3
+
         lblJugador3.setVisible(false);
         imgFicha3.setVisible(false);
-        // Jugador 4
+
         lblJugador4.setVisible(false);
         imgFicha4.setVisible(false);
-        // Jugador 5
+
         lblJugador5.setVisible(false);
         imgFicha5.setVisible(false);
-        // Jugador 6
+
         lblJugador6.setVisible(false);
         imgFicha6.setVisible(false);
 
