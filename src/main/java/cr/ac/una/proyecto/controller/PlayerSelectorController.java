@@ -361,7 +361,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
         FlowController.getInstance().goViewInWindowModal("SelectCrownDecisionView",
                 ((Stage) root.getScene().getWindow()), true);
         categoria = controladorCoronaSelection.getResultado();
-        AppContext.getInstance().set("categorias", categoria);
+        AppContext.getInstance().set("categoria", categoria);
 
     }
 
