@@ -25,7 +25,7 @@ public class PartidaDto implements Serializable {
         this.parPartida = new SimpleStringProperty("");
         this.parDuenio = new SimpleStringProperty("");
         this.modificado = false;
-       this.ronda = new SimpleStringProperty("");
+        this.ronda = new SimpleStringProperty("0");
         this.fecha = new SimpleObjectProperty(LocalDate.now());
     }
 

@@ -280,6 +280,7 @@ public class Juego {
     }
 
     public void mostrarGanador(Sector sector, AnchorPane anchorPane) {
+        AppContext.getInstance().set("jugadorGanador", sector.getJugador());
         FlowController.getInstance().goViewInWindow("WinnerView");
         ((Stage) anchorPane.getScene().getWindow()).close();
     }
@@ -298,8 +299,6 @@ public class Juego {
                 }
             }
             if (coronasActivas) {
-                String nombre = sectorActual.getJugador().getNombre();
-                AppContext.getInstance().set("nombreGanador", nombre);
                 mostrarGanador(sectorActual, anchorPane);
             }
         }

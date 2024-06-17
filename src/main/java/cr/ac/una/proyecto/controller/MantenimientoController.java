@@ -439,7 +439,7 @@ public class MantenimientoController extends Controller implements Initializable
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al la pregunta.", ex);
+            Logger.getLogger(MantenimientoController.class.getName()).log(Level.SEVERE, "Error al eliminar la pregunta.", ex);
             new Mensaje().showModal(Alert.AlertType.ERROR, "Eliminar Pregunta", getStage(),
                     "Ocurrió un error al eliminar la pregunta.");
         }

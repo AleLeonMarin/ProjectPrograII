@@ -232,9 +232,10 @@ public class TableroController extends Controller implements Initializable {
     @FXML
     private void onActionBtnGuardar(ActionEvent event) {
         cargarJuegoClass();
-        this.partidaDto.setParDuenio(lblJugador1.getText());
-        this.partidaDto.setRonda(busquedaController.getJuego().getRondas());
-
+        if (busquedaController != null) {
+            this.partidaDto.setParDuenio(lblJugador1.getText());
+            this.partidaDto.setRonda(busquedaController.getJuego().getRondas());
+        }
         try {
             PartidaService partidaService = new PartidaService();
             RespuestaUtil respuesta = partidaService.guardarPartida(partidaDto);
@@ -242,6 +243,7 @@ public class TableroController extends Controller implements Initializable {
             if (respuesta.getEstado()) {
                 partidaDto = (PartidaDto) respuesta.getResultado("Partida");
                 sound.playSound("Chance_audio.mp3");
+                AppContext.getInstance().set("partidaCargada", partidaDto);
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Guardar Partida", getStage(),
                         "Partida guardada con éxito.");
             } else {
@@ -531,16 +533,20 @@ public class TableroController extends Controller implements Initializable {
 
     private void createJson() {
         loadToJsonData();
-        System.out.println(loadToJson.toString());
         Gson gson = new Gson();
         String json = gson.toJson(loadToJson.toString());
         partidaDto.setParPartida(json);
     }
 
     private void cargarJuegoClass() {
-        juego = busquedaController.getJuego();
-        if (juego != null) {
-            createJson();
+        if (busquedaController != null) {
+            juego = busquedaController.getJuego();
+            if (juego != null) {
+                createJson();
+            }
+        } else {
+            juego = new Juego();
+            partidaDto.setParPartida(" ");
         }
     }
 
