@@ -22,22 +22,18 @@ public class Sound {
         mediaPlayer.play();
     }
 
-    public void disableForButtons(MFXButton btn1, MFXButton btn2,Label lbl, String path) {
+    public void disableForButtons(MFXButton btn1, MFXButton btn2, Label lbl, String path) {
 
-        PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(1));
         String sound = App.class.getResource("/cr/ac/una/proyecto/resources/audio/" + path).toExternalForm();
         Media h = new Media(sound);
         MediaPlayer mediaPlayer = new MediaPlayer(h);
 
-        pause.setOnFinished(events -> {
-
-            mediaPlayer.setOnEndOfMedia(() -> {
-                btn1.setDisable(false);
-                btn2.setDisable(false);
-                lbl.setDisable(false);
-            });
+        mediaPlayer.setOnEndOfMedia(() -> {
+            btn1.setDisable(false);
+            btn2.setDisable(false);
+            lbl.setDisable(false);
         });
-        pause.play();
+
         mediaPlayer.play();
 
     }
