@@ -5,28 +5,28 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Ruleta {
-    
+
     private ArrayList<String> categorias;
     private double anguloInicial;
     private double anguloDetenido;
-    
+
     public Ruleta() {
         categorias = new ArrayList<>(Arrays.asList("Deportes", "Arte", "Geografia", "Ciencia", "Corona", "Entretenimiento", "Historia"));
         anguloInicial = 0;
         anguloDetenido = 0;
-        
+
         AppContext.getInstance().set("categoriasRuleta", categorias);
     }
-    
+
     private int generarAnguloAleatorio() {
         Random random = new Random();
         return random.nextInt(360);
     }
-    
+
     public double getAnguloDetenido() {
         return anguloDetenido;
     }
-    
+
     public String determinarPosicionRuleta() {
         anguloDetenido = generarAnguloAleatorio();
         double cienciaInicio = 25;
@@ -44,29 +44,22 @@ public class Ruleta {
         double historiaInicio = 332;
         double historiaFin = 24;
         double finalGrados = 360;
-        
+
         String categoria = "Angulo no encontrado: " + anguloDetenido;
-        
-        if (anguloDetenido >= deporteInicio && anguloDetenido <= deporteFin)
-        {
+
+        if (anguloDetenido >= deporteInicio && anguloDetenido <= deporteFin) {
             categoria = categorias.get(0);
-        } else if (anguloDetenido >= arteInicio && anguloDetenido <= arteFin)
-        {
+        } else if (anguloDetenido >= arteInicio && anguloDetenido <= arteFin) {
             categoria = categorias.get(1);
-        } else if (anguloDetenido >= geografiaInicio && anguloDetenido <= geografiaFin)
-        {
+        } else if (anguloDetenido >= geografiaInicio && anguloDetenido <= geografiaFin) {
             categoria = categorias.get(2);
-        } else if (anguloDetenido >= cienciaInicio && anguloDetenido <= cienciaFin)
-        {
+        } else if (anguloDetenido >= cienciaInicio && anguloDetenido <= cienciaFin) {
             categoria = categorias.get(3);
-        } else if (anguloDetenido >= coronaInicio && anguloDetenido <= coronaFin)
-        {
+        } else if (anguloDetenido >= coronaInicio && anguloDetenido <= coronaFin) {
             categoria = categorias.get(4);
-        } else if (anguloDetenido >= entretenimientoInicio && anguloDetenido <= entretenimientoFin)
-        {
+        } else if (anguloDetenido >= entretenimientoInicio && anguloDetenido <= entretenimientoFin) {
             categoria = categorias.get(5);
-        } else if ((anguloDetenido >= historiaInicio && anguloDetenido <= finalGrados) || (anguloDetenido >= anguloInicial && anguloDetenido <= historiaFin))
-        {
+        } else if ((anguloDetenido >= historiaInicio && anguloDetenido <= finalGrados) || (anguloDetenido >= anguloInicial && anguloDetenido <= historiaFin)) {
             categoria = categorias.get(6);
         }
         return categorias.get(4);

@@ -25,7 +25,7 @@ public class PreguntaService {
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public RespuestaUtil getAll() {
+    public RespuestaUtil getAll() {//Obtiene todas las preguntas persistidas en la base de datos
         try {
             Query qryPregunta = em.createNamedQuery("Pregunta.findAll", Pregunta.class);
             List<Pregunta> preguntasDB = (List<Pregunta>) qryPregunta.getResultList();
@@ -46,7 +46,7 @@ public class PreguntaService {
     }
 
 
-    public RespuestaUtil getPregunta(Long id) {
+    public RespuestaUtil getPregunta(Long id) {//Obtiene la pregunta por e Id indicado
         try {
             Query qryPregunta = em.createNamedQuery("Pregunta.findByPreId", Pregunta.class);
             qryPregunta.setParameter("preId", id);
@@ -69,7 +69,7 @@ public class PreguntaService {
         }
     }
 
-    public RespuestaUtil getPreguntasByFiltros(String preguntaId, String preCategoria, String preEnunciado) {
+    public RespuestaUtil getPreguntasByFiltros(String preguntaId, String preCategoria, String preEnunciado) {//Obtiene las preguntas por filtos aplicados
         try {
             Query query = em.createNamedQuery("Pregunta.findByFilters", Pregunta.class);
             query.setParameter("preId", ("%" + preguntaId + "%"));
@@ -89,7 +89,7 @@ public class PreguntaService {
         }
     }
 
-    public RespuestaUtil guardarPregunta(PreguntaDto preguntaDto) {
+    public RespuestaUtil guardarPregunta(PreguntaDto preguntaDto) {//Guarda/Actualiza la pregunta y sus respuestas en la base de datos.
         try {
             et = em.getTransaction();
             et.begin();
@@ -139,7 +139,7 @@ public class PreguntaService {
         }
     }
 
-    public RespuestaUtil eliminarPregunta(Long id) {
+    public RespuestaUtil eliminarPregunta(Long id) {//Elimina la pregunta desde la base de datos
         try {
             et = em.getTransaction();
             et.begin();

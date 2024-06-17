@@ -56,7 +56,7 @@ public class LoadGameViewController extends Controller implements Initializable 
     private TableColumn<PartidaDto, LocalDate> tbcFecha;
 
     @FXML
-    void onActionBtnChargeMatch(ActionEvent event) {
+    void onActionBtnChargeMatch(ActionEvent event) {// Carga una partida selecciona de la 'tbvMacthes' a la variable 'partidaDto'
         partidaDto = tbvMatches.getSelectionModel().getSelectedItem();
         if (partidaDto != null) {
             setPartidaToAppContext();
@@ -66,7 +66,7 @@ public class LoadGameViewController extends Controller implements Initializable 
     }
 
     @FXML
-    void onActionBtnSalir(ActionEvent event) {
+    void onActionBtnSalir(ActionEvent event) {//Cierra la vista
         FlowController.getInstance().goViewInWindow("SelectingMode");
         ((Stage) btnSalir.getScene().getWindow()).close();
     }
@@ -86,7 +86,7 @@ public class LoadGameViewController extends Controller implements Initializable 
         tbvMatches.getSelectionModel().clearSelection();
     }
 
-    private void populateTable() {
+    private void populateTable() {//Configura las colummnas de la tabla para que sepan como obtener los datos de los objetos que representan las filas
 
         tbcId.setCellValueFactory(cd -> cd.getValue().parId);
         tbcDuenio.setCellValueFactory(cd -> cd.getValue().parDuenio);
@@ -96,7 +96,7 @@ public class LoadGameViewController extends Controller implements Initializable 
 
     }
 
-    private void loadMatchesToTable() {
+    private void loadMatchesToTable() {//Carga las partidas de la base de datos a la tabla 'tbvMatches'
 
         RespuestaUtil respuesta = partidaService.getAll();
 
@@ -113,7 +113,7 @@ public class LoadGameViewController extends Controller implements Initializable 
     }
 
     @FXML
-    private void onMousePressedTbvMatches(MouseEvent event) {
+    private void onMousePressedTbvMatches(MouseEvent event) {//Al presionar dos veces sobre una partida de la tabla, ejecuta la accion de 'onActionBtnChargeMatch'
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
             onActionBtnChargeMatch(null);
         }

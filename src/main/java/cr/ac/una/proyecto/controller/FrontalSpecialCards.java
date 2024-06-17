@@ -25,7 +25,7 @@ public class FrontalSpecialCards extends Controller implements Initializable {
         initValues();
     }
 
-    private void initValues() {
+    private void initValues() {//Abre la ventana con una animacion y la cierra con otra con la ayuda de atributtos Runnables.
         animacion = new Animacion();
         Runnable onFinishOut = () ->
         {

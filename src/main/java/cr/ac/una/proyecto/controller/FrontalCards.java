@@ -47,14 +47,14 @@ public class FrontalCards extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        habilitarCosas(false);
+        habilitarTodo(false);
         cargarCategoriaAppContext();
         cargarSectorJugadorDtoAppContext();
         initValues();
     }
 
     @FXML
-    private void onMouseTirarRuleta(MouseEvent event) {
+    private void onMouseTirarRuleta(MouseEvent event) {//Ayuda de tirar ruleta, abre una vista con una nueva ruleta para seleccionar una nueva categoria de pregunta a responder.
         sectorDto.removerAyudaPorNombre(ayudaRuleta);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
@@ -84,7 +84,7 @@ public class FrontalCards extends Controller implements Initializable {
         Runnable onFinishIn = () ->
         {
             if (!(sectorDto.getAyudas().isEmpty()) &&(sectorDto.findAyudaByName(ayudaRuleta))) {
-                habilitarCosas(true);
+                habilitarTodo(true);
             } else {
                 Platform.runLater(() -> animacion.animarFadeOut(acpRootPane, onFinishOut));
             }
@@ -107,8 +107,7 @@ public class FrontalCards extends Controller implements Initializable {
         AppContext.getInstance().set("preguntaCategoria", preguntaCategoria);
     }
 
-
-    private void habilitarCosas(boolean valor) {
+    private void habilitarTodo(boolean valor) {
         this.imvTirarRuleta.setDisable(!valor);
         this.imvTirarRuleta.setVisible(valor);
         this.btnResponderPregunta.setDisable(!valor);

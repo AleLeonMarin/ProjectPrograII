@@ -19,7 +19,7 @@ public class CategoriaService {
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public RespuestaUtil getAll() {
+    public RespuestaUtil getAll() {//Obtiene todas las categorias en la base de datos.
         try
         {
             Query qryCategoria = em.createNamedQuery("Categoria.findAll", Categoria.class);

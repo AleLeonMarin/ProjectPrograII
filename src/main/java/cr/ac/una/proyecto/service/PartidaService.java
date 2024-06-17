@@ -9,6 +9,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.Query;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +20,7 @@ public class PartidaService {
     EntityManager em = EntityManagerHelper.getInstance().getManager();
     private EntityTransaction et;
 
-    public RespuestaUtil getAll() {
+    public RespuestaUtil getAll() {//Obtiene todas las partidas en la base de datos.
         try {
             Query qryPartida = em.createNamedQuery("Partida.findAll");
             List<Partida> partidas = (List<Partida>) qryPartida.getResultList();
@@ -38,7 +39,7 @@ public class PartidaService {
         }
     }
 
-    public RespuestaUtil guardarPartida(PartidaDto partidaDto) {
+    public RespuestaUtil guardarPartida(PartidaDto partidaDto) {//Guarda/Actualiza una partida en la base de datos.
         try {
             et = em.getTransaction();
             et.begin();
@@ -65,6 +66,33 @@ public class PartidaService {
             }
             Logger.getLogger(PartidaService.class.getName()).log(Level.SEVERE, "Error guardando la partida.", ex);
             return new RespuestaUtil(false, "Error guardando la partida.", "guardarPartida " + ex.getMessage());
+        }
+
+    }
+
+    public RespuestaUtil eliminarPartida(Long id) {//Elimina la partida desde la base de datos por id
+        try {
+            et = em.getTransaction();
+            et.begin();
+            Partida partida;
+            if (id != null && id > 0) {
+                partida = em.find(Partida.class, id);
+                if (partida == null) {
+                    et.rollback();
+                    return new RespuestaUtil(false, "No se encontro una partida a eliminar", "eliminarPartida noResultExeption");
+                }
+                em.remove(partida);
+            } else {
+                et.rollback();
+                return new RespuestaUtil(false, "Favor consultar la partida a eliminar", "");
+            }
+            et.commit();
+            return new RespuestaUtil(true, "", "");
+
+        } catch (Exception ex) {
+            et.rollback();
+            Logger.getLogger(PreguntaService.class.getName()).log(Level.SEVERE, "Error eliminando la Partida.", ex);
+            return new RespuestaUtil(false, "Error elimnando la Partida.", "eliminarPartida" + ex.getMessage());
         }
 
     }

@@ -163,7 +163,7 @@ COMMENT ON COLUMN Categoria.cat_version IS 'Version de la entidad categoria'
 CREATE TABLE Partida(
   par_Id Number NOT NULL,
   par_partida Clob NOT NULL,
-  par_duenio Varchar2(50 ) NOT NULL,
+  par_duenio Varchar2(50 ),
   par_version Number DEFAULT 1 NOT NULL,
   par_fecha Date,
   par_ronda Number DEFAULT 0 NOT NULL

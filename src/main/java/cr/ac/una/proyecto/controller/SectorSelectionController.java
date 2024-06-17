@@ -101,7 +101,7 @@ public class SectorSelectionController extends Controller implements Initializab
         jugadores.forEach(jugador -> nombresJugadores.add(jugador.getNombre()));
     }
 
-    private boolean validarBotones() {
+    private boolean validarBotones() {//Valida si hay sectores que no se hayan seleccionados y que todos los jugadores vayan en sectores separados.
         Set<String> selectedNames = new HashSet<>();
 
         for (MFXComboBox<String> comboBox : botonesCmbBox) {
@@ -123,11 +123,11 @@ public class SectorSelectionController extends Controller implements Initializab
         return false;
     }
 
-    private JugadorDto buscarJugador(String nombreJugador) {
+    private JugadorDto buscarJugador(String nombreJugador) {//Busca el jugador por nombre dentro de la lista de jugadores y lo retorna.
         return jugadores.stream().filter(jugador -> jugador.getNombre().equals(nombreJugador)).findFirst().orElse(null);
     }
 
-    private void crearSectores(int cantidadJugadores) {// manejarLogicade inicio de sectores en tableros
+    private void crearSectores(int cantidadJugadores) {// crea sectores,asgina posiciones y dirrecion por defecto segun la cantidad de jugadores.
 
         ArrayList<Sector> sectores;
         sectores = new ArrayList<>();
