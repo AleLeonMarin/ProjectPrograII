@@ -263,13 +263,14 @@ public class TablerosController extends Controller implements Initializable {
             sound.playSound("Card.mp3");
 
             FlowController.getInstance().goViewInWindowModal("DuelPlayerSelector",
-            ((Stage) acpRootPane.getScene().getWindow()), true);
+                    ((Stage) acpRootPane.getScene().getWindow()), true);
             categoria = controladorDuelo.getCategoria();
-            if(categoria == null){
+            if (categoria == null) {
                 isOnDuel = false;
-            }else{
-            AppContext.getInstance().set("preguntaCategoria", categoria);
-            mostrarTarjetas();
+
+            } else {
+                AppContext.getInstance().set("preguntaCategoria", categoria);
+                mostrarTarjetas();
             }
         }
     }
