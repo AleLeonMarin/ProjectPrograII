@@ -99,7 +99,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
     @FXML
     void onActionBtnJugador5(ActionEvent event) {
         verifyCrowns(btnJugador5);
-            btnJugador5.setDisable(true);
+        btnJugador5.setDisable(true);
         botonesSeleccionados++;
 
     }
@@ -108,8 +108,8 @@ public class PlayerSelectorController extends Controller implements Initializabl
     void onActionBtnJugador6(ActionEvent event) {
         verifyCrowns(btnJugador6);
 
-            btnJugador6.setDisable(true);
-        
+        btnJugador6.setDisable(true);
+
         botonesSeleccionados++;
 
     }
@@ -118,9 +118,8 @@ public class PlayerSelectorController extends Controller implements Initializabl
     void onActionJugador4(ActionEvent event) {
         verifyCrowns(btnJugador4);
 
-  
-            btnJugador4.setDisable(true);
-        
+        btnJugador4.setDisable(true);
+
         botonesSeleccionados++;
 
     }
@@ -129,9 +128,8 @@ public class PlayerSelectorController extends Controller implements Initializabl
     void onActionbtnJugador3(ActionEvent event) {
         verifyCrowns(bntJugador3);
 
-   
-            bntJugador3.setDisable(true);
-        
+        bntJugador3.setDisable(true);
+
         botonesSeleccionados++;
 
     }
@@ -362,6 +360,8 @@ public class PlayerSelectorController extends Controller implements Initializabl
     }
 
     private void verifyCrowns(MFXButton btn) {
+        List<Corona> coronasRetador = (List<Corona>)AppContext.getInstance().get("coronasRetador");
+        
         int i = botonesJugadores.indexOf(btn);
         System.out.println(i);
         boolean jugadorTieneCorona = false;
@@ -373,6 +373,12 @@ public class PlayerSelectorController extends Controller implements Initializabl
             if (coronas != null && !coronas.isEmpty()) {
 
                 jugadorTieneCorona = sector.hasOneCrown();
+
+                if(sector.hasOneCrown()) {
+                    if(coronasRetador.equals(coronas)) {
+                        botonesJugadores.get(i).setDisable(true);
+                    }
+                }
 
                 if (!jugadorTieneCorona) {
 
@@ -390,7 +396,6 @@ public class PlayerSelectorController extends Controller implements Initializabl
 
                     AppContext.getInstance().set("coronaJugadorDuel", coronas);
                     AppContext.getInstance().set("indexSectorRetado", i);
-                    System.out.println(coronas);
 
                     getCrownTypeToDuel();
                     ((Stage) root.getScene().getWindow()).close();
@@ -398,6 +403,10 @@ public class PlayerSelectorController extends Controller implements Initializabl
             }
 
         }
+    }
+
+    private void compareCrowns() {
+
     }
 
     private void buttons() {
@@ -432,7 +441,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
 
     @Override
     public void initialize() {
-       this.botonesSeleccionados = 1;
+        this.botonesSeleccionados = 1;
         buttons();
         getCantidadJugadores();
         getJugadoresFromAppContext();

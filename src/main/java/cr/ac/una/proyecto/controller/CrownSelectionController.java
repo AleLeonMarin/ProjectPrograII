@@ -1,5 +1,6 @@
 package cr.ac.una.proyecto.controller;
 
+import cr.ac.una.proyecto.App;
 import cr.ac.una.proyecto.model.Corona;
 import cr.ac.una.proyecto.model.Juego;
 import cr.ac.una.proyecto.model.Sector;
@@ -105,6 +106,7 @@ public class CrownSelectionController extends Controller implements Initializabl
             // Obtener las coronas del sector actual
             List<Corona> coronas = sector.getCoronas();
             System.out.println("Coronas: " + coronas);
+            AppContext.getInstance().set("coronasRetador", coronas);
 
             // Verificar si hay coronas activas
             if (coronas != null && !coronas.isEmpty()) {
