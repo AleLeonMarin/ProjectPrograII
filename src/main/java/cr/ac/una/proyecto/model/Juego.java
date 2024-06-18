@@ -91,7 +91,7 @@ public class Juego {
             if (jugador != null) {
 
             } else {
-//crear Jugador por defecto
+                // crear Jugador por defecto
             }
             jugadores.add(jugador);
         }
@@ -215,6 +215,10 @@ public class Juego {
         sectores.set(turnoActual, (Sector) AppContext.getInstance().get("preguntaSector"));
     }
 
+    public void cargarSectorPreguntaIndexFromAppContext(int index) {
+        sectores.set(index, (Sector) AppContext.getInstance().get("preguntaSector"));
+    }
+
     public void jugar(GridPane grdpTablero, boolean valorRespuesta, boolean isJugadorOnCrow) {
         cargarSectorActualFromAppContext();
         Sector sectorActual = sectores.get(turnoActual);
@@ -252,7 +256,7 @@ public class Juego {
         dificultad = (String) AppContext.getInstance().get("dificultad");
     }
 
-    private void setSectorJugadorDtoAppContext(Sector sector) {
+    public void setSectorJugadorDtoAppContext(Sector sector) {
         AppContext.getInstance().set("preguntaSector", sector);
     }
 
@@ -284,7 +288,6 @@ public class Juego {
         FlowController.getInstance().goViewInWindow("WinnerView");
         ((Stage) anchorPane.getScene().getWindow()).close();
     }
-
 
     public void valdidarCoronasGanador(AnchorPane anchorPane) {
         int limiteRondasGanador = 25;
@@ -393,7 +396,8 @@ public class Juego {
         return this.dificultad;
     }
 
-    public void sectoresCargar(int slider) {//Carga los sectores con informacion que sirvira para mover la imagen dentro del gripPane del juego
+    public void sectoresCargar(int slider) {// Carga los sectores con informacion que sirvira para mover la imagen
+                                            // dentro del gripPane del juego
         sectores.clear();
         switch (slider) {
             case 2:
@@ -415,11 +419,11 @@ public class Juego {
 
                 break;
             case 5:
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
-                sectores.add(new Sector());
+                sectores.add(new Sector(5, 7, 2));
+                sectores.add(new Sector(5, 3, 2));
+                sectores.add(new Sector(4, 0, 4));
+                sectores.add(new Sector(1, 1, 1));
+                sectores.add(new Sector(1, 7, 3));
 
                 break;
             case 6:
@@ -431,6 +435,14 @@ public class Juego {
                 sectores.add(new Sector(4, 0, 4));
                 break;
         }
+    }
+
+    public List<JugadorDto> getJugadoresDtos() {
+        List<JugadorDto> jugadores = new ArrayList<>();
+        for (Sector sector : sectores) {
+            jugadores.add(sector.getJugador());
+        }
+        return jugadores;
     }
 
 }

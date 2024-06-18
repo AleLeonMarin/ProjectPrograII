@@ -149,6 +149,9 @@ public class TableroController extends Controller implements Initializable {
             juego = new Juego(partidaInfo, contextSlider);
             this.juego.setTurnoActual(Integer.parseInt(String.valueOf(partidaInfo.charAt(4))));
             AppContext.getInstance().set("juego", juego);
+            AppContext.getInstance().set("cantJugadoresSlider", contextSlider);
+            AppContext.getInstance().set("jugadores", juego.getJugadoresDtos());
+           
         } catch (NumberFormatException e) {
             this.contextSlider = 2;
             this.juego.setTurnoActual(0);

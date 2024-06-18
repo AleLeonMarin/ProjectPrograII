@@ -277,6 +277,22 @@ public class Sector {
 
     }
 
+    public void desactivarCoronaRandom() {
+        if (hasOneCrown()) {
+            boolean estadoCorona = true;
+            Random random = new Random();
+            while (estadoCorona) {
+                int numeroAleatorioInt = random.nextInt(coronas.size());
+
+                if ((coronas.get(numeroAleatorioInt).getEstado())) {
+                    coronas.get(numeroAleatorioInt).setEstado(false);
+                    estadoCorona = false;
+                }
+
+            }
+        }
+    }
+
     public boolean hasOneHint() {
         for (Ayuda ayuda : ayudas) {
             if (ayuda.getEstado()) {

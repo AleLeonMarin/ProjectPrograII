@@ -81,10 +81,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
     @FXML
     void onActionBtnJugador1(ActionEvent event) {
         verifyCrowns(btnJugador1);
-        if (btnJugador1.isPressed()) {
-
-            btnJugador1.setDisable(true);
-        }
+        btnJugador1.setDisable(true);
         botonesSeleccionados++;
 
     }
@@ -92,9 +89,9 @@ public class PlayerSelectorController extends Controller implements Initializabl
     @FXML
     void onActionBtnJugador2(ActionEvent event) {
         verifyCrowns(btnJugador2);
-        if (btnJugador2.isPressed()) {
-            btnJugador2.setDisable(true);
-        }
+
+        btnJugador2.setDisable(true);
+
         botonesSeleccionados++;
 
     }
@@ -102,11 +99,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
     @FXML
     void onActionBtnJugador5(ActionEvent event) {
         verifyCrowns(btnJugador5);
-
-        if (btnJugador5.isPressed()) {
             btnJugador5.setDisable(true);
-
-        }
         botonesSeleccionados++;
 
     }
@@ -115,9 +108,8 @@ public class PlayerSelectorController extends Controller implements Initializabl
     void onActionBtnJugador6(ActionEvent event) {
         verifyCrowns(btnJugador6);
 
-        if (btnJugador6.isPressed()) {
             btnJugador6.setDisable(true);
-        }
+        
         botonesSeleccionados++;
 
     }
@@ -126,9 +118,9 @@ public class PlayerSelectorController extends Controller implements Initializabl
     void onActionJugador4(ActionEvent event) {
         verifyCrowns(btnJugador4);
 
-        if (btnJugador4.isPressed()) {
+  
             btnJugador4.setDisable(true);
-        }
+        
         botonesSeleccionados++;
 
     }
@@ -137,9 +129,9 @@ public class PlayerSelectorController extends Controller implements Initializabl
     void onActionbtnJugador3(ActionEvent event) {
         verifyCrowns(bntJugador3);
 
-        if (bntJugador3.isPressed()) {
+   
             bntJugador3.setDisable(true);
-        }
+        
         botonesSeleccionados++;
 
     }
@@ -156,7 +148,6 @@ public class PlayerSelectorController extends Controller implements Initializabl
     }
 
     private void getCantidadJugadores() {
-
         cantJugadores = ((int) AppContext.getInstance().get("cantJugadoresSlider"));
     }
 
@@ -396,14 +387,15 @@ public class PlayerSelectorController extends Controller implements Initializabl
                         ((Stage) root.getScene().getWindow()).close();
                     }
                 } else {
-    
+
                     AppContext.getInstance().set("coronaJugadorDuel", coronas);
+                    AppContext.getInstance().set("indexSectorRetado", i);
                     System.out.println(coronas);
-    
+
                     getCrownTypeToDuel();
                     ((Stage) root.getScene().getWindow()).close();
                 }
-                }
+            }
 
         }
     }
@@ -440,7 +432,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
 
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
+       this.botonesSeleccionados = 1;
         buttons();
         getCantidadJugadores();
         getJugadoresFromAppContext();

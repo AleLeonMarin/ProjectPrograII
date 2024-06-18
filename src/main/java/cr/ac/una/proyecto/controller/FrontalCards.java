@@ -38,7 +38,7 @@ public class FrontalCards extends Controller implements Initializable {
     private String preguntaCategoria;
     private final String ayudaRuleta = "TirarRuleta";
     private Runnable onFinishOut;
-
+    private boolean isOnCrown;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,10 +51,13 @@ public class FrontalCards extends Controller implements Initializable {
         cargarCategoriaAppContext();
         cargarSectorJugadorDtoAppContext();
         initValues();
+        isOnCrown = false;
+        cargarIsOnCrown();
     }
 
     @FXML
-    private void onMouseTirarRuleta(MouseEvent event) {//Ayuda de tirar ruleta, abre una vista con una nueva ruleta para seleccionar una nueva categoria de pregunta a responder.
+    private void onMouseTirarRuleta(MouseEvent event) {// Ayuda de tirar ruleta, abre una vista con una nueva ruleta
+                                                       // para seleccionar una nueva categoria de pregunta a responder.
         sectorDto.removerAyudaPorNombre(ayudaRuleta);
         new Mensaje().showModal(Alert.AlertType.INFORMATION, "Ayuda Activada", getStage(),
                 "Has seleccionado la ayuda de tirar ruleta, esta ayuda te deja girar la ruleta para seleccionar otra pregunta");
@@ -76,14 +79,12 @@ public class FrontalCards extends Controller implements Initializable {
 
     private void initValues() {
         animacion = new Animacion();
-        onFinishOut = () ->
-        {
+        onFinishOut = () -> {
             ((Stage) acpRootPane.getScene().getWindow()).close();
         };
 
-        Runnable onFinishIn = () ->
-        {
-            if (!(sectorDto.getAyudas().isEmpty()) &&(sectorDto.findAyudaByName(ayudaRuleta))) {
+        Runnable onFinishIn = () -> {
+            if (!(sectorDto.getAyudas().isEmpty()) && (sectorDto.findAyudaByName(ayudaRuleta)&& !isOnCrown)) {
                 habilitarTodo(true);
             } else {
                 Platform.runLater(() -> animacion.animarFadeOut(acpRootPane, onFinishOut));
@@ -93,9 +94,12 @@ public class FrontalCards extends Controller implements Initializable {
         animacion.animarFadeIn(acpRootPane, onFinishIn);
     }
 
-
     private void cargarCategoriaAppContext() {
         this.preguntaCategoria = ((String) AppContext.getInstance().get("preguntaCategoria"));
+    }
+
+    private void cargarIsOnCrown() {
+        this.isOnCrown = ((boolean) AppContext.getInstance().get("crownAyuda"));
     }
 
     private void cargarSectorJugadorDtoAppContext() {
