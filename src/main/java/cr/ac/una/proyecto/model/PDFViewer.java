@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
@@ -60,6 +61,16 @@ public class PDFViewer {
             modalStage.setScene(scene);
             modalStage.setTitle("App Instrucciones");
             modalStage.setResizable(false);
+
+            // Añadir manejador de cierre de ventana
+            modalStage.setOnCloseRequest((WindowEvent event) -> {
+                try {
+                    stop();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
             modalStage.showAndWait(); // Esperar hasta que se cierre
 
         } catch (IOException e) {

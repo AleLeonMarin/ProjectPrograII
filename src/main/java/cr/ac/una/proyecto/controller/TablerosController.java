@@ -295,7 +295,7 @@ public class TablerosController extends Controller implements Initializable {
             if (retado) {
                 juego.getSectorActual().desactivarCoronaRandom();
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
-                        "Has ganado el duelo, el jugador retado ha ganado la corona");
+                        "Has perdido el duelo, el jugador retado ha mantenido su corona");
             } else {
                 juego.getSectores().get(indiceSectorRetado).removerCoronaPorNombre(categoria);
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
@@ -323,6 +323,7 @@ public class TablerosController extends Controller implements Initializable {
 
             categoria = controladorCoronaSelection.getResultado();
             AppContext.getInstance().set("preguntaCategoria", categoria);
+            AppContext.getInstance().set("DuelAyuda", false);
             mostrarTarjetas();
         } else {
             PlayerSelectorController controladorDuelo = (PlayerSelectorController) FlowController.getInstance()
@@ -334,6 +335,7 @@ public class TablerosController extends Controller implements Initializable {
                     ((Stage) acpRootPane.getScene().getWindow()), true);
             categoria = controladorDuelo.getCategoria();
             isOnDuel = controladorDuelo.getDueloResultado();
+            AppContext.getInstance().set("DuelAyuda", isOnDuel);
             if (categoria == null) {
                 isOnDuel = false;
             } else {

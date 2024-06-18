@@ -81,7 +81,8 @@ public class PlayerSelectorController extends Controller implements Initializabl
     Sector sector;
     private ArrayList<Corona> coronas;
     int botonesSeleccionados = 1;
-   private boolean dueloResult;
+    private boolean dueloResult;
+
     @FXML
     void onActionBtnJugador1(ActionEvent event) {
         verifyCrowns(btnJugador1);
@@ -333,7 +334,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
 
     private void populateButtons() {
         // Desactivar y ocultar el botón del jugador cuyo turno es el actual
-        for (int i = 0; i < cantJugadores-1; i++) {
+        for (int i = 0; i < cantJugadores ; i++) {
             if (juego.getTurnoActual() == i) {
                 getButton(i).setDisable(true);
                 getButton(i).setVisible(false);
@@ -344,7 +345,7 @@ public class PlayerSelectorController extends Controller implements Initializabl
         }
 
         // Actualizar las imágenes y los textos de los botones
-        for (int i = 0; i < cantJugadores-1; i++) {
+        for (int i = 0; i < cantJugadores ; i++) {
             String ruta = sectores.get(i).getRutaImagenJugador();
             getJugador(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(ruta))));
             getButton(i).setText(jugadoresEnAppContext.get(i));
@@ -354,43 +355,42 @@ public class PlayerSelectorController extends Controller implements Initializabl
     // Métodos auxiliares para obtener los botones y las imágenes de los jugadores
     private MFXButton getButton(int index) {
         switch (index) {
-            case 0: return btnJugador1;
-            case 1: return btnJugador2;
-            case 2: return bntJugador3;
-            case 3: return btnJugador4;
-            case 4: return btnJugador5;
-            case 5: return btnJugador6;
-            default: throw new IllegalArgumentException("Índice de jugador no válido: " + index);
+            case 0:
+                return btnJugador1;
+            case 1:
+                return btnJugador2;
+            case 2:
+                return bntJugador3;
+            case 3:
+                return btnJugador4;
+            case 4:
+                return btnJugador5;
+            case 5:
+                return btnJugador6;
+            default:
+                throw new IllegalArgumentException("Índice de jugador no válido: " + index);
         }
     }
 
     private ImageView getJugador(int index) {
         switch (index) {
-            case 0: return Jugador1;
-            case 1: return Jugador2;
-            case 2: return Jugador3;
-            case 3: return Jugador4;
-            case 4: return Jugador5;
-            case 5: return Jugador6;
-            default: throw new IllegalArgumentException("Índice de jugador no válido: " + index);
+            case 0:
+                return Jugador1;
+            case 1:
+                return Jugador2;
+            case 2:
+                return Jugador3;
+            case 3:
+                return Jugador4;
+            case 4:
+                return Jugador5;
+            case 5:
+                return Jugador6;
+            default:
+                throw new IllegalArgumentException("Índice de jugador no válido: " + index);
         }
     }
 
-
-
-    public void desactivarJugadores() {
-
-        btnJugador4.setDisable(true);
-        btnJugador5.setDisable(true);
-        btnJugador6.setDisable(true);
-        bntJugador3.setDisable(true);
-
-        btnJugador4.setVisible(false);
-        btnJugador5.setVisible(false);
-        btnJugador6.setVisible(false);
-        bntJugador3.setVisible(false);
-
-    }
 
     private void getCrownTypeToDuel() {
 
@@ -446,12 +446,17 @@ public class PlayerSelectorController extends Controller implements Initializabl
                         ((Stage) root.getScene().getWindow()).close();
                     }
                 } else {
-                    dueloResult = true;
-                    AppContext.getInstance().set("coronaJugadorDuel", coronas);
-                    AppContext.getInstance().set("indexSectorRetado", i);
+                    if (tienenLasMismasCoronasActivas(coronas,coronasRetador)) {
+                        new Mensaje().showModal(Alert.AlertType.ERROR, "Obtención de coronas", getStage(),
+                                "Este jugador tiene tus mismas coronas");
+                    } else {
+                        dueloResult = true;
+                        AppContext.getInstance().set("coronaJugadorDuel", coronas);
+                        AppContext.getInstance().set("indexSectorRetado", i);
 
-                    getCrownTypeToDuel();
-                    ((Stage) root.getScene().getWindow()).close();
+                        getCrownTypeToDuel();
+                        ((Stage) root.getScene().getWindow()).close();
+                    }
                 }
             }
 
@@ -500,13 +505,38 @@ public class PlayerSelectorController extends Controller implements Initializabl
         getJugadoresFromAppContext();
         getSectores();
         habilitarJugadores();
-        desactivarJugadores();
         getJuego();
         populateButtons();
     }
 
     public boolean getDueloResultado() {
         return dueloResult;
+    }
+
+    public static boolean tienenLasMismasCoronasActivas(List<Corona> coronas1, List<Corona> coronas2) {
+        if (coronas1.size() != coronas2.size()) {
+            return false;
+        }
+
+        // Crear listas de nombres de coronas activas
+        ArrayList<String> activas1 = new ArrayList<>();
+        ArrayList<String> activas2 = new ArrayList<>();
+
+        // Llenar las listas con los nombres de las coronas activas
+        for (Corona corona : coronas1) {
+            if (corona.getEstado()) {
+                activas1.add(corona.getNombre());
+            }
+        }
+
+        for (Corona corona : coronas2) {
+            if (corona.getEstado()) {
+                activas2.add(corona.getNombre());
+            }
+        }
+
+        // Comparar las listas de nombres de coronas activas
+        return activas1.containsAll(activas2) && activas2.containsAll(activas1);
     }
 
 }
