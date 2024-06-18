@@ -3,7 +3,6 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import cr.ac.una.proyecto.model.PartidaDto;
 import cr.ac.una.proyecto.service.PartidaService;
 import cr.ac.una.proyecto.util.AppContext;
@@ -11,10 +10,7 @@ import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
 import cr.ac.una.proyecto.util.RespuestaUtil;
 import io.github.palexdev.materialfx.controls.MFXButton;
-
 import java.time.LocalDate;
-
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

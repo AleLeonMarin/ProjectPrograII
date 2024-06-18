@@ -276,20 +276,29 @@ public class TablerosController extends Controller implements Initializable {
         if (retador && !retado) {
             juego.getSectorActual().setEstadoCorona(this.categoria, true);
             juego.getSectores().get(indiceSectorRetado).removerCoronaPorNombre(categoria);
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
+                    "Has ganado el duelo, el jugador retado ha perdido la corona" + categoria);
 
         } else if (!retador && retado) {
             juego.getSectorActual().desactivarCoronaRandom();
             juego.cambiarTurno();
-            // mensaje
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
+                    "Has perdido el duelo, el jugador retado ha ganado la corona" + categoria);
         } else {
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
+                    "Empate, el jugador retado tiene un intento más");
             llamarPreguntaViewRetado(indiceSectorRetado);
             retado = controladorPreguntaView.getResultadoRespuestaPregunta();
 
             if (retado) {
                 juego.getSectorActual().desactivarCoronaRandom();
+                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
+                        "Has ganado el duelo, el jugador retado ha ganado la corona");
             } else {
                 juego.getSectores().get(indiceSectorRetado).removerCoronaPorNombre(categoria);
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
+                new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
+                        "Has perdido el duelo, el jugador retado ha ganado la corona" + categoria);
             }
             juego.cambiarTurno();
         }
