@@ -39,7 +39,6 @@ public class FrontalCards extends Controller implements Initializable {
     private final String ayudaRuleta = "TirarRuleta";
     private Runnable onFinishOut;
     private boolean isOnCrown;
-    private boolean isOnDuel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,7 +52,6 @@ public class FrontalCards extends Controller implements Initializable {
         cargarSectorJugadorDtoAppContext();
         initValues();
         isOnCrown = false;
-        isOnDuel = false;
         cargarIsOnCrown();
     }
 
@@ -86,7 +84,7 @@ public class FrontalCards extends Controller implements Initializable {
         };
 
         Runnable onFinishIn = () -> {
-            if (!(sectorDto.getAyudas().isEmpty()) && (sectorDto.findAyudaByName(ayudaRuleta) && !isOnCrown&&!isOnDuel)) {
+            if (!(sectorDto.getAyudas().isEmpty()) && (sectorDto.findAyudaByName(ayudaRuleta) && (!isOnCrown))) {
                 habilitarTodo(true);
             } else {
                 Platform.runLater(() -> animacion.animarFadeOut(acpRootPane, onFinishOut));
@@ -102,7 +100,6 @@ public class FrontalCards extends Controller implements Initializable {
 
     private void cargarIsOnCrown() {
         this.isOnCrown = ((boolean) AppContext.getInstance().get("crownAyuda"));
-        this.isOnDuel = ((boolean) AppContext.getInstance().get("DuelAyuda"));
     }
 
     private void cargarSectorJugadorDtoAppContext() {

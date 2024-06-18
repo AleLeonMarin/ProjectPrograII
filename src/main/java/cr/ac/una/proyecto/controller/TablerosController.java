@@ -238,6 +238,7 @@ public class TablerosController extends Controller implements Initializable {
             FlowController.getInstance().goViewInWindowModal("FrontalCardHistory",
                     ((Stage) imvRuleta.getScene().getWindow()), true);
         }
+        
         isOnDuelAction();
     }
 
@@ -340,7 +341,9 @@ public class TablerosController extends Controller implements Initializable {
                 isOnDuel = false;
             } else {
                 AppContext.getInstance().set("preguntaCategoria", categoria);
+                AppContext.getInstance().set("DuelAyuda", false);
                 mostrarTarjetas();
+
             }
         }
     }
