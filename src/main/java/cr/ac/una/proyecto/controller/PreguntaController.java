@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -74,6 +75,8 @@ public class PreguntaController extends Controller implements Initializable {
     private String dificultad;
     private int intentos;
     private ArrayList<MFXButton> botones;
+    @FXML
+    private Label lblNombreJugador;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,6 +90,7 @@ public class PreguntaController extends Controller implements Initializable {
         respuestasDto = new ArrayList<>();
         preguntaDto = new PreguntaDto();
         jugadorDto = new JugadorDto();
+        this.lblNombreJugador.setText("");
         this.intentos = 1;
         cargarBotones();
         cargarDatosDesdeAppContext();
@@ -97,6 +101,7 @@ public class PreguntaController extends Controller implements Initializable {
         obtenerPreguntaAleatoriaPorCategoria();
         animacion.simpleFadeIn(acpRootPane);
         txaEnunciado.setEditable(false);
+
     }
 
     @FXML
@@ -379,6 +384,7 @@ public class PreguntaController extends Controller implements Initializable {
     private void cargarSectorJugadorDtoAppContext() {
         sectorDto = ((Sector) AppContext.getInstance().get("preguntaSector"));
         jugadorDto = sectorDto.getJugador();
+        this.lblNombreJugador.setText(jugadorDto.getNombre());
     }
 
     private void setSectorDtoToAppContext() {

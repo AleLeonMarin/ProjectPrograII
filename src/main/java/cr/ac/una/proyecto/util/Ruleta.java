@@ -62,6 +62,6 @@ public class Ruleta {
         } else if ((anguloDetenido >= historiaInicio && anguloDetenido <= finalGrados) || (anguloDetenido >= anguloInicial && anguloDetenido <= historiaFin)) {
             categoria = categorias.get(6);
         }
-        return categoria;
+        return categorias.get(4);
     }
 }

@@ -3,13 +3,18 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cr.ac.una.proyecto.model.PDFViewer;
 import cr.ac.una.proyecto.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class AdminController extends Controller implements Initializable{
+public class AdminController extends Controller implements Initializable {
 
     @FXML
     private MFXButton bntSalir;
@@ -19,10 +24,14 @@ public class AdminController extends Controller implements Initializable{
 
     @FXML
     private MFXButton btnEstadisticas;
+    @FXML
+    private Label lblIntrucciones;
+
+    private PDFViewer pdfViewer;
 
     @FXML
     void onActionBntSalir(ActionEvent event) {
-       FlowController.getInstance().salir();
+        FlowController.getInstance().salir();
 
     }
 
@@ -42,12 +51,17 @@ public class AdminController extends Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
+        this.pdfViewer = new PDFViewer();
     }
 
     @Override
     public void initialize() {
         // TODO Auto-generated method stub
+    }
+
+    @FXML
+    private void onMousePressedLblInstrucciones(MouseEvent event) {
+        this.pdfViewer.start((Stage) bntSalir.getScene().getWindow(), "/cr/ac/una/proyecto/resources/Instrucciones.pdf");
     }
 
 }

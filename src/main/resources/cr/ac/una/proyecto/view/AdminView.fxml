@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.AdminController">
+<BorderPane id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.AdminController">
    <left>
       <VBox alignment="CENTER" prefHeight="500.0" prefWidth="167.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,6 +30,7 @@
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                </graphic>
             </MFXButton>
+            <Label fx:id="lblIntrucciones" onMousePressed="#onMousePressedLblInstrucciones" styleClass="lblTexto" text="Instrucciones" />
          </children>
       </VBox>
    </left>
@@ -41,6 +42,7 @@
          <children>
             <Label styleClass="label-Titulo-Principal" text="Preguntados Jr" />
             <ImageView fitHeight="88.0" fitWidth="136.0" pickOnBounds="true" preserveRatio="true" styleClass="image-icon" />
-         </children></HBox>
+         </children>
+      </HBox>
    </top>
 </BorderPane>

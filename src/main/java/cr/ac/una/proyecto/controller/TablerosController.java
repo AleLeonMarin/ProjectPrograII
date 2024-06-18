@@ -91,7 +91,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void cargarLabelsPartidaInfo() {// Carga y setea la informacion de ronda y jugador actual en los label de la
-                                            // vista
+        // vista
         String nombreJugador = juego.getSectorActual().getJugador().getNombre();
         Integer rondasJuego = juego.getRondas();
         if (nombreJugador != null) {
@@ -278,12 +278,14 @@ public class TablerosController extends Controller implements Initializable {
             juego.getSectores().get(indiceSectorRetado).removerCoronaPorNombre(categoria);
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
                     "Has ganado el duelo, el jugador retado ha perdido la corona" + categoria);
+            validarCoronasPrimerTurno();
+
 
         } else if (!retador && retado) {
             juego.getSectorActual().desactivarCoronaRandom();
             juego.cambiarTurno();
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
-                    "Has perdido el duelo, el jugador retado ha ganado la corona" + categoria);
+                    "Has perdido el duelo, el jugador retado ha ganado la corona : " + categoria);
         } else {
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
                     "Empate, el jugador retado tiene un intento más");
@@ -298,7 +300,8 @@ public class TablerosController extends Controller implements Initializable {
                 juego.getSectores().get(indiceSectorRetado).removerCoronaPorNombre(categoria);
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
                 new Mensaje().showModal(Alert.AlertType.INFORMATION, "Duelo", getStage(),
-                        "Has perdido el duelo, el jugador retado ha ganado la corona" + categoria);
+                        "Has perdido el duelo, el jugador retado ha ganado la corona: " + categoria);
+                validarCoronasPrimerTurno();
             }
             juego.cambiarTurno();
         }
@@ -322,7 +325,6 @@ public class TablerosController extends Controller implements Initializable {
             AppContext.getInstance().set("preguntaCategoria", categoria);
             mostrarTarjetas();
         } else {
-            isOnDuel = true;
             PlayerSelectorController controladorDuelo = (PlayerSelectorController) FlowController.getInstance()
                     .getController("DuelPlayerSelector");
 
@@ -331,6 +333,7 @@ public class TablerosController extends Controller implements Initializable {
             FlowController.getInstance().goViewInWindowModal("DuelPlayerSelector",
                     ((Stage) acpRootPane.getScene().getWindow()), true);
             categoria = controladorDuelo.getCategoria();
+            isOnDuel = controladorDuelo.getDueloResultado();
             if (categoria == null) {
                 isOnDuel = false;
             } else {
@@ -341,7 +344,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void setCorona() {// Setea una corona de una categoria en especifico si el jugador en corona
-                              // respondio correctamente
+        // respondio correctamente
         if (isOnCrown) {
             if (valorPreguntaRespuesta) {
                 juego.getSectorActual().setEstadoCorona(this.categoria, true);
@@ -384,7 +387,7 @@ public class TablerosController extends Controller implements Initializable {
     }
 
     private void validarCoronasPrimerTurno() {// Valida si un jugador cumple con la regla de ganar 3 coronas en el
-                                              // primer turno
+        // primer turno
         Sector sectorActual = juego.getSectorActual();
         if ((juego.validarPrimerTurnoObtencionDeCoronas(sectorActual))) {
             new Mensaje().showModal(Alert.AlertType.INFORMATION, "Max Coronas alcanzadas", getStage(),
