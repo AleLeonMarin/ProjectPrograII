@@ -60,11 +60,14 @@ public class EstadisticasController extends Controller implements Initializable 
         populateTableView();
         bchartStatistics.setTitle("Estadísticas de Preguntas y Respuestas");
 
+        // Agrega un listener de la tabla para cargar las estadísticas de la pregunta
+        // seleccionada
         tbvPreguntas.getSelectionModel().selectedItemProperty()
                 .addListener((ObservableValue<? extends PreguntaDto> observable,
                         PreguntaDto oldValue, PreguntaDto newValue) -> {
 
                     if (newValue != null) {
+                        // con el valor seleccionado de la tabla se carga el barChart
                         this.preguntaDto = newValue;
                         populateBarChart();
                     }
@@ -78,6 +81,8 @@ public class EstadisticasController extends Controller implements Initializable 
 
     }
 
+    // Metodo que da los valores a las columnas de la tabla y se le agrega un boton
+    // a la ultima columna
     private void populateTableView() {
 
         tbcID.setCellValueFactory(cd -> cd.getValue().id);
@@ -95,20 +100,28 @@ public class EstadisticasController extends Controller implements Initializable 
         respuestasList = this.preguntaDto.getRespuestas();
     }
 
+    // Metodo que carga las estadisticas de las preguntas y respuestas dentro del
+    // barchart
     private void populateBarChart() {
         loadRespuestas();
+        // Obtiene la pregunta seleccionada de la tabla
         PreguntaDto preguntaDto = tbvPreguntas.getSelectionModel().getSelectedItem();
         if (preguntaDto != null) {
+            // Query que obtiene todas las preguntas y respuestas
             RespuestaUtil respuesta = preguntaService.getAll();
             if (respuesta.getEstado()) {
                 bchartStatistics.getData().clear();
+                // Se crean dos series, una para las estadísticas de la pregunta y otra para las
+                // estadísticas de las respuestas
                 XYChart.Series<String, Integer> series1 = new XYChart.Series();
                 XYChart.Series<String, Integer> series2 = new XYChart.Series();
                 series1.setName("Estadísticas de Pregunta");
                 series2.setName("Estadísticas de Respuestas");
                 series1.getData().add(new XYChart.Data("Veces Respondida", preguntaDto.getAparicion()));
                 series1.getData().add(new XYChart.Data("Veces Acertada", preguntaDto.getAciertos()));
+                // Se obtienen las respuestas de la pregunta seleccionada
                 cargarPregunta(preguntaDto.getId());
+                // se recorren las respuestas de la lista de respuestas
                 for (RespuestaDto respuestaDto : respuestasList) {
                     series2.getData()
                             .add(new XYChart.Data("Respuesta " + respuestaDto.getId(), respuestaDto.getContador()));
@@ -120,6 +133,7 @@ public class EstadisticasController extends Controller implements Initializable 
         }
     }
 
+    // Metodo que carga la pregunta seleccionada
     private void cargarPregunta(Long preId) {
         try {
             PreguntaService preguntaService = new PreguntaService();
@@ -145,6 +159,7 @@ public class EstadisticasController extends Controller implements Initializable 
         tbvPreguntas.getSelectionModel().clearSelection();
     }
 
+    // Clase que agrega un boton a la ultima columna de la tabla
     private class ButtonCell extends TableCell<PreguntaDto, Boolean> {
 
         final Button cellButton = new Button();
@@ -156,11 +171,15 @@ public class EstadisticasController extends Controller implements Initializable 
             cellButton.setOnAction(t -> {
                 PreguntaDto preguntaDto = tbvPreguntas.getSelectionModel().getSelectedItem();
                 if (preguntaDto != null) {
+                    // Se carga la pregunta seleccionada dentro de la vista que permite cargar la
+                    // pregunta seleccionada
+                    // para ver el detalle de la pregunta
                     FlowController.getInstance().goViewInWindowModal("PreguntaStatistics",
                             ((Stage) cellButton.getScene().getWindow()), true);
-                            tbvPreguntas.getSelectionModel().clearSelection();
-                }else{
-                    new Mensaje().showModal(AlertType.ERROR, "Cargar Pregunta", getStage(), "Debe seleccionar una pregunta");
+                    tbvPreguntas.getSelectionModel().clearSelection();
+                } else {
+                    new Mensaje().showModal(AlertType.ERROR, "Cargar Pregunta", getStage(),
+                            "Debe seleccionar una pregunta");
                 }
 
             });
@@ -184,6 +203,7 @@ public class EstadisticasController extends Controller implements Initializable 
         preguntaDto = tbvPreguntas.getSelectionModel().getSelectedItem();
     }
 
+    // carga las preguntas
     private void chargePregunta() {
 
         PreguntaService preguntaService = new PreguntaService();
@@ -198,6 +218,8 @@ public class EstadisticasController extends Controller implements Initializable 
         }
     }
 
+    // en el caso de que los datos vengan desordenados de la base de datos, compara las preguntas por id 
+    // y las ordena de menor a mayor
     private class PreguntaIdComparator implements Comparator<PreguntaDto> {
 
         @Override

@@ -44,22 +44,22 @@ public class EstadisticasJugadorController extends Controller implements Initial
 
     }
 
-
+    // Metodo para cargar las estadisticas del jugador
     private void populateBarChart() {
-
+        // Obtiene el jugador seleccionado en la vista anterior
         TablaPosicionesController tablaPosicionesController = (TablaPosicionesController) FlowController.getInstance()
                 .getController("TablaPosiciones");
         jugadorDto = (JugadorDto) tablaPosicionesController.getJugador();
 
         if (jugadorDto != null) {
-
+            // consulta el jugador a la base de datos por id
             RespuestaUtil respuesta = jugadorService.getJugador(jugadorDto.getId());
 
             if (respuesta != null) {
 
                 bchartStadistics.getData().clear();
                 bchartStadistics.setTitle("Estadisticas de " + jugadorDto.getNombre());
-
+                // Crea las series para el grafico
                 XYChart.Series<String, Number> series1 = new XYChart.Series();
                 XYChart.Series<String, Number> series2 = new XYChart.Series();
                 XYChart.Series<String, Number> series3 = new XYChart.Series();
@@ -75,7 +75,7 @@ public class EstadisticasJugadorController extends Controller implements Initial
                 XYChart.Series<String, Number> series13 = new XYChart.Series();
                 XYChart.Series<String, Number> series14 = new XYChart.Series();
                 XYChart.Series<String, Number> series15 = new XYChart.Series();
-
+                // Asigna los nombres a las series
                 series1.setName("Partidas Ganadas");
                 series2.setName("Preguntas Respondidas");
                 series3.setName("Preguntas Acertadas");
@@ -92,9 +92,11 @@ public class EstadisticasJugadorController extends Controller implements Initial
                 series14.setName("Acertas Entretenimiento");
                 series15.setName("Acertas Arte");
 
+                // Indica a las series los datos que van a mostrar en el grafico
                 series1.getData().add(new XYChart.Data("Partidas Ganadas", jugadorDto.getPartidasGanadas()));
                 series2.getData().add(new XYChart.Data("Preguntas Respondidas", jugadorDto.getPreguntasRespondidas()));
-                series3.getData().add(new XYChart.Data("Preguntas Acertadas", jugadorDto.getPRespondidasCorrectamente()));
+                series3.getData()
+                        .add(new XYChart.Data("Preguntas Acertadas", jugadorDto.getPRespondidasCorrectamente()));
                 series4.getData().add(new XYChart.Data("Respondidas Historia", jugadorDto.getContadorHistoria()));
                 series5.getData().add(new XYChart.Data("Respondidas Geografia", jugadorDto.getContadorGeografia()));
                 series6.getData().add(new XYChart.Data("Respondidas Ciencia", jugadorDto.getContadorCiencia()));
@@ -110,7 +112,7 @@ public class EstadisticasJugadorController extends Controller implements Initial
                 series14.getData().add(
                         new XYChart.Data("Acertas Entretenimiento", jugadorDto.getContadorCorrectasEntretenimiento()));
                 series15.getData().add(new XYChart.Data("Acertas Arte", jugadorDto.getContadorCorrectasArte()));
-
+                // Agrega las series al grafico
                 bchartStadistics.getData().addAll(series1, series2, series3, series4, series5, series6, series7,
                         series8, series9, series10, series11, series12, series13, series14, series15);
 

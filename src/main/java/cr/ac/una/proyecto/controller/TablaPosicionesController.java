@@ -3,10 +3,7 @@ package cr.ac.una.proyecto.controller;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import java.util.concurrent.Flow;
-
 import cr.ac.una.proyecto.model.JugadorDto;
-import cr.ac.una.proyecto.model.PreguntaDto;
 import cr.ac.una.proyecto.service.JugadorService;
 import cr.ac.una.proyecto.util.FlowController;
 import cr.ac.una.proyecto.util.Mensaje;
@@ -58,24 +55,28 @@ public class TablaPosicionesController extends Controller implements Initializab
         jugadorDto = new JugadorDto();
         tbvPosiciones.setItems(jugadorList);
         populateTable();
-
+        // Agrega listener para saber que jugador se selecciona
         tbvPosiciones.getSelectionModel().selectedItemProperty()
                 .addListener((ObservableValue<? extends JugadorDto> observable,
                         JugadorDto oldValue, JugadorDto newValue) -> {
 
                     if (newValue != null) {
+                        // Obtiene el jugador seleccionado en la tabla
                         this.jugadorDto = newValue;
                     }
 
                 });
+        // ordena la tabla por id
         jugadorList.sort(new JugadorIdComparator());
 
     }
 
+    // Asigna que tipo de dato va a tener cada columna de la tabla
     private void populateTable() {
 
         tbcID.setCellValueFactory(cd -> cd.getValue().id);
         tbcName.setCellValueFactory(cd -> cd.getValue().nombre);
+        // asigna el boton a la columna de estadisticas
         tbcEstadisticas
                 .setCellValueFactory((TableColumn.CellDataFeatures<JugadorDto, Boolean> p) -> new SimpleBooleanProperty(
                         p.getValue() != null));
@@ -84,6 +85,7 @@ public class TablaPosicionesController extends Controller implements Initializab
 
     }
 
+    // Metodo que se ejecuta al presionar el boton de volver
     @FXML
     void onActionBtnVolver(ActionEvent event) {
 
@@ -99,6 +101,7 @@ public class TablaPosicionesController extends Controller implements Initializab
 
     }
 
+    // Obtiene el jugador seleccionado
     public JugadorDto getJugador() {
         return jugadorDto;
     }
@@ -107,6 +110,7 @@ public class TablaPosicionesController extends Controller implements Initializab
         jugadorDto = tbvPosiciones.getSelectionModel().getSelectedItem();
     }
 
+    // Carga todos los jugadores de la base de datos
     private void chargeJugadores() {
 
         RespuestaUtil respuestaUtil = jugadorService.getAll();
@@ -124,6 +128,7 @@ public class TablaPosicionesController extends Controller implements Initializab
 
     }
 
+    // Clase que agrega un boton a la ultima columna de la tabla
     private class ButtonCell extends TableCell<JugadorDto, Boolean> {
 
         final Button cellButton = new Button();
@@ -137,6 +142,7 @@ public class TablaPosicionesController extends Controller implements Initializab
                 JugadorDto jugadorDto = tbvPosiciones.getSelectionModel().getSelectedItem();
                 if (jugadorDto != null) {
                     sound.playSound("clickedNext.mp3");
+                    // Carga la vista de estadisticas del jugador seleccionado
                     FlowController.getInstance().goViewInWindowModal("EstadisticasJugador",
                             ((Stage) cellButton.getScene().getWindow()), true);
                     tbvPosiciones.getSelectionModel().clearSelection();
@@ -158,6 +164,8 @@ public class TablaPosicionesController extends Controller implements Initializab
 
     }
 
+    // Clase que compara los id de los jugadores para ordenarlos
+    // en la tabla de menor a mayor
     private class JugadorIdComparator implements Comparator<JugadorDto> {
 
         @Override
