@@ -3,11 +3,9 @@ package cr.ac.una.proyecto.model;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.SequenceGenerator;
@@ -15,8 +13,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.List;
 
 @Entity
 @Table(name = "JUGADOR", schema = "PREGUNTADOS")

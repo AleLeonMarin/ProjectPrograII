@@ -1,13 +1,9 @@
 package cr.ac.una.proyecto.controller;
 
 import cr.ac.una.proyecto.util.Animacion;
-import cr.ac.una.proyecto.util.AppContext;
 import cr.ac.una.proyecto.util.Ruleta;
-
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
