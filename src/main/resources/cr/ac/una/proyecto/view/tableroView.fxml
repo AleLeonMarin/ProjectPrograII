@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane onMouseMoved="#onMouseMoved" prefHeight="800.0" prefWidth="1020.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.TableroController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="150.0" prefWidth="1920.0" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblTiempo" styleClass="label-Titulo-Principal" text="Label" />
+            <Label styleClass="label-Titulo-Principal" text="Preguntados Jr" />
+            <AnchorPane prefHeight="100.0" prefWidth="131.0" styleClass="Icon" />
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="248.0" spacing="70.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblJugador1" text="Label" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgvArteJug1" fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="image-arte" />
+                  <ImageView fx:id="imgvJug1Ciencia" fitHeight="43.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-ciencia" />
+                  <ImageView fx:id="imgvJug1Deporte" fitHeight="43.0" fitWidth="48.0" layoutX="38.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-deportes" />
+                  <ImageView fx:id="imgvJug1Entretenimiento" fitHeight="43.0" fitWidth="48.0" layoutX="64.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-entretenimiento" />
+                  <ImageView fx:id="imgvJug1Geografia" fitHeight="43.0" fitWidth="48.0" layoutX="93.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-geografia" />
+                  <ImageView fx:id="imgvJug1Historia" fitHeight="43.0" fitWidth="48.0" layoutX="122.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-historia" />
+               </children>
+            </HBox>
+            <Label fx:id="lblJugador2" text="Label" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgvJug2Arte" fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="image-arte" />
+                  <ImageView fx:id="imgvJug2Ciencia" fitHeight="43.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-ciencia" />
+                  <ImageView fx:id="imgvJug2Deporte" fitHeight="43.0" fitWidth="48.0" layoutX="38.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-deportes" />
+                  <ImageView fx:id="imgvJug2Entretenimiento" fitHeight="43.0" fitWidth="48.0" layoutX="64.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-entretenimiento" />
+                  <ImageView fx:id="imgvJug2Geografia" fitHeight="43.0" fitWidth="48.0" layoutX="93.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-geografia" />
+                  <ImageView fx:id="imgvJug2Historia" fitHeight="43.0" fitWidth="48.0" layoutX="122.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-historia" />
+               </children>
+            </HBox>
+            <Label fx:id="lblJugador3" text="Label" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgvJug3Arte" fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="image-arte" />
+                  <ImageView fx:id="imgvJug3Ciencia" fitHeight="43.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-ciencia" />
+                  <ImageView fx:id="imgvJug3Deporte" fitHeight="43.0" fitWidth="48.0" layoutX="38.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-deportes" />
+                  <ImageView fx:id="imgvJug3Entretenimiento" fitHeight="43.0" fitWidth="48.0" layoutX="64.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-entretenimiento" />
+                  <ImageView fx:id="imgvJug3Geografia" fitHeight="43.0" fitWidth="48.0" layoutX="93.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-geografia" />
+                  <ImageView fx:id="imgvJug3Historia" fitHeight="43.0" fitWidth="48.0" layoutX="122.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-historia" />
+               </children>
+            </HBox>
+         </children></VBox>
+   </left>
+   <right>
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="222.0" spacing="70.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lblJugador4" text="Label" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgvJug4Arte" fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="image-arte" />
+                  <ImageView fx:id="imgvJug4Ciencia" fitHeight="43.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-ciencia" />
+                  <ImageView fx:id="imgvJug4Deporte" fitHeight="43.0" fitWidth="48.0" layoutX="38.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-deportes" />
+                  <ImageView fx:id="imgvJug4Entretenimiento" fitHeight="43.0" fitWidth="48.0" layoutX="64.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-entretenimiento" />
+                  <ImageView fx:id="imgvJug4Geografia" fitHeight="43.0" fitWidth="48.0" layoutX="93.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-geografia" />
+                  <ImageView fx:id="imgvJug4Historia" fitHeight="43.0" fitWidth="48.0" layoutX="122.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-historia" />
+               </children>
+            </HBox>
+            <Label fx:id="lblJugador5" text="Label" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgvJug5Arte" fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="image-arte" />
+                  <ImageView fx:id="imgvJug5Ciencia" fitHeight="43.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-ciencia" />
+                  <ImageView fx:id="imgvJug5Deporte" fitHeight="43.0" fitWidth="48.0" layoutX="38.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-deportes" />
+                  <ImageView fx:id="imgvJug5Entretenimiento" fitHeight="43.0" fitWidth="48.0" layoutX="64.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-entretenimiento" />
+                  <ImageView fx:id="imgvJug5Geografia" fitHeight="43.0" fitWidth="48.0" layoutX="93.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-geografia" />
+                  <ImageView fx:id="imgvJug5Historia" fitHeight="43.0" fitWidth="48.0" layoutX="122.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-historia" />
+               </children>
+            </HBox>
+            <Label fx:id="lblJugador6" text="Label" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgvJug6Arte" fitHeight="43.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" styleClass="image-arte" />
+                  <ImageView fx:id="imgvJug6Ciencia" fitHeight="43.0" fitWidth="48.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-ciencia" />
+                  <ImageView fx:id="imgvJug6Deporte" fitHeight="43.0" fitWidth="48.0" layoutX="38.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-deportes" />
+                  <ImageView fx:id="imgvJug6Entretenimiento" fitHeight="43.0" fitWidth="48.0" layoutX="64.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-entretenimiento" />
+                  <ImageView fx:id="imgvJug6Geografia" fitHeight="43.0" fitWidth="48.0" layoutX="93.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-geografia" />
+                  <ImageView fx:id="imgvJug6Historia" fitHeight="43.0" fitWidth="48.0" layoutX="122.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="imagen-historia" />
+               </children>
+            </HBox>
+         </children></VBox>
+   </right>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+         <children>
+            <MFXButton fx:id="btnGuardar" onAction="#onActionBtnGuardar" styleClass="jfx-mfx-btn-save" text="Guardar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="btnIniciar" onAction="#onActionBtnIniciar" styleClass="jfx-mfx-btn-inicar" text="Cargar Tablero">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="btnSalir" onAction="#onActionBtnSalir" styleClass="jfx-mfx-btn-salir" text="Salir">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </MFXButton>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

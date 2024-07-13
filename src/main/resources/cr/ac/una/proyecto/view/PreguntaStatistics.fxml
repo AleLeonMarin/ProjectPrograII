@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="500.0" styleClass="jfx-background-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.PreguntaStatisticsController">
+   <children>
+      <AnchorPane layoutX="214.0" layoutY="76.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="190.0" layoutY="183.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" styleClass="jfx-principal-pane" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Label styleClass="label-Titulo-Principal" text="Pregunta consultada" />
+                  <TextArea fx:id="txaPregunta" prefHeight="147.0" prefWidth="430.0" />
+                  <MFXButton fx:id="btnRespuesta1" />
+                  <MFXButton fx:id="btnRespuesta2" />
+                  <MFXButton fx:id="btnRespuesta3" />
+                  <MFXButton fx:id="btnRespuesta4" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
