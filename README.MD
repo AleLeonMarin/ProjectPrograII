@@ -32,22 +32,25 @@ Es un juego de preguntas y respuestas desarrollado por la empresa argentina Eter
 
 '''bash 
 mvn clean install 
+'''
 
 5. Ir a la carpeta target 
 6. Ingresar a tu terminal 
 
 Si quieres ingresar al juego debes ejecutar este comando
 
-```bash 
+'''bash 
 
 java -jar proyecto-1.0-shaded.jar C
 
-
+'''
 Si desea ingresar a la parte administratica debe de ejecutar el siguiente comando 
 
-``` bash 
+'''bash 
 
 java -jar java -jar proyecto-1.0-shaded.jar A
+
+'''
 
 8. A disfrutar del juego 
 
