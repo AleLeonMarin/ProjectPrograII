@@ -1,65 +1,66 @@
 # PREGUNTADOS JR
 
-## Introduccion
+## Introducción
 
-Este proyecto fue realizado en el curso de programacion II 
-en la Universidad Nacional de Costa Rica. Con la finalidad de
-aprender el uso e implementacion de JavaFX y base de datos.
-Dicho proyecto fue realizado con JavaFX 21, Oracle 21c XE, docker 
-y las herramientas como VSCode, Intellij, NetBeans y Scene Builder
+Este proyecto fue realizado en el curso de Programación II en la Universidad Nacional de Costa Rica, con el objetivo de aprender el uso e implementación de JavaFX y bases de datos. Utilizamos JavaFX 21, Oracle 21c XE, Docker, y herramientas como VSCode, IntelliJ, NetBeans y Scene Builder.
 
-## En que consiste
+## ¿En qué consiste?
 
-Es un juego de preguntas y respuestas desarrollado por la empresa argentina Etermax. Consiste en responder preguntas de diferentes categorías como historia, geografía, ciencia, entretenimiento, arte y deportes. Los jugadores acumulan puntos al contestar correctamente y pueden competir contra amigos o desconocidos. El objetivo es llegar a responder una cantidad determinada de preguntas correctamente para ganar el juego. Es popular por su simplicidad y capacidad de desafiar el conocimiento general de los jugadores.
+"Preguntados JR" es un juego de preguntas y respuestas desarrollado por la empresa argentina Etermax. Los jugadores deben responder preguntas de diversas categorías como historia, geografía, ciencia, entretenimiento, arte y deportes. Acumulan puntos al contestar correctamente y pueden competir contra amigos o desconocidos. El objetivo es responder una cantidad determinada de preguntas correctamente para ganar el juego. Es popular por su simplicidad y capacidad para desafiar el conocimiento general de los jugadores.
 
-## Caracteristicas 
+## Características 
 
-- El juego permite de 2 a 6 jugadores con tablero redimensionable 
-- El juego consta de animaciones que no interrumpen la ejecucion del sistema 
-- Contiene la funcionalidad de duelo 
-- El juego permite realizar una edicion de los detalles de los jugadores antes de iniciar la partida 
-- El juego permite guardar la partida, asi mismo permite cargar las diferentes partidas que hay en la base de datos 
-- El juego ofrece castigos a los jugadores en caso de seleccionar duelo con un jugador sin coronas 
-- EL juego ofrece diferentes modos de juego, y asi afecta las ayudas para responder preguntas durante la partida 
+- Permite de 2 a 6 jugadores con tablero redimensionable.
+- Incluye animaciones que no interrumpen la ejecución del sistema.
+- Contiene la funcionalidad de duelo entre jugadores.
+- Permite editar los detalles de los jugadores antes de iniciar la partida.
+- Permite guardar y cargar partidas desde la base de datos.
+- Ofrece castigos a los jugadores en caso de seleccionar duelo con un jugador sin coronas.
+- Ofrece diferentes modos de juego que afectan las ayudas disponibles para responder preguntas.
 
-## Uso 
+## Uso
 
-1. Contar con Java JDK 21 o superior 
-2. Contar con Oracle DB 21c XE (Ya sea con docker o en sistema)
-3. Correr el script que se brinda en el proyecto para obtener las pregunta s
-4. Contar con Apache Maven 
-5. Correr el siguiente comando en tu terminal 
+Para utilizar "Preguntados JR", sigue estos pasos:
 
-'''bash 
-mvn clean install 
+1. Asegúrate de tener Java JDK 21 o superior instalado.
+2. Asegúrate de tener Oracle DB 21c XE instalado, ya sea mediante Docker o en tu sistema.
+3. Ejecuta el script proporcionado en el proyecto para obtener las preguntas.
+4. Asegúrate de tener Apache Maven instalado.
+5. En tu terminal, ejecuta el siguiente comando para compilar y construir el proyecto:
 
-5. Ir a la carpeta target 
-6. Ingresar a tu terminal 
+    ```bash
+    mvn clean install
+    ```
 
-Si quieres ingresar al juego debes ejecutar este comando
+6. Ve a la carpeta `target`:
 
-'''bash 
+    ```bash
+    cd target
+    ```
 
-java -jar proyecto-1.0-shaded.jar C
+7. Para ingresar al juego como jugador regular, ejecuta este comando en tu terminal:
 
-Si desea ingresar a la parte administratica debe de ejecutar el siguiente comando 
+    ```bash
+    java -jar proyecto-1.0-shaded.jar C
+    ```
 
-'''bash 
+8. Para acceder a la parte administrativa, ejecuta el siguiente comando:
 
-java -jar java -jar proyecto-1.0-shaded.jar A
+    ```bash
+    java -jar proyecto-1.0-shaded.jar A
+    ```
 
-8. A disfrutar del juego 
-
+9. ¡Disfruta del juego!
 
 ## Desarrolladores
 
 - Alejandro Leon Marin 
 - Justin Mendez Mena 
 
-## Creditos 
+## Créditos 
 
-Creditos a Etermax por la creacion y distribucion del jiego 
+Créditos a Etermax por la creación y distribución del juego.
 
 ## Contacto 
 
-correo electronico: aleleonmarin01@gmail.com
+Correo electrónico: aleleonmarin01@gmail.com
