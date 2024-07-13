@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.SummaryMatchViewController">
+   <children>
+      <VBox alignment="CENTER" layoutX="1.0" layoutY="40.0" styleClass="contenedores" stylesheets="@styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="label-Titulo-Principal" text="Resumen Pre-Partida" />
+            <HBox alignment="CENTER" styleClass="contenedores">
+               <children>
+                  <Label styleClass="label-Titulo-Principal" text="Dificultad :" />
+                  <Label fx:id="lblDifficulty" styleClass="label-Titulo-Principal" text="Label" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJuagdor1" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha1" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador2" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha2" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador3" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha3" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador4" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha4" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador5" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha5" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblJugador6" styleClass="lblTexto" text="Label" />
+                        <ImageView fx:id="imgFicha6" fitHeight="107.0" fitWidth="102.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" styleClass="contenedores">
+               <children>
+                  <MFXButton fx:id="btnEdit" onAction="#onActionBtnEdit" styleClass="jfx-mfx-btn-edit" text="Editar Información">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                  </MFXButton>
+                  <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" styleClass="jfx-mfx-btn-play" text="Iniciar Partida">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                  </MFXButton>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

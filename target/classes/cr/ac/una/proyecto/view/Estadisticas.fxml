@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" styleClass="jfx-background-panel" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.EstadisticasController">
+   <children>
+      <AnchorPane layoutX="300.0" layoutY="194.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="580.0" prefWidth="780.0" styleClass="jfx-panel-container" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Label styleClass="label-Titulo-Principal" text="Estadiscticas por Pregunta" />
+                  <HBox prefHeight="586.0" prefWidth="830.0" spacing="20.0" styleClass="jfx-principal-pane">
+                     <children>
+                        <TableView fx:id="tbvPreguntas" prefHeight="546.0" prefWidth="353.0" HBox.hgrow="ALWAYS">
+                           <columns>
+                              <TableColumn fx:id="tbcID" prefWidth="36.0" text="ID" />
+                              <TableColumn fx:id="tbcEnun" prefWidth="94.0" text="Enunciado" />
+                              <TableColumn fx:id="tbcLook" minWidth="5.0" prefWidth="57.0" text="Ver" />
+                           </columns></TableView>
+                        <Separator orientation="VERTICAL" prefHeight="546.0" prefWidth="42.0" />
+                        <BarChart fx:id="bchartStatistics" prefHeight="546.0" prefWidth="512.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis forceZeroInRange="false" minorTickCount="1" side="LEFT" tickLength="10.0" />
+                          </yAxis>
+                        </BarChart>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

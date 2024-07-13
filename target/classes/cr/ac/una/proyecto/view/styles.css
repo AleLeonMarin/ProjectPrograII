@@ -1,0 +1,658 @@
+* {
+    -mfx-main: rgb(81, 130, 155);
+    -mfx-purple: rgb(81, 130, 155);
+    -fx-beige: rgb(234, 223, 180);
+    -fx-celeste-pastel: rgb(155, 176, 193);
+    -fx-azul-pastel: rgb(81, 130, 155);
+    -fx-naranja: rgb(246, 153, 92);
+    -fx-magenta: rgb(255, 32, 78);
+    -fx-fucsia: rgb(160, 21, 62);
+    -fx-morado: rgb(93, 14, 65);
+    -fx-azul: rgb(0, 34, 77);
+    -fx-celeste-hielo: rgb(223, 245, 255);
+}
+
+.pregunta-background {
+    -fx-background-image: url("../resources/preguntaBackground.jpg");
+}
+
+.label-Titulos {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: whitesmoke;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 10.0, 0.7, 0.0, 1.5);
+}
+
+.contenedor-forms {
+    -fx-background-radius: 4.0;
+    -fx-padding: 15 15 15 15;
+    -fx-spacing: 6px;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 10.0, 0.7, 0.0, 1.5);
+    -fx-border-color: rgb(93, 14, 65);
+    -fx-border-width: 1px;
+}
+
+.contenedor-base {
+    -fx-background-radius: 4.0;
+    -fx-border-width: 1px;
+    -fx-padding: 5 5 5 5;
+    -fx-spacing: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1), 10, 0, 0, 0);
+}
+
+.contenedores {
+    -fx-padding: 5 5 5 5;
+    -fx-spacing: 10px;
+}
+
+.lblTexto {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF8A08;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 10.0, 0.7, 0.0, 1.5);
+}
+
+.contenedorBotones {
+    -fx-padding: 2 2 2 2;
+    -fx-spacing: 6px;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 10.0, 0.7, 0.0, 1.5);
+}
+
+.contenedorPregunta {
+    -fx-background-image: url("../resources/pregunta.png");
+}
+
+.mfx-button {
+    -mfx-button-type: RAISED;
+    -mfx-depth-level: LEVEL2;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+
+}
+
+.mfx-button:hover {
+    -fx-background-color: -fx-celeste-hielo;
+    -fx-text-fill: black;
+    -mfx-depth-level: LEVEL5;
+}
+
+.mfx-button:pressed {
+    -fx-alignment: BOTTOM_RIGHT;
+}
+
+.butonPregunta,
+.butonPregunta:armed,
+.butonPregunta:focused {
+    -fx-max-width: 225px;
+    -fx-min-width: 190px;
+    -fx-max-height: 40px;
+    -fx-min-height: 40px;
+    -fx-background-color: aquamarine;
+    -fx-text-fill: gray;
+}
+
+.butonComodin,
+.butonComodin:armed,
+.butonComodin:focused {
+    -fx-max-width: 50px;
+    -fx-min-width: 50px;
+    -fx-max-height: 50px;
+    -fx-min-height: 50px;
+    -fx-background-color: transparent;
+    -fx-alignment: BASELINE_RIGHT;
+    -fx-padding: 0 0 0 0;
+    -fx-effect: dropshadow(gaussian, rgb(0.0, 0.0, 0.0, 0.15), 50.0, 0.7, 0.0, 1.5);
+}
+
+.imagen {
+    -fx-background-position: center;
+    -fx-background-size: stretch;
+}
+
+.principal-imagen {
+    -fx-background-image: url("../resources/principalIcon.png");
+}
+
+.acercaDe-imagen {
+    -fx-background-image: url("../resources/acercadeBackground.jpg");
+    -fx-opacity: 1;
+}
+
+.imagenAyudaBomba {
+    -fx-background-image: url("../resources/bomb.png");
+}
+
+.imagenAyudaSegundaOportunidad {
+    -fx-background-image: url("../resources/porDos.png");
+}
+
+.imagenAyudaTirarRuleta {
+    -fx-background-image: url("../resources/reiniciar.png");
+}
+
+.imagenAyudaSiguientePregunta {
+    -fx-background-image: url("../resources/next.png");
+}
+
+.mfx-btn-bomb,
+.mfx-btn-bomb:armed,
+.mfx-btn-bomb:focused {
+    -fx-background-color: TRASNPARENT;
+    -fx-label-padding: 2px;
+}
+
+.mfx-btn-porDos,
+.mfx-btn-porDos:armed,
+.mfx-btn-porDos:focused {
+    -fx-background-color: TRASNPARENT;
+    -fx-label-padding: 2px;
+}
+
+.mfx-btn-btnRetry,
+.mfx-btn-btnRetry:armed,
+.mfx-btn-btnRetry:focused {
+    -fx-background-color: TRASNPARENT;
+    -fx-label-padding: 2px;
+}
+
+.mfx-btn-next,
+.mfx-btn-next:armed,
+.mfx-btn-next:focused {
+    -fx-background-color: TRASNPARENT;
+    -fx-label-padding: 2px;
+}
+
+
+.dev1-Image {
+    -fx-background-image: url("../resources/dev1.jpg");
+}
+
+.dev2-Image {
+    -fx-background-image: url("../resources/Dev2.JPG");
+}
+
+.Icon {
+    -fx-background-image: url("../resources/logo.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.label-Titulo-Principal {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.jfx-mfx-btn-inicar,
+.jfx-mfx-btn-inicar:armed,
+.jfx-mfx-btn-inicar:focused,
+.jfx-mfx-btn-inicar:hover {
+    -fx-background-color: #FF8A08;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-inicar>ImageView {
+    -fx-image: url("../resources/play.png");
+}
+
+.jfx-mfx-btn-chargeMatch>ImageView {
+    -fx-image: url("../resources/chargeMatch.png");
+}
+
+.jfx-mfx-btn-chargeMatch,
+.jfx-mfx-btn-chargeMatch:armed,
+.jfx-mfx-btn-chargeMatch:focused,
+.jfx-mfx-btn-chargeMatch:hover {
+    -fx-background-color: #E643A0;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-salir,
+.jfx-mfx-btn-salir:armed,
+.jfx-mfx-btn-salir:focused,
+.jfx-mfx-btn-salir:hover {
+    -fx-background-color: #C40C0C;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-salir>ImageView {
+    -fx-image: url("../resources/exit.png");
+}
+
+.background {
+    -fx-background-color: -fx-celeste-hielo;
+}
+
+.jfx-icon-principal-1 {
+    -fx-background-image: url("../resources/Arte.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-icon-principal-2 {
+    -fx-background-image: url("../resources/Deportes.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-icon-principal-3 {
+    -fx-background-image: url("../resources/Ciencia.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-icon-principal-4 {
+    -fx-background-image: url("../resources/Historia.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-icon-principal-5 {
+    -fx-background-image: url("../resources/Geografia.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-icon-principal-6 {
+    -fx-background-image: url("../resources/Entretenimiento.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-mfx-btn-play,
+.jfx-mfx-btn-play:armed,
+.jfx-mfx-btn-play:focused,
+.jfx-mfx-btn-play:hover {
+    -fx-background-color: #41B06E;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-play>ImageView {
+    -fx-image: url("../resources/play.png");
+}
+
+.jfx-mfx-btn-next,
+.jfx-mfx-btn-next:armed,
+.jfx-mfx-btn-next:focused,
+.jfx-mfx-btn-next:hover {
+    -fx-background-color: #4CCD99;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-next>ImageView {
+    -fx-image: url("../resources/next.png");
+}
+
+/*************
+    Tableros
+*************/
+
+.tablero-2-jugadores {
+
+    -fx-background-image: url("../resources/Tableros2jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-3-jugadores {
+
+    -fx-background-image: url("../resources/Tablero3jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-4-jugadores {
+
+    -fx-background-image: url("../resources/Tablero4jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-5-jugadores {
+
+    -fx-background-image: url("../resources/Tablero5jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.tablero-6-jugadores {
+
+    -fx-background-image: url("../resources/Tablero6jugadores.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.jfx-mfx-button-picker,
+.jfx-mfx-button-picker:armed,
+.jfx-mfx-button-picker:focused {
+    -fx-background-color: TRASNPARENT;
+}
+
+.jfx-mfx-button-picker>ImageView {
+    -fx-image: url("../resources/picker.png");
+}
+
+.image-arte {
+
+    -fx-image: url("../resources/Arte.jpg");
+}
+
+.imagen-ciencia {
+
+    -fx-image: url("../resources/Ciencia.jpg");
+}
+
+.imagen-deportes {
+
+    -fx-image: url("../resources/Deportes.jpg");
+}
+
+.imagen-entretenimiento {
+
+    -fx-image: url("../resources/Entretenimiento.jpg");
+}
+
+.imagen-geografia {
+
+    -fx-image: url("../resources/Geografia.jpg");
+}
+
+.imagen-historia {
+
+    -fx-image: url("../resources/Historia.jpg");
+}
+
+.imagen-corona {
+
+    -fx-image: url("../resources/Corona.png");
+}
+
+.imagen-duelo {
+    -fx-image: url("../resources/Duelo.png")
+}
+
+.jfx-mfx-btn-corona,
+.jfx-mfx-btn-corona:armed,
+.jfx-mfx-btn-corona:focused,
+.jfx-mfx-btn-corona:hover {
+    -fx-background-color: #FFBF00;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-duelo,
+.jfx-mfx-btn-duelo:armed,
+.jfx-mfx-btn-duelo:focused,
+.jfx-mfx-btn-duelo:hover {
+    -fx-background-color: #6FDCE3;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-save>ImageView {
+    -fx-image: url("../resources/save.png");
+}
+
+.jfx-mfx-btn-save,
+.jfx-mfx-btn-save:armed,
+.jfx-mfx-btn-save:focused,
+.jfx-mfx-btn-save:hover {
+    -fx-background-color: #003285;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-edit>ImageView {
+    -fx-image: url("../resources/edit.png");
+}
+
+.jfx-mfx-btn-edit,
+.jfx-mfx-btn-edit:armed,
+.jfx-mfx-btn-edit:focused,
+.jfx-mfx-btn-edit:hover {
+    -fx-background-color: #874CCC;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.image-icon {
+
+    -fx-image: url("../resources/logo.jpg");
+}
+
+.jfx-mfx-btn-edit-question>ImageView {
+    -fx-image: url("../resources/edit.png");
+}
+
+.jfx-mfx-btn-edit-question,
+.jfx-mfx-btn-edit-question:armed,
+.jfx-mfx-btn-edit-question:focused,
+.jfx-mfx-btn-edit-question:hover {
+    -fx-background-color: #874CCC;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-txfs-mantenimiento,
+.jfx-txfs-mantenimiento:focused,
+.jfx-txfs-mantenimiento:hover,
+.jfx-txfs-mantenimiento:armed,
+.jfx-txfs-mantenimiento:selected,
+.jfx-txfs-mantenimiento:unfocused {
+    -fx-background-color: transparent;
+    /* Fondo transparente */
+    -fx-border-color: transparent;
+    /* Borde transparente */
+    -fx-border-width: 0;
+    /* Ancho del borde a 0 */
+    -fx-border-style: none;
+    /* Sin estilo de borde */
+    -fx-padding: 0;
+    /* Sin relleno */
+    -fx-background-insets: 0;
+    /* Sin insets de fondo */
+    -fx-background-radius: 0;
+    /* Sin radio de fondo */
+}
+
+
+
+.jfx-txfs-mantenimiento-container,
+.jfx-txfs-mantenimiento-container:focused,
+.jfx-txfs-mantenimiento-container:hover,
+.jfx-txfs-mantenimiento-container:armed,
+.jfx-txfs-mantenimiento-container:selected,
+.jfx-txfs-mantenimiento-container:unfocused {
+    -fx-border-color: BLACK;
+    /* Borde transparente */
+    -fx-border-width: 0 0 1 0;
+    /* Línea inferior */
+    -fx-border-style: solid;
+    /* Estilo de línea sólido */
+    -fx-border-radius: 0;
+    /* Sin radio */
+}
+
+.jfx-mfx-btn-delete>ImageView {
+    -fx-image: url("../resources/delete.png");
+}
+
+.jfx-mfx-btn-delete,
+.jfx-mfx-btn-delete:armed,
+.jfx-mfx-btn-delete:focused,
+.jfx-mfx-btn-delete:hover {
+    -fx-background-color: #FF0000;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-search>ImageView {
+    -fx-image: url("../resources/search.png");
+}
+
+.jfx-mfx-btn-search,
+.jfx-mfx-btn-search:armed,
+.jfx-mfx-btn-search:focused,
+.jfx-mfx-btn-search:hover {
+    -fx-background-color: #C65BCF;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-new>ImageView {
+    -fx-image: url("../resources/clean.png");
+}
+
+.jfx-mfx-btn-new,
+.jfx-mfx-btn-new:armed,
+.jfx-mfx-btn-new:focused,
+.jfx-mfx-btn-new:hover {
+    -fx-background-color: #68D2E8;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-background-panel {
+    -fx-background-color: #DD761C;
+    -fx-opacity: 0.8;
+}
+
+.jfx-background-panel>AnchorPane {
+    -fx-background-color: #FFBF00;
+    /*-fx-opacity: 0.9;*/
+}
+
+.jfx-principal-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 4.0;
+    -fx-padding: 25 15 15 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.7, 0, 1.5);
+}
+
+.jfx-panel-container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 4.0;
+    -fx-padding: 15 15 15 15;
+}
+
+.jfx-mfx-btn-statistics>ImageView {
+    -fx-image: url("../resources/statistics.png");
+}
+
+.jfx-mfx-btn-statistics,
+.jfx-mfx-btn-statistics:armed,
+.jfx-mfx-btn-statistics:focused,
+.jfx-mfx-btn-statistics:hover {
+    -fx-background-color: #FFC700;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-label-padding: 2px;
+}
+
+.jfx-mfx-btn-Historia>ImageView {
+    -fx-image: url("../resources/Historia.jpg");
+}
+
+.jfx-mfx-btn-Arte>ImageView {
+    -fx-image: url("../resources/Arte.jpg");
+}
+
+.jfx-mfx-btn-Geografia>ImageView {
+    -fx-image: url("../resources/Geografia.jpg");
+}
+
+.jfx-mfx-btn-Deporte>ImageView {
+    -fx-image: url("../resources/Deportes.jpg");
+}
+
+.jfx-mfx-btn-Entretenimiento>ImageView {
+    -fx-image: url("../resources/Entretenimiento.jpg");
+}
+
+.jfx-mfx-btn-Ciencia>ImageView {
+    -fx-image: url("../resources/Ciencia.jpg");
+}
+
+.jfx-btnimg-tbvSearch {
+    -fx-opacity: 0.8;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: contain;
+    -fx-background-color: #41B06E;
+    -fx-background-image: url("../resources/search.png");
+}
+
+.jfx-pane{
+    -fx-background-color: #FF6500
+}
+
+.jfx-pane > AnchorPane {
+    -fx-background-color: #FC4100
+}
+
+.Image-final{
+    -fx-image: url("../resources/Preguntados1.png");
+    -fx-witdh: 500px;
+    -fx-height: 500px;
+}

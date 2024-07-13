@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" fx:id="acpRootPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.SelectCrownDecisionController">
+   <children>
+      <VBox alignment="CENTER" layoutX="128.0" layoutY="69.0" prefHeight="261.0" prefWidth="342.0" styleClass="contenedores" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="label-Titulos" text="Selecion Corona  Personaje" />
+            <HBox alignment="CENTER" styleClass="contenedor-base">
+               <children>
+                  <VBox alignment="CENTER" styleClass="contenedores">
+                     <children>
+                        <MFXButton fx:id="btnHistoria" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnHistoria" styleClass="jfx-mfx-btn-Historia" text="Historia">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnArte" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnArte" styleClass="jfx-mfx-btn-Arte" text="Arte">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnGeografia" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnGeografia" styleClass="jfx-mfx-btn-Geografia" text="Geografia">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" layoutX="240.0" layoutY="15.0" styleClass="contenedores">
+                     <children>
+                        <MFXButton fx:id="btnDeporte" contentDisplay="RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnDeporte" styleClass="jfx-mfx-btn-Deporte" text="Deporte">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnEntretenimiento" contentDisplay="RIGHT" onAction="#OnActionBtnEntretenimiento" styleClass="jfx-mfx-btn-Entretenimiento" text="Entretenimiento">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                        <MFXButton fx:id="btnCiencia" contentDisplay="RIGHT" layoutX="15.0" layoutY="136.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#OnActionBtnCiencia" styleClass="jfx-mfx-btn-Ciencia" text="Ciencia">
+                           <graphic>
+                              <ImageView fitHeight="56.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </MFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

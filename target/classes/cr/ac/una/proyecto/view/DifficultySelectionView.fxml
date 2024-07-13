@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="401.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.DifficultySelectionViewController">
+   <children>
+      <VBox alignment="CENTER" layoutX="24.0" layoutY="38.0" prefHeight="488.0" prefWidth="401.0" spacing="30.0" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="label-Titulo-Principal" text="Seleccion de dificultad" />
+            <MFXCheckbox fx:id="ckbEasy" onMouseClicked="#onActionFacil" text="Facil">
+               <VBox.margin>
+                  <Insets right="40.0" />
+               </VBox.margin>
+            </MFXCheckbox>
+            <MFXCheckbox fx:id="ckbMedium" onMouseClicked="#onActionMedio" text="Intermedio" />
+            <MFXCheckbox fx:id="ckbHard" onMouseClicked="#onActionDificil" text="Dificil">
+               <VBox.margin>
+                  <Insets right="30.0" />
+               </VBox.margin>
+            </MFXCheckbox>
+            <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" styleClass="jfx-mfx-btn-next" text="Ver Resumen de Registro">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </MFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

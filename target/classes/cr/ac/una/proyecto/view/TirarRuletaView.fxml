@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="acpRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.proyecto.controller.TirarRuletaController">
+   <children>
+      <ImageView fx:id="imvRuleta" fitHeight="344.0" fitWidth="357.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <image>
+            <Image url="@../resources/ruleta.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imvPicker" fitHeight="84.0" fitWidth="81.0" layoutX="163.0" layoutY="155.0" onMouseClicked="#OnMouseClickedPicker" pickOnBounds="true">
+         <image>
+            <Image url="@../resources/picker.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
